@@ -1,0 +1,63 @@
+# Builds sites/nuspace.si as a static export and pushes it to the gh-pages branch
+# of nustackdev/nuspace.si, which serves it on GitHub Pages at nuspace.si.
+# Runs on push to main (when the site, the shared kit or deps change) and via
+# manual dispatch from the Actions tab.
+#
+# Prereqs (one-time):
+#   nustackdev/nuspace.si -> Settings -> Deploy keys: public key, write access
+#   nustackdev/www   -> Settings -> Secrets -> Actions: NUSPACE_SI_DEPLOY_KEY = private key
+#   nustackdev/nuspace.si -> Settings -> Pages: deploy from branch gh-pages, / (root),
+#                       custom domain nuspace.si
+name: Deploy nuspace.si
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - sites/nuspace.si/**
+      - packages/**
+      - package.json
+      - pnpm-lock.yaml
+      - pnpm-workspace.yaml
+      - .github/workflows/deploy-nuspace.si.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-nuspace.si
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: build + deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: install
+        run: pnpm install --frozen-lockfile --filter nuspace.si...
+
+      - name: build (static export)
+        run: pnpm --filter nuspace.si build
+
+      - name: push to nustackdev/nuspace.si
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.NUSPACE_SI_DEPLOY_KEY }}
+          external_repository: nustackdev/nuspace.si
+          publish_branch: gh-pages
+          publish_dir: sites/nuspace.si/out
+          cname: nuspace.si
+          force_orphan: true
+          commit_message: deploy ${{ github.sha }}

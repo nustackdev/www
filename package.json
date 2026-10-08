@@ -1,40 +1,14 @@
 {
-  "name": "docs",
-  "version": "0.0.0",
+  "name": "www",
   "private": true,
   "packageManager": "pnpm@11.18.0",
   "scripts": {
-    "build": "next build",
-    "dev": "next dev",
-    "start": "next start",
-    "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
-    "postinstall": "fumadocs-mdx",
-    "docs:gen": "tools/.venv/bin/python -m docsgen",
-    "docs:gen:check": "tools/.venv/bin/python -m docsgen --check",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "cnfast": "^0.0.8",
-    "fumadocs-core": "16.10.7",
-    "fumadocs-mdx": "15.0.13",
-    "fumadocs-ui": "16.10.7",
-    "lucide-react": "^1.21.0",
-    "next": "16.2.9",
-    "posthog-js": "^1.413.2",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "zod": "4.4.3"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.1",
-    "@types/mdx": "^2.0.14",
-    "@types/node": "^26.0.0",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.4",
-    "eslint-config-next": "16.2.9",
-    "postcss": "^8.5.15",
-    "tailwindcss": "^4.3.1",
-    "typescript": "^6.0.3"
+    "dev:nustack": "pnpm --filter nustack.dev dev",
+    "dev:nuspace": "pnpm --filter nuspace.si dev",
+    "build": "pnpm -r --filter './sites/*' build",
+    "build:nustack": "pnpm --filter nustack.dev build",
+    "build:nuspace": "pnpm --filter nuspace.si build",
+    "types:check": "pnpm -r --filter './sites/*' types:check",
+    "lint": "pnpm -r --filter './sites/*' lint"
   }
 }
