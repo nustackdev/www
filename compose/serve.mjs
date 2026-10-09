@@ -4,7 +4,7 @@
 //   node serve.mjs <dir> [--port 4000] [--base /blog]
 //
 // `--base` mounts the directory under a prefix, for previewing one zone app
-// on its own (the blog placeholder's dev script uses it).
+// on its own (the blog's preview script uses it).
 
 import { createReadStream, existsSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';

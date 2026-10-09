@@ -2,12 +2,36 @@
   "name": "@www/blog",
   "version": "0.0.0",
   "private": true,
-  "description": "nustack.dev/blog: placeholder until the blog engine lands. Emits a static hello page under /blog.",
+  "type": "module",
+  "description": "nustack.dev/blog: the Astro blog. MDX posts, RSS, OG images, giscus comments, served under /blog.",
   "scripts": {
-    "build": "node build.mjs",
-    "dev": "node build.mjs && node ../compose/serve.mjs out --base /blog --port 3003"
+    "build": "astro build",
+    "dev": "astro dev --port 3003 --host 127.0.0.1 --ignore-lock",
+    "preview": "node ../compose/serve.mjs out --base /blog --port 3003",
+    "types:check": "astro check"
   },
   "dependencies": {
-    "@www/shared": "workspace:*"
+    "@astrojs/mdx": "^8.0.3",
+    "@astrojs/react": "^7.0.1",
+    "@astrojs/rss": "^4.0.19",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@giscus/react": "^3.1.0",
+    "@www/shared": "workspace:*",
+    "astro": "^7.3.7",
+    "lucide-react": "^1.23.0",
+    "next-themes": "^0.4.6",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@fontsource/noto-sans": "^5.3.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "satori": "^0.41.0",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^6.0.3"
   }
 }

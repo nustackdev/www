@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import { Header, Body, Chapter } from '@www/shared/components/page';
+import { Row } from '@www/shared/components/grid/Row';
+import { Cell } from '@www/shared/components/grid/Cell';
+import { CellContent } from '@www/shared/components/grid/CellContent';
+import { Heading, Lede } from '@www/shared/components/text';
+import { MonoKicker } from '@www/shared/components/meta/MonoKicker';
+import { formatDate } from '@www/shared/lib/date';
+import { BLOG_DESCRIPTION, BLOG_TITLE, getPosts, ogImagePath, postPath } from '../lib/posts';
+
+const posts = await getPosts();
+---
+
+<Base title={BLOG_TITLE} description={BLOG_DESCRIPTION} path="/blog/" image={ogImagePath('index')}>
+  <Header title="Blog" lede={BLOG_DESCRIPTION} />
+  <Body>
+    {
+      posts.map((post) => (
+        <a href={postPath(post)} class="post-link">
+          <Chapter className="post-card">
+            <Row cols={1}>
+              <Cell>
+                <CellContent pad="lg">
+                  <MonoKicker as="p" size="xs" tracking="wider">
+                    {formatDate(post.data.date)} · by {post.data.author}
+                    {post.data.draft ? ' · draft' : ''}
+                  </MonoKicker>
+                  <Heading level={2}>{post.data.title}</Heading>
+                  <Lede>{post.data.description}</Lede>
+                </CellContent>
+              </Cell>
+            </Row>
+          </Chapter>
+        </a>
+      ))
+    }
+  </Body>
+</Base>
+
+<style>
+  .post-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+  .post-link :global(.post-card) {
+    transition: border-color var(--site-t), background var(--site-t);
+  }
+  .post-link:hover :global(.post-card),
+  .post-link:focus-visible :global(.post-card) {
+    border-color: var(--site-accent);
+    background: var(--site-bg-overlay);
+  }
+  .post-link:focus-visible {
+    outline: none;
+  }
+</style>

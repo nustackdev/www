@@ -1,0 +1,134 @@
+/* =============================================================================
+ * Post typography. Rhythm and measure are tuned for long-form reading, not
+ * reference lookup. Colors come from the shared site tokens.
+ * ==========================================================================*/
+
+.prose {
+  color: var(--site-ink);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  width: 100%;
+  max-width: 72ch;
+  margin-inline: auto;
+  /* Size from the card, not the content, so wide code blocks scroll inside
+   * the post instead of stretching the grid cell on small screens. */
+  contain: inline-size;
+  overflow-wrap: break-word;
+}
+
+.prose > :first-child { margin-top: 0; }
+.prose > :last-child { margin-bottom: 0; }
+
+.prose p { margin: 0 0 1.5em; }
+
+.prose :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--site-ink);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  scroll-margin-top: calc(var(--site-nav-clearance, 96px) + 16px);
+}
+
+.prose h2 { font-size: 1.625rem; margin: 2.75em 0 0.75em; letter-spacing: -0.015em; }
+.prose h3 { font-size: 1.25rem; margin: 2.25em 0 0.5em; }
+.prose h4 { font-size: 1.0625rem; margin: 1.75em 0 0.5em; }
+.prose :is(h5, h6) {
+  font-size: 0.9375rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--site-ink-3);
+  margin: 1.5em 0 0.5em;
+}
+.prose :is(h2, h3):first-child { margin-top: 0; }
+
+.prose a {
+  color: var(--site-ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--site-ink) 30%, transparent);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color var(--site-t);
+}
+.prose a:hover { text-decoration-color: var(--site-ink); }
+
+.prose :is(ul, ol) { margin: 0 0 1.5em; padding-left: 1.5em; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li { margin-bottom: 0.5em; }
+.prose li > p { margin-bottom: 0.5em; }
+.prose li::marker { color: var(--site-ink-3); }
+.prose li > :is(ul, ol) { margin: 0.5em 0; }
+
+.prose strong { font-weight: 600; }
+
+.prose blockquote {
+  margin: 2em 0;
+  padding: 0.25em 0 0.25em 1.25em;
+  border-left: 2px solid var(--site-border-strong);
+  color: var(--site-ink-3);
+}
+.prose blockquote p:last-child { margin-bottom: 0; }
+
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  background: var(--site-code-bg);
+  color: var(--site-ink);
+  overflow-wrap: anywhere;
+}
+
+/* Code blocks: Shiki renders both themes, light inline and dark as
+ * --shiki-dark vars. The surface comes from the site tokens either way. */
+.prose pre {
+  margin: 1.75em 0;
+  padding: var(--site-code-pad-y, 14px) var(--site-code-pad-x, 16px);
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-r-md, 8px);
+  background: var(--site-code-bg) !important;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+.prose pre code { font-family: inherit; }
+.dark .prose pre span {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--site-border);
+  margin: 3em 0;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.75em 0;
+}
+
+.prose table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 1.75em 0;
+  font-size: 0.9375rem;
+}
+.prose :is(th, td) {
+  padding: 0.6em 0.8em;
+  border-bottom: 1px solid var(--site-border);
+  text-align: left;
+}
+.prose th { font-weight: 600; color: var(--site-ink-3); }
+
+@media (max-width: 640px) {
+  .prose { font-size: 1rem; line-height: 1.7; }
+  .prose h2 { font-size: 1.5rem; }
+  .prose h3 { font-size: 1.1875rem; }
+}

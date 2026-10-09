@@ -10,6 +10,7 @@ __pycache__/
 # test & build
 coverage/
 .next/
+.astro/
 out/
 build/
 *.tsbuildinfo

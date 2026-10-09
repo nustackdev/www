@@ -1,0 +1,85 @@
+---
+import '../styles/global.css';
+import { Page } from '@www/shared/components/page';
+import { Footer } from '@www/shared/components/nav/Footer';
+import { abs, organizationLd, websiteLd } from '@www/shared/lib/jsonld';
+import Nav from '../components/Nav';
+import { BLOG_TITLE } from '../lib/posts';
+
+interface Props {
+  /** Page title as shared (OG, Twitter). */
+  title: string;
+  /** Browser tab title, when it differs from `title`. */
+  docTitle?: string;
+  description: string;
+  /** Site-absolute path of this page, e.g. `/blog/x/`. */
+  path: string;
+  /** Site-absolute path of the OG image. */
+  image: string;
+  imageAlt?: string;
+  article?: { date: string; author: string; tags: string[] };
+  jsonLd?: object[];
+}
+
+const { title, docTitle = title, description, path, image, imageAlt = title, article, jsonLd = [] } = Astro.props;
+const ld = [organizationLd(), websiteLd(), ...jsonLd];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{docTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={abs(path)} />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" href="/icon.png" sizes="256x256" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-icon.png" sizes="256x256" type="image/png" />
+    <link rel="alternate" type="application/rss+xml" title={BLOG_TITLE} href="/blog/rss.xml" />
+    <meta name="theme-color" content="#fafbfc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:site_name" content="Nu" />
+    <meta property="og:url" content={abs(path)} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={abs(image)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    {article && <meta property="article:published_time" content={article.date} />}
+    {article && <meta property="article:author" content={article.author} />}
+    {article?.tags.map((tag) => <meta property="article:tag" content={tag} />)}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@nustackdev" />
+    <meta name="twitter:creator" content="@nustackdev" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={abs(image)} />
+
+    {/* Same theme key and class as next-themes in the other zones, applied before paint. */}
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'system';
+          var dark = t === 'dark' || (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+          var el = document.documentElement;
+          el.classList.add(dark ? 'dark' : 'light');
+          el.style.colorScheme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </head>
+  <body>
+    <Nav client:load />
+    <main class="flex flex-1 flex-col">
+      <Page>
+        <slot />
+        <Footer slot="footer" />
+      </Page>
+    </main>
+  </body>
+</html>

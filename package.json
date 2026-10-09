@@ -11,7 +11,7 @@
     "build:apps": "pnpm -r --filter @www/landing --filter @www/docs --filter @www/blog build",
     "build:site": "pnpm --filter @www/compose build",
     "serve": "pnpm --filter @www/compose serve",
-    "types:check": "pnpm -r --filter @www/landing --filter @www/docs --filter @www/shared types:check",
+    "types:check": "pnpm -r --filter @www/landing --filter @www/docs --filter @www/blog --filter @www/shared types:check",
     "lint": "pnpm -r --filter @www/landing --filter @www/docs lint",
     "docs:gen": "tools/.venv/bin/python -m docsgen",
     "docs:gen:check": "tools/.venv/bin/python -m docsgen --check"
