@@ -12,7 +12,7 @@ import {
   INTRO_PLAIN_LINES,
   INTRO_KV_LINES,
   INTRO_UI_LINES,
-} from '../intro.sample.data';
+} from './intro.sample.data';
 import s from './IntroStory.module.css';
 
 const INTRO_FABRICS = FABRICS.filter((f) => f.showcase);

@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 const OG_IMAGE = '/og/page/root/image.png';
-const TITLE = 'Nu — the interaction primitive';
-const DESCRIPTION = 'Build apps in one primitive that spans your whole stack: databases, UIs, AI agents, services. No glue. 50x less code.';
+const TITLE = 'nuspace: an information base';
+const DESCRIPTION = 'A database keeps the data. A knowledge base keeps the conclusions. An information base keeps the data in context, and runs the programs that make it.';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -26,7 +26,7 @@ export const metadata = {
     siteName: 'Nu',
     title: TITLE,
     description: DESCRIPTION,
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: 'Nu — the interaction primitive' }],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: TITLE }],
   },
   twitter: {
     card: 'summary_large_image',

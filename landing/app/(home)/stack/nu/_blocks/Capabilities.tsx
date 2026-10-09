@@ -15,7 +15,7 @@ import {
   CAP_UI_LINES,
   CAP_CLUSTER_LINES,
   CAP_LLM_LINES,
-} from '../capabilities.sample.data';
+} from './capabilities.sample.data';
 import s from './Capabilities.module.css';
 
 interface Capability {

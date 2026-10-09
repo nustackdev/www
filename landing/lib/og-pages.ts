@@ -18,9 +18,9 @@ export interface PageOgEntry {
 export const PAGE_OG_ENTRIES: PageOgEntry[] = [
   {
     key: 'root',
-    title: 'Nu — the interaction primitive.',
+    title: 'nuspace is an information base.',
     description:
-      'Build apps in one primitive that spans your whole stack: databases, UIs, AI agents, services. No glue. 50x less code.',
+      'A database keeps the data. A knowledge base keeps the conclusions. An information base keeps the data in context, and runs the programs that make it.',
     siteLabel: appName,
   },
   {

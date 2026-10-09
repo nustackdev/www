@@ -1,0 +1,42 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+}
+@media (max-width: 860px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Value sits above the label visually; dt stays first for a11y. */
+.item {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 20px 22px;
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-r-md);
+  background: var(--site-surface-2);
+  min-width: 0;
+}
+
+.value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--site-fs-13);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--site-ink);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 640px) {
+  .value { font-size: var(--site-fs-12); }
+}
+
+.label {
+  font-size: var(--site-fs-6);
+  line-height: 1.4;
+  color: var(--site-ink-3);
+}

@@ -5,7 +5,8 @@ import { PageBadge } from '@www/shared/components/meta/PageBadge';
 import { Button } from '@www/shared/components/controls/Button';
 import { CtaRow } from '@www/shared/components/layout/CtaRow';
 import { TryIt } from '@/components/chapters/TryIt';
-import { FabricsCatalogue } from './FabricsCatalogue';
+import { FabricsTable } from './_blocks/FabricsTable';
+import { UnderTheHood } from './_blocks/UnderTheHood';
 import { pageOG, ogPageImage } from '@/lib/og';
 import { PAGE_OG } from '@/lib/og-pages';
 
@@ -38,7 +39,8 @@ export default function NustdPage() {
         }
       />
       <Body>
-        <FabricsCatalogue />
+        <FabricsTable />
+        <UnderTheHood />
         <TryIt />
       </Body>
     </Page>

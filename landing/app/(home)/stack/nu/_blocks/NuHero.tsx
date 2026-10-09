@@ -10,9 +10,9 @@ import { Button, ButtonRepoLabel } from '@www/shared/components/controls/Button'
 import { MonoKicker } from '@www/shared/components/meta/MonoKicker';
 import { Meta } from '@www/shared/components/meta/Meta';
 import { NumberedList } from '@www/shared/components/controls/NumberedList';
-import s from '../page.module.css';
+import s from './nu.module.css';
 
-// Kept local until the landing rewrite replaces the hero.
+// The old landing's use-case list.
 const USE_CASES = [
   { label: 'AI agents', desc: 'Long-running agents with memory.' },
   { label: 'Local-first apps', desc: 'Apps that live on your machine.' },
@@ -22,11 +22,12 @@ const USE_CASES = [
 ];
 
 /**
- * Hero — landing-only page header. Bespoke two-column layout:
+ * NuHero — the old landing hero, kept from before the nuspace landing.
+ * Bespoke two-column layout:
  * slogan on the left, tagline + use-cases + CTAs + meta on the right.
  * Sub-pages use the standard `<Header>` primitive instead.
  */
-export function Hero() {
+export function NuHero() {
   return (
     <Row template="minmax(0, 55fr) minmax(0, 45fr)" divider={false} stackAt="sm" className={s.heroRow}>
       <Cell yalign="middle" className={s.heroLeftCell}>

@@ -5,9 +5,10 @@ import { PageBadge } from '@www/shared/components/meta/PageBadge';
 import { Button } from '@www/shared/components/controls/Button';
 import { CtaRow } from '@www/shared/components/layout/CtaRow';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
-import { TryIt } from '@/components/chapters/TryIt';
 import { LikeThisBlock } from '@/components/chapters/LikeThisBlock';
-import { IntroBrief } from '../../_blocks/IntroBrief';
+import { Capabilities } from './_blocks/Capabilities';
+import { SeeNuLive } from './_blocks/SeeNuLive';
+import { IntroBrief } from './_blocks/IntroBrief';
 import { pageOG, ogPageImage } from '@/lib/og';
 import { PAGE_OG } from '@/lib/og-pages';
 
@@ -44,8 +45,9 @@ export default function NuPage() {
         }
       />
       <Body>
+        <Capabilities />
+        <SeeNuLive />
         <IntroBrief />
-        <TryIt />
         <LikeThisBlock />
       </Body>
     </Page>
