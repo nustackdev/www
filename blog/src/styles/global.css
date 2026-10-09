@@ -9,3 +9,11 @@
 html {
   font-family: 'Inter Variable', var(--font-display);
 }
+
+/* The one reading column every blog page sits in. */
+.blog-column {
+  width: 100%;
+  max-width: 820px;
+  margin-inline: auto;
+  padding-bottom: calc(var(--site-gap-xloose) * 2);
+}

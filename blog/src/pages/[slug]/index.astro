@@ -2,10 +2,8 @@
 import { render } from 'astro:content';
 import { ArrowLeft } from 'lucide-react';
 import Base from '../../layouts/Base.astro';
-import { Header, Body, Chapter } from '@www/shared/components/page';
-import { Row } from '@www/shared/components/grid/Row';
-import { Cell } from '@www/shared/components/grid/Cell';
-import { CellContent } from '@www/shared/components/grid/CellContent';
+import { Heading, Lede } from '@www/shared/components/text';
+import { MonoKicker } from '@www/shared/components/meta/MonoKicker';
 import { blogPostingLd } from '@www/shared/lib/jsonld';
 import { formatDate } from '@www/shared/lib/date';
 import Comments from '../../components/Comments';
@@ -33,53 +31,61 @@ const image = ogImagePath(post.id);
   article={{ date, author, tags }}
   jsonLd={[blogPostingLd({ title, description, url: path, image, date, author, tags })]}
 >
-  <Header title={title} lede={description}>
-    <span slot="meta" class="meta-row">
-      <a href="/blog/" class="back-link">
-        <ArrowLeft size={12} aria-hidden="true" />
-        <span>Blog</span>
-      </a>
-      <span class="sep">·</span>
-      <time datetime={date}>{formatDate(date)}</time>
-      <span class="sep">·</span>
-      <span>by {author}</span>
-    </span>
-  </Header>
-  <Body>
-    <Chapter>
-      <Row cols={1}>
-        <Cell>
-          <CellContent pad="lg">
-            <article class="prose" data-pagefind-body>
-              <Content />
-            </article>
-          </CellContent>
-        </Cell>
-      </Row>
-    </Chapter>
-    <Chapter>
-      <Row cols={1}>
-        <Cell>
-          <CellContent pad="lg">
-            <section class="comments" aria-label="Comments" data-pagefind-ignore>
-              <Comments client:visible />
-            </section>
-          </CellContent>
-        </Cell>
-      </Row>
-    </Chapter>
-  </Body>
+  <div class="blog-column">
+    <header class="head">
+      <div class="meta">
+        <a href="/blog/" class="back">
+          <ArrowLeft size={13} aria-hidden="true" />
+          <span>Blog</span>
+        </a>
+        <span class="sep">/</span>
+        <time datetime={date}>{formatDate(date)}</time>
+        <span class="sep">·</span>
+        <span>by {author}</span>
+      </div>
+      <Heading level={1}>{title}</Heading>
+      <Lede className="lede">{description}</Lede>
+      {
+        tags.length > 0 && (
+          <ul class="tags">
+            {tags.map((tag) => (
+              <li>
+                <MonoKicker size="xs" tracking="wide">{tag}</MonoKicker>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    <article class="prose" data-pagefind-body>
+      <Content />
+    </article>
+
+    <section class="comments" aria-label="Comments" data-pagefind-ignore>
+      <MonoKicker as="h2" size="xs" tracking="wider">Comments</MonoKicker>
+      <Comments client:visible />
+    </section>
+  </div>
 </Base>
 
 <style>
-  .meta-row {
-    display: inline-flex;
+  .head {
+    padding-block: var(--site-gap-loose) 32px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--site-border);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--site-gap-tight);
+    margin-bottom: var(--site-gap-normal);
     color: var(--site-ink-3);
+    font-size: 0.875rem;
     font-variant-numeric: tabular-nums;
   }
-  .back-link {
+  .back {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -87,23 +93,46 @@ const image = ogImagePath(post.id);
     text-decoration: none;
     transition: color var(--site-t);
   }
-  .back-link :global(svg) {
+  .back :global(svg) {
     transition: transform 0.18s ease;
   }
-  .back-link:hover,
-  .back-link:focus-visible {
+  .back:hover,
+  .back:focus-visible {
     color: var(--site-ink);
     outline: none;
   }
-  .back-link:hover :global(svg),
-  .back-link:focus-visible :global(svg) {
+  .back:hover :global(svg),
+  .back:focus-visible :global(svg) {
     transform: translateX(-2px);
   }
   .sep {
     opacity: 0.5;
   }
+  .head :global(.lede) {
+    margin-top: var(--site-gap-normal);
+    color: var(--site-ink-2);
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: var(--site-gap-loose);
+    padding: 0;
+    list-style: none;
+  }
+  .tags li {
+    padding: 3px 10px;
+    border: 1px solid var(--site-border);
+    border-radius: 999px;
+    color: var(--site-ink-3);
+  }
   .comments {
-    max-width: 72ch;
-    margin-inline: auto;
+    margin-top: calc(var(--site-gap-xloose) * 1.5);
+    padding-top: var(--site-gap-loose);
+    border-top: 1px solid var(--site-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--site-gap-normal);
+    color: var(--site-ink-3);
   }
 </style>

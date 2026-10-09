@@ -5,11 +5,9 @@
 
 .prose {
   color: var(--site-ink);
-  font-size: 1.0625rem;
+  font-size: 1.125rem;
   line-height: 1.75;
   width: 100%;
-  max-width: 72ch;
-  margin-inline: auto;
   /* Size from the card, not the content, so wide code blocks scroll inside
    * the post instead of stretching the grid cell on small screens. */
   contain: inline-size;
