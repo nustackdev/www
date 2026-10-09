@@ -1,0 +1,15 @@
+{
+  "name": "@www/compose",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Stitches the zone apps into one static nustack.dev: build merge, local dev proxy, static preview server.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node dev.mjs",
+    "serve": "node serve.mjs ../out --port 4000"
+  },
+  "devDependencies": {
+    "pagefind": "^1.5.2"
+  }
+}

@@ -3,6 +3,7 @@ packages:
   - docs
   - landing
   - blog
+  - compose
 allowBuilds:
   core-js: false
   esbuild: true

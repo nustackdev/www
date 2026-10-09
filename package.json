@@ -3,16 +3,17 @@
   "private": true,
   "packageManager": "pnpm@11.18.0",
   "scripts": {
-    "build": "pnpm -r --filter @www/landing --filter @www/docs --filter @www/blog build",
+    "dev": "pnpm --filter @www/compose dev",
+    "dev:landing": "pnpm --filter @www/landing dev",
+    "dev:docs": "pnpm --filter @www/docs dev",
+    "dev:blog": "pnpm --filter @www/blog dev",
+    "build": "pnpm build:apps && pnpm build:site",
+    "build:apps": "pnpm -r --filter @www/landing --filter @www/docs --filter @www/blog build",
+    "build:site": "pnpm --filter @www/compose build",
+    "serve": "pnpm --filter @www/compose serve",
     "types:check": "pnpm -r --filter @www/landing --filter @www/docs --filter @www/shared types:check",
     "lint": "pnpm -r --filter @www/landing --filter @www/docs lint",
-    "dev:docs": "pnpm --filter @www/docs dev",
-    "build:docs": "pnpm --filter @www/docs build",
     "docs:gen": "tools/.venv/bin/python -m docsgen",
-    "docs:gen:check": "tools/.venv/bin/python -m docsgen --check",
-    "dev:landing": "pnpm --filter @www/landing dev",
-    "build:landing": "pnpm --filter @www/landing build",
-    "build:blog": "pnpm --filter @www/blog build",
-    "dev:blog": "pnpm --filter @www/blog dev"
+    "docs:gen:check": "tools/.venv/bin/python -m docsgen --check"
   }
 }
