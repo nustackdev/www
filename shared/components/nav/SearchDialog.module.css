@@ -1,0 +1,121 @@
+/* SearchDialog — site-wide search modal. Uses site tokens only. */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 12vh 16px 16px;
+  background: var(--site-scrim);
+  backdrop-filter: blur(4px);
+}
+
+.panel {
+  width: min(640px, 100%);
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-r-md);
+  background: var(--site-bg-overlay);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--site-border);
+}
+
+.icon {
+  color: var(--site-ink-4);
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--site-ink);
+  font-size: var(--site-fs-8);
+}
+
+.input::placeholder {
+  color: var(--site-ink-4);
+}
+
+.kbd {
+  font-family: var(--font-mono);
+  font-size: var(--site-fs-1);
+  color: var(--site-ink-4);
+  border: 1px solid var(--site-border);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.note {
+  margin: 0;
+  padding: 16px;
+  color: var(--site-ink-3);
+  font-size: var(--site-fs-5);
+}
+
+.hits {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  overflow-y: auto;
+}
+
+.hit {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: var(--site-r-md);
+  color: var(--site-ink);
+  text-decoration: none;
+}
+
+.hit[data-active='true'] {
+  background: var(--site-wash-2);
+}
+
+.hitHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hitTitle {
+  font-weight: 600;
+  font-size: var(--site-fs-6);
+}
+
+.hitZone {
+  font-family: var(--font-mono);
+  font-size: var(--site-fs-1);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--site-ink-4);
+}
+
+.hitExcerpt {
+  font-size: var(--site-fs-5);
+  color: var(--site-ink-3);
+  line-height: 1.45;
+}
+
+.hitExcerpt mark {
+  background: var(--site-accent-soft);
+  color: var(--site-ink);
+  border-radius: 2px;
+}

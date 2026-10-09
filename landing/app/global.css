@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+@source '../../shared';
+@import '@www/shared/design/tokens.css';
+@import '@www/shared/design/hue-scope.css';
+@import '@www/shared/design/base.css';
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}

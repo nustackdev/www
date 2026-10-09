@@ -1,0 +1,308 @@
+/* =============================================================================
+ * Footer — rich sitemap footer.
+ *
+ * Vercel/Stripe-style deep footer: each product entry shows its name + a
+ * one-line description underneath. Four product groups become peer columns
+ * with a header + tagline. Brand column on the left carries wordmark, a
+ * confident tagline, Learn links, and socials.
+ *
+ * Transparent — sits on the PageShell surface (--site-bg), no bg/border.
+ * ==========================================================================*/
+
+.footer {
+  position: relative;
+  width: 100%;
+  /* Transition into the footer reads as: chapter → xloose gap → hairline
+   * → xloose gap (inner padding-top) → footer content. The border spans
+   * the full viewport width, not just the 1200 content column. */
+  margin-top: var(--site-gap-xloose);
+  border-top: 1px solid var(--site-rule);
+  color: var(--site-ink-2);
+  font-family: var(--font-display);
+}
+
+.inner {
+  max-width: var(--site-kal-max-width, 1200px);
+  margin: 0 auto;
+  padding-inline: var(--site-container-pad-x);
+  padding-block: var(--site-gap-xloose) var(--site-gap-loose);
+}
+
+/* --- Top region ---------------------------------------------------------- */
+
+.top {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(0, 3.4fr);
+  gap: var(--site-gap-loose);
+  align-items: start;
+}
+
+/* --- Brand column -------------------------------------------------------- */
+
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--site-gap-normal);
+  min-width: 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--site-ink);
+}
+.brandLogo { flex: 0 0 auto; }
+.brandMark { font-size: var(--site-fs-8); }
+
+.brandTagline {
+  margin: 0;
+  color: var(--site-ink-2);
+  font-size: var(--site-fs-6);
+  line-height: 1.45;
+  letter-spacing: var(--site-tr-tight);
+  max-width: 22ch;
+}
+
+.learnList {
+  list-style: none;
+  padding: 0;
+  margin: var(--site-gap-tight) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--site-gap-tight);
+}
+.learnLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--site-ink-3);
+  text-decoration: none;
+  font-size: var(--site-fs-5);
+  transition: color .18s ease;
+}
+.learnLink:hover,
+.learnLink:focus-visible {
+  color: var(--site-ink);
+  outline: none;
+}
+.learnLinkExternal {
+  opacity: 0.7;
+  transform: translateY(-1px);
+}
+
+/* --- Socials ------------------------------------------------------------- */
+
+.socials {
+  display: flex;
+  gap: 4px;
+  margin-right: -8px;
+}
+.socialIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  color: var(--site-ink-3);
+  text-decoration: none;
+  transition: color .18s ease, background .18s ease;
+}
+.socialIcon:hover,
+.socialIcon:focus-visible {
+  color: var(--site-ink);
+  background: var(--site-wash-2);
+  outline: none;
+}
+
+/* --- Sitemap ------------------------------------------------------------- */
+
+.sitemap {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-areas: "apps fabrics tools usecases";
+  gap: var(--site-gap-loose);
+  min-width: 0;
+}
+
+.group { min-width: 0; }
+
+.groupHead {
+  margin-bottom: var(--site-gap-normal);
+  padding-bottom: var(--site-gap-tight);
+  border-bottom: 1px solid var(--site-rule-2);
+}
+
+.groupHeaderLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.groupHeaderLink:hover .groupHeader,
+.groupHeaderLink:focus-visible .groupHeader { color: var(--site-ink); outline: none; }
+.groupHeaderLink:hover .groupTagline,
+.groupHeaderLink:focus-visible .groupTagline { color: var(--site-ink-3); }
+
+.groupHeader {
+  display: block;
+  color: var(--site-ink);
+  font-size: var(--site-fs-5);
+  font-weight: var(--site-fw-semibold);
+  letter-spacing: 0.005em;
+  transition: color .18s ease;
+}
+
+.groupTagline {
+  display: block;
+  margin-top: 4px;
+  color: var(--site-ink-4);
+  font-size: var(--site-fs-3);
+  line-height: 1.4;
+  transition: color .18s ease;
+}
+
+.items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--site-list-item-gap);
+}
+
+.item {
+  min-width: 0;
+}
+
+/* Rich items — original footer treatment. Hover halo pads outward via a
+   matching negative margin so the tint doesn't shift layout; kept tight
+   (6px) so it doesn't bleed into neighboring rows/columns.
+   .itemStatic drops hover for rows without an href yet. */
+.itemLink,
+.itemStatic {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 5px 10px;
+  margin: -5px -10px;
+  border-radius: var(--site-r-md);
+  text-decoration: none;
+  color: inherit;
+  transition: background .18s ease;
+}
+.itemLink:hover,
+.itemLink:focus-visible {
+  background: var(--site-wash);
+  outline: none;
+}
+.itemLink:hover .itemName,
+.itemLink:focus-visible .itemName { color: var(--site-ink); }
+.itemLink:hover .itemDesc,
+.itemLink:focus-visible .itemDesc { color: var(--site-ink-3); }
+
+.itemName {
+  color: var(--site-ink-2);
+  font-size: var(--site-fs-5);
+  font-weight: var(--site-fw-medium);
+  letter-spacing: var(--site-tr-tight);
+  transition: color .18s ease;
+}
+
+.itemDesc {
+  color: var(--site-ink-4);
+  font-size: var(--site-fs-3);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color .18s ease;
+}
+
+.explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: var(--site-gap-normal);
+  font-size: var(--site-fs-4);
+  font-weight: var(--site-fw-medium);
+  color: var(--site-ink-2);
+  text-decoration: none;
+  transition: color .18s ease;
+  width: fit-content;
+}
+.explore:hover,
+.explore:focus-visible {
+  color: var(--site-ink);
+  outline: none;
+}
+.explore svg { transition: transform .18s ease; }
+.explore:hover svg,
+.explore:focus-visible svg { transform: translateX(2px); }
+
+/* --- Bottom strip -------------------------------------------------------- */
+
+.bottom {
+  margin-top: var(--site-gap-loose);
+  padding-top: var(--site-gap-normal);
+  border-top: 1px solid var(--site-rule-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--site-gap-normal);
+  flex-wrap: wrap;
+  color: var(--site-ink-4);
+  font-size: var(--site-fs-3);
+}
+
+.copyright { color: var(--site-ink-4); }
+
+/* --- Responsive ---------------------------------------------------------- */
+
+/* Tablet: brand stacks above sitemap; brand col becomes a horizontal band that
+   uses the freed-up right side — mark+tagline left, Learn links inline right. */
+/* Tablet: brand stacks above sitemap. */
+@media (max-width: 1024px) {
+  .top {
+    grid-template-columns: 1fr;
+  }
+  .brandCol {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--site-gap-normal) var(--site-gap-loose);
+  }
+  .brandBlock {
+    display: flex;
+    flex-direction: column;
+    gap: var(--site-gap-tight);
+    min-width: 0;
+  }
+  .brandTagline { max-width: none; }
+  .learnList {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 0;
+    gap: var(--site-gap-tight) var(--site-gap-normal);
+    align-items: center;
+  }
+}
+
+/* Phone: sitemap folds to single column. Descriptions tighten. */
+@media (max-width: 640px) {
+  .sitemap {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "apps"
+      "fabrics"
+      "tools"
+      "usecases";
+  }
+  .itemDesc {
+    -webkit-line-clamp: 1;
+    line-height: 1.35;
+  }
+}

@@ -3,16 +3,14 @@
   "private": true,
   "packageManager": "pnpm@11.18.0",
   "scripts": {
-    "dev:nustack": "pnpm --filter nustack.dev dev",
-    "dev:nuspace": "pnpm --filter nuspace.si dev",
-    "build": "pnpm -r --filter './sites/*' --filter @www/docs build",
-    "build:nustack": "pnpm --filter nustack.dev build",
-    "build:nuspace": "pnpm --filter nuspace.si build",
-    "types:check": "pnpm -r --filter './sites/*' --filter @www/docs types:check",
-    "lint": "pnpm -r --filter './sites/*' --filter @www/docs lint",
+    "build": "pnpm -r --filter @www/landing --filter @www/docs build",
+    "types:check": "pnpm -r --filter @www/landing --filter @www/docs --filter @www/shared types:check",
+    "lint": "pnpm -r --filter @www/landing --filter @www/docs lint",
     "dev:docs": "pnpm --filter @www/docs dev",
     "build:docs": "pnpm --filter @www/docs build",
     "docs:gen": "tools/.venv/bin/python -m docsgen",
-    "docs:gen:check": "tools/.venv/bin/python -m docsgen --check"
+    "docs:gen:check": "tools/.venv/bin/python -m docsgen --check",
+    "dev:landing": "pnpm --filter @www/landing dev",
+    "build:landing": "pnpm --filter @www/landing build"
   }
 }
