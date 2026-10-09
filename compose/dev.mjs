@@ -11,7 +11,7 @@ import { createReadStream, existsSync } from 'node:fs';
 import { createServer, request } from 'node:http';
 import { connect } from 'node:net';
 import { extname, join, normalize } from 'node:path';
-import { APPS, OUT, ROOT, appFor } from './apps.mjs';
+import { APPS, OUT, ROOT, devAppFor } from './apps.mjs';
 
 const PORT = Number(process.env.PORT ?? 3000);
 
@@ -55,7 +55,7 @@ const server = createServer((req, res) => {
     return;
   }
 
-  const app = appFor(path);
+  const app = devAppFor(path);
   const upstream = request(
     { host: '127.0.0.1', port: app.port, path: req.url, method: req.method, headers: req.headers },
     (up) => {
@@ -70,9 +70,13 @@ const server = createServer((req, res) => {
   req.pipe(upstream);
 });
 
-// HMR websockets: hand the raw socket to the owning app.
+// HMR websockets: hand the raw socket to the owning app. Vite's connects at
+// the root, so it is told apart by its subprotocol.
 server.on('upgrade', (req, socket, head) => {
-  const app = appFor(new URL(req.url, 'http://x').pathname);
+  const protocol = req.headers['sec-websocket-protocol'] ?? '';
+  const app =
+    APPS.find((a) => a.devWsProtocol && protocol.includes(a.devWsProtocol)) ??
+    devAppFor(new URL(req.url, 'http://x').pathname);
   const up = connect(app.port, '127.0.0.1', () => {
     up.write(`${req.method} ${req.url} HTTP/${req.httpVersion}\r\n`);
     for (let i = 0; i < req.rawHeaders.length; i += 2) up.write(`${req.rawHeaders[i]}: ${req.rawHeaders[i + 1]}\r\n`);

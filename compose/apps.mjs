@@ -12,7 +12,8 @@ export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 export const APPS = [
   { name: 'landing', pkg: '@www/landing', zone: '', port: 3001 },
   { name: 'docs', pkg: '@www/docs', zone: '/docs', port: 3002 },
-  { name: 'blog', pkg: '@www/blog', zone: '/blog', port: 3003 },
+  // Astro's dev server serves its Vite modules from the root, not under /blog.
+  { name: 'blog', pkg: '@www/blog', zone: '/blog', port: 3003, devPaths: ['/@vite/', '/@fs/', '/@id/', '/@react-refresh', '/src/', '/node_modules/'], devWsProtocol: 'vite-hmr' },
 ].map((a) => ({ ...a, out: join(ROOT, a.name, 'out') }));
 
 export const OUT = join(ROOT, 'out');
@@ -22,4 +23,9 @@ export function appFor(path) {
   return (
     APPS.find((a) => a.zone && (path === a.zone || path.startsWith(`${a.zone}/`))) ?? APPS[0]
   );
+}
+
+/** Same, plus the extra paths an app's dev server serves outside its zone. */
+export function devAppFor(path) {
+  return APPS.find((a) => a.devPaths?.some((p) => path.startsWith(p))) ?? appFor(path);
 }
