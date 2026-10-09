@@ -1,17 +1,14 @@
-# nustack.dev
+# landing
 
-Nu website + docs + blog. Part of the `www` workspace, see the root README.
+`nustack.dev`: home and every product page. Owns the site root and every path no other zone claims. Part of the `www` workspace, see the root README.
 
 ```bash
-pnpm dev   # http://localhost:3000
+pnpm dev   # http://localhost:3001 (or the whole site on :3000 from the root)
 ```
 
 ## Layout
 
-- `app/(home)` - landing
-- `app/docs` - docs shell
-- `content/docs` - MDX source (Catalogue, Guides, Nudle)
-- `components/` - site-only pieces (nav, footer, mdx, site chapters); the rest comes from `@www/shared`
-- `lib/source.ts` - content adapter · `lib/shared.ts` - app + git config
-- `source.config.ts` - MDX + frontmatter schema
-- `tools/` - docsgen, generates `content/docs/reference/`
+- `app/(home)` - pages: home, nuspace, fabrics, tools, spec, about
+- `app/og` - OG image routes (pages, fabrics, tools)
+- `components/` - landing-only pieces (nav, footer, site chapters); the rest comes from `@www/shared`
+- `lib/` - fabric and tool registries, OG helpers
