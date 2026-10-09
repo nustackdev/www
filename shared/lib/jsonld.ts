@@ -1,4 +1,4 @@
-import { siteUrl, appName } from '@/lib/shared';
+import { siteUrl, appName } from './site';
 
 /**
  * schema.org builders. All URLs must be absolute — pass paths through `abs`.

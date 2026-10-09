@@ -1,6 +1,6 @@
 import { JsonLd } from '@www/shared/components/meta/JsonLd';
 import { TOOL } from '@/lib/tools';
-import { softwareApplicationLd } from '@/lib/jsonld';
+import { softwareApplicationLd } from '@www/shared/lib/jsonld';
 import { ogToolImage } from '@/lib/og';
 
 /** schema.org SoftwareApplication block for a tool page. */

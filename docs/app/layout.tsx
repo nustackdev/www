@@ -1,32 +1,33 @@
-import { RootProvider } from 'fumadocs-ui/provider/next';
 import './global.css';
 import { Inter } from 'next/font/google';
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { JsonLd } from '@www/shared/components/meta/JsonLd';
 import { organizationLd, websiteLd } from '@www/shared/lib/jsonld';
+import { DocsProvider } from '@/components/provider';
+import { baseOptions } from '@/lib/layout.shared';
+import { siteUrl } from '@/lib/shared';
+import { source } from '@/lib/source';
 
 const inter = Inter({
   subsets: ['latin'],
   axes: ['opsz'],
 });
 
-const SITE_URL = 'https://nustack.dev';
-const OG_IMAGE = '/og/page/root/image.png';
-const TITLE = 'Nu — the interaction primitive';
-const DESCRIPTION = 'Build apps in one primitive that spans your whole stack: databases, UIs, AI agents, services. No glue. 50x less code.';
+const TITLE = 'Nu docs';
+const DESCRIPTION = 'Tutorials, how-tos and the fabric reference for Nu, the interaction primitive.';
 
 export const metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(siteUrl),
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: '/' },
+  alternates: { canonical: '/docs' },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
-    url: '/',
+    url: '/docs',
     siteName: 'Nu',
     title: TITLE,
     description: DESCRIPTION,
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: 'Nu — the interaction primitive' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -34,7 +35,6 @@ export const metadata = {
     creator: '@nustackdev',
     title: TITLE,
     description: DESCRIPTION,
-    images: [OG_IMAGE],
   },
 };
 
@@ -49,12 +49,11 @@ export default function Layout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
-        <RootProvider
-          theme={{ defaultTheme: 'system', enableSystem: true }}
-          search={{ options: { type: 'static' } }}
-        >
-          {children}
-        </RootProvider>
+        <DocsProvider>
+          <DocsLayout tree={source.getPageTree()} {...baseOptions()}>
+            {children}
+          </DocsLayout>
+        </DocsProvider>
         <JsonLd data={[organizationLd(), websiteLd()]} />
       </body>
     </html>

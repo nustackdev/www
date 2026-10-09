@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "nustack-docsgen"
 version = "0.1.0"
-description = "Generates content/docs/reference/ from nu.inspect."
+description = "Generates docs/content/reference/ from nu.inspect."
 requires-python = ">=3.11"
 dependencies = [
     "nucore==0.5.2",

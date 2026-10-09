@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 
 /**
- * Shared OG image renderer for docs + blog.
+ * Shared OG image renderer for every app (landing, docs, blog).
  * Uses site brand palette (dark bg, purple → blue accents) and the nu logo
  * mark instead of the fumadocs default circle. Title/description are
  * clamped so long headers cannot overflow into the footer row.

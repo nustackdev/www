@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { siteUrl } from '@/lib/shared';
 import { FABRICS } from '@/lib/fabrics';
 import { TOOLS } from '@/lib/tools';
-import { source, getAllBlogPosts } from '@/lib/source';
+import { getAllBlogPosts } from '@/lib/source';
 
 export const dynamic = 'force-static';
 
@@ -22,7 +22,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: abs('/fabrics'),  changeFrequency: 'weekly',  priority: 0.9, lastModified: now },
     { url: abs('/tools'),    changeFrequency: 'weekly',  priority: 0.9, lastModified: now },
     { url: abs('/blog'),     changeFrequency: 'weekly',  priority: 0.8, lastModified: now },
-    { url: abs('/docs'),     changeFrequency: 'weekly',  priority: 0.9, lastModified: now },
   ];
 
   const fabricPages = FABRICS.map((f) => ({
@@ -39,13 +38,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
   }));
 
-  const docPages = source.getPages().map((p) => ({
-    url: abs(p.url),
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-    lastModified: now,
-  }));
-
   const blogPages = getAllBlogPosts().map((p) => ({
     url: abs(p.url),
     changeFrequency: 'monthly' as const,
@@ -53,5 +45,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: p.data.date ? new Date(p.data.date) : now,
   }));
 
-  return [...staticPages, ...fabricPages, ...toolPages, ...docPages, ...blogPages];
+  return [...staticPages, ...fabricPages, ...toolPages, ...blogPages];
 }

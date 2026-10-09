@@ -1,5 +1,6 @@
 packages:
   - shared
+  - docs
   - sites/*
 allowBuilds:
   core-js: false

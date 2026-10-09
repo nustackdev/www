@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
 import { blogSource, getAllBlogPosts, getBlogPageImage } from '@/lib/source';
 import { appName } from '@/lib/shared';
-import { OGImage } from '../../render';
+import { OGImage } from '@www/shared/components/meta/OGImage';
 
 export const revalidate = false;
 

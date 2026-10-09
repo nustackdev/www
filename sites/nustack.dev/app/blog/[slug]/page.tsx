@@ -11,7 +11,7 @@ import { blogSource, getAllBlogPosts, getBlogPageImage } from '@/lib/source';
 import { getMDXComponents } from '@/components/mdx';
 import { formatDate } from '@www/shared/lib/date';
 import { JsonLd } from '@www/shared/components/meta/JsonLd';
-import { blogPostingLd } from '@/lib/jsonld';
+import { blogPostingLd } from '@www/shared/lib/jsonld';
 import s from '../blog.module.css';
 
 export async function generateStaticParams() {

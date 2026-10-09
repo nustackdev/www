@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
 import { FABRIC, FABRICS } from '@/lib/fabrics';
 import { appName } from '@/lib/shared';
-import { OGImage } from '../../../render';
+import { OGImage } from '@www/shared/components/meta/OGImage';
 
 export const revalidate = false;
 

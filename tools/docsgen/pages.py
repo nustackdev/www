@@ -15,7 +15,7 @@ from dataclasses import dataclass
 
 __all__ = ["DISTRIBUTIONS", "FABRICS", "REF", "ROOTS", "SKIP", "SPLIT", "RootSpec"]
 
-REF = "content/docs/reference"
+REF = "docs/content/reference"
 
 DISTRIBUTIONS = (("nucore", "nu"), ("nustd", "nustd"))
 """Distribution to the directory it owns.

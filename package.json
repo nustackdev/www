@@ -5,10 +5,14 @@
   "scripts": {
     "dev:nustack": "pnpm --filter nustack.dev dev",
     "dev:nuspace": "pnpm --filter nuspace.si dev",
-    "build": "pnpm -r --filter './sites/*' build",
+    "build": "pnpm -r --filter './sites/*' --filter @www/docs build",
     "build:nustack": "pnpm --filter nustack.dev build",
     "build:nuspace": "pnpm --filter nuspace.si build",
-    "types:check": "pnpm -r --filter './sites/*' types:check",
-    "lint": "pnpm -r --filter './sites/*' lint"
+    "types:check": "pnpm -r --filter './sites/*' --filter @www/docs types:check",
+    "lint": "pnpm -r --filter './sites/*' --filter @www/docs lint",
+    "dev:docs": "pnpm --filter @www/docs dev",
+    "build:docs": "pnpm --filter @www/docs build",
+    "docs:gen": "tools/.venv/bin/python -m docsgen",
+    "docs:gen:check": "tools/.venv/bin/python -m docsgen --check"
   }
 }

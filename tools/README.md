@@ -1,6 +1,6 @@
 # docsgen
 
-Generates `content/docs/reference/` from `nu.inspect`.
+Generates `docs/content/reference/` from `nu.inspect`.
 
 The code is the source of truth for every fact on a reference page. Names,
 sorts, call forms, argument defaults, what an atom yields, its notes and its
@@ -71,7 +71,7 @@ holding the module prose and one summary table per section, plus
 `<slug>/<section>.md` per section holding the full entries. Fumadocs serves
 `mem/index.md` at the same URL `mem.md` served, so the split is invisible to
 `lib/refs.ts`, the ten marketing pages and the hardcoded links in
-`content/docs/index.mdx`. A single-section page with no nested page never
+`docs/content/index.mdx`. A single-section page with no nested page never
 splits, however long: the code declares no seam to cut it on.
 
 A section's filename is its dotted module path minus the page's own prefix, so

@@ -76,7 +76,7 @@ class Node:
 
     @property
     def url(self) -> str:
-        return "/" + self.base.removeprefix("content/")
+        return "/docs/" + self.base.removeprefix("docs/content/")
 
     def walk(self) -> list[Node]:
         out = [self]

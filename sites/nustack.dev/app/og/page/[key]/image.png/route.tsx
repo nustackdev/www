@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
 import { PAGE_OG, PAGE_OG_ENTRIES } from '@/lib/og-pages';
-import { OGImage } from '../../../render';
+import { OGImage } from '@www/shared/components/meta/OGImage';
 
 export const revalidate = false;
 

@@ -2,8 +2,9 @@
  * Fumadocs → site token bridge.
  *
  * Fumadocs-ui components consume --color-fd-* internally. This sheet aliases
- * every --color-fd-* to the corresponding --site-* token, so docs and blog
- * render in the marketing palette without any per-component overrides.
+ * every --color-fd-* to the corresponding --site-* token, so docs
+ * render in the site palette without any per-component overrides. Only the
+ * docs app loads fumadocs, so this sheet lives here and nowhere else.
  *
  * Loaded after fumadocs' preset.css / neutral.css so these declarations win.
  *

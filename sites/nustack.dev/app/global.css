@@ -4,7 +4,7 @@
 @import 'fumadocs-ui/css/preset.css';
 @import '@www/shared/design/tokens.css';
 @import '@www/shared/design/hue-scope.css';
-@import '@www/shared/design/fumadocs-bridge.css';
+@import '../../../docs/app/fumadocs-bridge.css';
 
 html {
   scrollbar-gutter: stable;
