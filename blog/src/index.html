@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog — nustack</title>
+    <meta name="description" content="Announcements, notes, and thinking from the nustack team." />
+    <link rel="canonical" href="https://nustack.dev/blog" />
+    <link rel="icon" href="/icon.png" />
+    <script>
+      // Same `theme` key next-themes uses in the other apps.
+      try {
+        var t = localStorage.getItem('theme') || 'system';
+        var dark = t === 'dark' || (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+      } catch (e) {}
+    </script>
+    <link rel="stylesheet" href="/blog/tokens.css" />
+    <link rel="stylesheet" href="/blog/base.css" />
+    <style>
+      body { font-family: var(--font-display); }
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--site-gap-normal);
+        width: min(720px, 100%);
+        margin: 0 auto;
+        padding: 96px 16px;
+      }
+      h1 { margin: 0; font-size: var(--site-fs-13); letter-spacing: -0.03em; line-height: 1; }
+      p { margin: 0; font-size: var(--site-fs-9); color: var(--site-ink-2); }
+      nav { display: flex; gap: var(--site-gap-normal); font-size: var(--site-fs-6); }
+      a { color: var(--site-accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <main data-pagefind-body>
+      <h1>Hello, blog.</h1>
+      <p>Posts from the nustack team land here soon.</p>
+      <nav>
+        <a href="/">nustack.dev</a>
+        <a href="/docs">Docs</a>
+        <a href="/nuspace">nuspace</a>
+      </nav>
+    </main>
+  </body>
+</html>

@@ -3,7 +3,7 @@
   "private": true,
   "packageManager": "pnpm@11.18.0",
   "scripts": {
-    "build": "pnpm -r --filter @www/landing --filter @www/docs build",
+    "build": "pnpm -r --filter @www/landing --filter @www/docs --filter @www/blog build",
     "types:check": "pnpm -r --filter @www/landing --filter @www/docs --filter @www/shared types:check",
     "lint": "pnpm -r --filter @www/landing --filter @www/docs lint",
     "dev:docs": "pnpm --filter @www/docs dev",
@@ -11,6 +11,8 @@
     "docs:gen": "tools/.venv/bin/python -m docsgen",
     "docs:gen:check": "tools/.venv/bin/python -m docsgen --check",
     "dev:landing": "pnpm --filter @www/landing dev",
-    "build:landing": "pnpm --filter @www/landing build"
+    "build:landing": "pnpm --filter @www/landing build",
+    "build:blog": "pnpm --filter @www/blog build",
+    "dev:blog": "pnpm --filter @www/blog dev"
   }
 }

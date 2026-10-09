@@ -8,6 +8,12 @@ importers:
 
   .: {}
 
+  blog:
+    dependencies:
+      '@www/shared':
+        specifier: workspace:*
+        version: link:../shared
+
   docs:
     dependencies:
       '@www/shared':

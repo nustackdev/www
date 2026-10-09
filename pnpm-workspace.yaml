@@ -2,6 +2,7 @@ packages:
   - shared
   - docs
   - landing
+  - blog
 allowBuilds:
   core-js: false
   esbuild: true

@@ -1,0 +1,13 @@
+{
+  "name": "@www/blog",
+  "version": "0.0.0",
+  "private": true,
+  "description": "nustack.dev/blog: placeholder until the blog engine lands. Emits a static hello page under /blog.",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs && node ../compose/serve.mjs out --base /blog --port 3003"
+  },
+  "dependencies": {
+    "@www/shared": "workspace:*"
+  }
+}
