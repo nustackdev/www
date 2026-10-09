@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { SiteLink as Link } from '../nav/SiteLink';
 import type { ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
 import s from './NumberedList.module.css';

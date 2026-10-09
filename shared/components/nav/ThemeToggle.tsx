@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTheme } from 'fumadocs-ui/provider/base';
+import { useTheme } from 'next-themes';
 import { Sun, Moon } from 'lucide-react';
 
 interface Props {

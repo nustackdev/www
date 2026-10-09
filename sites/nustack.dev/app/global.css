@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@source '../../../packages/shared';
+@source '../../../shared';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 @import '@www/shared/design/tokens.css';

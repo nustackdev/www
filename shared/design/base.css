@@ -1,0 +1,29 @@
+/* =============================================================================
+ * Base page styles for apps that do not run fumadocs (landing, blog).
+ * Import after tailwindcss (for preflight) and tokens.css. Docs gets the
+ * same result from fumadocs' preset through its bridge sheet.
+ * ==========================================================================*/
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--site-border, currentColor);
+  }
+
+  html {
+    scrollbar-gutter: stable;
+    overflow-x: clip;
+    font-optical-sizing: auto;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--site-bg);
+    color: var(--site-ink);
+  }
+}

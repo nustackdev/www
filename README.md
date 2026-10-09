@@ -6,7 +6,7 @@ Websites for nustack. One pnpm workspace, one shared kit, one deploy per site.
 | --- | --- | --- |
 | `sites/nustack.dev` | Nu website + docs + blog | [nustack.dev](https://nustack.dev) via `nustackdev/nustack.dev` |
 | `sites/nuspace.si` | nuspace website | [nuspace.si](https://nuspace.si) via `nustackdev/nuspace.si` |
-| `packages/shared` | `@www/shared`: design tokens, landing primitives, brand marks, analytics | - |
+| `shared` | `@www/shared`: design tokens, landing primitives, brand marks, analytics | - |
 
 Next 16 · React 19 · Tailwind 4 · TS, static export.
 

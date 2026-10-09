@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import Link from 'next/link';
+import { SiteLink as Link } from '../nav/SiteLink';
 import { SilverWovenName } from '../meta/SilverWovenName';
 import { Tagline, Description } from '../text';
 import { Chip } from '../controls/Chip';

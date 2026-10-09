@@ -1,6 +1,6 @@
 packages:
+  - shared
   - sites/*
-  - packages/*
 allowBuilds:
   core-js: false
   esbuild: true

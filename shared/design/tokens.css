@@ -1,14 +1,15 @@
 /* =============================================================================
  * Site design tokens — single source of truth.
  *
- * Declared at :root so every surface (marketing site, fumadocs docs, blog)
- * inherits them without opt-in. Fumadocs' --color-fd-* tokens are aliased
- * onto these in ./fumadocs-bridge.css, so the whole site speaks one system.
+ * Declared at :root so every app (landing, docs, blog) inherits them without
+ * opt-in. Docs aliases fumadocs' --color-fd-* tokens onto these in its own
+ * bridge sheet, so the whole site speaks one system.
  *
  * Themed primitives live in two blocks:
  *   :root  — light values (default, no class needed).
- *   .dark  — dark overrides. Fumadocs' RootProvider stamps `class="dark"` on
- *            <html>, so these win whenever dark theme is active.
+ *   .dark  — dark overrides. next-themes stamps `class="dark"` on <html>
+ *            (directly or through fumadocs' RootProvider), so these win
+ *            whenever dark theme is active.
  *
  * Brand accents compose from --*-rgb tokens so alpha variants (soft/wash/
  * line/glow) automatically track the base hex when a theme flips it.
@@ -320,7 +321,7 @@
  * Themed primitives — DARK (overrides).
  *
  * The site's original cool blue-black palette. Applied when
- * fumadocs' RootProvider stamps `class="dark"` on <html>.
+ * next-themes stamps `class="dark"` on <html>.
  * ==========================================================================*/
 
 .dark {

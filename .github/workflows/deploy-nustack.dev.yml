@@ -15,7 +15,7 @@ on:
     branches: [main]
     paths:
       - sites/nustack.dev/**
-      - packages/**
+      - shared/**
       - package.json
       - pnpm-lock.yaml
       - pnpm-workspace.yaml

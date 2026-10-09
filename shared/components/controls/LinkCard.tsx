@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import Link from 'next/link';
+import { SiteLink as Link } from '../nav/SiteLink';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { SilverWovenName, type SilverWovenHue } from '../meta/SilverWovenName';
 import { Tagline } from '../text/Tagline';
