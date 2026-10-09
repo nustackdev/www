@@ -1,6 +1,6 @@
 # docsgen
 
-Generates `docs/content/reference/` from `nu.inspect`.
+Generates `docs/content/nu/reference/` from `nu.inspect`.
 
 The code is the source of truth for every fact on a reference page. Names,
 sorts, call forms, argument defaults, what an atom yields, its notes and its
@@ -91,7 +91,7 @@ Two things it deliberately never writes:
   including the one per page folder. Never list `"index"` in a `pages` array:
   fumadocs then renders the index as a duplicate child instead of making the
   folder itself link to it.
-- **The ten fabric slugs.** `lib/refs.ts` builds `/docs/reference/nustd/<slug>`
+- **The ten fabric slugs.** `lib/refs.ts` builds `/docs/nu/reference/nustd/<slug>`
   and every marketing fabric page links off it, so `kv, ui, cluster, llm, mem,
   proxy, http, service, cc, mp` are asserted rather than assumed.
 

@@ -1,4 +1,4 @@
-"""Generates ``docs/content/reference/`` from ``nu.inspect``.
+"""Generates ``docs/content/nu/reference/`` from ``nu.inspect``.
 
 The code is the source of truth for every fact on a reference page, so the
 pages are read off the records rather than written by hand. Run ``npm run

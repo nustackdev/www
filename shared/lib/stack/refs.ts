@@ -13,8 +13,8 @@ export type Powered =
   | { kind: 'tool'; slug: string }
   | { kind: 'external'; name: string; url?: string };
 
-/** Reference-doc URL for a fabric (its API page under /docs/reference/nustd). */
-export const fabricDocsHref = (slug: string) => `/docs/reference/nustd/${slug}`;
+/** Reference-doc URL for a fabric (its API page under /docs/nu/reference/nustd). */
+export const fabricDocsHref = (slug: string) => `/docs/nu/reference/nustd/${slug}`;
 
 /** Source-code URL for a fabric's implementation directory in the nu repo. */
 export const fabricSrcHref = (slug: string) =>

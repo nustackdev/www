@@ -1,0 +1,6 @@
+{
+  "title": "Nu",
+  "description": "The interaction primitive, and nustd.",
+  "root": true,
+  "pages": ["index", "tutorials", "how-to", "model", "reference"]
+}

@@ -110,7 +110,7 @@ export function IntroBrief() {
               network, cluster compute.
             </Description>
             <CtaRow>
-              <Button href="/docs">
+              <Button href="/docs/nu">
                 <BookOpen size={14} aria-hidden />
                 <span>Quickstart</span>
               </Button>

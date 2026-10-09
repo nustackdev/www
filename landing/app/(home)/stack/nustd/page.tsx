@@ -31,7 +31,7 @@ export default function NustdPage() {
         }
         actions={
           <CtaRow>
-            <Button variant="solid" href="/docs/reference/nustd">
+            <Button variant="solid" href="/docs/nu/reference/nustd">
               <BookOpen size={14} aria-hidden />
               <span>Reference</span>
             </Button>

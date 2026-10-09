@@ -1,0 +1,6 @@
+{
+  "title": "nuspace",
+  "description": "The information base, and nuverse.",
+  "root": true,
+  "pages": ["index", "nuverse"]
+}

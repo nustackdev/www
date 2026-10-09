@@ -33,7 +33,7 @@ export default function NuPage() {
         }
         actions={
           <CtaRow>
-            <Button variant="solid" href="/docs">
+            <Button variant="solid" href="/docs/nu">
               <BookOpen size={14} aria-hidden />
               <span>Read the docs</span>
             </Button>

@@ -74,7 +74,7 @@ export function SeeNuLive() {
             <strong>03</strong> Start hacking
           </MonoKicker>
           <div className={s.learnGrid}>
-            <LinkCard href="/docs" icon={<BookOpen size={14} />} title="Read the docs">
+            <LinkCard href="/docs/nu" icon={<BookOpen size={14} />} title="Read the docs">
               Tutorials, how-tos, and the fabric reference.
             </LinkCard>
             <LinkCard

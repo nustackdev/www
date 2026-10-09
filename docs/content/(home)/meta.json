@@ -1,0 +1,6 @@
+{
+  "title": "Docs",
+  "description": "Start here.",
+  "root": true,
+  "pages": ["index"]
+}

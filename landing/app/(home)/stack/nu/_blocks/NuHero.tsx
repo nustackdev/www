@@ -61,7 +61,7 @@ export function NuHero() {
 
             <div className={s.heroCtaGroup}>
               <div className={s.heroCtaRow}>
-                <Button variant="solid" href="/docs">
+                <Button variant="solid" href="/docs/nu">
                   <BookOpen size={14} aria-hidden />
                   <span>Quickstart</span>
                 </Button>

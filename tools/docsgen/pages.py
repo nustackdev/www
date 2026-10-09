@@ -15,7 +15,7 @@ from dataclasses import dataclass
 
 __all__ = ["DISTRIBUTIONS", "FABRICS", "REF", "ROOTS", "SKIP", "SPLIT", "RootSpec"]
 
-REF = "docs/content/reference"
+REF = "docs/content/nu/reference"
 
 DISTRIBUTIONS = (("nucore", "nu"), ("nustd", "nustd"))
 """Distribution to the directory it owns.
@@ -43,7 +43,7 @@ held in the one place nobody reads.
 FABRICS = ("kv", "ui", "cluster", "llm", "mem", "proxy", "http", "service", "cc", "mp")
 """The ten slugs that are load-bearing outside the docs tree.
 
-``lib/refs.ts`` builds ``/docs/reference/nustd/<slug>`` and every marketing
+``lib/refs.ts`` builds ``/docs/nu/reference/nustd/<slug>`` and every marketing
 fabric page links off it. Path mirroring produces all ten on its own, so this
 is not a map, it is an assertion: ``discover.check_fabrics`` refuses to
 generate the day one of them moves.

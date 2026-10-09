@@ -9,7 +9,7 @@ The nustack.dev website. One pnpm workspace, one app per section, composed into 
 | `blog/` | `@www/blog`: Astro blog, MDX posts in `blog/content`, RSS, giscus comments | `/blog` |
 | `shared/` | `@www/shared`: design tokens, page primitives, brand marks, nav pieces, zones, analytics | - |
 | `compose/` | `@www/compose`: merges the builds into `out/`, site-wide search, dev proxy, preview server | - |
-| `tools/` | docsgen: generates `docs/content/reference/` from `nu.inspect` | - |
+| `tools/` | docsgen: generates `docs/content/nu/reference/` from `nu.inspect` | - |
 
 Next 16 · React 19 · Tailwind 4 · TS, static export.
 
