@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
-import { FABRIC, FABRICS } from '@/lib/fabrics';
+import { FABRIC, FABRICS } from '@www/shared/lib/stack/fabrics';
 import { appName } from '@/lib/shared';
 import { OGImage } from '@www/shared/components/meta/OGImage';
 

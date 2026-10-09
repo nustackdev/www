@@ -10,5 +10,5 @@ pnpm dev   # http://localhost:3001 (or the whole site on :3000 from the root)
 
 - `app/(home)` - pages: home, nuspace, fabrics, tools, spec, about
 - `app/og` - OG image routes (pages, fabrics, tools)
-- `components/` - landing-only pieces (nav, footer, site chapters); the rest comes from `@www/shared`
-- `lib/` - fabric and tool registries, OG helpers
+- `components/` - landing-only pieces (site chapters, page wrapper); nav, footer and the fabric/tool registries come from `@www/shared`
+- `lib/` - OG helpers

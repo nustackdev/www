@@ -13,7 +13,7 @@ import { SnippetBeat } from '@www/shared/components/chapters/SnippetBeat';
 import { TryIt } from '@/components/chapters/TryIt';
 import { LikeThisBlock } from '@/components/chapters/LikeThisBlock';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
-import { FABRIC } from '@/lib/fabrics';
+import { FABRIC } from '@www/shared/lib/stack/fabrics';
 import { SERVICE_SAMPLE_LINES } from './service.sample.data';
 
 import { pageOG, ogFabricImage } from '@/lib/og';

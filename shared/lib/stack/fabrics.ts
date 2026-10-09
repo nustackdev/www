@@ -1,7 +1,7 @@
 /**
  * Fabrics — canonical list. Consumed by:
- *   - components/nav/nav.data.ts   (Stack dropdown + footer; filters `showcase`)
- *   - app/(home)/fabrics/FabricsCatalogue.tsx (full catalogue)
+ *   - components/nav/nav.data.ts (Stack dropdown + footer; filters `showcase`)
+ *   - landing fabrics catalogue (full catalogue)
  *   - landing intro (fabric list)
  *
  * `navDesc` is the compressed microcopy for dropdown/footer/intro.
@@ -10,13 +10,13 @@
  */
 
 import type { ComponentType } from 'react';
-import type { Hue } from '@www/shared/components/chapters/CatalogueGrid';
+import type { Hue } from '../../components/chapters/CatalogueGrid';
 import {
   type Powered,
   fabricHref as _fh,
   fabricDocsHref as _fd,
   fabricSrcHref as _fs,
-} from '@/lib/refs';
+} from './refs';
 import {
   MemGlyph,
   KvGlyph,
@@ -24,7 +24,7 @@ import {
   ProxyGlyph,
   RayGlyph,
   LlmGlyph,
-} from '@www/shared/components/marks/FabricGlyphs';
+} from '../../components/marks/FabricGlyphs';
 
 /** Fabric record — derived link fields (`href`, `docs`, `src`) are attached
  * at export from the slug, so consumers only need to import FABRICS/FABRIC

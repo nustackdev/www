@@ -9,7 +9,7 @@
  * Surface matches FloatingNav's pill glass formula.
  */
 
-import { SiteLink as Link } from '@www/shared/components/nav/SiteLink';
+import { SiteLink as Link } from './SiteLink';
 import { ArrowRight } from 'lucide-react';
 import { PRODUCT_GROUPS, type ProductGroup } from './nav.data';
 import s from './ProductsMenu.module.css';

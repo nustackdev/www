@@ -1,5 +1,5 @@
 import { JsonLd } from '@www/shared/components/meta/JsonLd';
-import { TOOL } from '@/lib/tools';
+import { TOOL } from '@www/shared/lib/stack/tools';
 import { softwareApplicationLd } from '@www/shared/lib/jsonld';
 import { ogToolImage } from '@/lib/og';
 

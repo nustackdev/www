@@ -1,9 +1,9 @@
-import { SiteLink as Link } from '@www/shared/components/nav/SiteLink';
+import { SiteLink as Link } from './SiteLink';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
-import { NuLogo } from '@www/shared/components/marks/NuLogo';
-import { NustackMark } from '@www/shared/components/marks/NustackMark';
-import { SocialLinks } from '@www/shared/components/nav/SocialLinks';
-import { PRODUCT_GROUPS, USE_CASES_GROUP } from '@/components/nav/nav.data';
+import { NuLogo } from '../marks/NuLogo';
+import { NustackMark } from '../marks/NustackMark';
+import { SocialLinks } from './SocialLinks';
+import { PRODUCT_GROUPS, USE_CASES_GROUP } from './nav.data';
 import s from './Footer.module.css';
 
 /**

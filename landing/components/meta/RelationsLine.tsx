@@ -1,7 +1,7 @@
 import { SiteLink as Link } from '@www/shared/components/nav/SiteLink';
-import type { Powered } from '@/lib/refs';
-import { FABRIC } from '@/lib/fabrics';
-import { TOOL } from '@/lib/tools';
+import type { Powered } from '@www/shared/lib/stack/refs';
+import { FABRIC } from '@www/shared/lib/stack/fabrics';
+import { TOOL } from '@www/shared/lib/stack/tools';
 import { MonoKicker } from '@www/shared/components/meta/MonoKicker';
 import s from './RelationsLine.module.css';
 

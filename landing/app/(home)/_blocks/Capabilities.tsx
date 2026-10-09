@@ -9,7 +9,7 @@ import { CtaRow } from '@www/shared/components/layout/CtaRow';
 import { Button } from '@www/shared/components/controls/Button';
 import { BulletList } from '@www/shared/components/controls/BulletList';
 import type { Hue } from '@www/shared/lib/hue';
-import { FABRIC } from '@/lib/fabrics';
+import { FABRIC } from '@www/shared/lib/stack/fabrics';
 import {
   CAP_KV_LINES,
   CAP_UI_LINES,

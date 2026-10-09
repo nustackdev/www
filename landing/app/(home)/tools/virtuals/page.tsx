@@ -13,8 +13,8 @@ import { GainGrid } from '@www/shared/components/chapters/GainGrid';
 import { SnippetBeat } from '@www/shared/components/chapters/SnippetBeat';
 import { LikeThisBlock } from '@/components/chapters/LikeThisBlock';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
-import { TOOL } from '@/lib/tools';
-import { FABRIC } from '@/lib/fabrics';
+import { TOOL } from '@www/shared/lib/stack/tools';
+import { FABRIC } from '@www/shared/lib/stack/fabrics';
 import { pageOG, ogToolImage } from '@/lib/og';
 import { VIRTUALS_LINES } from './snippet.data';
 

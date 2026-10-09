@@ -1,6 +1,6 @@
 import { Chapter, Section } from '@/components/page';
 import { CatalogueGrid, CatalogueCard } from '@www/shared/components/chapters/CatalogueGrid';
-import { TOOLS, toolHref } from '@/lib/tools';
+import { TOOLS, toolHref } from '@www/shared/lib/stack/tools';
 
 export function ToolsCatalogue() {
   return (

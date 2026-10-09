@@ -10,8 +10,8 @@
  * do `TOOL.rdbpy.examples` with one import.
  */
 
-import type { Hue } from '@www/shared/components/chapters/CatalogueGrid';
-import { type Powered, toolHref as _th } from '@/lib/refs';
+import type { Hue } from '../../components/chapters/CatalogueGrid';
+import { type Powered, toolHref as _th } from './refs';
 
 export interface Tool {
   name: string;

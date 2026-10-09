@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { ImageResponse } from 'next/og';
-import { TOOL, TOOLS } from '@/lib/tools';
+import { TOOL, TOOLS } from '@www/shared/lib/stack/tools';
 import { appName } from '@/lib/shared';
 import { OGImage } from '@www/shared/components/meta/OGImage';
 

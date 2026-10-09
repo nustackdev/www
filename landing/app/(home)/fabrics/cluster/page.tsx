@@ -21,7 +21,7 @@ import { LinkGrid } from '@www/shared/components/layout/LinkGrid';
 import { CtaRow } from '@www/shared/components/layout/CtaRow';
 import { Button } from '@www/shared/components/controls/Button';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
-import { FABRIC } from '@/lib/fabrics';
+import { FABRIC } from '@www/shared/lib/stack/fabrics';
 
 import { pageOG, ogFabricImage } from '@/lib/og';
 

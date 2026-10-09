@@ -2,13 +2,13 @@
  * Nav data — single source of truth for the header nav and its Stack menu.
  * Consumed by FloatingNav (desktop pill + mobile sheet) and ProductsMenu.
  *
- * Product items are sourced from lib/{fabrics,tools,use-cases}.ts —
+ * Product items are sourced from lib/stack/{fabrics,tools,use-cases}.ts —
  * this file only decides which of them appear in the nav and how they group.
  */
 
-import { FABRICS, fabricHref } from '@/lib/fabrics';
-import { TOOLS, toolHref } from '@/lib/tools';
-import { USE_CASES, useCaseHref } from '@/lib/use-cases';
+import { FABRICS, fabricHref } from '../../lib/stack/fabrics';
+import { TOOLS, toolHref } from '../../lib/stack/tools';
+import { USE_CASES, useCaseHref } from '../../lib/stack/use-cases';
 
 export type ProductItem = { name: string; href: string; desc: string };
 export type ProductGroup = {
@@ -47,7 +47,7 @@ export const PRODUCT_GROUPS: ProductGroup[] = [
   },
 ];
 
-/** Use-cases group — dropdown + footer sitemap. Items sourced from lib/use-cases.ts.
+/** Use-cases group — dropdown + footer sitemap. Items sourced from lib/stack/use-cases.ts.
  * href/explore intentionally omitted while per-case pages are unpublished; Footer
  * renders items as plain text (see components/nav/Footer.tsx). */
 export const USE_CASES_GROUP: ProductGroup = {
@@ -65,4 +65,4 @@ export const WORD_LINKS: WordLink[] = [
   { label: 'About', href: '/about' },
 ];
 
-export { SOCIAL_LINKS } from '@www/shared/lib/social';
+export { SOCIAL_LINKS } from '../../lib/social';

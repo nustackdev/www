@@ -19,8 +19,8 @@ import { LinkGrid } from '@www/shared/components/layout/LinkGrid';
 import { Stack } from '@www/shared/components/layout/Stack';
 import { CodeSample, type CodeTok } from '@www/shared/components/media/CodeSample';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
-import { TOOL } from '@/lib/tools';
-import { FABRIC } from '@/lib/fabrics';
+import { TOOL } from '@www/shared/lib/stack/tools';
+import { FABRIC } from '@www/shared/lib/stack/fabrics';
 import { pageOG, ogToolImage } from '@/lib/og';
 
 export const metadata = pageOG({

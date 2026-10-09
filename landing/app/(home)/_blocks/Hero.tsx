@@ -10,7 +10,7 @@ import { Button, ButtonRepoLabel } from '@www/shared/components/controls/Button'
 import { MonoKicker } from '@www/shared/components/meta/MonoKicker';
 import { Meta } from '@www/shared/components/meta/Meta';
 import { NumberedList } from '@www/shared/components/controls/NumberedList';
-import { USE_CASES as USE_CASE_DATA } from '@/lib/use-cases';
+import { USE_CASES as USE_CASE_DATA } from '@www/shared/lib/stack/use-cases';
 import s from '../page.module.css';
 
 // href intentionally omitted while per-case pages are unpublished — this hides

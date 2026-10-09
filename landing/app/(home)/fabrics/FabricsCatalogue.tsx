@@ -1,6 +1,6 @@
 import { Chapter, Section } from '@/components/page';
 import { CatalogueGrid, CatalogueCard } from '@www/shared/components/chapters/CatalogueGrid';
-import { FABRICS, fabricHref } from '@/lib/fabrics';
+import { FABRICS, fabricHref } from '@www/shared/lib/stack/fabrics';
 
 export function FabricsCatalogue() {
   return (

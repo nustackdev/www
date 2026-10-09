@@ -10,17 +10,17 @@
  * escapes this header's `isolation: isolate` backdrop-root.
  */
 
-import { SiteLink as Link } from '@www/shared/components/nav/SiteLink';
+import { SiteLink as Link } from './SiteLink';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Search, Menu, BookOpen, Rss, X as CloseIcon, ArrowRight } from 'lucide-react';
-import { NuLogo } from '@www/shared/components/marks/NuLogo';
-import { GithubMark } from '@www/shared/components/marks/GithubMark';
+import { NuLogo } from '../marks/NuLogo';
+import { GithubMark } from '../marks/GithubMark';
 import { ProductsMenu } from './ProductsMenu';
-import { SocialLinks } from '@www/shared/components/nav/SocialLinks';
-import { ThemeToggle } from '@www/shared/components/nav/ThemeToggle';
-import { SearchDialog } from '@www/shared/components/nav/SearchDialog';
+import { SocialLinks } from './SocialLinks';
+import { ThemeToggle } from './ThemeToggle';
+import { SearchDialog } from './SearchDialog';
 import { PRODUCT_GROUPS, USE_CASES_GROUP, WORD_LINKS, SOCIAL_LINKS } from './nav.data';
 import s from './FloatingNav.module.css';
 

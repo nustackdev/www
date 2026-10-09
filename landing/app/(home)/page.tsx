@@ -22,8 +22,8 @@ import { HERO_BLOBS } from '@www/shared/components/bg/GradientBlobs';
 import { Hero } from './_blocks/Hero';
 import { Capabilities } from './_blocks/Capabilities';
 import { IntroBrief } from './_blocks/IntroBrief';
-import { FABRICS } from '@/lib/fabrics';
-import { TOOLS } from '@/lib/tools';
+import { FABRICS } from '@www/shared/lib/stack/fabrics';
+import { TOOLS } from '@www/shared/lib/stack/tools';
 import s from './page.module.css';
 
 /** Representative interaction hint per fabric — a short line that reads as

@@ -7,7 +7,7 @@ import { CodeSample } from '@www/shared/components/media/CodeSample';
 import { Button, ButtonRepoLabel } from '@www/shared/components/controls/Button';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
 import { Chapter, Section, SectionCell, SectionHead } from '@/components/page';
-import { FABRICS } from '@/lib/fabrics';
+import { FABRICS } from '@www/shared/lib/stack/fabrics';
 import {
   INTRO_PLAIN_LINES,
   INTRO_KV_LINES,

@@ -8,8 +8,8 @@
  * can render as chip labels or as links to the fabric/tool pages.
  */
 
-import type { Hue } from '@www/shared/components/chapters/CatalogueGrid';
-import { type Powered, useCaseHref as _uh } from '@/lib/refs';
+import type { Hue } from '../../components/chapters/CatalogueGrid';
+import { type Powered, useCaseHref as _uh } from './refs';
 
 export interface UseCase {
   name: string;

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { siteUrl } from '@/lib/shared';
-import { FABRICS } from '@/lib/fabrics';
-import { TOOLS } from '@/lib/tools';
+import { FABRICS } from '@www/shared/lib/stack/fabrics';
+import { TOOLS } from '@www/shared/lib/stack/tools';
 
 export const dynamic = 'force-static';
 

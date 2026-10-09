@@ -1,4 +1,4 @@
-import { FloatingNav } from '@/components/nav/FloatingNav';
+import { FloatingNav } from '@www/shared/components/nav/FloatingNav';
 
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (

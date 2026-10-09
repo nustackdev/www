@@ -18,8 +18,8 @@ import { LikeThisBlock } from '@/components/chapters/LikeThisBlock';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
 import { PageBadge } from '@www/shared/components/meta/PageBadge';
 import { RelationsLine } from '@/components/meta/RelationsLine';
-import { TOOL } from '@/lib/tools';
-import { FABRIC } from '@/lib/fabrics';
+import { TOOL } from '@www/shared/lib/stack/tools';
+import { FABRIC } from '@www/shared/lib/stack/fabrics';
 
 import { pageOG, ogToolImage } from '@/lib/og';
 
