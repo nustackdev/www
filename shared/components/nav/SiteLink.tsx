@@ -6,7 +6,7 @@ type Props = Omit<ComponentProps<'a'>, 'href'> & { href: string; prefetch?: bool
 
 /**
  * Link that knows about zones. Write hrefs as site-absolute paths
- * (`/docs/x`, `/fabrics/kv`): inside this app's zone it is a next/link,
+ * (`/docs/x`, `/stack/nuspace`): inside this app's zone it is a next/link,
  * anywhere else a plain <a> so the browser loads the other app.
  */
 export function SiteLink({ href, prefetch, ...rest }: Props) {

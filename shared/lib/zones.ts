@@ -15,7 +15,7 @@ export type Zone = (typeof ZONES)[number] | '';
 /** The zone this build serves. */
 export const CURRENT_ZONE = (process.env.NEXT_PUBLIC_ZONE ?? '') as Zone;
 
-/** The zone that owns a site-absolute path like `/docs/x` or `/fabrics/kv`. */
+/** The zone that owns a site-absolute path like `/docs/x` or `/stack/nuspace`. */
 export function zoneOf(path: string): Zone {
   for (const z of ZONES) {
     if (path === z || path.startsWith(`${z}/`) || path.startsWith(`${z}#`) || path.startsWith(`${z}?`)) return z;

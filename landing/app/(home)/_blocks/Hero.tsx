@@ -10,15 +10,16 @@ import { Button, ButtonRepoLabel } from '@www/shared/components/controls/Button'
 import { MonoKicker } from '@www/shared/components/meta/MonoKicker';
 import { Meta } from '@www/shared/components/meta/Meta';
 import { NumberedList } from '@www/shared/components/controls/NumberedList';
-import { USE_CASES as USE_CASE_DATA } from '@www/shared/lib/stack/use-cases';
 import s from '../page.module.css';
 
-// href intentionally omitted while per-case pages are unpublished — this hides
-// the trailing "See →" link on each row (NumberedList only renders it when href is set).
-const USE_CASES = USE_CASE_DATA.map((u) => ({
-  label: u.name,
-  desc: u.navDesc,
-}));
+// Kept local until the landing rewrite replaces the hero.
+const USE_CASES = [
+  { label: 'AI agents', desc: 'Long-running agents with memory.' },
+  { label: 'Local-first apps', desc: 'Apps that live on your machine.' },
+  { label: 'Observability', desc: 'Logs and metrics without a server.' },
+  { label: 'Data-intensive apps', desc: 'Terabytes in one Python program.' },
+  { label: 'Internal tools', desc: 'Scalable dashboards that fit in a single file.' },
+];
 
 /**
  * Hero — landing-only page header. Bespoke two-column layout:

@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * ProductsMenu — the Products mega-panel that opens under the nav trigger.
+ * ProductsMenu — the mega-panel that opens under a nav trigger (Stack, Spaces).
  *
  * One row per product group. Left column: group name + tagline. Right
  * column: 2-column grid of items (name + tagline text). Hover paints a
@@ -11,10 +11,10 @@
 
 import { SiteLink as Link } from './SiteLink';
 import { ArrowRight } from 'lucide-react';
-import { PRODUCT_GROUPS, type ProductGroup } from './nav.data';
+import { STACK_GROUPS, type ProductGroup } from './nav.data';
 import s from './ProductsMenu.module.css';
 
-export function ProductsMenu({ groups = PRODUCT_GROUPS }: { groups?: ProductGroup[] }) {
+export function ProductsMenu({ groups = STACK_GROUPS }: { groups?: ProductGroup[] }) {
   return (
     <div className={s.panel}>
       {groups.map((group, i) => (

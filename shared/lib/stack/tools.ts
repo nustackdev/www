@@ -1,8 +1,7 @@
 /**
  * Tools — canonical list. Consumed by:
- *   - components/nav/nav.data.ts   (Stack dropdown + footer)
- *   - app/(home)/tools/ToolsCatalogue.tsx (full catalogue)
- *   - individual tool pages (install command, repo link, py version, powers)
+ *   - landing /stack index (the libraries the stack is built on)
+ *   - landing home (under the hood)
  *
  * Each tool ships as its own PyPI package with its own GitHub repo.
  * `powers` is the inverse of `poweredBy` — where in nustack this tool is used.
@@ -11,7 +10,7 @@
  */
 
 import type { Hue } from '../../components/chapters/CatalogueGrid';
-import { type Powered, toolHref as _th } from './refs';
+import type { Powered } from './refs';
 
 export interface Tool {
   name: string;
@@ -30,7 +29,7 @@ export interface Tool {
   github: string;
   /** `${github}/tree/main/examples` — derived. */
   examples: string;
-  /** Catalogue link — derived. */
+  /** Where the tool links to: its GitHub repo — derived. */
   href: string;
   /** PyPI package name — `pip install ${pypi}`. */
   pypi: string;
@@ -112,15 +111,13 @@ export const TOOLS: Tool[] = SPECS.map((t) => ({
   ...t,
   github: `https://github.com/${t.repo}`,
   examples: `https://github.com/${t.repo}/tree/main/examples`,
-  href: _th(t.slug),
+  href: `https://github.com/${t.repo}`,
 }));
 
 /** Slug-indexed map — use `TOOL.rdbpy.examples`, `TOOL.virtuals.powers`, etc. */
 export const TOOL: Record<string, Tool> = Object.fromEntries(
   TOOLS.map((t) => [t.slug, t]),
 );
-
-export const toolHref = (t: Pick<Tool, 'slug'>) => _th(t.slug);
 
 export const findTool = (slug: string) => TOOL[slug];
 

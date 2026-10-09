@@ -2,7 +2,7 @@ import { MonoKicker } from './MonoKicker';
 import { SilverWovenName, type SilverWovenHue } from './SilverWovenName';
 import s from './PageBadge.module.css';
 
-export type PageBadgeKind = 'fabric' | 'tool' | 'use case' | 'app' | 'spec';
+export type PageBadgeKind = 'stack' | 'space';
 
 interface Props {
   kind: PageBadgeKind;
@@ -12,12 +12,12 @@ interface Props {
 }
 
 /** PageBadge — the header meta slot for every detail page.
- *  Renders a uppercase mono kicker ("FABRIC ·", "TOOL ·", …) next to the
+ *  Renders a uppercase mono kicker ("STACK ·", "SPACE ·") next to the
  *  entity name in a SilverWovenName. SilverWovenName is a sibling of the
  *  kicker, not a child, so it does not inherit `text-transform`.
  *
  *  Pass as the `meta` prop of <Header>:
- *    <Header meta={<PageBadge kind="fabric" name="nustd.ui" hue="teal" />} … />
+ *    <Header meta={<PageBadge kind="stack" name="nuspace" hue="teal" />} … />
  */
 export function PageBadge({ kind, name, hue, className }: Props) {
   const cls = [s.badge, className].filter(Boolean).join(' ');

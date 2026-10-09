@@ -3,10 +3,10 @@
 /**
  * FloatingNav — the site's top nav pill.
  *
- * Desktop: logo · Products▾ · Docs · Blog · About · search · socials.
+ * Desktop: logo · Stack▾ · Spaces▾ · Docs · Blog · About · socials · search.
  * Mobile:  logo · search · hamburger → full-screen sheet with everything stacked.
  *
- * The Products dropdown (ProductsMenu) is portaled to <body> so its blur
+ * Both dropdowns (ProductsMenu) are portaled to <body> so their blur
  * escapes this header's `isolation: isolate` backdrop-root.
  */
 
@@ -19,9 +19,8 @@ import { NuLogo } from '../marks/NuLogo';
 import { GithubMark } from '../marks/GithubMark';
 import { ProductsMenu } from './ProductsMenu';
 import { SocialLinks } from './SocialLinks';
-import { ThemeToggle } from './ThemeToggle';
 import { SearchDialog } from './SearchDialog';
-import { PRODUCT_GROUPS, USE_CASES_GROUP, WORD_LINKS, SOCIAL_LINKS } from './nav.data';
+import { STACK_GROUPS, SPACES_GROUP, WORD_LINKS, SOCIAL_LINKS } from './nav.data';
 import s from './FloatingNav.module.css';
 
 const HOVER_CLOSE_MS = 140;
@@ -30,62 +29,62 @@ export function FloatingNav() {
   const [searchOpen, setOpenSearch] = useState(false);
   const pathname = usePathname();
 
-  const [productsOpen, setProductsOpen] = useState(false);
-  const [useCasesOpen, setUseCasesOpen] = useState(false);
+  const [stackOpen, setStackOpen] = useState(false);
+  const [spacesOpen, setSpacesOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
   const pillRef = useRef<HTMLDivElement>(null);
-  const productsTriggerRef = useRef<HTMLButtonElement>(null);
-  const productsPanelRef = useRef<HTMLDivElement>(null);
-  const useCasesTriggerRef = useRef<HTMLButtonElement>(null);
-  const useCasesPanelRef = useRef<HTMLDivElement>(null);
+  const stackTriggerRef = useRef<HTMLButtonElement>(null);
+  const stackPanelRef = useRef<HTMLDivElement>(null);
+  const spacesTriggerRef = useRef<HTMLButtonElement>(null);
+  const spacesPanelRef = useRef<HTMLDivElement>(null);
   const sheetCloseRef = useRef<HTMLButtonElement>(null);
-  const hoverTimer = useRef<number | null>(null);
-  const useCasesHoverTimer = useRef<number | null>(null);
+  const stackHoverTimer = useRef<number | null>(null);
+  const spacesHoverTimer = useRef<number | null>(null);
 
-  // Close both surfaces on route change.
+  // Close every surface on route change.
   useEffect(() => {
-    setProductsOpen(false);
-    setUseCasesOpen(false);
+    setStackOpen(false);
+    setSpacesOpen(false);
     setSheetOpen(false);
   }, [pathname]);
 
-  // Outside-click closes the products panel. The panel is portaled to body,
+  // Outside-click closes the stack panel. The panel is portaled to body,
   // so hover keeps it open via .panelWrap handlers, not via containment.
   useEffect(() => {
-    if (!productsOpen) return;
+    if (!stackOpen) return;
     const onDown = (e: MouseEvent) => {
       const target = e.target as Node;
       const inPill = pillRef.current?.contains(target);
-      const inPanel = productsPanelRef.current?.contains(target);
-      if (!inPill && !inPanel) setProductsOpen(false);
+      const inPanel = stackPanelRef.current?.contains(target);
+      if (!inPill && !inPanel) setStackOpen(false);
     };
     document.addEventListener('mousedown', onDown);
     return () => document.removeEventListener('mousedown', onDown);
-  }, [productsOpen]);
+  }, [stackOpen]);
 
   useEffect(() => {
-    if (!useCasesOpen) return;
+    if (!spacesOpen) return;
     const onDown = (e: MouseEvent) => {
       const target = e.target as Node;
       const inPill = pillRef.current?.contains(target);
-      const inPanel = useCasesPanelRef.current?.contains(target);
-      if (!inPill && !inPanel) setUseCasesOpen(false);
+      const inPanel = spacesPanelRef.current?.contains(target);
+      if (!inPill && !inPanel) setSpacesOpen(false);
     };
     document.addEventListener('mousedown', onDown);
     return () => document.removeEventListener('mousedown', onDown);
-  }, [useCasesOpen]);
+  }, [spacesOpen]);
 
-  // Esc closes either surface and returns focus to the products trigger.
+  // Esc closes either surface and returns focus to the stack trigger.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
-      setProductsOpen(false);
-      setUseCasesOpen(false);
+      setStackOpen(false);
+      setSpacesOpen(false);
       setSheetOpen(false);
-      productsTriggerRef.current?.focus();
+      stackTriggerRef.current?.focus();
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
@@ -128,45 +127,45 @@ export function FloatingNav() {
     if (sheetOpen) sheetCloseRef.current?.focus();
   }, [sheetOpen]);
 
-  const openProducts = useCallback(() => {
-    if (hoverTimer.current) window.clearTimeout(hoverTimer.current);
-    setProductsOpen(true);
-    setUseCasesOpen(false);
+  const openStack = useCallback(() => {
+    if (stackHoverTimer.current) window.clearTimeout(stackHoverTimer.current);
+    setStackOpen(true);
+    setSpacesOpen(false);
   }, []);
-  const scheduleCloseProducts = useCallback(() => {
-    if (hoverTimer.current) window.clearTimeout(hoverTimer.current);
-    hoverTimer.current = window.setTimeout(() => setProductsOpen(false), HOVER_CLOSE_MS);
+  const scheduleCloseStack = useCallback(() => {
+    if (stackHoverTimer.current) window.clearTimeout(stackHoverTimer.current);
+    stackHoverTimer.current = window.setTimeout(() => setStackOpen(false), HOVER_CLOSE_MS);
   }, []);
-  const toggleProducts = useCallback(() => setProductsOpen(v => !v), []);
-  const onProductsKey = useCallback((e: React.KeyboardEvent<HTMLButtonElement>) => {
+  const toggleStack = useCallback(() => setStackOpen(v => !v), []);
+  const onStackKey = useCallback((e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      toggleProducts();
+      toggleStack();
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setProductsOpen(true);
+      setStackOpen(true);
     }
-  }, [toggleProducts]);
+  }, [toggleStack]);
 
-  const openUseCases = useCallback(() => {
-    if (useCasesHoverTimer.current) window.clearTimeout(useCasesHoverTimer.current);
-    setUseCasesOpen(true);
-    setProductsOpen(false);
+  const openSpaces = useCallback(() => {
+    if (spacesHoverTimer.current) window.clearTimeout(spacesHoverTimer.current);
+    setSpacesOpen(true);
+    setStackOpen(false);
   }, []);
-  const scheduleCloseUseCases = useCallback(() => {
-    if (useCasesHoverTimer.current) window.clearTimeout(useCasesHoverTimer.current);
-    useCasesHoverTimer.current = window.setTimeout(() => setUseCasesOpen(false), HOVER_CLOSE_MS);
+  const scheduleCloseSpaces = useCallback(() => {
+    if (spacesHoverTimer.current) window.clearTimeout(spacesHoverTimer.current);
+    spacesHoverTimer.current = window.setTimeout(() => setSpacesOpen(false), HOVER_CLOSE_MS);
   }, []);
-  const toggleUseCases = useCallback(() => setUseCasesOpen(v => !v), []);
-  const onUseCasesKey = useCallback((e: React.KeyboardEvent<HTMLButtonElement>) => {
+  const toggleSpaces = useCallback(() => setSpacesOpen(v => !v), []);
+  const onSpacesKey = useCallback((e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      toggleUseCases();
+      toggleSpaces();
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setUseCasesOpen(true);
+      setSpacesOpen(true);
     }
-  }, [toggleUseCases]);
+  }, [toggleSpaces]);
 
   return (
     <header className={s.floatingNav}>
@@ -179,18 +178,18 @@ export function FloatingNav() {
 
         <div
           className={s.productsSlot}
-          onMouseEnter={openProducts}
-          onMouseLeave={scheduleCloseProducts}
+          onMouseEnter={openStack}
+          onMouseLeave={scheduleCloseStack}
         >
           <button
-            ref={productsTriggerRef}
+            ref={stackTriggerRef}
             type="button"
             className={s.navWord}
             aria-haspopup="menu"
-            aria-expanded={productsOpen}
-            data-open={productsOpen ? 'true' : 'false'}
-            onClick={toggleProducts}
-            onKeyDown={onProductsKey}
+            aria-expanded={stackOpen}
+            data-open={stackOpen ? 'true' : 'false'}
+            onClick={toggleStack}
+            onKeyDown={onStackKey}
           >
             Stack
             <svg className={s.caret} width="8" height="6" viewBox="0 0 8 6" fill="none" aria-hidden>
@@ -198,12 +197,12 @@ export function FloatingNav() {
             </svg>
           </button>
 
-          {productsOpen && mounted && createPortal(
+          {stackOpen && mounted && createPortal(
             <div
-              ref={productsPanelRef}
+              ref={stackPanelRef}
               className={s.panelWrap}
-              onMouseEnter={openProducts}
-              onMouseLeave={scheduleCloseProducts}
+              onMouseEnter={openStack}
+              onMouseLeave={scheduleCloseStack}
               role="menu"
             >
               <ProductsMenu />
@@ -212,43 +211,40 @@ export function FloatingNav() {
           )}
         </div>
 
-        {/* Use cases — hidden until per-case pages ship. Re-enable by uncommenting. */}
-        {/*
         <div
           className={s.productsSlot}
-          onMouseEnter={openUseCases}
-          onMouseLeave={scheduleCloseUseCases}
+          onMouseEnter={openSpaces}
+          onMouseLeave={scheduleCloseSpaces}
         >
           <button
-            ref={useCasesTriggerRef}
+            ref={spacesTriggerRef}
             type="button"
             className={s.navWord}
             aria-haspopup="menu"
-            aria-expanded={useCasesOpen}
-            data-open={useCasesOpen ? 'true' : 'false'}
-            onClick={toggleUseCases}
-            onKeyDown={onUseCasesKey}
+            aria-expanded={spacesOpen}
+            data-open={spacesOpen ? 'true' : 'false'}
+            onClick={toggleSpaces}
+            onKeyDown={onSpacesKey}
           >
-            Use cases
+            Spaces
             <svg className={s.caret} width="8" height="6" viewBox="0 0 8 6" fill="none" aria-hidden>
               <path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
 
-          {useCasesOpen && mounted && createPortal(
+          {spacesOpen && mounted && createPortal(
             <div
-              ref={useCasesPanelRef}
+              ref={spacesPanelRef}
               className={s.panelWrap}
-              onMouseEnter={openUseCases}
-              onMouseLeave={scheduleCloseUseCases}
+              onMouseEnter={openSpaces}
+              onMouseLeave={scheduleCloseSpaces}
               role="menu"
             >
-              <ProductsMenu groups={[USE_CASES_GROUP]} />
+              <ProductsMenu groups={[SPACES_GROUP]} />
             </div>,
             document.body,
           )}
         </div>
-        */}
 
         {WORD_LINKS.map((w) => (
           <Link key={w.href} href={w.href} className={`${s.navWord} ${s.desktopOnly}`}>
@@ -293,8 +289,6 @@ export function FloatingNav() {
           <Search size={18} aria-hidden />
         </button>
 
-        <ThemeToggle className={`${s.navIcon} ${s.desktopOnly}`} />
-
         <button
           type="button"
           className={`${s.navIcon} ${s.hamburger}`}
@@ -318,11 +312,11 @@ export function FloatingNav() {
             <CloseIcon size={18} aria-hidden />
           </button>
 
-          {/* Top-level nav mirrors desktop: Stack + Use cases (each expandable)
+          {/* Top-level nav mirrors desktop: Stack + Spaces (each expandable)
               · Docs · Blog · About. */}
           {[
-            { label: 'Stack', groups: PRODUCT_GROUPS },
-            // { label: 'Use cases', groups: [USE_CASES_GROUP] }, // hidden until per-case pages ship
+            { label: 'Stack', groups: STACK_GROUPS },
+            { label: 'Spaces', groups: [SPACES_GROUP] },
           ].map((section) => (
             <details key={section.label} className={s.sheetAccordion}>
               <summary className={s.sheetAccordionSummary}>

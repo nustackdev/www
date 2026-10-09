@@ -6,7 +6,7 @@ import { GithubMark } from '@www/shared/components/marks/GithubMark';
 import s from './TryIt.module.css';
 
 /**
- * TryIt — the unified closing "Try it." chapter every fabric page uses.
+ * TryIt — the closing "Try Nu." chapter of the Nu pages.
  * Three cells in one row: install, run the demo, browse examples.
  * Zero props so the copy stays in one place — edit here, all pages follow.
  */
@@ -28,7 +28,7 @@ export function TryIt() {
             <MonoKicker as="p" size="xs" tracking="wider">
               <strong>01</strong> Install
             </MonoKicker>
-            <CommandLine command='pip install "nustack-py[all]"' />
+            <CommandLine command='pip install nucli "nustd[all]"' />
           </div>
           <div className={s.cell}>
             <MonoKicker as="p" size="xs" tracking="wider">

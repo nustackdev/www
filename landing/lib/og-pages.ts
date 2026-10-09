@@ -1,7 +1,7 @@
 import { appName } from '@/lib/shared';
 
 /**
- * Registry of static (non-fabric, non-tool, non-doc, non-post) pages that
+ * Registry of static (non-doc, non-post) pages that
  * ship a branded OG card. Consumed by `app/og/page/[key]/image.png` (server
  * render) and by each page's `metadata` block (via `ogPageImage`).
  *
@@ -30,31 +30,54 @@ export const PAGE_OG_ENTRIES: PageOgEntry[] = [
     siteLabel: appName,
   },
   {
-    key: 'spec',
-    title: 'The interaction model.',
+    key: 'stack',
+    title: 'The stack.',
     description:
-      'The language-agnostic specification behind Nu. Refs, Interactions, Fabrics, Contexts.',
-    siteLabel: appName,
-  },
-  {
-    key: 'fabrics-index',
-    title: 'Fabrics.',
-    description:
-      'Each fabric gives your Nu app a new capability. State, UI, distributed execution and more.',
-    siteLabel: appName,
-  },
-  {
-    key: 'tools-index',
-    title: 'Tools.',
-    description:
-      'The standalone libraries Nu is built on. Each one solves its own problem, ships on PyPI, and can be used without Nu.',
+      'Interaction model, interaction primitive, interaction OS. One idea, three layers.',
     siteLabel: appName,
   },
   {
     key: 'nuspace',
     title: 'nuspace.',
     description:
-      'A live computing space for your notes, data, tools and agents. Everything in it is a running program.',
+      'An information base. One store anyone opens and writes, and the programs that run in it.',
+    siteLabel: appName,
+  },
+  {
+    key: 'nuverse',
+    title: 'nuverse.',
+    description: 'The nuspace ecosystem: the snippets and primitives spaces are built from.',
+    siteLabel: appName,
+  },
+  {
+    key: 'nu',
+    title: 'Nu.',
+    description: 'The interaction primitive. Refs name what a program touches, interactions say what to do.',
+    siteLabel: appName,
+  },
+  {
+    key: 'nustd',
+    title: 'nustd.',
+    description: 'Fabrics and the standard library for Nu: state, UI, network, cluster, models.',
+    siteLabel: appName,
+  },
+  {
+    key: 'model',
+    title: 'The interaction model.',
+    description:
+      'The language agnostic specification behind Nu. Refs, Interactions, Fabrics, Contexts.',
+    siteLabel: appName,
+  },
+  {
+    key: 'spaces',
+    title: 'Spaces.',
+    description: 'Things people and agents built in nuspace.',
+    siteLabel: appName,
+  },
+  {
+    key: 'placeholder',
+    title: 'Placeholder.',
+    description: 'Placeholder space.',
     siteLabel: appName,
   },
 ];

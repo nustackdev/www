@@ -163,7 +163,7 @@ function MoreCard() {
             as the four above.
           </Description>
           <CtaRow>
-            <Button href="/fabrics" variant="outline">
+            <Button href="/stack/nustd" variant="outline">
               <span>Explore all fabrics</span>
             </Button>
           </CtaRow>

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { siteUrl } from '@/lib/shared';
-import { FABRICS } from '@www/shared/lib/stack/fabrics';
-import { TOOLS } from '@www/shared/lib/stack/tools';
+import { STACK } from '@www/shared/lib/stack/stack';
+import { SPACES } from '@www/shared/lib/stack/spaces';
 
 export const dynamic = 'force-static';
 
@@ -15,27 +15,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const abs = (path: string) => `${siteUrl}${path}`;
 
   const staticPages: MetadataRoute.Sitemap = [
-    { url: abs('/'),         changeFrequency: 'weekly',  priority: 1.0, lastModified: now },
-    { url: abs('/about'),    changeFrequency: 'monthly', priority: 0.7, lastModified: now },
-    { url: abs('/spec'),     changeFrequency: 'monthly', priority: 0.8, lastModified: now },
-    { url: abs('/fabrics'),  changeFrequency: 'weekly',  priority: 0.9, lastModified: now },
-    { url: abs('/tools'),    changeFrequency: 'weekly',  priority: 0.9, lastModified: now },
-    { url: abs('/nuspace'),  changeFrequency: 'monthly', priority: 0.9, lastModified: now },
+    { url: abs('/'),       changeFrequency: 'weekly',  priority: 1.0, lastModified: now },
+    { url: abs('/stack'),  changeFrequency: 'monthly', priority: 0.9, lastModified: now },
+    { url: abs('/spaces'), changeFrequency: 'weekly',  priority: 0.9, lastModified: now },
+    { url: abs('/about'),  changeFrequency: 'monthly', priority: 0.7, lastModified: now },
   ];
 
-  const fabricPages = FABRICS.map((f) => ({
-    url: abs(f.href),
+  const stackPages = STACK.map((s) => ({
+    url: abs(s.href),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
     lastModified: now,
   }));
 
-  const toolPages = TOOLS.map((t) => ({
-    url: abs(t.href),
+  const spacePages = SPACES.map((s) => ({
+    url: abs(s.href),
     changeFrequency: 'monthly' as const,
-    priority: 0.7,
+    priority: 0.8,
     lastModified: now,
   }));
 
-  return [...staticPages, ...fabricPages, ...toolPages];
+  return [...staticPages, ...stackPages, ...spacePages];
 }

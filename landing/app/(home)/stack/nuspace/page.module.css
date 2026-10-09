@@ -1,0 +1,26 @@
+/* nuspace page: a few page-only text styles. */
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--site-gap-normal);
+  max-width: 68ch;
+}
+
+.pull {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--site-fs-9);
+  line-height: 1.35;
+  background: linear-gradient(to right, var(--site-accent), var(--site-accent-2));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-wrap: balance;
+}
+
+.stepLabel strong {
+  color: var(--site-accent);
+  margin-right: 0.6em;
+}

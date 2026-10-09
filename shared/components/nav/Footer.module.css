@@ -121,7 +121,7 @@
 .sitemap {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-areas: "apps fabrics tools usecases";
+  grid-template-areas: "os primitive model spaces";
   gap: var(--site-gap-loose);
   min-width: 0;
 }
@@ -177,10 +177,8 @@
 
 /* Rich items — original footer treatment. Hover halo pads outward via a
    matching negative margin so the tint doesn't shift layout; kept tight
-   (6px) so it doesn't bleed into neighboring rows/columns.
-   .itemStatic drops hover for rows without an href yet. */
-.itemLink,
-.itemStatic {
+   (6px) so it doesn't bleed into neighboring rows/columns. */
+.itemLink {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -296,10 +294,10 @@
   .sitemap {
     grid-template-columns: 1fr;
     grid-template-areas:
-      "apps"
-      "fabrics"
-      "tools"
-      "usecases";
+      "os"
+      "primitive"
+      "model"
+      "spaces";
   }
   .itemDesc {
     -webkit-line-clamp: 1;

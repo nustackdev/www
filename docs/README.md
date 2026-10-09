@@ -15,4 +15,4 @@ pnpm dev   # http://localhost:3002/docs (or the whole site on :3000 from the roo
 - `lib/source.ts` - content adapter · `lib/shared.ts` - routes + git config
 - `source.config.ts` - MDX + frontmatter schema
 
-Write links in content as site-absolute paths (`/docs/how-to/install`). Links into another zone (`/fabrics/kv`) work the same way and load that app.
+Write links in content as site-absolute paths (`/docs/how-to/install`). Links into another zone (`/stack/nuspace`) work the same way and load that app.

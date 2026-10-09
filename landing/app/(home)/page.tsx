@@ -175,7 +175,7 @@ export default function Home() {
               ]}
             />
             <CtaRow>
-              <Button href="/fabrics" variant="outline">
+              <Button href="/stack/nustd" variant="outline">
                 <span>Explore all fabrics</span>
               </Button>
             </CtaRow>

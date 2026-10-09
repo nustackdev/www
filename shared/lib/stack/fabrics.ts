@@ -1,22 +1,16 @@
 /**
  * Fabrics — canonical list. Consumed by:
- *   - components/nav/nav.data.ts (Stack dropdown + footer; filters `showcase`)
- *   - landing fabrics catalogue (full catalogue)
- *   - landing intro (fabric list)
+ *   - landing /stack/nustd (full catalogue)
+ *   - landing home (fabric list)
  *
  * `navDesc` is the compressed microcopy for dropdown/footer/intro.
- * `showcase` marks the curated set that surfaces in nav/footer/landing.
+ * `showcase` marks the curated set that surfaces on the landing.
  * `poweredBy` lists what the fabric stands on — nu tools + external tech.
  */
 
 import type { ComponentType } from 'react';
 import type { Hue } from '../../components/chapters/CatalogueGrid';
-import {
-  type Powered,
-  fabricHref as _fh,
-  fabricDocsHref as _fd,
-  fabricSrcHref as _fs,
-} from './refs';
+import { type Powered, fabricDocsHref as _fd, fabricSrcHref as _fs } from './refs';
 import {
   MemGlyph,
   KvGlyph,
@@ -36,12 +30,12 @@ export interface Fabric {
   tagline: string;
   description: string;
   navDesc: string;
-  /** Surfaces in curated spots: nav dropdown, footer, landing intro. */
+  /** Surfaces in curated spots on the landing. */
   showcase?: boolean;
   poweredBy?: Powered[];
   /** Optional glyph for landing/detail pages. */
   glyph?: ComponentType;
-  /** Catalogue link — derived. */
+  /** Where the fabric links to: its reference docs — derived. */
   href: string;
   /** Reference-doc link — derived. */
   docs: string;
@@ -218,7 +212,7 @@ const SPECS: FabricSpec[] = [
 
 export const FABRICS: Fabric[] = SPECS.map((f) => ({
   ...f,
-  href: _fh(f.slug),
+  href: _fd(f.slug),
   docs: _fd(f.slug),
   src: _fs(f.slug),
 }));
@@ -228,6 +222,6 @@ export const FABRIC: Record<string, Fabric> = Object.fromEntries(
   FABRICS.map((f) => [f.slug, f]),
 );
 
-export const fabricHref = (f: Pick<Fabric, 'slug'>) => _fh(f.slug);
+export const fabricHref = (f: Pick<Fabric, 'slug'>) => _fd(f.slug);
 
 export const findFabric = (slug: string) => FABRIC[slug];

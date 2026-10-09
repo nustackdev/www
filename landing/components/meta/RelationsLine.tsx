@@ -29,7 +29,7 @@ function resolve(ref: Powered, i: number): Resolved | null {
   if (ref.kind === 'tool') {
     const t = TOOL[ref.slug];
     if (!t) return null;
-    return { key: `t:${ref.slug}`, name: t.name, href: t.href, external: false, hue: t.hue };
+    return { key: `t:${ref.slug}`, name: t.name, href: t.href, external: true, hue: t.hue };
   }
   return { key: `e:${i}:${ref.name}`, name: ref.name, href: ref.url, external: true };
 }

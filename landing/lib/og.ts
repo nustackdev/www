@@ -9,7 +9,7 @@ import type { Metadata } from 'next';
  * `openGraph` / `twitter` loses layout-level `siteName`, `url`, `site`,
  * `creator`. This helper re-adds them so every page carries a complete card.
  *
- * Pass `path` (e.g. `/fabrics/kv`) to get both `openGraph.url` and
+ * Pass `path` (e.g. `/stack/nuspace`) to get both `openGraph.url` and
  * `alternates.canonical` on the page — recommended for every static route.
  */
 export function pageOG({
@@ -49,5 +49,3 @@ export function pageOG({
 }
 
 export const ogPageImage = (key: string) => `/og/page/${key}/image.png`;
-export const ogFabricImage = (slug: string) => `/og/fabric/${slug}/image.png`;
-export const ogToolImage = (slug: string) => `/og/tool/${slug}/image.png`;

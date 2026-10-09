@@ -3,14 +3,16 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { NuLogo } from '../marks/NuLogo';
 import { NustackMark } from '../marks/NustackMark';
 import { SocialLinks } from './SocialLinks';
-import { PRODUCT_GROUPS, USE_CASES_GROUP } from './nav.data';
+import { ThemeToggle } from './ThemeToggle';
+import { STACK_GROUPS, SPACES_GROUP } from './nav.data';
 import s from './Footer.module.css';
 
 /**
  * Site footer — rich sitemap.
  *
  * Each product entry is a titled row: name (link) + one-line description under
- * it. Four product groups become peer columns with taglines under each header.
+ * it. The three stack tiers and Spaces become peer columns with taglines under
+ * each header.
  * A brand column carries the wordmark, a confident tagline, Learn links, and
  * socials. Transparent surface; sits on --site-bg from PageShell.
  */
@@ -18,19 +20,18 @@ import s from './Footer.module.css';
 const LEARN_LINKS = [
   { label: 'Docs', href: '/docs' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Spec', href: '/spec' },
   { label: 'Changelog', href: 'https://github.com/nustackdev/nu/blob/main/CHANGELOG.md' },
   { label: 'About', href: '/about' },
 ];
 
 const AREAS: Record<string, string> = {
-  Apps: 'apps',
-  Fabrics: 'fabrics',
-  Tools: 'tools',
-  'Use cases': 'usecases',
+  'Interaction OS': 'os',
+  'Interaction primitive': 'primitive',
+  'Interaction model': 'model',
+  Spaces: 'spaces',
 };
 
-const FOOTER_GROUPS = [...PRODUCT_GROUPS, USE_CASES_GROUP];
+const FOOTER_GROUPS = [...STACK_GROUPS, SPACES_GROUP];
 
 export function Footer() {
   return (
@@ -89,17 +90,10 @@ export function Footer() {
                 <ul className={s.items}>
                   {group.items.map((item) => (
                     <li key={item.href} className={s.item}>
-                      {group.header === 'Use cases' ? (
-                        <span className={s.itemStatic}>
-                          <span className={s.itemName}>{item.name}</span>
-                          <span className={s.itemDesc}>{item.desc}</span>
-                        </span>
-                      ) : (
-                        <Link href={item.href} className={s.itemLink}>
-                          <span className={s.itemName}>{item.name}</span>
-                          <span className={s.itemDesc}>{item.desc}</span>
-                        </Link>
-                      )}
+                      <Link href={item.href} className={s.itemLink}>
+                        <span className={s.itemName}>{item.name}</span>
+                        <span className={s.itemDesc}>{item.desc}</span>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -129,6 +123,7 @@ export function Footer() {
                 />
               </svg>
             </a>
+            <ThemeToggle className={s.socialIcon} />
           </div>
         </div>
       </div>

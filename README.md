@@ -4,7 +4,7 @@ The nustack.dev website. One pnpm workspace, one app per section, composed into 
 
 | Path | What | Serves |
 | --- | --- | --- |
-| `landing/` | `@www/landing`: Next app, home and every product page (nu, nuspace, fabrics, tools, spec, about) | `/` and every path no other zone claims |
+| `landing/` | `@www/landing`: Next app, home, the stack pages, spaces, about | `/` and every path no other zone claims |
 | `docs/` | `@www/docs`: Next + fumadocs, MDX in `docs/content` | `/docs` |
 | `blog/` | `@www/blog`: Astro blog, MDX posts in `blog/content`, RSS, giscus comments | `/blog` |
 | `shared/` | `@www/shared`: design tokens, page primitives, brand marks, nav pieces, zones, analytics | - |
@@ -27,7 +27,7 @@ pnpm docs:gen       # regenerate the reference docs (tools/.venv)
 Each app owns one path prefix (a zone) and builds on its own: its own engine, dependencies and config. Only docs depends on fumadocs, so its CSS never reaches the landing or the blog. Every app has its own root layout and stylesheet; they share the tokens from `shared/design`.
 
 - **Apps.** A zone app builds a static `out/` meant to be served under its prefix. For Next that is `basePath` plus `NEXT_PUBLIC_ZONE` in `next.config.mjs`; for Astro, `base` plus the same `NEXT_PUBLIC_ZONE` define in `astro.config.mjs`. The list of apps lives in `compose/apps.mjs`, the list of prefixes in `shared/lib/zones.ts`.
-- **Links.** Write hrefs as site-absolute paths (`/docs/x`, `/fabrics/kv`). `SiteLink` from the shared kit keeps links inside the current zone client-side and turns links into another zone into plain `<a>`, since that zone is a different build. Docs plugs the same resolver into fumadocs through `docs/components/provider.tsx`.
+- **Links.** Write hrefs as site-absolute paths (`/docs/x`, `/stack/nuspace`). `SiteLink` from the shared kit keeps links inside the current zone client-side and turns links into another zone into plain `<a>`, since that zone is a different build. Docs plugs the same resolver into fumadocs through `docs/components/provider.tsx`.
 - **Theme.** next-themes everywhere, same `theme` key and `.dark` class, so the chosen theme carries across zones. The blog also sets the class from an inline head script, since its pages are static HTML.
 - **Search.** compose runs Pagefind over the merged HTML, so the shared `SearchDialog` searches every zone. Pages opt in with `data-pagefind-body`. Docs also keeps fumadocs' own search. In dev, `/pagefind` is served from the last `pnpm build`.
 

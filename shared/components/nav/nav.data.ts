@@ -1,59 +1,41 @@
 /**
- * Nav data — single source of truth for the header nav and its Stack menu.
- * Consumed by FloatingNav (desktop pill + mobile sheet) and ProductsMenu.
+ * Nav data — single source of truth for the header nav, its Stack and Spaces
+ * menus, and the footer sitemap. Consumed by FloatingNav (desktop pill +
+ * mobile sheet), ProductsMenu and Footer.
  *
- * Product items are sourced from lib/stack/{fabrics,tools,use-cases}.ts —
- * this file only decides which of them appear in the nav and how they group.
+ * Items are sourced from lib/stack/{stack,spaces}.ts — this file only decides
+ * how they group.
  */
 
-import { FABRICS, fabricHref } from '../../lib/stack/fabrics';
-import { TOOLS, toolHref } from '../../lib/stack/tools';
-import { USE_CASES, useCaseHref } from '../../lib/stack/use-cases';
+import { TIERS, stackOf } from '../../lib/stack/stack';
+import { SPACES } from '../../lib/stack/spaces';
 
 export type ProductItem = { name: string; href: string; desc: string };
 export type ProductGroup = {
   header: string;
   tagline: string;
   /** Optional href — when set, the group header itself becomes a link to
-   * the group's catalogue page (e.g. Fabrics → /fabrics). */
+   * the group's index page (e.g. Spaces → /spaces). */
   href?: string;
   items: ProductItem[];
-  /** Optional trailing text link (e.g. "Explore →") pointing to a catalogue.
-   * Redundant when `href` is set; kept for groups whose header is not itself
-   * a page. */
+  /** Optional trailing text link (e.g. "Explore →") pointing to an index. */
   explore?: { label: string; href: string };
 };
 
-export const PRODUCT_GROUPS: ProductGroup[] = [
-  {
-    header: 'Apps',
-    tagline: 'End-user tools built as Nu programs.',
-    items: [{ name: 'nuspace', href: '/nuspace', desc: 'A space where your data and the programs on it live together.' }],
-  },
-  {
-    header: 'Fabrics',
-    tagline: 'Each fabric, a Nu capability.',
-    href: '/fabrics',
-    items: FABRICS
-      .filter((f) => f.showcase)
-      .map((f) => ({ name: f.name, href: fabricHref(f), desc: f.navDesc })),
-    explore: { label: 'Explore all', href: '/fabrics' },
-  },
-  {
-    header: 'Tools',
-    tagline: 'The libraries the fabrics stand on.',
-    href: '/tools',
-    items: TOOLS.map((t) => ({ name: t.name, href: toolHref(t), desc: t.navDesc })),
-  },
-];
+/** Stack menu: one group per tier, top of the ladder first. The last tier
+ * carries the link to the /stack overview. */
+export const STACK_GROUPS: ProductGroup[] = TIERS.map((t, i) => ({
+  header: t.name,
+  tagline: t.tagline,
+  items: stackOf(t.tier).map((s) => ({ name: s.name, href: s.href, desc: s.navDesc })),
+  ...(i === TIERS.length - 1 && { explore: { label: 'The whole stack', href: '/stack' } }),
+}));
 
-/** Use-cases group — dropdown + footer sitemap. Items sourced from lib/stack/use-cases.ts.
- * href/explore intentionally omitted while per-case pages are unpublished; Footer
- * renders items as plain text (see components/nav/Footer.tsx). */
-export const USE_CASES_GROUP: ProductGroup = {
-  header: 'Use cases',
-  tagline: 'Jobs the stack fits.',
-  items: USE_CASES.map((u) => ({ name: u.name, href: useCaseHref(u), desc: u.navDesc })),
+export const SPACES_GROUP: ProductGroup = {
+  header: 'Spaces',
+  tagline: 'Built in nuspace.',
+  href: '/spaces',
+  items: SPACES.map((s) => ({ name: s.name, href: s.href, desc: s.navDesc })),
 };
 
 export type WordLink = { label: string; href: string };
@@ -61,7 +43,6 @@ export type WordLink = { label: string; href: string };
 export const WORD_LINKS: WordLink[] = [
   { label: 'Docs', href: '/docs' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Spec', href: '/spec' },
   { label: 'About', href: '/about' },
 ];
 
