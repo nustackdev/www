@@ -1,0 +1,23 @@
+/* Scene — reserved frame, styled like a nuspace window at rest. A lighter
+ * top edge catches the light, the way a real window does. */
+
+.frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  border: 1px solid var(--site-border);
+  border-top-color: var(--site-border-strong);
+  border-radius: 12px;
+  background:
+    linear-gradient(to bottom, color-mix(in oklab, var(--site-ink) 3%, transparent), transparent 40%),
+    var(--site-bg-raised);
+  overflow: hidden;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--site-fs-3);
+  letter-spacing: 0.06em;
+  color: var(--site-ink-4);
+}

@@ -1,11 +1,12 @@
+/* Stats — a ruled row of big numbers, no boxes. */
+
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
   margin: 0;
 }
 @media (max-width: 860px) {
-  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 24px; }
 }
 
 /* Value sits above the label visually; dt stays first for a11y. */
@@ -14,25 +15,20 @@
   flex-direction: column-reverse;
   justify-content: flex-end;
   gap: 6px;
-  padding: 20px 22px;
-  border: 1px solid var(--site-border);
-  border-radius: var(--site-r-md);
-  background: var(--site-surface-2);
+  padding: 4px 24px;
+  border-left: 1px solid var(--site-border);
   min-width: 0;
 }
 
 .value {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--site-fs-13);
+  font-weight: var(--home-fw-title);
+  font-size: clamp(32px, 3.6vw, 44px);
   line-height: 1;
-  letter-spacing: -0.03em;
+  letter-spacing: var(--home-tr-display);
   color: var(--site-ink);
   font-variant-numeric: tabular-nums;
-}
-@media (max-width: 640px) {
-  .value { font-size: var(--site-fs-12); }
 }
 
 .label {

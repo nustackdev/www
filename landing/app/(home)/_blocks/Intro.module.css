@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.kicker {
+  margin: 0;
+  font-size: var(--site-fs-5);
+  font-weight: 500;
+  color: var(--site-accent);
+}
+
+.text {
+  margin: 0;
+  max-width: min(30ch, 100%);
+  font-family: var(--font-display);
+  font-weight: var(--home-fw-title);
+  font-size: clamp(30px, 3.6vw, 48px);
+  line-height: 1.12;
+  letter-spacing: var(--home-tr-display);
+  color: var(--site-ink);
+  text-wrap: pretty;
+}
+.dim { color: var(--site-ink-3); }

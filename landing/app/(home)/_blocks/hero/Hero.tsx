@@ -1,57 +1,47 @@
-import { NuLogo } from '@www/shared/components/marks/NuLogo';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
-import { Cell } from '@www/shared/components/grid/Cell';
-import { CellContent } from '@www/shared/components/grid/CellContent';
-import { Row } from '@www/shared/components/grid/Row';
 import { Button } from '@www/shared/components/controls/Button';
-import { CommandLine } from '@www/shared/components/media/CommandLine';
-import { StoreCompare } from './StoreCompare';
+import { Scene } from '../scene/Scene';
 import s from './Hero.module.css';
 
 /**
- * Hero — landing-only page header. One centered column: badge, category
- * line, one-sentence sub, install + CTAs, then the store comparison as
- * the visual. Sub-pages use the standard `<Header>` instead.
+ * Hero — left aligned head, then the hero scene bleeding past the main
+ * column to the right, cut by the window. Copy from compass: category,
+ * positioning, lines.
  */
 export function Hero() {
   return (
-    <Row cols={1} divider={false} className={s.row}>
-      <Cell>
-        <CellContent pad="lg">
-          <div className={s.hero}>
-            <p className={s.badge}>
-              <NuLogo size="1.1em" />
-              <span>nuspace</span>
-              <span className={s.badgeSep} aria-hidden />
-              <span className={s.badgeMeta}>Early · Self-hosted · AGPL&#8209;3.0</span>
-            </p>
+    <section className={s.root}>
+      <div className={s.head}>
+        <p className={s.eyebrow}>
+          <span className={s.dot} aria-hidden />
+          <span>nuspace</span>
+          <span className={s.meta}>An interaction OS that runs Nu programs</span>
+        </p>
 
-            <h1 className={s.title}>
-              nuspace is an <span className={s.accent}>information base.</span>
-            </h1>
+        <h1 className={s.title}>
+          Data, logic and UI,
+          <br />
+          <span className={s.dim}>connected by default.</span>
+        </h1>
 
-            <p className={s.sub}>
-              Data in context, and the programs that make it. One store for
-              you and your agents.
-            </p>
-
-            <div className={s.actions}>
-              <CommandLine command="pip install nuspace" className={s.install} />
-              <div className={s.buttons}>
-                <Button variant="solid" href="#start">
-                  <span>Get started</span>
-                </Button>
-                <Button variant="solidAlt" href="https://github.com/nustackdev/nuspace">
-                  <GithubMark size={14} />
-                  <span>GitHub</span>
-                </Button>
-              </div>
-            </div>
-
-            <StoreCompare />
+        <div className={s.row}>
+          <p className={s.sub}>
+            A computing space for data-centric apps. It runs on your machine,
+            and you and your agents build in it.
+          </p>
+          <div className={s.actions}>
+            <Button variant="solid" href="#start">
+              <span>Get started</span>
+            </Button>
+            <Button variant="solidAlt" href="https://github.com/nustackdev/nuspace">
+              <GithubMark size={14} />
+              <span>GitHub</span>
+            </Button>
           </div>
-        </CellContent>
-      </Cell>
-    </Row>
+        </div>
+      </div>
+
+      <Scene name="hero" ratio="16 / 10" className={s.scene} />
+    </section>
   );
 }

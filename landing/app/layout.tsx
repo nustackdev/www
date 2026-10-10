@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 const OG_IMAGE = '/og/page/root/image.png';
-const TITLE = 'nuspace: an information base';
-const DESCRIPTION = 'A database keeps the data. A knowledge base keeps the conclusions. An information base keeps the data in context, and runs the programs that make it.';
+const TITLE = 'nuspace: a computing space for data-centric apps';
+const DESCRIPTION = 'An interaction OS that runs Nu programs. Data, logic and UI, connected by default.';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),

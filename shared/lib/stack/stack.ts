@@ -38,7 +38,7 @@ export interface StackItem {
 type StackSpec = Omit<StackItem, 'href'>;
 
 const SPECS: StackSpec[] = [
-  { name: 'nuspace', slug: 'nuspace', tier: 'os', hue: 'teal', navDesc: 'An information base. One store, programs that run in it.' },
+  { name: 'nuspace', slug: 'nuspace', tier: 'os', hue: 'teal', navDesc: 'Interaction OS. A computing space for data-centric apps.' },
   { name: 'nuverse', slug: 'nuverse', tier: 'os', hue: 'sage', navDesc: 'The nuspace ecosystem: planes and snippets.' },
   { name: 'nu', slug: 'nu', tier: 'primitive', hue: 'plum', navDesc: 'The interaction primitive. Refs and interactions.' },
   { name: 'nustd', slug: 'nustd', tier: 'primitive', hue: 'coral', navDesc: 'Fabrics and the standard library.' },

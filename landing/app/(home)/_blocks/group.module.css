@@ -1,0 +1,23 @@
+/* A group: a full width divider, its h2 intro, then its units. Units close
+ * with a main width divider, except the last: the next group's full one
+ * takes its place. */
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(64px, 8vw, 112px);
+  padding-top: clamp(64px, 8vw, 112px);
+}
+
+.root::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  background: var(--site-border);
+  transform: translateX(-50%);
+}
+
+.root > article:last-child { border-bottom: 0; }

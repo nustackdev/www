@@ -1,107 +1,93 @@
-/* Hero — one centered column over the hero blobs.
- * Locally inflates --site-u so derived pads, gaps and buttons scale up. */
+/* Hero — left aligned, tight, the product bleeds right. */
 
-.row {
-  position: relative;
-  margin-bottom: var(--site-gap-xloose);
-  --site-u: clamp(12px, calc(0.8vw + 7px), 20px);
-}
-
-.hero {
+.root {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--site-gap-loose);
-  padding-block: var(--site-gap-loose);
-  min-width: 0;
+  gap: clamp(48px, 6vw, 80px);
+  padding-top: clamp(32px, 6vw, 88px);
+  padding-bottom: clamp(64px, 8vw, 112px);
 }
 
-/* -- Badge ---------------------------------------------------------------- */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
 
-.badge {
+/* -- Eyebrow -------------------------------------------------------------- */
+
+.eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 8px;
   margin: 0;
-  padding: 6px 14px;
-  border: 1px solid var(--site-border);
-  border-radius: 999px;
-  background: var(--site-surface-2);
-  font-family: var(--font-mono);
-  font-size: var(--site-fs-3);
-  letter-spacing: 0.02em;
+  font-size: var(--site-fs-6);
+  font-weight: 500;
   color: var(--site-ink);
 }
-.badgeSep {
-  width: 1px;
-  height: 1em;
-  background: var(--site-border-strong);
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--site-accent);
+  box-shadow: 0 0 10px var(--site-accent);
 }
-.badgeMeta {
+.meta {
   color: var(--site-ink-3);
+  font-weight: 400;
 }
 
-/* -- Title + sub ---------------------------------------------------------- */
+/* -- Title + row ---------------------------------------------------------- */
 
 .title {
   margin: 0;
-  max-width: 16ch;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--site-fs-13);
-  line-height: 1;
-  letter-spacing: -0.03em;
+  font-weight: var(--home-fw-title);
+  font-size: clamp(40px, 6.4vw, 80px);
+  line-height: 1.02;
+  letter-spacing: var(--home-tr-display);
   color: var(--site-ink);
-  text-wrap: balance;
 }
-@media (min-width: 1025px) {
-  .title { font-size: var(--site-fs-15); }
-}
+.dim { color: var(--site-ink-3); }
 
-.accent {
-  background: linear-gradient(
-    to right,
-    color-mix(in oklab, var(--site-accent) 92%, white 8%),
-    color-mix(in oklab, var(--site-accent-2) 92%, white 8%)
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 48px;
 }
 
 .sub {
   margin: 0;
-  max-width: 40ch;
-  font-family: var(--font-display);
-  font-size: var(--site-fs-10);
-  line-height: 1.45;
+  max-width: min(42ch, 100%);
+  font-size: clamp(16px, 1.3vw, 18px);
+  line-height: 1.5;
   color: var(--site-ink-2);
-  text-wrap: balance;
 }
-
-/* -- Actions -------------------------------------------------------------- */
 
 .actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: var(--site-control-gap);
-}
-.install {
-  text-align: left;
-  min-width: 15rem;
-}
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   gap: var(--site-control-gap);
 }
 
+/* -- Scene ---------------------------------------------------------------- */
+
+/* Wider than the main column: runs to the wide edge (1600 area) on big
+ * screens, cut by the window on smaller ones. Fades out at the bottom. */
+.scene {
+  width: 1400px;
+  max-width: none;
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent);
+  mask-image: linear-gradient(to bottom, black 80%, transparent);
+}
+
+@media (max-width: 860px) {
+  .scene { width: 180%; }
+}
 @media (max-width: 640px) {
   .actions { flex-direction: column; align-items: stretch; width: 100%; }
-  .install { min-width: 0; }
+  .meta { display: none; }
 }

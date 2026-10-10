@@ -1,0 +1,56 @@
+/* Unit — h3 | description, scene, extras, divider. */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4vw, 48px);
+  padding-bottom: clamp(64px, 8vw, 112px);
+  border-bottom: 1px solid var(--site-border);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 20px 64px;
+}
+
+.titleCol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kicker {
+  margin: 0;
+  font-size: var(--site-fs-5);
+  font-weight: 500;
+  color: var(--site-ink-3);
+}
+
+.title {
+  margin: 0;
+  max-width: min(20ch, 100%);
+  font-family: var(--font-display);
+  font-weight: var(--home-fw-title);
+  font-size: clamp(24px, 2.6vw, 32px);
+  line-height: 1.15;
+  letter-spacing: var(--home-tr-display);
+  color: var(--site-ink);
+  text-wrap: balance;
+}
+
+.desc {
+  margin: 0;
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.5;
+  color: var(--site-ink-2);
+}
+
+/* Wider than the main column, bleeds right, cut by the window. */
+.scene { width: 1400px; max-width: none; }
+
+@media (max-width: 860px) {
+  .head { grid-template-columns: 1fr; }
+  .scene { width: 180%; }
+}
