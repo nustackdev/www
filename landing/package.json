@@ -12,7 +12,7 @@
     "scenes": "node scripts/scenes.mjs"
   },
   "dependencies": {
-    "@nustackdev/tape-player": "0.1.2",
+    "@nustackdev/tape-player": "0.1.3",
     "@www/shared": "workspace:*",
     "lucide-react": "^1.21.0",
     "next": "16.2.9",
@@ -21,7 +21,7 @@
     "react-dom": "^19.2.7"
   },
   "devDependencies": {
-    "@nustackdev/tape": "0.1.2",
+    "@nustackdev/tape": "0.1.3",
     "@tailwindcss/postcss": "^4.3.1",
     "@types/node": "^26.0.0",
     "@types/react": "^19.2.17",
