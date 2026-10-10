@@ -29,3 +29,6 @@ yarn-error.log*
 .vercel
 next-env.d.ts
 .ruff_cache
+
+# fetched by landing/scripts/scenes.mjs
+landing/public/scenes/nuspace/

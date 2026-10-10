@@ -14,3 +14,6 @@ minimumReleaseAgeExclude:
   - '@posthog/core@1.46.8'
   - '@posthog/types@1.402.1'
   - posthog-js@1.413.2
+  - '@nustackdev/tape-player@0.1.2'
+  - '@nustackdev/tape-scene@0.1.2'
+  - '@nustackdev/tape@0.1.2'

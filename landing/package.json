@@ -4,13 +4,15 @@
   "private": true,
   "description": "nustack.dev: the landing app. Home and every product page; owns every path no other zone claims.",
   "scripts": {
-    "build": "next build",
-    "dev": "next dev --port 3001",
+    "build": "node scripts/scenes.mjs && next build",
+    "dev": "node scripts/scenes.mjs && next dev --port 3001",
     "start": "next start",
     "types:check": "next typegen && tsc --noEmit",
-    "lint": "eslint"
+    "lint": "eslint",
+    "scenes": "node scripts/scenes.mjs"
   },
   "dependencies": {
+    "@nustackdev/tape-player": "0.1.2",
     "@www/shared": "workspace:*",
     "lucide-react": "^1.21.0",
     "next": "16.2.9",
@@ -19,6 +21,7 @@
     "react-dom": "^19.2.7"
   },
   "devDependencies": {
+    "@nustackdev/tape": "0.1.2",
     "@tailwindcss/postcss": "^4.3.1",
     "@types/node": "^26.0.0",
     "@types/react": "^19.2.17",
