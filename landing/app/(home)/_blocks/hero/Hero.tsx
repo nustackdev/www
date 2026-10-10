@@ -12,11 +12,7 @@ export function Hero() {
   return (
     <section className={s.root}>
       <div className={s.head}>
-        <p className={s.eyebrow}>
-          <span className={s.dot} aria-hidden />
-          <span>nuspace</span>
-          <span className={s.meta}>An interaction OS that runs Nu programs</span>
-        </p>
+        <p className={s.eyebrow}>The interaction primitive, and the OS that runs it.</p>
 
         <h1 className={s.title}>
           Data, logic and UI,

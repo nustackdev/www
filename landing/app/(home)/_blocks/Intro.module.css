@@ -22,4 +22,4 @@
   color: var(--site-ink);
   text-wrap: pretty;
 }
-.dim { color: var(--site-ink-3); }
+.dim { color: var(--home-ink-dim); }

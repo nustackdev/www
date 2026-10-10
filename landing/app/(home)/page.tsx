@@ -1,4 +1,5 @@
 import { Container } from '@www/shared/components/grid/Container';
+import { DotPattern } from '@www/shared/components/bg/DotPattern';
 import { Footer } from '@www/shared/components/nav/Footer';
 import { Hero } from './_blocks/hero/Hero';
 import { Spaces } from './_blocks/Spaces';
@@ -15,6 +16,7 @@ import s from './page.module.css';
 export default function Home() {
   return (
     <div className={s.root}>
+      <DotPattern />
       <Container className={s.content}>
         <Hero />
         <Spaces />
@@ -22,7 +24,9 @@ export default function Home() {
         <UnderTheHood />
         <TryIt />
       </Container>
-      <Footer />
+      <div className={s.layer}>
+        <Footer />
+      </div>
     </div>
   );
 }

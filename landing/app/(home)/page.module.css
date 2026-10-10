@@ -1,32 +1,15 @@
-/* Home — the product look. Remaps the site tokens onto the nuspace shell
- * (ui-kit) grays and accents, scoped to this page only. */
+/* Home, the product look. Colors come from the shared site tokens. */
 
 .root {
-  --site-bg:            #f7f7f9;
-  --site-bg-raised:     #ffffff;
-  --site-surface:       #ffffff;
-  --site-surface-2:     #ffffff;
-  --site-ink:           #121216;
-  --site-ink-2:         #47474f;
-  --site-ink-3:         #666672;
-  --site-ink-4:         #8c8c99;
-  --site-border-subtle: #eeeef2;
-  --site-border:        #d9d9e0;
-  --site-border-strong: #b3b3bf;
-
-  --site-accent:        #7a4ce0;
-  --site-accent-2:      #3e72e7;
-  --site-accent-soft:   color-mix(in oklab, #7a4ce0 18%, transparent);
-  --site-accent-wash:   color-mix(in oklab, #7a4ce0 8%, transparent);
-  --site-accent-line:   color-mix(in oklab, #7a4ce0 42%, transparent);
-  --site-accent-glow:   color-mix(in oklab, #7a4ce0 22%, transparent);
-
   /* Type, after Inter's own tracking curve: -0.022em
    * from 32px up, -0.012em for 17-24px titles, -0.011em for copy. */
   --home-fw-title:    590;
   --home-tr-display:  -0.022em;
   --home-tr-title:    -0.012em;
   --home-tr-body:     -0.011em;
+
+  /* Second tone of two tone titles: ink pulled toward the brand purple. */
+  --home-ink-dim: color-mix(in oklab, var(--site-accent) 38%, var(--site-ink-3));
 
   font-feature-settings: "cv01", "ss03";
   letter-spacing: var(--home-tr-body);
@@ -39,32 +22,19 @@
   overflow-x: clip;
 }
 
-:global(.dark) .root {
-  --site-bg:            #08080a;
-  --site-bg-raised:     #101013;
-  --site-surface:       #1c1c20;
-  --site-surface-2:     #1c1c20;
-  --site-ink:           #f9fafc;
-  --site-ink-2:         #b4b6bf;
-  --site-ink-3:         #7d7f88;
-  --site-ink-4:         #666672;
-  --site-border-subtle: rgba(255, 255, 255, 0.06);
-  --site-border:        rgba(255, 255, 255, 0.10);
-  --site-border-strong: rgba(255, 255, 255, 0.18);
-
-  --site-accent:        #a684ff;
-  --site-accent-2:      #6b96f2;
-  --site-accent-soft:   color-mix(in oklab, #a684ff 22%, transparent);
-  --site-accent-wash:   color-mix(in oklab, #a684ff 12%, transparent);
-  --site-accent-line:   color-mix(in oklab, #a684ff 44%, transparent);
-  --site-accent-glow:   color-mix(in oklab, #a684ff 30%, transparent);
-}
-
 /* Groups stack edge to edge, their full width dividers carry the rhythm. */
 .content {
+  position: relative;
+  z-index: 1;
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   padding-top: var(--site-nav-clearance);
   padding-bottom: clamp(64px, 8vw, 112px);
+}
+
+/* Content and footer sit above the fixed dot layer. */
+.layer {
+  position: relative;
+  z-index: 1;
 }
