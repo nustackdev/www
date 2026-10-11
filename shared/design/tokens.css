@@ -7,7 +7,7 @@
  *
  * Colors come from the nustack design language (Go: design/language/color.md),
  * mapped per design/systems/landing/tokens.md:
- *   :root  light, Paper (default, no class needed).
+ *   :root  light, Dawn (default, no class needed).
  *   .dark  dark, Dusk. next-themes stamps `class="dark"` on <html>
  *          (directly or through fumadocs' RootProvider).
  * ==========================================================================*/
@@ -126,7 +126,7 @@
 }
 
 /* =============================================================================
- * Themed primitives, LIGHT (default): Paper.
+ * Themed primitives, LIGHT (default): Dawn.
  * ==========================================================================*/
 
 :root {
