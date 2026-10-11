@@ -208,9 +208,9 @@
   /* --- Ground ---------------------------------------------------------- */
   --site-bg:         #15181f; /* ground */
   --site-bg-raised:  #191c24; /* ground-raised */
-  --site-bg-overlay: #232730; /* ground-overlay */
+  --site-bg-overlay: #292e37; /* ground-overlay */
   --site-surface:    #1e222a; /* ground-card */
-  --site-surface-2:  #232730; /* ground-overlay */
+  --site-surface-2:  #292e37; /* ground-overlay */
   --site-wash:       color-mix(in oklab, var(--site-ink) 7%, transparent); /* hover wash */
   --site-wash-2:     color-mix(in oklab, var(--site-ink) 11%, transparent); /* press wash */
   --site-code-bg:    #13161d; /* ground-deep */
@@ -235,8 +235,8 @@
 
   /* --- Afterglow Violet (primary) ------------------------------------- */
   --site-accent:         #8946db;
-  --site-accent-hover:   #9256e2;
-  --site-accent-pressed: #7a3dc5;
+  --site-accent-hover:   #7f3ccd;
+  --site-accent-pressed: #7335bc;
   --site-accent-ring:    #6d37ae;
   --site-accent-text:    #cbaeff;
   --site-accent-soft:    #3e2a5d; /* afterglow-soft */
@@ -264,8 +264,8 @@
 
   /* --- Destructive ----------------------------------------------------- */
   --site-destructive:         #c72c34; /* ember-solid */
-  --site-destructive-hover:   #d2383d;
-  --site-destructive-pressed: #b71f2a;
+  --site-destructive-hover:   #b82530;
+  --site-destructive-pressed: #a51d27;
   --site-destructive-ring:    #a01722;
 }
 
