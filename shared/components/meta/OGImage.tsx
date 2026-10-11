@@ -7,12 +7,12 @@ import type { ReactElement } from 'react';
  * clamped so long headers cannot overflow into the footer row.
  */
 
-const BG = '#0f1117';
-const FG = '#f5f6fa';
-const MUTED = 'rgba(240, 242, 248, 0.62)';
-const ACCENT = '#7c5cff';
-const ACCENT_2 = '#4b7ee6';
-const ACCENT_LINE = 'rgba(124, 92, 255, 0.32)';
+const BG = '#0f1523'; // Dusk Navy, the brand ground for marketing
+const FG = '#e6eaf1'; // ink-1
+const MUTED = '#96a2b9'; // ink-3
+const ACCENT = '#8946db'; // afterglow
+const ACCENT_2 = '#8cbcff'; // starlight
+const ACCENT_LINE = 'rgba(137, 70, 219, 0.44)'; // afterglow 44%
 
 function NuMark({ size = 92 }: { size?: number }): ReactElement {
   return (
@@ -53,7 +53,6 @@ export function OGImage({ title, description, site }: OGProps): ReactElement {
         color: FG,
         padding: '72px 80px',
         backgroundColor: BG,
-        backgroundImage: `radial-gradient(1100px 520px at 88% -10%, rgba(124,92,255,0.22), transparent 60%), radial-gradient(900px 480px at -10% 110%, rgba(75,126,230,0.18), transparent 55%)`,
         borderBottom: `14px solid ${ACCENT_LINE}`,
         fontFamily:
           'Inter, "InterVariable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',

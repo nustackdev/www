@@ -8,7 +8,7 @@
   margin: 0;
   font-size: var(--site-fs-5);
   font-weight: 500;
-  color: var(--site-accent);
+  color: var(--site-accent-text);
 }
 
 .text {

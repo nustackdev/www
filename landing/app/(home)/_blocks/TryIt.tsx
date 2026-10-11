@@ -34,7 +34,7 @@ export function TryIt() {
         </ol>
 
         <div className={s.buttons}>
-          <Button variant="solidAlt" href="https://github.com/nustackdev/nuspace">
+          <Button variant="neutral" href="https://github.com/nustackdev/nuspace">
             <GithubMark size={14} />
             <span>Star on GitHub</span>
           </Button>

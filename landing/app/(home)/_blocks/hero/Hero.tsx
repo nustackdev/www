@@ -29,7 +29,7 @@ export function Hero() {
             <Button variant="solid" href="#start">
               <span>Get started</span>
             </Button>
-            <Button variant="solidAlt" href="https://github.com/nustackdev/nuspace">
+            <Button variant="neutral" href="https://github.com/nustackdev/nuspace">
               <GithubMark size={14} />
               <span>GitHub</span>
             </Button>

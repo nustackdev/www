@@ -106,7 +106,7 @@
 
 /* Token-colored silhouettes. Same color mapping as the visible code. */
 .bar_kw   { color: var(--site-accent-2); }
-.bar_nu   { color: var(--site-accent); }
+.bar_nu   { color: var(--site-accent-text); }
 .bar_str  { color: var(--site-ink); }
 .bar_cmt  { color: var(--site-ink-4); }
 .bar_num  { color: var(--site-ink-3); }
@@ -135,7 +135,7 @@
 /* Token colors — same class names + mapping used across CodeSample and the
  * ghost-row silhouettes. */
 .kw  { color: var(--site-accent-2); }
-.nu  { color: var(--site-accent); }
+.nu  { color: var(--site-accent-text); }
 .str { color: var(--site-ink); }
 .cmt { color: var(--site-ink-4); font-style: italic; }
 .num { color: var(--site-ink-3); }

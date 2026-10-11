@@ -13,7 +13,7 @@
   font-weight: 600;
   font-size: var(--site-fs-9);
   line-height: 1.35;
-  background: linear-gradient(to right, var(--site-accent), var(--site-accent-2));
+  background: linear-gradient(to right, var(--site-accent-text), var(--site-accent-2));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -21,6 +21,6 @@
 }
 
 .stepLabel strong {
-  color: var(--site-accent);
+  color: var(--site-accent-text);
   margin-right: 0.6em;
 }

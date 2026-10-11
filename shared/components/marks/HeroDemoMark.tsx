@@ -220,7 +220,7 @@ function RightScene() {
   const ink3 = 'var(--site-ink-3)';
   const ink4 = 'var(--site-ink-4)';
   const ruleSoft = 'var(--site-rule-2)';
-  const accent = 'var(--site-accent)';
+  const accent = 'var(--site-accent-text)';
   const mono = 'var(--font-mono)';
 
   const W = 340;

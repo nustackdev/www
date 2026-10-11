@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { Container } from '../grid/Container';
-import { DotPattern } from '../bg/DotPattern';
 import { GradientBlobs } from '../bg/GradientBlobs';
 import type { Blob as GradientBlob } from '../bg/GradientBlobs';
 import s from './Page.module.css';
@@ -15,9 +14,8 @@ export interface PageProps {
    */
   decorations?: ReactNode;
   /**
-   * Gradient bloom decoration. Opt-in per page — landing passes HERO_BLOBS
-   * for its purple/blue bloom; every other page omits this and gets the
-   * plain bg color + dot pattern.
+   * Gradient bloom decoration. Opt-in per page, unused now: the design
+   * language has no glows, pages get the plain bg color + dot pattern.
    */
   gradientBlobs?: GradientBlob[];
   /** Extra className applied to the pageRoot. */
@@ -53,7 +51,6 @@ export function Page({
           {decorations}
         </div>
       ) : null}
-      <DotPattern className={s.dotLayer} />
       <Container className={s.contentLayer}>
         <div className={s.content}>{children}</div>
       </Container>

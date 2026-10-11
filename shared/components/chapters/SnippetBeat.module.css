@@ -19,5 +19,6 @@
  * Hue value comes from design/hue-scope.css via --h. */
 .codeScope[data-hue] {
   --site-accent:   var(--h);
-  --site-accent-2: var(--site-hue-steel);
+  --site-accent-text: var(--h);
+  --site-accent-2: var(--site-starlight);
 }

@@ -131,7 +131,7 @@
 .tableList .rowLink:focus-visible .cellMono .cellBody,
 .tableList .rowLink:hover .chip,
 .tableList .rowLink:focus-visible .chip {
-  color: var(--h-2, var(--site-accent));
+  color: var(--h-2, var(--site-accent-text));
 }
 
 /* -- Cells ---------------------------------------------------------------- */

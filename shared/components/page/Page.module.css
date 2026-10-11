@@ -15,10 +15,9 @@
   overflow-x: clip;
 }
 
-/* Stacking: gradient (0) < decorations (1) < dots (2) < content (3). */
+/* Stacking: gradient (0) < decorations (1) < content (3). */
 .gradientLayer     { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .decorationsLayer  { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.dotLayer          { z-index: 2; }
 /* Content grows to push footer to the bottom on short pages (sticky-footer). */
 .contentLayer      { position: relative; z-index: 3; flex: 1 0 auto; }
 .footerLayer       { position: relative; z-index: 3; }

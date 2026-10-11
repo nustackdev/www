@@ -6,6 +6,7 @@
 
 .hueScope {
   --site-accent:        var(--h);
+  --site-accent-text:   var(--h);
   --site-accent-soft:   var(--h-soft);
   --site-accent-wash:   var(--h-wash);
   --site-accent-line:   var(--h-line);
@@ -15,15 +16,16 @@
   --site-accent-2-line: var(--h-line);
 }
 
-/* Code sample scope: dual silver-woven hues — teal for nu API tokens,
- * steel for keywords. Sits outside the standard hue palette. */
+/* Code sample scope: two hues, moonlight for nu API tokens and
+ * Starlight for keywords. Sits outside the standard hue palette. */
 .hueScope[data-hue="code"] {
-  --site-accent:        var(--site-hue-teal);
-  --site-accent-soft:   var(--site-hue-teal-soft);
-  --site-accent-wash:   var(--site-hue-teal-wash);
-  --site-accent-line:   var(--site-hue-teal-line);
-  --site-accent-2:      var(--site-hue-steel);
-  --site-accent-2-soft: var(--site-hue-steel-soft);
-  --site-accent-2-wash: var(--site-hue-steel-wash);
-  --site-accent-2-line: var(--site-hue-steel-line);
+  --site-accent:        var(--site-status-info);
+  --site-accent-text:   var(--site-status-info);
+  --site-accent-soft:   var(--site-status-info-soft);
+  --site-accent-wash:   var(--site-status-info-soft);
+  --site-accent-line:   var(--site-status-info-line);
+  --site-accent-2:      var(--site-starlight);
+  --site-accent-2-soft: var(--site-starlight-soft);
+  --site-accent-2-wash: var(--site-starlight-soft);
+  --site-accent-2-line: var(--site-starlight-line);
 }

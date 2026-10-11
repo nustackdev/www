@@ -1,7 +1,8 @@
-/* Site-wide hue vocabulary. The 12 silver-woven hues declared in
- * design/tokens.css. Consumers import `Hue` (or extend it) instead of
- * redeclaring the union — adding a hue is one edit here + one block in
- * design/tokens.css + one block in design/hue-scope.css. */
+/* Site-wide hue vocabulary. Each name resolves to the nearest color of the
+ * nustack design language in design/hue-scope.css (sage aurora, amber and
+ * gold sunset, crimson and coral ember, teal and cyan moonlight, steel and
+ * indigo Starlight, violet plum magenta Afterglow). Consumers import `Hue`
+ * instead of redeclaring the union. */
 
 export const HUES = [
   'crimson', 'coral', 'amber', 'gold',

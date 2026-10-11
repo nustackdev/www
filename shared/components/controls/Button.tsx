@@ -7,7 +7,6 @@ export type ButtonVariant =
   | 'neutral'
   | 'outline'
   | 'solid'
-  | 'solidAlt'
   | 'ghost'
   | 'repo';
 
@@ -108,7 +107,6 @@ function classesFor(v: Exclude<ButtonVariant, 'ghost'>): [string, string] {
     case 'neutral':  return [s.btn,      s.arrow];
     case 'outline':  return [s.outline,  s.arrowHue];
     case 'solid':    return [s.solid,    s.arrow];
-    case 'solidAlt': return [s.solidAlt, s.arrow];
     case 'repo':     return [s.repo,     s.arrowRepo];
   }
 }

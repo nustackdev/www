@@ -15,7 +15,7 @@
   background: var(--site-bg-overlay);
 }
 .card:focus-visible {
-  outline: 2px solid var(--site-accent);
+  outline: 2px solid var(--site-accent-text);
   outline-offset: 2px;
 }
 
@@ -31,7 +31,7 @@
 .icon {
   display: inline-flex;
   align-items: center;
-  color: var(--site-accent);
+  color: var(--site-accent-text);
   flex: none;
 }
 
@@ -46,7 +46,7 @@
   transition: color var(--site-t), transform var(--site-t);
 }
 .card:hover .arrow {
-  color: var(--site-accent);
+  color: var(--site-accent-text);
   transform: translateX(2px);
 }
 

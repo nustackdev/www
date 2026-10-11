@@ -5,7 +5,6 @@
  *   neutral   transparent bg, hairline border — no accent (hero CTAs, section CTAs)
  *   outline   accent border + wash fill — reads --site-accent-* scope (adaptive)
  *   solid     solid accent fill — reads --site-accent scope (brand purple by default)
- *   solidAlt  solid --site-accent-2 fill (brand blue, one-off for github CTAs)
  *   ghost     dashed, disabled ("coming soon")
  *   repo      accent-tinted, mono type (apps repo link)
  * ==========================================================================*/
@@ -55,9 +54,9 @@
   background: var(--site-accent-soft);
   border-color: var(--site-accent);
 }
-.outline > svg { color: var(--site-accent); }
+.outline > svg { color: var(--site-accent-text); }
 .arrowHue {
-  color: var(--site-accent);
+  color: var(--site-accent-text);
   display: inline-flex;
   align-items: center;
 }
@@ -65,32 +64,19 @@
 /* ---- solid — solid brand fill -------------------------------------------- */
 .solid {
   composes: btn;
-  background: color-mix(in oklab, var(--site-accent) 85%, black 15%);
-  border: 1px solid #6b48b8;
+  background: var(--site-accent);
+  border: 1px solid var(--site-accent-ring);
   color: white;
 }
 .solid:hover {
-  background: var(--site-accent);
-  border-color: var(--site-accent);
+  background: var(--site-accent-hover);
+}
+.solid:active {
+  background: var(--site-accent-pressed);
 }
 .solid > svg,
 .solid .arrow {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.solidAlt {
-  composes: btn;
-  background: color-mix(in oklab, var(--site-accent-2) 85%, black 15%);
-  border: 1px solid #3f68c8;
-  color: white;
-}
-.solidAlt:hover {
-  background: var(--site-accent-2);
-  border-color: var(--site-accent-2);
-}
-.solidAlt > svg,
-.solidAlt .arrow {
-  color: rgba(255, 255, 255, 0.85);
+  color: inherit;
 }
 
 /* ---- ghost — dashed, disabled ("coming soon") ---------------------------- */
@@ -133,7 +119,7 @@
   border-color: var(--site-accent);
 }
 .arrowRepo {
-  color: var(--site-accent);
+  color: var(--site-accent-text);
 }
 
 /* ---- mono repo label used inside neutral CTAs ---------------------------- */

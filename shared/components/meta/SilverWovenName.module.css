@@ -1,17 +1,7 @@
 /* =============================================================================
- * SilverWovenName — hero-scale silver-to-hue gradient title.
- * Silver stops come from tokens (--site-silver-1 / --site-silver-2) which
- * theme themselves. The generic hue stops come from design/hue-scope.css
- * (--h / --h-2) so any hue in the site's vocabulary works with one rule.
- *
- * The 5 original hues (steel, sage, plum, amber, teal) keep bespoke
- * hex overrides — their gradient stops were hand-tuned pre-tokens and
- * we preserve them byte-for-byte here. Every other hue picks up the
- * token-driven default below.
- *
- * Historical note: background-image via CSS var indirection has been flaky
- * with some LightningCSS orderings — set the full `background-image` per
- * hue rule directly (same pattern as .taglineAccent).
+ * SilverWovenName: hero-scale hue title. The silver to hue gradient is gone
+ * with the silver tokens; the name now reads in its hue's language color
+ * (--h from design/hue-scope.css), falling back to ink.
  * ==========================================================================*/
 
 .name {
@@ -22,137 +12,9 @@
   letter-spacing: -0.01em;
   margin: 0;
   display: inline-block;
-  /* Shrink-wrap to the text so the background gradient (stretched to the
-   * element's box) spans the visible glyphs, not the whole parent. */
   width: fit-content;
   max-width: 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  /* Extend the painted background above/below the line-box so glyph
-   * ascenders/descenders keep their gradient at tight line-heights.
-   * Negative margins cancel the layout impact. */
-  padding-block: 0.15em;
-  margin-block: -0.15em;
-}
-
-/* --- Default: token-driven for every hue in the site's vocabulary ---- */
-
-.name[data-hue] {
-  background-image: linear-gradient(
-    120deg,
-    var(--site-silver-1) 0%,
-    var(--site-silver-2) 22%,
-    var(--h) 55%,
-    var(--h-2) 100%
-  );
-}
-
-/* --- LIGHT overrides — the 5 originals keep hand-tuned darker stops --- */
-
-.name[data-hue="steel"] {
-  background-image: linear-gradient(
-    120deg,
-    var(--site-silver-1) 0%,
-    var(--site-silver-2) 22%,
-    #4a6b95 55%,
-    #2f4b73 100%
-  );
-}
-
-.name[data-hue="sage"] {
-  background-image: linear-gradient(
-    120deg,
-    var(--site-silver-1) 0%,
-    var(--site-silver-2) 22%,
-    #5a8065 55%,
-    #3d5f4a 100%
-  );
-}
-
-.name[data-hue="plum"] {
-  background-image: linear-gradient(
-    120deg,
-    var(--site-silver-1) 0%,
-    var(--site-silver-2) 22%,
-    #7c5a90 55%,
-    #5d3f70 100%
-  );
-}
-
-.name[data-hue="amber"] {
-  background-image: linear-gradient(
-    120deg,
-    var(--site-silver-1) 0%,
-    var(--site-silver-2) 22%,
-    #a07840 55%,
-    #7a5a2a 100%
-  );
-}
-
-.name[data-hue="teal"] {
-  background-image: linear-gradient(
-    120deg,
-    var(--site-silver-1) 0%,
-    var(--site-silver-2) 22%,
-    #3d7a85 55%,
-    #285860 100%
-  );
-}
-
-/* --- DARK overrides — original pale stops for the 5 originals -------- */
-
-:global(.dark) .name[data-hue="steel"] {
-  background-image: linear-gradient(
-    120deg,
-    var(--site-silver-1) 0%,
-    var(--site-silver-2) 22%,
-    #9bb0d0 55%,
-    #7a95b8 100%
-  );
-}
-
-:global(.dark) .name[data-hue="sage"] {
-  background-image: linear-gradient(
-    120deg,
-    var(--site-silver-1) 0%,
-    var(--site-silver-2) 22%,
-    #a8c0af 55%,
-    #8ba894 100%
-  );
-}
-
-:global(.dark) .name[data-hue="plum"] {
-  background-image: linear-gradient(
-    120deg,
-    var(--site-silver-1) 0%,
-    var(--site-silver-2) 22%,
-    #bda2c8 55%,
-    #a68ab2 100%
-  );
-}
-
-:global(.dark) .name[data-hue="amber"] {
-  background-image: linear-gradient(
-    120deg,
-    var(--site-silver-1) 0%,
-    var(--site-silver-2) 22%,
-    #dab88a 55%,
-    #c8a26e 100%
-  );
-}
-
-:global(.dark) .name[data-hue="teal"] {
-  background-image: linear-gradient(
-    120deg,
-    var(--site-silver-1) 0%,
-    var(--site-silver-2) 22%,
-    #a3ced4 55%,
-    #7fb0b8 100%
-  );
+  color: var(--h, var(--site-ink));
 }
 
 @media (max-width: 640px) {

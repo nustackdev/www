@@ -107,7 +107,7 @@
   border-color: var(--site-border);
 }
 .ideCopy:focus-visible {
-  outline: 2px solid var(--site-accent);
+  outline: 2px solid var(--site-accent-text);
   outline-offset: 2px;
 }
 .ideGutter {
@@ -142,7 +142,7 @@
 
 /* token colors — sourced from site tokens (--site-accent[-2] hue scope) */
 .kw  { color: var(--site-accent-2); }
-.nu  { color: var(--site-accent); }
+.nu  { color: var(--site-accent-text); }
 .str { color: var(--site-ink); }
 .cmt { color: var(--site-ink-4); font-style: italic; }
 .num { color: var(--site-ink-3); }

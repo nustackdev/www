@@ -11,7 +11,7 @@ interface Props {
   children: ReactNode;
 }
 
-/** SilverWovenName — hero-scale silver→hue gradient title. */
+/** SilverWovenName: hero-scale title in its hue's color. */
 export function SilverWovenName({
   hue, as: Tag = 'span', className, children,
 }: Props) {

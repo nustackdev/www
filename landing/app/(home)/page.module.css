@@ -8,8 +8,8 @@
   --home-tr-title:    -0.012em;
   --home-tr-body:     -0.011em;
 
-  /* Second tone of two tone titles: ink pulled toward the brand purple. */
-  --home-ink-dim: color-mix(in oklab, var(--site-accent) 38%, var(--site-ink-3));
+  /* Second tone of two tone titles: ink-twilight. */
+  --home-ink-dim: var(--site-ink-twilight);
 
   font-feature-settings: "cv01", "ss03";
   letter-spacing: var(--home-tr-body);

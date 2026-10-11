@@ -78,7 +78,7 @@ export function DiskStack({
     return 0.7 - 0.15 * (i - 1) * (1 / Math.max(1, middleCount));
   };
 
-  const accent = 'var(--site-accent)';
+  const accent = 'var(--site-accent-text)';
   const accentWash = 'var(--site-accent-wash)';
   const accentLine = 'var(--site-accent-line)';
 

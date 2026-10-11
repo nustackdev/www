@@ -14,7 +14,7 @@ export function NuspaceMockSvg() {
   const ink2 = 'var(--site-ink-2)';
   const ink3 = 'var(--site-ink-3)';
   const ink4 = 'var(--site-ink-4)';
-  const accent = 'var(--site-accent)';
+  const accent = 'var(--site-accent-text)';
   const accentWash = 'var(--site-accent-wash)';
   const accentLine = 'var(--site-accent-line)';
   const accent2 = 'var(--site-accent-2)';

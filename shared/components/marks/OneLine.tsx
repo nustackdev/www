@@ -15,7 +15,7 @@ const MONO = 'var(--font-mono)';
  * this file stays semantic — it just says "Ref" and "Interaction".
  */
 export function OneLineSvg({ className }: { className?: string }) {
-  const accent = 'var(--site-accent)';
+  const accent = 'var(--site-accent-text)';
   const accentWash = 'var(--site-accent-wash)';
   const accentLine = 'var(--site-accent-line)';
   const accent2 = 'var(--site-accent-2)';

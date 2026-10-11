@@ -87,7 +87,7 @@
 }
 
 .handle:hover {
-  color: var(--site-accent);
+  color: var(--site-accent-text);
   border-bottom-color: var(--site-accent-line);
 }
 

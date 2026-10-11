@@ -130,8 +130,8 @@
   font-variant-numeric: tabular-nums;
   background: linear-gradient(
     to right,
-    color-mix(in oklab, var(--site-accent) 92%, white 8%),
-    color-mix(in oklab, var(--site-accent-2) 92%, white 8%)
+    var(--site-accent-text),
+    var(--site-accent-2)
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -161,11 +161,11 @@
   margin-top: auto;
 }
 
-.demoCard[data-hue="steel"] { --site-accent: var(--site-hue-steel); }
-.demoCard[data-hue="sage"]  { --site-accent: var(--site-hue-sage); }
-.demoCard[data-hue="teal"]  { --site-accent: var(--site-hue-teal); }
-.demoCard[data-hue="plum"]  { --site-accent: var(--site-hue-plum); }
-.demoCard[data-hue="amber"] { --site-accent: var(--site-hue-amber); }
+.demoCard[data-hue="steel"] { --site-accent: var(--site-starlight); --site-accent-text: var(--site-starlight); }
+.demoCard[data-hue="sage"]  { --site-accent: var(--site-status-success); --site-accent-text: var(--site-status-success); }
+.demoCard[data-hue="teal"]  { --site-accent: var(--site-status-info); --site-accent-text: var(--site-status-info); }
+.demoCard[data-hue="plum"]  { --site-accent: var(--site-afterglow-text); --site-accent-text: var(--site-afterglow-text); }
+.demoCard[data-hue="amber"] { --site-accent: var(--site-status-warning); --site-accent-text: var(--site-status-warning); }
 
 /* Shrink SilverWovenName from hero-scale (fs-12) to card-scale. */
 .demoName {
@@ -186,7 +186,7 @@
   color: var(--site-ink-3);
 }
 .stepLabel strong {
-  color: var(--site-accent);
+  color: var(--site-accent-text);
   font-weight: 600;
   margin-right: 0.4em;
 }

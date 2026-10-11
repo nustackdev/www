@@ -35,13 +35,13 @@
   transition: border-color var(--site-t), background var(--site-t);
 }
 .card:hover { border-color: var(--site-accent); background: var(--site-bg-overlay); }
-.card:focus-visible { outline: 2px solid var(--site-accent); outline-offset: 2px; }
+.card:focus-visible { outline: 2px solid var(--site-accent-text); outline-offset: 2px; }
 
 /* Hue tint — --h comes from design/hue-scope.css, keyed off [data-hue].
  * `rose` is a legacy hue outside the 12-hue scope; kept as a targeted
  * fallback so existing callers don't regress. */
-.card[data-hue] { --site-accent: var(--h); }
-.card[data-hue="rose"] { --site-accent: var(--site-hue-rose); }
+.card[data-hue] { --site-accent: var(--h); --site-accent-text: var(--h); }
+.card[data-hue="rose"] { --site-accent: var(--site-status-error); --site-accent-text: var(--site-status-error); }
 
 .kicker {
   font-family: var(--font-mono, ui-monospace, monospace);

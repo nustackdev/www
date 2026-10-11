@@ -1,5 +1,5 @@
 /* =============================================================================
- * Fumadocs → site token bridge.
+ * Fumadocs to site token bridge.
  *
  * Fumadocs-ui components consume --color-fd-* internally. This sheet aliases
  * every --color-fd-* to the corresponding --site-* token, so docs
@@ -14,12 +14,12 @@
 
 :root {
   /* --- Surface & structure --------------------------------------------- */
-  --color-fd-background: var(--site-bg);
+  --color-fd-background: var(--site-bg-raised);
   --color-fd-foreground: var(--site-ink);
   --color-fd-border:     var(--site-border);
-  --color-fd-ring:       var(--site-accent-line);
+  --color-fd-ring:       var(--site-accent-text);
   --color-fd-overlay:    var(--site-scrim);
-  --color-fd-article:    var(--site-bg);
+  --color-fd-article:    var(--site-bg-raised);
 
   /* --- Semantic surface pairs ------------------------------------------ */
   --color-fd-card:                 var(--site-surface);
@@ -29,8 +29,9 @@
   --color-fd-muted:                var(--site-wash);
   --color-fd-muted-foreground:     var(--site-ink-3);
 
-  /* Brand (nustack purple). Foreground: dark ink for contrast on purple. */
-  --color-fd-primary:              var(--site-accent);
+  /* Brand (Afterglow). Fumadocs reads primary mostly as text (active links),
+   * so it takes Afterglow text; the ground reads well on it as a label. */
+  --color-fd-primary:              var(--site-accent-text);
   --color-fd-primary-foreground:   var(--site-bg);
 
   /* Secondary — subtle button / chip surface inside docs. */
@@ -53,4 +54,19 @@
   --color-fd-diff-add-symbol:    var(--site-diff-add-symbol);
   --color-fd-diff-remove:        var(--site-diff-remove);
   --color-fd-diff-remove-symbol: var(--site-diff-remove-symbol);
+}
+
+/* One app shape across nustack: sidebars on ground-deep, the document on
+ * ground-raised, same as nuspace and nudle. Fumadocs paints the sidebar with
+ * its card color, so it is set here directly. */
+#nd-sidebar {
+  background-color: var(--site-code-bg);
+}
+
+
+/* The active page is the press wash with primary ink, like a selected row in
+ * nuspace. Fumadocs tints it with the brand; Afterglow is never a background. */
+#nd-sidebar a[data-active="true"] {
+  background-color: var(--site-wash-2);
+  color: var(--site-ink);
 }

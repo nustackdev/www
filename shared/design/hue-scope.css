@@ -1,125 +1,81 @@
 /* =============================================================================
- * Hue scope — expose the current [data-hue]'s tokens as short, hue-agnostic
- * aliases. Any element (or ancestor) that carries data-hue="crimson" makes
+ * Hue scope. Any element (or ancestor) carrying data-hue="<hue>" exposes
  *
- *   --h        base (mid stop / accent)
- *   --h-2      deep stop
- *   --h-ink    readable text on wash
- *   --h-soft   14–18% wash tint
- *   --h-wash    7–9%  wash tint
- *   --h-line   38–44% border
- *   --h-glow   28–34% glow
+ *   --h        color (text, icons, strokes)
+ *   --h-2      deep stop, same as --h now
+ *   --h-ink    readable text on --h-soft
+ *   --h-soft   soft fill
+ *   --h-wash   soft fill
+ *   --h-line   border
  *
- * available to every descendant. Consumers read var(--h) et al. and decide
- * how to map them onto --site-accent, backgrounds, borders, gradients, etc.
- * Adding a hue = one block here (plus tokens.css). No consumer touches.
+ * to every descendant. The old silver woven hue palette is gone: each hue
+ * name now resolves to the nearest color of the nustack design language
+ * (aurora, sunset, ember, moonlight, Starlight, Afterglow), so existing
+ * data-hue values keep working without their own palette.
  * ==========================================================================*/
 
-[data-hue="crimson"] {
-  --h:      var(--site-hue-crimson);
-  --h-2:    var(--site-hue-crimson-2);
-  --h-ink:  var(--site-hue-crimson-ink);
-  --h-soft: var(--site-hue-crimson-soft);
-  --h-wash: var(--site-hue-crimson-wash);
-  --h-line: var(--site-hue-crimson-line);
-  --h-glow: var(--site-hue-crimson-glow);
-}
-[data-hue="coral"] {
-  --h:      var(--site-hue-coral);
-  --h-2:    var(--site-hue-coral-2);
-  --h-ink:  var(--site-hue-coral-ink);
-  --h-soft: var(--site-hue-coral-soft);
-  --h-wash: var(--site-hue-coral-wash);
-  --h-line: var(--site-hue-coral-line);
-  --h-glow: var(--site-hue-coral-glow);
-}
-[data-hue="amber"] {
-  --h:      var(--site-hue-amber);
-  --h-2:    var(--site-hue-amber-2);
-  --h-ink:  var(--site-hue-amber-ink);
-  --h-soft: var(--site-hue-amber-soft);
-  --h-wash: var(--site-hue-amber-wash);
-  --h-line: var(--site-hue-amber-line);
-  --h-glow: var(--site-hue-amber-glow);
-}
-[data-hue="gold"] {
-  --h:      var(--site-hue-gold);
-  --h-2:    var(--site-hue-gold-2);
-  --h-ink:  var(--site-hue-gold-ink);
-  --h-soft: var(--site-hue-gold-soft);
-  --h-wash: var(--site-hue-gold-wash);
-  --h-line: var(--site-hue-gold-line);
-  --h-glow: var(--site-hue-gold-glow);
-}
+/* success */
 [data-hue="sage"] {
-  --h:      var(--site-hue-sage);
-  --h-2:    var(--site-hue-sage-2);
-  --h-ink:  var(--site-hue-sage-ink);
-  --h-soft: var(--site-hue-sage-soft);
-  --h-wash: var(--site-hue-sage-wash);
-  --h-line: var(--site-hue-sage-line);
-  --h-glow: var(--site-hue-sage-glow);
+  --h:      var(--site-status-success);
+  --h-2:    var(--site-status-success);
+  --h-ink:  var(--site-status-success);
+  --h-soft: var(--site-status-success-soft);
+  --h-wash: var(--site-status-success-soft);
+  --h-line: var(--site-status-success-line);
 }
-[data-hue="teal"] {
-  --h:      var(--site-hue-teal);
-  --h-2:    var(--site-hue-teal-2);
-  --h-ink:  var(--site-hue-teal-ink);
-  --h-soft: var(--site-hue-teal-soft);
-  --h-wash: var(--site-hue-teal-wash);
-  --h-line: var(--site-hue-teal-line);
-  --h-glow: var(--site-hue-teal-glow);
+
+/* warning */
+[data-hue="amber"],
+[data-hue="gold"] {
+  --h:      var(--site-status-warning);
+  --h-2:    var(--site-status-warning);
+  --h-ink:  var(--site-status-warning);
+  --h-soft: var(--site-status-warning-soft);
+  --h-wash: var(--site-status-warning-soft);
+  --h-line: var(--site-status-warning-line);
 }
+
+/* error */
+[data-hue="crimson"],
+[data-hue="coral"] {
+  --h:      var(--site-status-error);
+  --h-2:    var(--site-status-error);
+  --h-ink:  var(--site-status-error);
+  --h-soft: var(--site-status-error-soft);
+  --h-wash: var(--site-status-error-soft);
+  --h-line: var(--site-status-error-line);
+}
+
+/* info */
+[data-hue="teal"],
 [data-hue="cyan"] {
-  --h:      var(--site-hue-cyan);
-  --h-2:    var(--site-hue-cyan-2);
-  --h-ink:  var(--site-hue-cyan-ink);
-  --h-soft: var(--site-hue-cyan-soft);
-  --h-wash: var(--site-hue-cyan-wash);
-  --h-line: var(--site-hue-cyan-line);
-  --h-glow: var(--site-hue-cyan-glow);
+  --h:      var(--site-status-info);
+  --h-2:    var(--site-status-info);
+  --h-ink:  var(--site-status-info);
+  --h-soft: var(--site-status-info-soft);
+  --h-wash: var(--site-status-info-soft);
+  --h-line: var(--site-status-info-line);
 }
-[data-hue="steel"] {
-  --h:      var(--site-hue-steel);
-  --h-2:    var(--site-hue-steel-2);
-  --h-ink:  var(--site-hue-steel-ink);
-  --h-soft: var(--site-hue-steel-soft);
-  --h-wash: var(--site-hue-steel-wash);
-  --h-line: var(--site-hue-steel-line);
-  --h-glow: var(--site-hue-steel-glow);
-}
+
+/* Starlight */
+[data-hue="steel"],
 [data-hue="indigo"] {
-  --h:      var(--site-hue-indigo);
-  --h-2:    var(--site-hue-indigo-2);
-  --h-ink:  var(--site-hue-indigo-ink);
-  --h-soft: var(--site-hue-indigo-soft);
-  --h-wash: var(--site-hue-indigo-wash);
-  --h-line: var(--site-hue-indigo-line);
-  --h-glow: var(--site-hue-indigo-glow);
+  --h:      var(--site-starlight);
+  --h-2:    var(--site-starlight);
+  --h-ink:  var(--site-starlight);
+  --h-soft: var(--site-starlight-soft);
+  --h-wash: var(--site-starlight-soft);
+  --h-line: var(--site-starlight-line);
 }
-[data-hue="violet"] {
-  --h:      var(--site-hue-violet);
-  --h-2:    var(--site-hue-violet-2);
-  --h-ink:  var(--site-hue-violet-ink);
-  --h-soft: var(--site-hue-violet-soft);
-  --h-wash: var(--site-hue-violet-wash);
-  --h-line: var(--site-hue-violet-line);
-  --h-glow: var(--site-hue-violet-glow);
-}
-[data-hue="plum"] {
-  --h:      var(--site-hue-plum);
-  --h-2:    var(--site-hue-plum-2);
-  --h-ink:  var(--site-hue-plum-ink);
-  --h-soft: var(--site-hue-plum-soft);
-  --h-wash: var(--site-hue-plum-wash);
-  --h-line: var(--site-hue-plum-line);
-  --h-glow: var(--site-hue-plum-glow);
-}
+
+/* Afterglow */
+[data-hue="violet"],
+[data-hue="plum"],
 [data-hue="magenta"] {
-  --h:      var(--site-hue-magenta);
-  --h-2:    var(--site-hue-magenta-2);
-  --h-ink:  var(--site-hue-magenta-ink);
-  --h-soft: var(--site-hue-magenta-soft);
-  --h-wash: var(--site-hue-magenta-wash);
-  --h-line: var(--site-hue-magenta-line);
-  --h-glow: var(--site-hue-magenta-glow);
+  --h:      var(--site-afterglow-text);
+  --h-2:    var(--site-afterglow-text);
+  --h-ink:  var(--site-afterglow-text);
+  --h-soft: var(--site-afterglow-soft);
+  --h-wash: var(--site-afterglow-soft);
+  --h-line: var(--site-afterglow-line);
 }

@@ -65,7 +65,7 @@ export function NuHero() {
                   <BookOpen size={14} aria-hidden />
                   <span>Quickstart</span>
                 </Button>
-                <Button variant="solidAlt" href="https://github.com/nustackdev/nu">
+                <Button variant="neutral" href="https://github.com/nustackdev/nu">
                   <GithubMark size={14} />
                   <ButtonRepoLabel>nustackdev/nu</ButtonRepoLabel>
                 </Button>

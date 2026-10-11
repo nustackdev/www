@@ -39,8 +39,9 @@
  * as tokens (silvers were both too close to white, everything mushed). Uses
  * the same teal + steel pairing as Section hue="code". */
 .codeScope {
-  --site-accent:   var(--site-hue-teal);
-  --site-accent-2: var(--site-hue-steel);
+  --site-accent:   var(--site-status-info);
+  --site-accent-text: var(--site-status-info);
+  --site-accent-2: var(--site-starlight);
 }
 
 /* Pull-quote landmarks — full width, hue accent per landmark. */
@@ -50,7 +51,7 @@
   font-weight: 500;
   letter-spacing: -0.005em;
   color: var(--site-ink);
-  border-left: 2px solid var(--pq-hue, var(--site-hue-teal));
+  border-left: 2px solid var(--pq-hue, var(--site-status-info));
   padding: calc(var(--site-u) * 0.15) 0 calc(var(--site-u) * 0.15) var(--site-link-card-pad-x);
   margin: 0;
   max-width: 72ch;
@@ -58,15 +59,15 @@
 
 .pullQuote em {
   font-style: normal;
-  color: var(--pq-hue, var(--site-hue-teal));
+  color: var(--pq-hue, var(--site-status-info));
 }
 
 .pullQuote code { color: inherit; }
 
 /* Palette-1: the "same primitive" payoff (after WHAT beats). */
-.pullQuoteTeal  { --pq-hue: var(--site-hue-teal); }
+.pullQuoteTeal  { --pq-hue: var(--site-status-info); }
 /* Palette-2: the "not features, falls out" payoff (after HOW beat). */
-.pullQuoteAmber { --pq-hue: var(--site-hue-amber); }
+.pullQuoteAmber { --pq-hue: var(--site-status-warning); }
 
 /* Vocabulary card (Beat 2 right) — Ref / Interaction / Fabric definitions. */
 .vocab {
@@ -85,7 +86,7 @@
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.82rem;
   letter-spacing: 0.02em;
-  color: var(--site-hue-steel);
+  color: var(--site-starlight);
   text-transform: none;
   margin: 0;
 }
@@ -124,7 +125,7 @@
 .fabricRow dt code {
   background: transparent;
   padding: 0;
-  color: var(--site-hue-sage);
+  color: var(--site-status-success);
   font-size: 0.92rem;
 }
 
@@ -159,7 +160,7 @@
   top: 0.72em;
   width: 0.5rem;
   height: 1px;
-  background: var(--site-hue-plum);
+  background: var(--site-afterglow-text);
 }
 
 .consequences li strong { color: var(--site-ink); font-weight: 600; }

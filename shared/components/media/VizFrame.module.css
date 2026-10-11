@@ -49,6 +49,7 @@
 /* --- hue remap for shared primitives inside the frame --------------------- */
 .frame[data-hue] {
   --site-accent:        var(--h);
+  --site-accent-text:   var(--h);
   --site-accent-soft:   var(--h-soft);
   --site-accent-wash:   var(--h-wash);
   --site-accent-line:   var(--h-line);

@@ -56,7 +56,7 @@ export function BrowserChrome({
   const ink4 = 'var(--site-ink-4)';
   const rule = 'var(--site-rule)';
   const ruleSoft = 'var(--site-rule-2)';
-  const accent = 'var(--site-accent)';
+  const accent = 'var(--site-accent-text)';
   const bg = 'var(--site-surface)';
   const mono = 'var(--font-mono)';
 

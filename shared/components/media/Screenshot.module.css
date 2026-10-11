@@ -16,7 +16,8 @@
 
 .frame[data-hue] {
   --site-accent:   var(--h);
-  --site-accent-2: var(--site-hue-steel);
+  --site-accent-text: var(--h);
+  --site-accent-2: var(--site-starlight);
 }
 
 .body {

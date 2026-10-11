@@ -11,7 +11,7 @@
   transition: border-color var(--site-t), background var(--site-t);
 }
 .wrap:focus-within {
-  border-color: var(--site-accent);
+  border-color: var(--site-accent-text);
   background: var(--site-chrome-bg);
 }
 

@@ -4,7 +4,7 @@
   white-space: nowrap;
 }
 .nu {
-  color: var(--site-accent);
+  color: var(--site-accent-text);
   font-weight: inherit;
 }
 .stack {
