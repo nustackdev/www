@@ -7,9 +7,9 @@ import type { ReactElement } from 'react';
  * clamped so long headers cannot overflow into the footer row.
  */
 
-const BG = '#0f1523'; // Dusk Navy, the brand ground for marketing
-const FG = '#e6eaf1'; // ink-1
-const MUTED = '#96a2b9'; // ink-3
+const BG = '#15181f'; // Dusk ground
+const FG = '#eceef4'; // ink-1
+const MUTED = '#9ba2ae'; // ink-3
 const ACCENT = '#8946db'; // afterglow
 const ACCENT_2 = '#8cbcff'; // starlight
 const ACCENT_LINE = 'rgba(137, 70, 219, 0.44)'; // afterglow 44%
