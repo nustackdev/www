@@ -1,4 +1,10 @@
 import type { ReactElement } from 'react';
+import {
+  NU_MARK_PATH,
+  NU_MARK_STOPS,
+  NU_MARK_TRANSFORM,
+  NU_MARK_VIEWBOX,
+} from '../marks/nuMark';
 
 /**
  * Shared OG image renderer for every app (landing, docs, blog).
@@ -10,8 +16,6 @@ import type { ReactElement } from 'react';
 const BG = '#15181f'; // Dusk ground
 const FG = '#eceef4'; // ink-1
 const MUTED = '#9ba2ae'; // ink-3
-const ACCENT = '#8946db'; // afterglow
-const ACCENT_2 = '#8cbcff'; // starlight
 const ACCENT_LINE = 'rgba(137, 70, 219, 0.44)'; // afterglow 44%
 
 function NuMark({ size = 92 }: { size?: number }): ReactElement {
@@ -19,18 +23,18 @@ function NuMark({ size = 92 }: { size?: number }): ReactElement {
     <svg
       width={size}
       height={size}
-      viewBox="140 144 271 263"
+      viewBox={NU_MARK_VIEWBOX}
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <linearGradient id="og-nu-grad" x1="140" y1="407" x2="411" y2="144" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor={ACCENT} />
-          <stop offset="1" stopColor={ACCENT_2} />
+        <linearGradient id="og-nu-grad" x1="0" y1="1" x2="1" y2="0">
+          {NU_MARK_STOPS.map((s) => (
+            <stop key={s.offset} offset={s.offset} stopColor={s.color} />
+          ))}
         </linearGradient>
       </defs>
-      <g transform="translate(0,552) scale(0.1,-0.1)" fill="url(#og-nu-grad)" stroke="none">
-        <path d="M2121 4065 c-376 -82 -653 -368 -711 -735 -6 -41 -10 -402 -10 -972 l0 -908 190 0 190 0 0 878 c0 968 -1 941 64 1070 19 37 51 86 71 110 54 62 155 130 238 161 l72 26 363 3 362 3 0 -681 0 -681 143 3 c132 3 145 5 172 26 68 53 64 1 65 900 l0 812 -572 -1 c-449 0 -587 -4 -637 -14z" />
-        <path d="M3730 3203 c0 -973 2 -940 -66 -1076 -47 -93 -144 -190 -235 -234 -117 -58 -158 -63 -531 -63 l-338 0 0 681 0 680 -142 -3 c-160 -3 -178 -10 -217 -79 -21 -36 -21 -46 -21 -848 l0 -811 563 0 c350 0 586 4 623 11 379 67 675 365 734 739 6 41 10 402 10 973 l0 907 -190 0 -190 0 0 -877z" />
+      <g transform={NU_MARK_TRANSFORM} fill="url(#og-nu-grad)" stroke="none">
+        <path d={NU_MARK_PATH} />
       </g>
     </svg>
   );
