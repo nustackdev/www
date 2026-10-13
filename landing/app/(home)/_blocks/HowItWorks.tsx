@@ -24,9 +24,9 @@ const LAYERS: Layer[] = [
   },
   { role: 'The primitive', name: 'nu', line: 'The interaction model implementation in Python.', repo: `${GH}/nu` },
   {
-    role: 'The fabrics',
+    role: 'The standard library',
     name: 'nustd',
-    line: 'The standard Nu library. Refs and Interactions for everyday tasks.',
+    line: 'Nu Refs and Interactions for everyday tasks.',
     repo: `${GH}/nu/tree/main/pkgs/nustd`,
   },
   {
