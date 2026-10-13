@@ -1,0 +1,32 @@
+/* A space's highlights: three short lines in a row, ticked by a dot. */
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--site-fs-9);
+  line-height: 1.45;
+  color: var(--site-ink-2);
+}
+
+.highlights li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.highlights li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--site-accent-text);
+}
+
+@media (max-width: 860px) {
+  .highlights { grid-template-columns: 1fr; }
+}

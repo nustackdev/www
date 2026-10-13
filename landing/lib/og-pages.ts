@@ -18,9 +18,9 @@ export interface PageOgEntry {
 export const PAGE_OG_ENTRIES: PageOgEntry[] = [
   {
     key: 'root',
-    title: 'nuspace is an information base.',
+    title: 'Build your computable space.',
     description:
-      'A database keeps the data. A knowledge base keeps the conclusions. An information base keeps the data in context, and runs the programs that make it.',
+      'For everything you work with: notes, data, tools, agents. Connected cells: living programs that hold data, logic and look in one form.',
     siteLabel: appName,
   },
   {

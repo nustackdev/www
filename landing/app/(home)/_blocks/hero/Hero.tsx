@@ -5,25 +5,24 @@ import s from './Hero.module.css';
 
 /**
  * Hero — left aligned head, then the hero scene bleeding past the main
- * column to the right, cut by the window. Copy from compass: category,
- * positioning, lines.
+ * column to the right, cut by the window. Copy from identity.md in Go.
  */
 export function Hero() {
   return (
     <section className={s.root}>
       <div className={s.head}>
-        <p className={s.eyebrow}>The interaction primitive, and the OS that runs it.</p>
-
         <h1 className={s.title}>
-          Data, logic and UI,
+          Build your computable space
           <br />
-          <span className={s.dim}>connected by default.</span>
+          <span className={s.dim}>for everything you work with: notes, data, tools, agents.</span>
         </h1>
 
         <div className={s.row}>
           <p className={s.sub}>
-            A computing space for data-centric apps. It runs on your machine,
-            and you and your agents build in it.
+            Elsewhere, a note is a dead document, data is scattered, tools are
+            siloed and an agent&apos;s work is lost in chat. In nuspace,
+            they&apos;re all connected cells: living programs that hold data,
+            logic and look in one form.
           </p>
           <div className={s.actions}>
             <Button variant="solid" href="#start">

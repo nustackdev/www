@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 const OG_IMAGE = '/og/page/root/image.png';
-const TITLE = 'nuspace: a computing space for data-centric apps';
-const DESCRIPTION = 'An interaction OS that runs Nu programs. Data, logic and UI, connected by default.';
+const TITLE = 'nuspace: build your computable space';
+const DESCRIPTION = 'Build your computable space for everything you work with: notes, data, tools, agents. Connected cells: living programs that hold data, logic and look in one form.';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),

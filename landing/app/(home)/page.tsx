@@ -2,7 +2,7 @@ import { Container } from '@www/shared/components/grid/Container';
 import { Footer } from '@www/shared/components/nav/Footer';
 import { Hero } from './_blocks/hero/Hero';
 import { Spaces } from './_blocks/Spaces';
-import { Agents } from './_blocks/Agents';
+import { Highlights } from './_blocks/Highlights';
 import { UnderTheHood } from './_blocks/UnderTheHood';
 import { TryIt } from './_blocks/TryIt';
 import s from './page.module.css';
@@ -17,8 +17,8 @@ export default function Home() {
     <div className={s.root}>
       <Container className={s.content}>
         <Hero />
+        <Highlights />
         <Spaces />
-        <Agents />
         <UnderTheHood />
         <TryIt />
       </Container>

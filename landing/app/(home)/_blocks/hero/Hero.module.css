@@ -14,22 +14,16 @@
   gap: 24px;
 }
 
-/* -- Eyebrow -------------------------------------------------------------- */
-
-.eyebrow {
-  margin: 0;
-  font-size: var(--site-fs-6);
-  color: var(--site-ink-3);
-}
-
 /* -- Title + row ---------------------------------------------------------- */
 
 .title {
   margin: 0;
   font-family: var(--font-display);
   font-weight: var(--home-fw-title);
-  font-size: clamp(40px, 6.4vw, 80px);
-  line-height: 1.02;
+  max-width: min(22ch, 100%);
+  font-size: clamp(36px, 5.2vw, 68px);
+  line-height: 1.04;
+  text-wrap: balance;
   letter-spacing: var(--home-tr-display);
   color: var(--site-ink);
 }
@@ -45,7 +39,7 @@
 
 .sub {
   margin: 0;
-  max-width: min(42ch, 100%);
+  max-width: min(54ch, 100%);
   font-size: clamp(16px, 1.3vw, 18px);
   line-height: 1.5;
   color: var(--site-ink-2);

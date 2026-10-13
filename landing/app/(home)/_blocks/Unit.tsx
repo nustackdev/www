@@ -9,15 +9,17 @@ export interface UnitProps {
   description: ReactNode;
   /** Tape scene name. Omit for units that carry their own visual. */
   scene?: string;
+  /** Extras between the head and the scene, eg a space's highlights. */
+  lead?: ReactNode;
   /** Extras under the scene: stats, code, links. */
   children?: ReactNode;
 }
 
 /**
- * Unit — the one repeated section: h3 left, description right, the scene
- * bleeding right past the main column, extras, then a divider.
+ * Unit — the one repeated section: h3 left, description right, lead extras,
+ * the scene bleeding right past the main column, extras, then a divider.
  */
-export function Unit({ kicker, title, description, scene, children }: UnitProps) {
+export function Unit({ kicker, title, description, lead, scene, children }: UnitProps) {
   return (
     <article className={s.root}>
       <div className={s.head}>
@@ -27,6 +29,7 @@ export function Unit({ kicker, title, description, scene, children }: UnitProps)
         </div>
         <p className={s.desc}>{description}</p>
       </div>
+      {lead}
       {scene ? <Scene name={scene} ratio="16 / 10" className={s.scene} /> : null}
       {children}
     </article>
