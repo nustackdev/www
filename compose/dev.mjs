@@ -55,6 +55,13 @@ const server = createServer((req, res) => {
     return;
   }
 
+  // A bare zone root gets its slash, as Pages does in production.
+  if (APPS.some((a) => a.zone && path === a.zone)) {
+    const { search } = new URL(req.url, 'http://x');
+    res.writeHead(308, { location: `${path}/${search}` }).end();
+    return;
+  }
+
   const app = devAppFor(path);
   const upstream = request(
     { host: '127.0.0.1', port: app.port, path: req.url, method: req.method, headers: req.headers },

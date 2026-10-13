@@ -15,7 +15,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'no
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const NUSPACE = '0.5.1';
+const NUSPACE = '0.5.3';
 
 const OUT = 'public/scenes/nuspace';
 const BASE = '/scenes/nuspace/';
