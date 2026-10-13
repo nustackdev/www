@@ -22,6 +22,10 @@
 .contentLayer      { position: relative; z-index: 3; flex: 1 0 auto; }
 .footerLayer       { position: relative; z-index: 3; }
 
-/* Top clearance so page content sits below the fixed FloatingNav.
+/* Top clearance so page content sits below the fixed FloatingNav, and the
+ * gap before the footer: the page owns it, the footer has no outer margin.
  * Scales with the u-atom so proportion holds across viewports. */
-.content { padding-top: var(--site-nav-clearance); }
+.content {
+  padding-top: var(--site-nav-clearance);
+  padding-bottom: var(--site-gap-xloose);
+}
