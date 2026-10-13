@@ -3,7 +3,7 @@ import { Footer } from '@www/shared/components/nav/Footer';
 import { Hero } from './_blocks/hero/Hero';
 import { Spaces } from './_blocks/Spaces';
 import { Highlights } from './_blocks/Highlights';
-import { UnderTheHood } from './_blocks/UnderTheHood';
+import { HowItWorks } from './_blocks/HowItWorks';
 import { TryIt } from './_blocks/TryIt';
 import s from './page.module.css';
 
@@ -19,7 +19,7 @@ export default function Home() {
         <Hero />
         <Highlights />
         <Spaces />
-        <UnderTheHood />
+        <HowItWorks />
         <TryIt />
       </Container>
       <div className={s.layer}>

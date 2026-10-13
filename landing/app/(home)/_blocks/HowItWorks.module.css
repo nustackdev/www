@@ -1,0 +1,113 @@
+/* HowItWorks — the stack as rows, the base first: number, role and name,
+ * one line, an arrow to the repo. Lines between rows only, fading at both ends,
+ * like Highlights. */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4vw, 48px);
+  padding-bottom: clamp(64px, 8vw, 112px);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list > li:not(:last-child)::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--site-border-strong) 18%,
+    var(--site-border-strong) 82%,
+    transparent
+  );
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 0.8fr) minmax(0, 2fr) auto;
+  align-items: center;
+  gap: 16px 32px;
+  padding-block: clamp(22px, 2.4vw, 32px);
+  text-decoration: none;
+  color: inherit;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: var(--site-fs-7);
+  color: var(--site-ink-3);
+  transition: color var(--site-t);
+}
+
+.id {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.role {
+  font-size: var(--site-fs-5);
+  font-weight: 500;
+  color: var(--site-accent-text);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: var(--home-fw-title);
+  font-size: clamp(22px, 2.2vw, 28px);
+  line-height: 1.15;
+  letter-spacing: var(--home-tr-display);
+  color: var(--site-ink);
+}
+
+.line {
+  max-width: 60ch;
+  font-size: var(--site-fs-9);
+  line-height: 1.5;
+  color: var(--site-ink-2);
+  text-wrap: pretty;
+}
+
+.gh {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--site-fs-7);
+  font-weight: 500;
+  color: var(--site-ink-3);
+  white-space: nowrap;
+  transition: color var(--site-t);
+}
+
+.arrow {
+  flex: none;
+  transition: transform var(--site-t);
+}
+
+.row:hover .num,
+.row:hover .gh { color: var(--site-accent-text); }
+.row:hover .arrow { transform: translate(2px, -2px); }
+.row:hover .name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+
+.close {
+  margin: 0;
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.5;
+  color: var(--site-ink-2);
+}
+
+@media (max-width: 860px) {
+  .row {
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 10px 16px;
+  }
+  .line { grid-column: 2 / 4; }
+  .gh { grid-column: 3; grid-row: 1; align-self: center; }
+}
