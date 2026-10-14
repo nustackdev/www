@@ -55,23 +55,30 @@
 .learnList {
   list-style: none;
   padding: 0;
-  margin: var(--site-gap-tight) 0 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--site-gap-tight);
 }
+/* Same type and hover halo as the product links. */
 .learnLink {
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  color: var(--site-ink-3);
+  padding: 3px 10px;
+  margin: -3px -10px;
+  border-radius: var(--site-r-md);
+  color: var(--site-ink-2);
   text-decoration: none;
   font-size: var(--site-fs-5);
-  transition: color .18s ease;
+  letter-spacing: var(--site-tr-tight);
+  transition: color .18s ease, background .18s ease;
 }
 .learnLink:hover,
 .learnLink:focus-visible {
   color: var(--site-ink);
+  background: var(--site-wash);
   outline: none;
 }
 .learnLinkExternal {
@@ -107,24 +114,32 @@
 /* --- Sitemap: one column per product pair ------------------------------- */
 
 .sitemap {
+  --pair-gap: calc(var(--site-gap-loose) * 2);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--site-gap-loose) var(--pair-gap);
   min-width: 0;
 }
 
 .items {
+  position: relative;
   list-style: none;
-  padding: 0 var(--site-gap-loose);
+  padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: var(--site-gap-normal);
   min-width: 0;
 }
-.items:first-child { padding-left: 0; }
-.items:last-child { padding-right: 0; }
-/* A rule between pairs. */
-.items + .items { border-left: 1px solid var(--site-rule-2); }
+/* A rule between pairs, centred in the gap so every column is the same width. */
+.items + .items::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--pair-gap) / -2);
+  border-left: 1px solid var(--site-rule-2);
+}
 
 .item {
   min-width: 0;
@@ -193,9 +208,8 @@
 
 /* --- Responsive ---------------------------------------------------------- */
 
-/* Tablet: brand stacks above sitemap; brand col becomes a horizontal band that
-   uses the freed-up right side — mark+tagline left, Learn links inline right. */
-/* Tablet: brand stacks above sitemap. */
+/* Tablet: brand stacks above sitemap, as a band: mark left, Learn links
+   inline right. */
 @media (max-width: 1024px) {
   .top {
     grid-template-columns: 1fr;
@@ -216,7 +230,6 @@
   .learnList {
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 0;
     gap: var(--site-gap-tight) var(--site-gap-normal);
     align-items: center;
   }
@@ -227,11 +240,11 @@
   .sitemap {
     grid-template-columns: 1fr;
   }
-  .items {
-    padding: var(--site-gap-normal) 0;
-  }
-  .items:first-child { padding-top: 0; }
-  .items + .items {
+  .items + .items::before {
+    top: calc(var(--site-gap-loose) / -2);
+    bottom: auto;
+    left: 0;
+    right: 0;
     border-left: 0;
     border-top: 1px solid var(--site-rule-2);
   }
