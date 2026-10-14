@@ -1,6 +1,11 @@
 {
   "title": "Nu",
-  "description": "The interaction primitive, and nustd.",
+  "description": "The interaction model in Python.",
   "root": true,
-  "pages": ["index", "tutorials", "how-to", "model", "reference"]
+  "pages": [
+    "index",
+    "tutorials",
+    "how-to",
+    "reference"
+  ]
 }

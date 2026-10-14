@@ -1,0 +1,8 @@
+{
+  "title": "nustd",
+  "description": "Refs and Interactions for everyday tasks.",
+  "root": true,
+  "pages": [
+    "index"
+  ]
+}

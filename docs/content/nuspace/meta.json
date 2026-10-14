@@ -1,6 +1,8 @@
 {
   "title": "nuspace",
-  "description": "The information base, and nuverse.",
+  "description": "Your computable space.",
   "root": true,
-  "pages": ["index", "nuverse"]
+  "pages": [
+    "index"
+  ]
 }
