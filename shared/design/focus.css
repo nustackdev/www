@@ -1,0 +1,36 @@
+/* =============================================================================
+ * Focus and motion, the two a11y rules every zone shares (design language:
+ * a11y.md, motion.md).
+ *
+ * One ring, the same everywhere: 2px Afterglow (--site-ring), 2px off the
+ * element, following its radius. Keyboard focus only, a click never paints
+ * it. Components never style focus themselves; hover washes stay hover.
+ *
+ * Where a parent would clip a ring drawn outside (rows in a scroller, cells
+ * flush with a frame), add `data-ring="inset"`: same ring, drawn inside.
+ * ==========================================================================*/
+
+:where(a, button, summary, input, select, textarea, [role="button"], [role="menuitem"], [role="tab"], [tabindex]):focus-visible {
+  outline: var(--site-ring-width) solid var(--site-ring);
+  outline-offset: var(--site-ring-offset);
+}
+
+[data-ring="inset"]:focus-visible {
+  outline-offset: calc(var(--site-ring-width) * -1);
+}
+
+/* Fields carry their own edge, focus moves it to the ring color. */
+:where(input, textarea, select):focus-visible {
+  outline-offset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

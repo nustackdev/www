@@ -17,7 +17,7 @@
   --color-fd-background: var(--site-bg-raised);
   --color-fd-foreground: var(--site-ink);
   --color-fd-border:     var(--site-border);
-  --color-fd-ring:       var(--site-accent-text);
+  --color-fd-ring:       var(--site-ring);
   --color-fd-overlay:    var(--site-scrim);
   --color-fd-article:    var(--site-bg-raised);
 

@@ -94,12 +94,11 @@ const image = ogImagePath(post.id);
     transition: color var(--site-t);
   }
   .back :global(svg) {
-    transition: transform 0.18s ease;
+    transition: transform var(--site-t);
   }
   .back:hover,
   .back:focus-visible {
     color: var(--site-ink);
-    outline: none;
   }
   .back:hover :global(svg),
   .back:focus-visible :global(svg) {

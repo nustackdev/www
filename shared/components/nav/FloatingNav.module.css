@@ -63,13 +63,12 @@
   color: var(--site-ink-2);
   cursor: pointer;
   text-decoration: none;
-  transition: color .18s ease, background .18s ease;
+  transition: color var(--site-t), background var(--site-t);
 }
 .navIcon:hover,
 .navIcon:focus-visible {
   color: var(--site-ink);
   background: var(--site-wash-2);
-  outline: none;
 }
 
 .navWord {
@@ -87,21 +86,20 @@
   font: inherit;
   letter-spacing: inherit;
   white-space: nowrap;
-  transition: color .18s ease, background .18s ease;
+  transition: color var(--site-t), background var(--site-t);
 }
 .navWord:hover,
 .navWord:focus-visible,
 .navWord[data-open='true'] {
   color: var(--site-ink);
   background: var(--site-wash-2);
-  outline: none;
 }
 
 .caret {
   display: inline-block;
   margin-left: 6px;
   opacity: 0.7;
-  transition: transform .18s ease;
+  transition: transform var(--site-t);
 }
 .navWord[data-open='true'] .caret { transform: rotate(180deg); }
 
@@ -174,7 +172,7 @@
   gap: var(--site-gap-tight);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  animation: sheetIn .18s ease-out;
+  animation: sheetIn var(--site-dur-base) var(--site-ease-out);
 }
 @keyframes sheetIn {
   from { opacity: 0; transform: translateY(-4px); }
@@ -199,13 +197,12 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: color .18s ease, background .18s ease;
+  transition: color var(--site-t), background var(--site-t);
 }
 .sheetClose:hover,
 .sheetClose:focus-visible {
   color: var(--site-ink);
   background: var(--site-wash-2);
-  outline: none;
 }
 /* Top-level items in the sheet: Products (accordion) + flat links share a row
    treatment so they read as siblings. Hairline between rows. */
@@ -225,12 +222,11 @@
   font-family: var(--font-display);
   font-size: var(--site-fs-8);
   font-weight: 500;
-  transition: background .18s ease;
+  transition: background var(--site-t);
 }
 .sheetTopLink:hover,
 .sheetTopLink:focus-visible {
   background: var(--site-wash);
-  outline: none;
 }
 
 .sheetAccordionSummary {
@@ -276,7 +272,7 @@
   justify-content: center;
   color: var(--site-ink);
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: var(--site-r-lg);
   font-family: var(--font-display);
   font-size: var(--site-fs-6);
   font-weight: 500;
@@ -288,7 +284,7 @@
   display: inline-block;
   margin-left: 4px;
   vertical-align: -2px;
-  transition: transform 180ms ease-out;
+  transition: transform var(--site-t);
 }
 .sheetSubLink:hover .sheetSubExploreArrow,
 .sheetSubLink:focus-visible .sheetSubExploreArrow {

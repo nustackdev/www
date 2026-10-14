@@ -2,7 +2,6 @@
 @source '../../../shared';
 @import '@fontsource-variable/inter/opsz.css';
 @import '@www/shared/design/tokens.css';
-@import '@www/shared/design/hue-scope.css';
 @import '@www/shared/design/base.css';
 @import './prose.css';
 

@@ -25,18 +25,18 @@ export function Hero() {
             logic and look in one form.
           </p>
           <div className={s.actions}>
-            <Button variant="solid" href="#start">
-              <span>Get started</span>
+            <Button variant="primary" href="#start" arrow>
+              Get started
             </Button>
-            <Button variant="neutral" href="https://github.com/nustackdev/nuspace">
-              <GithubMark size={14} />
-              <span>GitHub</span>
+            <Button variant="secondary" href="https://github.com/nustackdev/nuspace">
+              <GithubMark size={16} />
+              GitHub
             </Button>
           </div>
         </div>
       </div>
 
-      <Scene name="hero" ratio="16 / 10" className={s.scene} />
+      <Scene name="hero" />
     </section>
   );
 }

@@ -1,7 +1,0 @@
-/* PageBadge — inline row: uppercase mono kicker + hue-tinted name. */
-
-.badge {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.4em;
-}

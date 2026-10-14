@@ -3,7 +3,7 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 @import '@www/shared/design/tokens.css';
-@import '@www/shared/design/hue-scope.css';
+@import '@www/shared/design/focus.css';
 @import './fumadocs-bridge.css';
 
 html {

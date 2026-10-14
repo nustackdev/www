@@ -9,8 +9,11 @@
   align-items: flex-start;
   padding: 12vh 16px 16px;
   background: var(--site-scrim);
-  backdrop-filter: blur(4px);
+  animation: scrimIn var(--site-dur-base) var(--site-ease-out);
 }
+
+@keyframes scrimIn { from { opacity: 0; } }
+@keyframes panelIn { from { opacity: 0; transform: translateY(-4px) scale(0.99); } }
 
 .panel {
   width: min(640px, 100%);
@@ -19,9 +22,10 @@
   flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--site-border);
-  border-radius: var(--site-r-md);
+  border-radius: var(--site-r-lg);
   background: var(--site-bg-overlay);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+  box-shadow: var(--site-elevation-modal);
+  animation: panelIn var(--site-dur-base) var(--site-ease-out);
 }
 
 .field {
@@ -52,12 +56,15 @@
 }
 
 .kbd {
-  font-family: var(--font-mono);
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--site-r-sm);
+  background: var(--site-wash-2);
+  color: var(--site-ink-3);
   font-size: var(--site-fs-1);
-  color: var(--site-ink-4);
-  border: 1px solid var(--site-border);
-  border-radius: 4px;
-  padding: 1px 5px;
+  font-weight: var(--site-fw-medium);
 }
 
 .note {
@@ -85,7 +92,7 @@
 }
 
 .hit[data-active='true'] {
-  background: var(--site-wash-2);
+  background: var(--site-wash);
 }
 
 .hitHead {

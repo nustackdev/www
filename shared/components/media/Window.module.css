@@ -1,0 +1,72 @@
+/* Window — a flat tinted mat with a hairline outline, neutral lights on its
+ * top edge. Outlines tint from ink, so they read on both themes. The mat's
+ * radius is the screen's plus the mat, so the corners stay concentric. */
+
+.bezel {
+  --win-mat: 10px;
+
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0 var(--win-mat) var(--win-mat);
+  border-radius: calc(var(--site-r-xl) + var(--win-mat));
+  border: 1px solid color-mix(in oklab, var(--site-ink) 8%, transparent);
+  background: color-mix(in oklab, var(--site-ink) 4%, var(--site-bg));
+}
+
+.top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 32px;
+  padding-inline: 6px 0;
+}
+
+.lights {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.lights i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--site-ink) 16%, transparent);
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: var(--site-fs-3);
+  color: var(--site-ink-3);
+  white-space: nowrap;
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.screen {
+  position: relative;
+  width: 100%;
+  border-radius: var(--site-r-xl);
+  border: 1px solid color-mix(in oklab, var(--site-ink) 9%, transparent);
+  background: var(--site-bg-raised);
+  overflow: hidden;
+}
+
+/* Wider than the 1200 main column: runs to the wide area on big screens,
+ * cut by the window on smaller ones. */
+.bleed {
+  width: 1400px;
+  max-width: none;
+}
+@media (max-width: 860px) {
+  .bleed { width: 180%; }
+}

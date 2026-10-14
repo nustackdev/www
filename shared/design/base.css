@@ -1,8 +1,11 @@
 /* =============================================================================
  * Base page styles for apps that do not run fumadocs (landing, blog).
  * Import after tailwindcss (for preflight) and tokens.css. Docs gets the
- * same result from fumadocs' preset through its bridge sheet.
+ * same result from fumadocs' preset through its bridge sheet, and imports
+ * focus.css on its own.
  * ==========================================================================*/
+
+@import './focus.css';
 
 @layer base {
   *,

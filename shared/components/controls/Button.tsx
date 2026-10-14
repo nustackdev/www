@@ -1,116 +1,87 @@
-import type { ReactNode } from 'react';
-import { SiteLink as Link } from '../nav/SiteLink';
+import type { FocusEventHandler, MouseEventHandler, ReactNode } from 'react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { SiteLink as Link } from '../nav/SiteLink';
+import { cn } from '../../lib/cn';
 import s from './Button.module.css';
 
-export type ButtonVariant =
-  | 'neutral'
-  | 'outline'
-  | 'solid'
-  | 'ghost'
-  | 'repo';
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+export type ButtonSize = 'sm' | 'md' | 'lg';
 
-interface Props {
+export interface ButtonProps {
+  /** primary: solid Afterglow, the one main action. secondary: neutral
+   *  fill and hairline. ghost: no fill until hovered. */
   variant?: ButtonVariant;
+  /** sm 28, md 32, lg 40 (the site control height). */
+  size?: ButtonSize;
+  /** Renders a link. Without it, a `<button>`. */
   href?: string;
-  /** Single size for now — reserved for future scale variants. */
-  size?: 'md';
-  className?: string;
-  children: ReactNode;
-  /** Force external-link behavior (target=_blank + ArrowUpRight). */
+  /** Opens in a new tab with a ↗. Inferred from an http(s) href. */
   external?: boolean;
+  /** A trailing → that nudges on hover. External links get ↗ instead. */
+  arrow?: boolean;
+  onClick?: MouseEventHandler<HTMLElement>;
+  onFocus?: FocusEventHandler<HTMLElement>;
+  type?: 'button' | 'submit';
+  disabled?: boolean;
   ariaLabel?: string;
+  className?: string;
+  /** Label, with an optional leading icon before it. */
+  children: ReactNode;
 }
 
 /**
- * Button — the single CTA/button primitive for the landing.
- * Internal href (starts with `/` or `#`) renders a next/Link + ArrowRight.
- * External href (starts with `http`) renders `<a target="_blank">` + ArrowUpRight.
- * `variant="ghost"` renders a static `<span>` (no href needed).
+ * Button — the one button and CTA primitive of the site. Every variant has
+ * three steps, rest, hover and press, and the shared focus ring.
  */
 export function Button({
-  variant = 'neutral',
+  variant = 'secondary',
+  size = 'lg',
   href,
-  children,
-  className,
   external,
+  arrow,
+  onClick,
+  onFocus,
+  type = 'button',
+  disabled,
   ariaLabel,
-}: Props) {
-  // Ghost: static span, no href, disabled visual.
-  if (variant === 'ghost') {
-    return (
-      <span
-        className={cn(s.ghost, className)}
-        aria-disabled="true"
-        aria-label={ariaLabel}
-      >
-        {children}
-      </span>
-    );
-  }
-
+  className,
+  children,
+}: ButtonProps) {
   const isExternal = external ?? (!!href && /^https?:\/\//.test(href));
+  const cls = cn(s.btn, s[variant], s[size], className);
 
-  const [cls, arrowCls] = classesFor(variant);
-  const arrow = isExternal ? (
-    <ArrowUpRight size={13} aria-hidden className={arrowCls} />
-  ) : (
-    <ArrowRight size={13} aria-hidden className={arrowCls} />
-  );
+  const trail = isExternal ? (
+    <ArrowUpRight aria-hidden className={cn(s.trail, s.trailOut)} />
+  ) : arrow ? (
+    <ArrowRight aria-hidden className={cn(s.trail, s.trailOn)} />
+  ) : null;
 
   const content = (
     <>
       {children}
-      {arrow}
+      {trail}
     </>
   );
 
-  const finalCls = cn(cls, className);
-
   if (!href) {
     return (
-      <span className={finalCls} aria-label={ariaLabel}>
+      <button type={type} className={cls} onClick={onClick} onFocus={onFocus} disabled={disabled} aria-label={ariaLabel}>
         {content}
-      </span>
+      </button>
     );
   }
 
   if (isExternal) {
     return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noreferrer"
-        className={finalCls}
-        aria-label={ariaLabel}
-      >
+      <a href={href} target="_blank" rel="noreferrer" className={cls} onClick={onClick} onFocus={onFocus} aria-label={ariaLabel}>
         {content}
       </a>
     );
   }
 
   return (
-    <Link href={href} className={finalCls} aria-label={ariaLabel}>
+    <Link href={href} className={cls} onClick={onClick} onFocus={onFocus} aria-label={ariaLabel}>
       {content}
     </Link>
   );
-}
-
-/** Mono `org/repo` label — pair with a `variant="neutral"` Button to make
- *  a GitHub-repo CTA. Matches the old `RepoName` from SectionCard.tsx. */
-export function ButtonRepoLabel({ children }: { children: ReactNode }) {
-  return <span className={s.repoLabel}>{children}</span>;
-}
-
-function classesFor(v: Exclude<ButtonVariant, 'ghost'>): [string, string] {
-  switch (v) {
-    case 'neutral':  return [s.btn,      s.arrow];
-    case 'outline':  return [s.outline,  s.arrowHue];
-    case 'solid':    return [s.solid,    s.arrow];
-    case 'repo':     return [s.repo,     s.arrowRepo];
-  }
-}
-
-function cn(...parts: (string | undefined | false)[]) {
-  return parts.filter(Boolean).join(' ');
 }

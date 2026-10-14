@@ -1,7 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
-import { Intro } from './Intro';
-import g from './group.module.css';
+import { Group } from '@www/shared/components/page';
 import s from './HowItWorks.module.css';
 
 interface Layer {
@@ -46,9 +45,7 @@ const LAYERS: Layer[] = [
 /** HowItWorks — the stack under nuspace, from the theory up to the ecosystem. */
 export function HowItWorks() {
   return (
-    <section id="how" className={g.root}>
-      <Intro kicker="How it works" title="One primitive, all the way down." />
-
+    <Group id="how" kicker="How it works" title="One primitive, all the way down.">
       <div className={s.body}>
         <ol className={s.list}>
           {LAYERS.map((l, i) => (
@@ -71,6 +68,6 @@ export function HowItWorks() {
         </ol>
         <p className={s.close}>All speak the same language. That&apos;s why everything connects.</p>
       </div>
-    </section>
+    </Group>
   );
 }

@@ -11,8 +11,7 @@ export interface ContainerProps {
 
 /**
  * Container — outer wrapper for a site page.
- * Owns the layout tokens (--site-kal-u, --site-kal-border, --site-kal-divider) that all
- * descendants read.
+ * The 1200 main column every page sits in.
  */
 export function Container({
   children,

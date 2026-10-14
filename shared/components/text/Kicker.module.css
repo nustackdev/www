@@ -1,0 +1,8 @@
+.kicker {
+  margin: 0;
+  font-size: var(--site-fs-5);
+  font-weight: var(--site-fw-medium);
+  letter-spacing: 0;
+}
+.accent { color: var(--site-accent-text); }
+.muted  { color: var(--site-ink-3); }

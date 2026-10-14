@@ -1,6 +1,5 @@
-import { Intro } from './Intro';
-import { Unit } from './Unit';
-import g from './group.module.css';
+import { Group, Unit } from '@www/shared/components/page';
+import { Scene } from './scene/Scene';
 import s from './Spaces.module.css';
 
 interface Space {
@@ -63,17 +62,14 @@ const SPACES: Space[] = [
 /** Spaces — what nuspace enables, shown on real spaces. */
 export function Spaces() {
   return (
-    <section className={g.root}>
-      <Intro kicker="Spaces" title="Built in nuspace.">
-        Real spaces, made of connected cells.
-      </Intro>
+    <Group kicker="Spaces" title="Built in nuspace." dim="Real spaces, made of connected cells.">
       {SPACES.map((sp) => (
         <Unit
           key={sp.scene}
           kicker={sp.name}
           title={sp.title}
           description={sp.body}
-          scene={sp.scene}
+          media={<Scene name={sp.scene} />}
           lead={
             <ul className={s.highlights}>
               {sp.highlights.map((h) => (
@@ -83,6 +79,6 @@ export function Spaces() {
           }
         />
       ))}
-    </section>
+    </Group>
   );
 }

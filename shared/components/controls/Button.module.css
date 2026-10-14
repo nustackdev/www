@@ -1,130 +1,101 @@
 /* =============================================================================
- * Button — every landing CTA/button collapses here.
- * Two axes: fill intensity × ambient accent (from --site-accent scope).
- * Variants:
- *   neutral   transparent bg, hairline border — no accent (hero CTAs, section CTAs)
- *   outline   accent border + wash fill — reads --site-accent-* scope (adaptive)
- *   solid     solid accent fill — reads --site-accent scope (brand purple by default)
- *   ghost     dashed, disabled ("coming soon")
- *   repo      accent-tinted, mono type (apps repo link)
+ * Button — the site's one button. Three variants, three sizes.
+ *
+ * Every variant moves the same way: rest, hover, press, each a clear step.
+ * Fills go darker (primary), neutral controls step the ink wash (secondary
+ * on its overlay fill, ghost from nothing). Focus is the shared ring from
+ * design/focus.css, never styled here.
  * ==========================================================================*/
 
 .btn {
+  --btn-h: var(--site-control-h);
+  --btn-px: var(--site-control-px);
+  --btn-icon: 16px;
+
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: var(--site-control-gap);
-  min-height: var(--site-control-h);
-  padding: 0 var(--site-control-px);
+  justify-content: center;
+  gap: 8px;
+  height: var(--btn-h);
+  padding: 0 var(--btn-px);
+  border: 1px solid transparent;
   border-radius: var(--site-r-md);
-  border: 1px solid var(--site-border-strong);
-  background: var(--site-wash);
-  color: var(--site-ink);
   font-family: var(--font-display);
-  font-weight: 500;
   font-size: var(--site-fs-6);
-  letter-spacing: 0.005em;
+  font-weight: var(--site-fw-medium);
+  line-height: 1;
+  letter-spacing: -0.006em;
+  white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
-  transition: background var(--site-t), border-color var(--site-t), color var(--site-t);
-}
-
-.btn:hover {
-  background: var(--site-wash-2);
-  border-color: var(--site-border-stronger);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--site-t),
+    border-color var(--site-t),
+    color var(--site-t);
 }
 
 .btn > svg {
-  color: var(--site-ink-2);
   flex: none;
+  width: var(--btn-icon);
+  height: var(--btn-icon);
 }
 
-.arrow {
-  color: var(--site-ink-3);
-  display: inline-flex;
-  align-items: center;
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-/* ---- outline — accent border + wash fill, reads ambient --site-accent-* -- */
-.outline {
-  composes: btn;
-  border-color: var(--site-accent-line);
-  background: var(--site-accent-wash);
-}
-.outline:hover {
-  background: var(--site-accent-soft);
-  border-color: var(--site-accent);
-}
-.outline > svg { color: var(--site-accent-text); }
-.arrowHue {
-  color: var(--site-accent-text);
-  display: inline-flex;
-  align-items: center;
-}
+/* ---- sizes ---------------------------------------------------------------- */
 
-/* ---- solid — solid brand fill -------------------------------------------- */
-.solid {
-  composes: btn;
+.sm { --btn-h: 28px; --btn-px: 10px; --btn-icon: 14px; gap: 6px; font-size: var(--site-fs-3); }
+.md { --btn-h: 32px; --btn-px: 12px; --btn-icon: 14px; gap: 6px; font-size: var(--site-fs-5); }
+.lg { /* the site control: 40 tall, 36 on phones (tokens.css) */ }
+
+/* ---- primary: solid Afterglow, white label ------------------------------- */
+
+.primary {
   background: var(--site-accent);
-  border: 1px solid var(--site-accent-ring);
-  color: white;
+  border-color: var(--site-accent-ring);
+  color: #fff;
 }
-.solid:hover {
-  background: var(--site-accent-hover);
-}
-.solid:active {
-  background: var(--site-accent-pressed);
-}
-.solid > svg,
-.solid .arrow {
-  color: inherit;
-}
+.primary:hover  { background: var(--site-accent-hover); }
+.primary:active { background: var(--site-accent-pressed); }
 
-/* ---- ghost — dashed, disabled ("coming soon") ---------------------------- */
-.ghost {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--site-control-h);
-  padding: 0 var(--site-control-px);
-  border-radius: var(--site-r-md);
-  border: 1px dashed var(--site-rule-2);
-  background: transparent;
-  color: var(--site-ink-3);
-  font-family: var(--font-mono);
-  font-size: var(--site-fs-3);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  cursor: not-allowed;
-}
+/* ---- secondary: the overlay fill and a hairline -------------------------- */
 
-/* ---- repo — hue-tinted, mono type (apps repo link) ----------------------- */
-.repo {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--site-control-gap);
-  min-height: var(--site-control-h);
-  padding: 0 var(--site-control-px);
-  border-radius: var(--site-r-md);
-  border: 1px solid var(--site-accent-line);
-  background: var(--site-accent-wash);
+.secondary {
+  background: var(--site-bg-overlay);
+  border-color: var(--site-border);
   color: var(--site-ink);
-  font-family: var(--font-mono);
-  font-size: var(--site-fs-3);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  transition: background var(--site-t), border-color var(--site-t);
 }
-.repo:hover {
-  background: var(--site-accent-soft);
-  border-color: var(--site-accent);
+.secondary:hover {
+  background: var(--site-overlay-hover);
+  border-color: var(--site-border-strong);
 }
-.arrowRepo {
-  color: var(--site-accent-text);
-}
+.secondary:active { background: var(--site-overlay-press); }
 
-/* ---- mono repo label used inside neutral CTAs ---------------------------- */
-.repoLabel {
-  font-family: var(--font-mono);
-  font-size: var(--site-fs-4);
-  letter-spacing: 0;
+/* ---- ghost: nothing until hovered ----------------------------------------- */
+
+.ghost {
+  background: transparent;
+  color: var(--site-ink-2);
 }
+.ghost:hover  { background: var(--site-wash); color: var(--site-ink); }
+.ghost:active { background: var(--site-wash-2); color: var(--site-ink); }
+
+/* ---- trailing arrow -------------------------------------------------------- */
+
+.btn > .trail {
+  width: calc(var(--btn-icon) - 2px);
+  height: calc(var(--btn-icon) - 2px);
+  margin-right: -2px;
+  transition: transform var(--site-dur-base) var(--site-ease-out);
+}
+.secondary > .trail,
+.ghost > .trail { color: var(--site-ink-3); }
+
+.btn:hover > .trailOn  { transform: translateX(2px); }
+.btn:hover > .trailOut { transform: translate(1px, -1px); }

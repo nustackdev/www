@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 @source '../../shared';
 @import '@www/shared/design/tokens.css';
-@import '@www/shared/design/hue-scope.css';
 @import '@www/shared/design/base.css';
 
 html > body[data-scroll-locked] {

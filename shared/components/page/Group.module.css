@@ -1,0 +1,30 @@
+.root {
+  --group-pad: clamp(64px, 8vw, 112px);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--group-pad);
+  padding-block: var(--group-pad);
+  scroll-margin-top: var(--site-nav-h);
+}
+
+.tight { gap: clamp(40px, 5vw, 64px); }
+
+/* Edge to edge, past the main column. */
+.root::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  background: var(--site-border);
+  transform: translateX(-50%);
+}
+
+/* The last unit hands its divider and bottom space to the group. */
+.root > article:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}

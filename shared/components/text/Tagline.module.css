@@ -1,8 +1,0 @@
-/* Tagline — accent phrase above a description. Zero margin. */
-.tagline {
-  font-size: var(--site-fs-tagline);
-  line-height: 1.5;
-  color: var(--site-ink-2);
-  margin: 0;
-  max-width: 44ch;
-}

@@ -21,18 +21,18 @@
   --font-display: "Inter", "InterVariable", ui-sans-serif, system-ui,
                   -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
                   Arial, sans-serif;
-  --font-mono:    ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* --- Type: size scale (8 steps covering all repeated site sizes) ------ */
-  --site-fs-1: 10.5px;  /* micro caps  (Chip.sm, MonoKicker.xs, HeroViz hint, ideMeta) */
-  --site-fs-2: 11px;    /* small mono  (MonoKicker.sm, Chip.md, HeroViz code, NumberedList.num) */
-  --site-fs-3: 12px;    /* mono base   (MonoKicker.md, Button ghost/repo, ideTab) */
-  --site-fs-4: 12.5px;  /* small copy  (Button repoLabel, ideGutter, ideCode) */
-  --site-fs-5: 13px;    /* footer, blurbs */
-  --site-fs-6: 13.5px;  /* Button base, FloatingNav */
-  --site-fs-7: 14.5px;  /* NumberedList item */
-  --site-fs-8: 15px;    /* body text (AppsGrid/FabricsSection body max) */
-  --site-fs-9:  17px;   /* body-lg  (heroTagline, sectionIntro) */
+  --site-fs-1: 11px;    /* micro labels, kbd, kickers */
+  --site-fs-2: 11px;    /* small mono */
+  --site-fs-3: 12px;    /* secondary text, item descriptions */
+  --site-fs-4: 13px;    /* small copy */
+  --site-fs-5: 13px;    /* footer, kickers, blurbs */
+  --site-fs-6: 14px;    /* controls: buttons, nav */
+  --site-fs-7: 14px;    /* list numbers, row meta */
+  --site-fs-8: 15px;    /* body text */
+  --site-fs-9:  17px;   /* body-lg, card titles */
   --site-fs-10: 20px;   /* lede     (.tagline, .lede) */
   --site-fs-11: 24px;   /* h4       (entryName) */
   --site-fs-12: 32px;   /* h3       (sectionTitle) */
@@ -58,6 +58,13 @@
 
   --site-fw-medium:   500;
   --site-fw-semibold: 600;
+  --site-fw-title:    590; /* every site title, with cv01 and ss03 */
+
+  /* Inter's own tracking curve: -0.022em from 32px up, -0.012em for 17-24px
+   * titles, -0.011em for copy. */
+  --site-tr-display: -0.022em;
+  --site-tr-title:   -0.012em;
+  --site-tr-body:    -0.011em;
 
   /* --- Space: one fluid atom, everything derived ----------------------
    * Hero and other "grand" surfaces opt in by locally overriding --site-u
@@ -92,13 +99,31 @@
   --site-nav-h:          47px;
   --site-nav-clearance:  calc(var(--site-u) * 5 + var(--site-nav-h));
 
-  /* --- Shape ----------------------------------------------------------- */
-  --site-r-sm: 8px;
-  --site-r-md: 10px;
-  --site-r-lg: 14px;
-  --site-t:    0.15s ease;
+  /* --- Shape: the language radius steps -------------------------------- */
+  --site-r-sm: 4px;   /* badges, kbd, small chips */
+  --site-r-md: 6px;   /* controls */
+  --site-r-lg: 8px;   /* cards, panels, menus */
+  --site-r-xl: 12px;  /* large surfaces, frames, dialogs */
+
+  /* --- Motion: four steps, one easing family ---------------------------- */
+  --site-dur-fast: 120ms;  /* hover, focus, small toggles */
+  --site-dur-base: 180ms;  /* menus, popovers */
+  --site-dur-slow: 280ms;  /* dialogs, sheets */
+  --site-ease-out:    cubic-bezier(0.2, 0, 0, 1);
+  --site-ease-in:     cubic-bezier(0.4, 0, 1, 1);
+  --site-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Default transition for color steps. */
+  --site-t: var(--site-dur-fast) var(--site-ease-out);
+
+  /* --- Focus: one ring, everywhere --------------------------------------- */
+  --site-ring-width:  2px;
+  --site-ring-offset: 2px;
 
   /* --- Color derived from the themed primitives ---------------------- */
+  /* Secondary controls: the overlay fill, stepped with the ink wash so they
+   * react without losing their body. */
+  --site-overlay-hover: color-mix(in oklab, var(--site-ink) var(--site-wash-hover-pct), var(--site-bg-overlay));
+  --site-overlay-press: color-mix(in oklab, var(--site-ink) var(--site-wash-press-pct), var(--site-bg-overlay));
   --site-accent-line:   color-mix(in oklab, var(--site-accent) 44%, transparent);
   --site-accent-2-line: color-mix(in oklab, var(--site-accent-2) 44%, transparent);
 
@@ -140,8 +165,11 @@
   --site-bg-overlay: #ffffff; /* ground-overlay */
   --site-surface:    #ffffff; /* ground-card */
   --site-surface-2:  #ffffff; /* ground-overlay */
+  --site-wash-hover-pct: 5%;
+  --site-wash-press-pct: 9%;
   --site-wash:       color-mix(in oklab, var(--site-ink) 5%, transparent); /* hover wash */
   --site-wash-2:     color-mix(in oklab, var(--site-ink) 9%, transparent); /* press wash */
+  --site-wash-3:     color-mix(in oklab, var(--site-ink) 13%, transparent); /* press on a washed thing */
   --site-code-bg:    #f7f8fa; /* ground-deep */
   --site-code-bg-2:  #ffffff; /* ground-raised */
   --site-chrome-bg:  #ffffff; /* ground-raised */
@@ -167,7 +195,8 @@
   --site-accent-hover:   #7f3ccd;
   --site-accent-pressed: #7335bc;
   --site-accent-ring:    #6e34b3;
-  --site-accent-text:    #7638c0; /* Afterglow as text, icons, focus ring */
+  --site-accent-text:    #7638c0; /* Afterglow as text, icons */
+  --site-ring:           #7638c0; /* afterglow-focus */
   --site-accent-soft:    #ede5fe; /* afterglow-soft */
   --site-accent-wash:    #e9ebff; /* selection */
 
@@ -196,6 +225,11 @@
   --site-destructive-hover:   #ae1b24;
   --site-destructive-pressed: #a0171f;
   --site-destructive-ring:    #94151d;
+
+  /* --- Elevation: three shadows over flat, nothing else ---------------- */
+  --site-elevation-raised:   0 1px 1px rgb(26 29 36 / 0.04), 0 1px 3px rgb(26 29 36 / 0.06);
+  --site-elevation-floating: 0 2px 4px rgb(26 29 36 / 0.05), 0 6px 16px rgb(26 29 36 / 0.08);
+  --site-elevation-modal:    0 4px 8px rgb(26 29 36 / 0.05), 0 20px 48px rgb(26 29 36 / 0.12);
 }
 
 /* =============================================================================
@@ -211,8 +245,11 @@
   --site-bg-overlay: #292e37; /* ground-overlay */
   --site-surface:    #1e222a; /* ground-card */
   --site-surface-2:  #292e37; /* ground-overlay */
+  --site-wash-hover-pct: 7%;
+  --site-wash-press-pct: 11%;
   --site-wash:       color-mix(in oklab, var(--site-ink) 7%, transparent); /* hover wash */
   --site-wash-2:     color-mix(in oklab, var(--site-ink) 11%, transparent); /* press wash */
+  --site-wash-3:     color-mix(in oklab, var(--site-ink) 15%, transparent); /* press on a washed thing */
   --site-code-bg:    #13161d; /* ground-deep */
   --site-code-bg-2:  #191c24; /* ground-raised */
   --site-chrome-bg:  #191c24; /* ground-raised */
@@ -239,6 +276,7 @@
   --site-accent-pressed: #7335bc;
   --site-accent-ring:    #6d37ae;
   --site-accent-text:    #cbaeff;
+  --site-ring:           #a274ec; /* afterglow-focus, 4:1 or more on every surface */
   --site-accent-soft:    #3e2a5d; /* afterglow-soft */
   --site-accent-wash:    #292a49; /* selection */
 
@@ -267,6 +305,11 @@
   --site-destructive-hover:   #b82530;
   --site-destructive-pressed: #a51d27;
   --site-destructive-ring:    #a01722;
+
+  /* --- Elevation: a lit top edge does what a shadow cannot in dark ----- */
+  --site-elevation-raised:   inset 0 1px 0 rgb(255 255 255 / 0.03), 0 1px 2px rgb(0 0 0 / 0.3);
+  --site-elevation-floating: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 2px 4px rgb(0 0 0 / 0.24), 0 8px 20px rgb(0 0 0 / 0.3);
+  --site-elevation-modal:    inset 0 1px 0 rgb(255 255 255 / 0.05), 0 8px 16px rgb(0 0 0 / 0.26), 0 24px 56px rgb(0 0 0 / 0.34);
 }
 
 /* =============================================================================

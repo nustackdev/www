@@ -1,8 +1,4 @@
-/* =============================================================================
- * Page — the site's outer page wrapper.
- * Layered composition: gradient (z=0), decorations slot (z=1),
- * dot pattern (z=2), content Container (z=3).
- * ==========================================================================*/
+/* Page — the site's outer page wrapper. */
 
 .root {
   position: relative;
@@ -15,16 +11,12 @@
   overflow-x: clip;
 }
 
-/* Stacking: gradient (0) < decorations (1) < content (3). */
-.gradientLayer     { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.decorationsLayer  { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-/* Content grows to push footer to the bottom on short pages (sticky-footer). */
-.contentLayer      { position: relative; z-index: 3; flex: 1 0 auto; }
-.footerLayer       { position: relative; z-index: 3; }
+/* Content grows to push the footer to the bottom on short pages. */
+.contentLayer { position: relative; flex: 1 0 auto; }
+.footerLayer  { position: relative; }
 
-/* Top clearance so page content sits below the fixed FloatingNav, and the
- * gap before the footer: the page owns it, the footer has no outer margin.
- * Scales with the u-atom so proportion holds across viewports. */
+/* Top clearance under the fixed FloatingNav, and the gap before the footer:
+ * the page owns it, the footer has no outer margin. */
 .content {
   padding-top: var(--site-nav-clearance);
   padding-bottom: var(--site-gap-xloose);

@@ -1,5 +1,5 @@
+import { Window } from '@www/shared/components/media/Window';
 import { ScenePlayer } from './ScenePlayer';
-import s from './Scene.module.css';
 
 /** Scenes recorded so far, by name. A block without its own plays the hero. */
 const SCENES: Record<string, { scene: string; label: string }> = {
@@ -23,28 +23,19 @@ export interface SceneProps {
   name: string;
   /** Frame aspect ratio. Reserved up front so nothing shifts when tape lands. */
   ratio?: '16 / 10' | '4 / 3';
-  className?: string;
 }
 
 /**
- * Scene — a tape playing in a window. The bezel is the window: a tinted mat
- * with neutral dots on its top edge, holding the screen. The screen is server
- * rendered at its size; the player and the app load lazily inside it.
+ * Scene — a tape playing in a Window, bleeding right past the main column.
+ * The screen is server rendered at its size; the player and the app load
+ * lazily inside it.
  */
-export function Scene({ name, ratio = '4 / 3', className }: SceneProps) {
-  const cls = [s.bezel, className].filter(Boolean).join(' ');
+export function Scene({ name, ratio = '16 / 10' }: SceneProps) {
   const rec = SCENES[name] ?? SCENES.hero;
   const [w, h] = ratio.split(' / ').map(Number);
   return (
-    <div className={cls} data-scene={name}>
-      <span className={s.lights} aria-hidden>
-        <i />
-        <i />
-        <i />
-      </span>
-      <div className={s.screen} style={{ aspectRatio: ratio }}>
-        <ScenePlayer scene={rec.scene} aspect={w / h} label={rec.label} />
-      </div>
-    </div>
+    <Window bleed screenStyle={{ aspectRatio: ratio }}>
+      <ScenePlayer scene={rec.scene} aspect={w / h} label={rec.label} />
+    </Window>
   );
 }

@@ -1,6 +1,6 @@
 /* Install — a rail of steps beside one terminal. The rail is a hairline that
- * lights in Afterglow at the active step; the terminal is a scene frame
- * (lighter top edge) whose blocks dim unless their step is active. */
+ * lights in Afterglow at the active step; the terminal is a Window whose
+ * blocks dim unless their step is active. */
 
 .root {
   display: grid;
@@ -30,6 +30,7 @@
   font: inherit;
   text-align: left;
   color: inherit;
+  border-radius: 0 var(--site-r-md) var(--site-r-md) 0;
   cursor: pointer;
 }
 
@@ -42,15 +43,9 @@
   width: 2px;
   background: var(--site-accent-text);
   transform: scaleY(0);
-  transition: transform 180ms cubic-bezier(0.2, 0, 0, 1);
+  transition: transform var(--site-dur-base) var(--site-ease-out);
 }
 .step[data-active]::before { transform: scaleY(1); }
-
-.step:focus-visible {
-  outline: 2px solid var(--site-accent-ring, var(--site-accent-text));
-  outline-offset: 2px;
-  border-radius: var(--site-r-sm);
-}
 
 .num {
   font-family: var(--font-mono);
@@ -62,8 +57,8 @@
 
 .label {
   font-size: var(--site-fs-9);
-  font-weight: var(--home-fw-title);
-  letter-spacing: var(--home-tr-title);
+  font-weight: var(--site-fw-title);
+  letter-spacing: var(--site-tr-title);
   color: var(--site-ink-3);
   transition: color var(--site-t);
 }
@@ -76,17 +71,10 @@
   text-wrap: pretty;
   transition: color var(--site-t);
 }
-.note code,
-.note kbd {
+.note code {
   font-family: var(--font-mono);
   font-size: 0.9em;
   color: var(--site-ink-2);
-}
-.note kbd {
-  padding: 1px 5px;
-  border: 1px solid var(--site-border);
-  border-bottom-width: 2px;
-  border-radius: 4px;
 }
 
 .step[data-active] .num { color: var(--site-accent-text); }
@@ -95,45 +83,7 @@
 
 /* -- Terminal ------------------------------------------------------------- */
 
-.term {
-  min-width: 0;
-  border: 1px solid var(--site-border);
-  border-top-color: var(--site-border-strong);
-  border-radius: 12px;
-  background:
-    linear-gradient(to bottom, color-mix(in oklab, var(--site-ink) 3%, transparent), transparent 40%),
-    var(--site-bg-raised);
-  overflow: hidden;
-}
-
-.bar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 40px;
-  padding-inline: 16px;
-  border-bottom: 1px solid var(--site-border-subtle);
-}
-
-.dots {
-  display: flex;
-  gap: 7px;
-}
-.dots i {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--site-border-strong);
-}
-
-.title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-mono);
-  font-size: var(--site-fs-3);
-  color: var(--site-ink-4);
-}
+.term { min-width: 0; }
 
 .session {
   display: flex;
@@ -151,7 +101,7 @@
   gap: 16px;
   padding: 12px 20px;
   opacity: 0.38;
-  transition: opacity 180ms ease, background var(--site-t);
+  transition: opacity var(--site-dur-base) var(--site-ease-out), background-color var(--site-t);
 }
 .block[data-active] {
   opacity: 1;
@@ -197,32 +147,11 @@
 
 .copy {
   flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 26px;
-  padding: 0 9px;
-  border: 1px solid var(--site-border);
-  border-radius: 6px;
-  background: var(--site-bg-raised);
-  font-family: var(--font-sans, inherit);
-  font-size: var(--site-fs-3);
-  font-weight: 500;
-  color: var(--site-ink-2);
-  cursor: pointer;
   opacity: 0;
-  transition: opacity var(--site-t), color var(--site-t), border-color var(--site-t);
+  transition: opacity var(--site-t);
 }
 .block[data-active] .copy,
 .copy:focus-visible { opacity: 1; }
-.copy:hover {
-  color: var(--site-ink);
-  border-color: var(--site-border-strong);
-}
-.copy:focus-visible {
-  outline: 2px solid var(--site-accent-text);
-  outline-offset: 2px;
-}
 
 @media (max-width: 960px) {
   .root { grid-template-columns: 1fr; }

@@ -1,19 +1,8 @@
+/* Container — the main column: max width, centered, side padding. */
 .root {
-  /* kal-u is a legacy alias for --site-u × 2.5. Fully fluid — no breakpoint
-   * step. Kept so any consumer still computing `N * var(--site-kal-u)`
-   * (grid rulers, viz frames) keeps working. New code uses --site-pad-*
-   * or --site-u directly. */
-  --site-kal-u: calc(var(--site-u) * 2.5);
-  --site-kal-border: var(--site-border-stronger);
-  --site-kal-divider: var(--site-border-stronger);
-
   position: relative;
   width: 100%;
   margin-inline: auto;
   max-width: var(--site-kal-max-width, 1200px);
   padding-inline: var(--site-container-pad-x);
-}
-
-.full {
-  min-height: 100vh;
 }

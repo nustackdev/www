@@ -1,11 +1,4 @@
-/* TryIt — the install (see Install), then the community as an open
- * grid: lines between cells only, fading at the edges, like Highlights. */
-
-.root {
-  scroll-margin-top: var(--site-nav-clearance);
-}
-
-/* -- Community ------------------------------------------------------------ */
+/* TryIt — the install (see Install), then the community as a FeatureGrid. */
 
 .community {
   display: flex;
@@ -16,98 +9,11 @@
 .subhead {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: var(--home-fw-title);
+  font-weight: var(--site-fw-title);
   font-size: clamp(22px, 2.4vw, 28px);
   line-height: 1.2;
-  letter-spacing: var(--home-tr-display);
+  letter-spacing: var(--site-tr-display);
   color: var(--site-ink);
   text-wrap: balance;
 }
-.dim { color: var(--home-ink-dim); }
-
-.grid {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.grid::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--site-border-strong);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
-}
-
-.grid > li { background: var(--site-bg); }
-
-.cell {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  height: 100%;
-  padding: 24px clamp(20px, 2.2vw, 32px);
-  text-decoration: none;
-  color: inherit;
-}
-.grid > li:first-child .cell { padding-left: 0; }
-.grid > li:last-child .cell { padding-right: 0; }
-
-.head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.icon {
-  display: grid;
-  place-items: center;
-  width: 20px;
-  color: var(--site-ink);
-  transition: color var(--site-t);
-}
-
-.title {
-  font-weight: var(--home-fw-title);
-  font-size: var(--site-fs-9);
-  letter-spacing: var(--home-tr-title);
-  color: var(--site-ink);
-}
-
-.arrow {
-  margin-left: auto;
-  color: var(--site-ink-3);
-  transition: color var(--site-t), transform var(--site-t);
-}
-
-.line {
-  font-size: var(--site-fs-8);
-  line-height: 1.5;
-  color: var(--site-ink-2);
-}
-
-.cell:hover .icon,
-.cell:hover .arrow { color: var(--site-accent-text); }
-.cell:hover .arrow { transform: translate(2px, -2px); }
-
-@media (max-width: 1024px) {
-  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .grid::before {
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
-  }
-  .grid > li .cell { padding-inline: clamp(20px, 2.2vw, 32px); }
-  .grid > li:nth-child(odd) .cell { padding-left: 0; }
-  .grid > li:nth-child(even) .cell { padding-right: 0; }
-}
-@media (max-width: 560px) {
-  .grid { grid-template-columns: 1fr; }
-  .grid > li .cell { padding: 20px 0; }
-}
+.dim { color: var(--site-ink-twilight); }

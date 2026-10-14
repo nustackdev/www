@@ -8,9 +8,8 @@ import { TryIt } from './_blocks/TryIt';
 import s from './page.module.css';
 
 /**
- * Home — the nuspace product page. Its own look, taken from the nuspace
- * shell (see landing/direction.md in Go), so the page and the scenes read
- * as one surface. Other pages keep the site Page.
+ * Home — the nuspace product page, built from the shared page grammar:
+ * Group (h2), Unit (h3) and Window scenes. See design/systems/landing in Go.
  */
 export default function Home() {
   return (
@@ -22,9 +21,7 @@ export default function Home() {
         <HowItWorks />
         <TryIt />
       </Container>
-      <div className={s.layer}>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 }

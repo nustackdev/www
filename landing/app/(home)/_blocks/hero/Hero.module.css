@@ -19,15 +19,15 @@
 .title {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: var(--home-fw-title);
+  font-weight: var(--site-fw-title);
   max-width: min(22ch, 100%);
   font-size: clamp(36px, 5.2vw, 68px);
   line-height: 1.04;
   text-wrap: balance;
-  letter-spacing: var(--home-tr-display);
+  letter-spacing: var(--site-tr-display);
   color: var(--site-ink);
 }
-.dim { color: var(--home-ink-dim); }
+.dim { color: var(--site-ink-twilight); }
 
 .row {
   display: flex;
@@ -52,18 +52,6 @@
   gap: var(--site-control-gap);
 }
 
-/* -- Scene ---------------------------------------------------------------- */
-
-/* Wider than the main column: runs to the wide edge (1600 area) on big
- * screens, cut by the window on smaller ones. */
-.scene {
-  width: 1400px;
-  max-width: none;
-}
-
-@media (max-width: 860px) {
-  .scene { width: 180%; }
-}
 @media (max-width: 640px) {
   .actions { flex-direction: column; align-items: stretch; width: 100%; }
 }

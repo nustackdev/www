@@ -6,15 +6,12 @@
  *     page comes back)
  */
 
-import type { Hue } from '../hue';
-
 /** The family title and line over the products, as in the landing "How it works". */
 export const NUSTACK = { name: 'nustack', tagline: 'One primitive, all the way down.' };
 
 export interface StackItem {
   name: string;
   slug: string;
-  hue: Hue;
   /** One line for the nav dropdown and footer, after the landing wording. */
   navDesc: string;
   /** Lead-in before navDesc in the footer, eg "The theory". */
@@ -29,11 +26,11 @@ type StackSpec = Omit<StackItem, 'href'>;
 const GH = 'https://github.com/nustackdev';
 
 const SPECS: StackSpec[] = [
-  { name: 'nuspace', slug: 'nuspace', hue: 'teal', navDesc: 'A space that runs Nu programs. Every cell is one.', repo: `${GH}/nuspace` },
-  { name: 'nuverse', slug: 'nuverse', hue: 'sage', navDesc: 'Ready made spaces and extensions, one install away.', repo: `${GH}/nuverse` },
-  { name: 'nu', slug: 'nu', hue: 'plum', navDesc: 'The interaction model implementation in Python.', repo: `${GH}/nu` },
-  { name: 'nustd', slug: 'nustd', hue: 'coral', navDesc: 'Nu Refs and Interactions for everyday tasks.', repo: `${GH}/nu/tree/main/pkgs/nustd` },
-  { name: 'interaction-model', slug: 'model', hue: 'steel', role: 'The theory', navDesc: 'Every resource is a Ref, everything you do with it an Interaction.', repo: `${GH}/interaction-model` },
+  { name: 'nuspace', slug: 'nuspace', navDesc: 'A space that runs Nu programs. Every cell is one.', repo: `${GH}/nuspace` },
+  { name: 'nuverse', slug: 'nuverse', navDesc: 'Ready made spaces and extensions, one install away.', repo: `${GH}/nuverse` },
+  { name: 'nu', slug: 'nu', navDesc: 'The interaction model implementation in Python.', repo: `${GH}/nu` },
+  { name: 'nustd', slug: 'nustd', navDesc: 'Nu Refs and Interactions for everyday tasks.', repo: `${GH}/nu/tree/main/pkgs/nustd` },
+  { name: 'interaction-model', slug: 'model', role: 'The theory', navDesc: 'Every resource is a Ref, everything you do with it an Interaction.', repo: `${GH}/interaction-model` },
 ];
 
 export const stackHref = (slug: string) => `/stack/${slug}`;

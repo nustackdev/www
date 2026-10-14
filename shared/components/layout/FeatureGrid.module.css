@@ -1,0 +1,142 @@
+/* FeatureGrid — lines only between cells: the 1px gaps show a line colored
+ * layer behind the cells, and that layer fades out toward every edge. */
+
+.grid {
+  --cols: 4;
+  --cell-px: clamp(20px, 2.2vw, 32px);
+
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.c2 { --cols: 2; }
+.c3 { --cols: 3; }
+.c4 { --cols: 4; }
+
+.grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--site-border-strong);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 18%, #000 82%, transparent),
+    linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 18%, #000 82%, transparent),
+    linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+  mask-composite: intersect;
+}
+
+.cell {
+  display: flex;
+  background: var(--site-bg);
+}
+
+.body,
+.link {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(24px, 2.6vw, 36px) var(--cell-px);
+  color: inherit;
+  text-decoration: none;
+}
+.link { border-radius: var(--site-r-md); }
+
+/* Edge columns drop their outer padding. */
+.c4 > .cell:nth-child(4n + 1) > *,
+.c3 > .cell:nth-child(3n + 1) > *,
+.c2 > .cell:nth-child(2n + 1) > * { padding-left: 0; }
+.c4 > .cell:nth-child(4n) > *,
+.c3 > .cell:nth-child(3n) > *,
+.c2 > .cell:nth-child(2n) > *,
+.cell:last-child > * { padding-right: 0; }
+
+/* The closing cell: twice as wide, washed in the accent. */
+.wide {
+  grid-column: span 2;
+  background:
+    radial-gradient(120% 140% at 0% 0%, var(--site-accent-soft), transparent 60%),
+    var(--site-bg);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  color: var(--site-ink);
+  transition: color var(--site-t);
+}
+.tile .icon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--site-r-lg);
+  background: var(--site-accent-soft);
+  box-shadow: inset 0 0 0 1px var(--site-accent-line);
+  color: var(--site-accent-text);
+}
+.tile .wide .icon {
+  background: var(--site-accent);
+  box-shadow: none;
+  color: #fff;
+}
+.plain .icon { width: 20px; }
+.icon svg { width: 16px; height: 16px; }
+
+.title {
+  font-weight: var(--site-fw-title);
+  font-size: var(--site-fs-9);
+  letter-spacing: var(--site-tr-title);
+  color: var(--site-ink);
+}
+
+.arrow {
+  flex: none;
+  margin-left: auto;
+  color: var(--site-ink-3);
+  transition: color var(--site-t), transform var(--site-dur-base) var(--site-ease-out);
+}
+
+.line {
+  font-size: var(--site-fs-8);
+  line-height: 1.5;
+  color: var(--site-ink-2);
+  text-wrap: pretty;
+}
+
+.link:hover .arrow { color: var(--site-accent-text); transform: translate(2px, -2px); }
+.plain .link:hover .icon { color: var(--site-accent-text); }
+.link:hover .title { color: var(--site-ink); }
+
+@media (max-width: 1024px) {
+  .c3, .c4 { --cols: 2; }
+  .grid > .cell > * { padding-inline: var(--cell-px); }
+  .grid > .cell:nth-child(odd) > * { padding-left: 0; }
+  .grid > .cell:nth-child(even) > *,
+  .grid > .cell:last-child > * { padding-right: 0; }
+}
+@media (max-width: 560px) {
+  .grid { --cols: 1; }
+  /* One column: the closing cell is a regular one, the wash has no edge to sit in. */
+  .wide { grid-column: auto; background: var(--site-bg); }
+  .tile .wide .icon {
+    background: var(--site-accent-soft);
+    box-shadow: inset 0 0 0 1px var(--site-accent-line);
+    color: var(--site-accent-text);
+  }
+  .grid > .cell > * { padding: 22px 0; }
+}

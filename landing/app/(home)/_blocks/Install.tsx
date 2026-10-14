@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
-import { Check, Copy } from 'lucide-react';
+import { CopyButton } from '@www/shared/components/controls/CopyButton';
+import { Window } from '@www/shared/components/media/Window';
+import { Kbd } from '@www/shared/components/text/Kbd';
 import s from './Install.module.css';
 
 /** One printed line: the bold `nuspace` mark then dim text, or dim text alone. */
@@ -29,7 +31,7 @@ const STEPS: Step[] = [
     label: 'Run',
     note: (
       <>
-        A browser opens on your space. Press <kbd>/</kbd> on a plane to add a cell.
+        A browser opens on your space. Press <Kbd>/</Kbd> on a plane to add a cell.
       </>
     ),
     commands: ['nuspace run my.nuspace'],
@@ -57,17 +59,6 @@ const STEPS: Step[] = [
  *  Pointing at a step lights its part of the session. */
 export function Install() {
   const [active, setActive] = useState(0);
-  const [copied, setCopied] = useState<number | null>(null);
-
-  const copy = async (i: number) => {
-    try {
-      await navigator.clipboard.writeText(STEPS[i].commands.join('\n'));
-      setCopied(i);
-      setTimeout(() => setCopied((c) => (c === i ? null : c)), 1400);
-    } catch {
-      /* clipboard blocked, silent no-op */
-    }
-  };
 
   return (
     <div className={s.root}>
@@ -91,15 +82,7 @@ export function Install() {
         ))}
       </ol>
 
-      <div className={s.term}>
-        <div className={s.bar}>
-          <span className={s.dots} aria-hidden>
-            <i />
-            <i />
-            <i />
-          </span>
-          <span className={s.title}>~ zsh</span>
-        </div>
+      <Window title="~ zsh" className={s.term}>
         <div className={s.session}>
           {STEPS.map((st, i) => (
             <div
@@ -122,20 +105,16 @@ export function Install() {
                   </div>
                 ))}
               </div>
-              <button
-                type="button"
+              <CopyButton
+                text={st.commands.join('\n')}
+                what={`${st.label.toLowerCase()} commands`}
                 className={s.copy}
-                onClick={() => copy(i)}
                 onFocus={() => setActive(i)}
-                aria-label={copied === i ? 'copied' : `copy ${st.label.toLowerCase()} commands`}
-              >
-                {copied === i ? <Check size={13} aria-hidden /> : <Copy size={13} aria-hidden />}
-                <span>{copied === i ? 'Copied' : 'Copy'}</span>
-              </button>
+              />
             </div>
           ))}
         </div>
-      </div>
+      </Window>
     </div>
   );
 }
