@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 const OG_IMAGE = '/og/page/root/image.png';
-const TITLE = 'Build your computational space';
-const DESCRIPTION = 'Build your computational space for everything you work with: notes, data, tools, agents. Connected cells: living programs that hold data, logic and look in one form.';
+const TITLE = 'Build your computational space with nuspace';
+const DESCRIPTION = 'One place for your notes, data, tools and agents, built from connected cells: living programs that hold data, logic and look in one form.';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -23,7 +23,7 @@ export const metadata = {
   openGraph: {
     type: 'website',
     url: '/',
-    siteName: 'Nu',
+    siteName: 'nustack',
     title: TITLE,
     description: DESCRIPTION,
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: TITLE }],
