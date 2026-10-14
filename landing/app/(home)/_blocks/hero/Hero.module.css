@@ -55,12 +55,10 @@
 /* -- Scene ---------------------------------------------------------------- */
 
 /* Wider than the main column: runs to the wide edge (1600 area) on big
- * screens, cut by the window on smaller ones. Fades out at the bottom. */
+ * screens, cut by the window on smaller ones. */
 .scene {
   width: 1400px;
   max-width: none;
-  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent);
-  mask-image: linear-gradient(to bottom, black 80%, transparent);
 }
 
 @media (max-width: 860px) {

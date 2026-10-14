@@ -27,16 +27,24 @@ export interface SceneProps {
 }
 
 /**
- * Scene — a frame playing a live tape scene. The frame is server rendered at
- * its size; the player and the app load lazily inside it.
+ * Scene — a tape playing in a window. The bezel is the window: a tinted mat
+ * with neutral dots on its top edge, holding the screen. The screen is server
+ * rendered at its size; the player and the app load lazily inside it.
  */
 export function Scene({ name, ratio = '4 / 3', className }: SceneProps) {
-  const cls = [s.frame, className].filter(Boolean).join(' ');
+  const cls = [s.bezel, className].filter(Boolean).join(' ');
   const rec = SCENES[name] ?? SCENES.hero;
   const [w, h] = ratio.split(' / ').map(Number);
   return (
-    <div className={cls} style={{ aspectRatio: ratio }} data-scene={name}>
-      <ScenePlayer scene={rec.scene} aspect={w / h} label={rec.label} />
+    <div className={cls} data-scene={name}>
+      <span className={s.lights} aria-hidden>
+        <i />
+        <i />
+        <i />
+      </span>
+      <div className={s.screen} style={{ aspectRatio: ratio }}>
+        <ScenePlayer scene={rec.scene} aspect={w / h} label={rec.label} />
+      </div>
     </div>
   );
 }
