@@ -62,10 +62,11 @@ const SPACES: Space[] = [
 /** Spaces — what nuspace enables, shown on real spaces. */
 export function Spaces() {
   return (
-    <Group kicker="Spaces" title="Built in nuspace." dim="Real spaces, made of connected cells.">
+    <Group id="spaces" kicker="Spaces" title="Built in nuspace." dim="Real spaces, made of connected cells.">
       {SPACES.map((sp) => (
         <Unit
           key={sp.scene}
+          id={sp.scene}
           kicker={sp.name}
           title={sp.title}
           description={sp.body}

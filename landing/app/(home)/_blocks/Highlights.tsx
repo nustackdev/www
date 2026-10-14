@@ -21,7 +21,7 @@ const HIGHLIGHTS: Feature[] = [
 /** Highlights — what every cell can do, as an open grid. */
 export function Highlights() {
   return (
-    <Group kicker="Highlights" title="Program anything." dim="The data, the logic, the look, even the space itself." tight>
+    <Group id="highlights" kicker="Highlights" title="Program anything." dim="The data, the logic, the look, even the space itself." tight>
       <FeatureGrid items={HIGHLIGHTS} />
     </Group>
   );

@@ -4,6 +4,7 @@
   gap: clamp(32px, 4vw, 48px);
   padding-bottom: clamp(64px, 8vw, 112px);
   border-bottom: 1px solid var(--site-border);
+  scroll-margin-top: var(--site-nav-clearance);
 }
 
 .head {

@@ -3,6 +3,8 @@ import { Kicker } from '../text/Kicker';
 import s from './Unit.module.css';
 
 export interface UnitProps {
+  /** Anchor for the unit; its kicker links to it, so the unit can be shared. */
+  id?: string;
   /** Unit name, eg "Knowledge bases". */
   kicker: ReactNode;
   title: ReactNode;
@@ -19,12 +21,12 @@ export interface UnitProps {
  * Unit — the one repeated block of a product page: h3 left, description
  * right, lead extras, the media, extras, then a main width divider.
  */
-export function Unit({ kicker, title, description, lead, media, children }: UnitProps) {
+export function Unit({ id, kicker, title, description, lead, media, children }: UnitProps) {
   return (
-    <article className={s.root}>
+    <article id={id} className={s.root}>
       <div className={s.head}>
         <div className={s.titleCol}>
-          <Kicker>{kicker}</Kicker>
+          <Kicker href={id ? `#${id}` : undefined}>{kicker}</Kicker>
           <h3 className={s.title}>{title}</h3>
         </div>
         <p className={s.desc}>{description}</p>

@@ -4,6 +4,7 @@ import { Intro } from './Intro';
 import s from './Group.module.css';
 
 export interface GroupProps {
+  /** Anchor for the group; its kicker links to it, so the section can be shared. */
   id?: string;
   /** Group name over the h2, eg "Spaces". */
   kicker: ReactNode;
@@ -25,7 +26,7 @@ export interface GroupProps {
 export function Group({ id, kicker, title, dim, tight, className, children }: GroupProps) {
   return (
     <section id={id} className={cn(s.root, tight && s.tight, className)}>
-      <Intro kicker={kicker} title={title}>
+      <Intro kicker={kicker} title={title} href={id ? `#${id}` : undefined}>
         {dim}
       </Intro>
       {children}
