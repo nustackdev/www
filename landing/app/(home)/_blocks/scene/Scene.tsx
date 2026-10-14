@@ -1,11 +1,21 @@
 import { ScenePlayer } from './ScenePlayer';
 import s from './Scene.module.css';
 
-const HELLO = { scene: 'hello', label: 'A nuspace plane being written: a title, then two lines of text.' };
-
-/** Scenes recorded so far, by name. Until a block has its own, it plays hello. */
+/** Scenes recorded so far, by name. A block without its own plays the hero. */
 const SCENES: Record<string, { scene: string; label: string }> = {
-  hero: HELLO,
+  hero: {
+    scene: 'hero',
+    label:
+      'A nuspace space built from zero: a reading list with a table, a slider, live totals and a chart, then a page inside it.',
+  },
+  movies: {
+    scene: 'movies',
+    label:
+      'The nuspace movies demo: a film added and ticked watched, the timeline, The Godfather rerated, then the atlas.',
+  },
+  agents: { scene: 'agents', label: 'The nuspace agents demo: Claude Code sessions run and steered from a space.' },
+  memes: { scene: 'memes', label: 'The nuspace memes demo: meme launches and trades streaming in live.' },
+  training: { scene: 'training', label: 'The nuspace mnist demo: a model trained, steered mid-run, then reading a drawn digit.' },
 };
 
 export interface SceneProps {
@@ -22,7 +32,7 @@ export interface SceneProps {
  */
 export function Scene({ name, ratio = '4 / 3', className }: SceneProps) {
   const cls = [s.frame, className].filter(Boolean).join(' ');
-  const rec = SCENES[name] ?? HELLO;
+  const rec = SCENES[name] ?? SCENES.hero;
   const [w, h] = ratio.split(' / ').map(Number);
   return (
     <div className={cls} style={{ aspectRatio: ratio }} data-scene={name}>
