@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { useSyncExternalStore } from 'react';
 import { useTheme } from 'next-themes';
+import { CLICK_MS, TapeClick, TapeCursor } from './TapeCursor';
 
 // The player is its own chunk, fetched after the page has loaded. It in turn
 // fetches the scene and the app bundle only once the frame nears the viewport.
@@ -28,6 +29,9 @@ export function ScenePlayer({ scene, aspect, label }: { scene: string; aspect: n
       scene={`/scenes/${scene}.json`}
       aspect={aspect}
       label={label}
+      cursor={<TapeCursor />}
+      click={<TapeClick />}
+      clickMs={CLICK_MS}
       storage={{ 'nuspace.theme': resolvedTheme === 'dark' ? 'dark' : 'light' }}
       style={{ position: 'absolute', inset: 0 }}
     />
