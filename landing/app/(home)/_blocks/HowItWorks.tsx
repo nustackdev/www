@@ -18,7 +18,7 @@ const GH = 'https://github.com/nustackdev';
 const LAYERS: Layer[] = [
   {
     role: 'The theory',
-    name: 'interaction model',
+    name: 'interaction-model',
     line: 'Every resource is a Ref: a KV slot, a UI widget, an LLM call, a remote object. Everything you do with it is an Interaction.',
     repo: `${GH}/interaction-model`,
   },

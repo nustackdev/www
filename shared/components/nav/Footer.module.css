@@ -2,9 +2,8 @@
  * Footer — rich sitemap footer.
  *
  * Vercel/Stripe-style deep footer: each product entry shows its name + a
- * one-line description underneath. Four product groups become peer columns
- * with a header + tagline. Brand column on the left carries wordmark, a
- * confident tagline, Learn links, and socials.
+ * one-line description underneath, in paired columns next to the brand column
+ * (wordmark, Learn links).
  *
  * Transparent — sits on the PageShell surface (--site-bg), no bg/border.
  * ==========================================================================*/
@@ -52,15 +51,6 @@
 }
 .brandLogo { flex: 0 0 auto; }
 .brandMark { font-size: var(--site-fs-8); }
-
-.brandTagline {
-  margin: 0;
-  color: var(--site-ink-2);
-  font-size: var(--site-fs-6);
-  line-height: 1.45;
-  letter-spacing: var(--site-tr-tight);
-  max-width: 22ch;
-}
 
 .learnList {
   list-style: none;
@@ -114,60 +104,27 @@
   outline: none;
 }
 
-/* --- Sitemap ------------------------------------------------------------- */
+/* --- Sitemap: one column per product pair ------------------------------- */
 
 .sitemap {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-areas: "os primitive model";
-  gap: var(--site-gap-loose);
   min-width: 0;
-}
-
-.group { min-width: 0; }
-
-.groupHead {
-  margin-bottom: var(--site-gap-normal);
-  padding-bottom: var(--site-gap-tight);
-  border-bottom: 1px solid var(--site-rule-2);
-}
-
-.groupHeaderLink {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-}
-.groupHeaderLink:hover .groupHeader,
-.groupHeaderLink:focus-visible .groupHeader { color: var(--site-ink); outline: none; }
-.groupHeaderLink:hover .groupTagline,
-.groupHeaderLink:focus-visible .groupTagline { color: var(--site-ink-3); }
-
-.groupHeader {
-  display: block;
-  color: var(--site-ink);
-  font-size: var(--site-fs-5);
-  font-weight: var(--site-fw-semibold);
-  letter-spacing: 0.005em;
-  transition: color .18s ease;
-}
-
-.groupTagline {
-  display: block;
-  margin-top: 4px;
-  color: var(--site-ink-4);
-  font-size: var(--site-fs-3);
-  line-height: 1.4;
-  transition: color .18s ease;
 }
 
 .items {
   list-style: none;
-  padding: 0;
+  padding: 0 var(--site-gap-loose);
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--site-list-item-gap);
+  gap: var(--site-gap-normal);
+  min-width: 0;
 }
+.items:first-child { padding-left: 0; }
+.items:last-child { padding-right: 0; }
+/* A rule between pairs. */
+.items + .items { border-left: 1px solid var(--site-rule-2); }
 
 .item {
   min-width: 0;
@@ -217,27 +174,6 @@
   transition: color .18s ease;
 }
 
-.explore {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: var(--site-gap-normal);
-  font-size: var(--site-fs-4);
-  font-weight: var(--site-fw-medium);
-  color: var(--site-ink-2);
-  text-decoration: none;
-  transition: color .18s ease;
-  width: fit-content;
-}
-.explore:hover,
-.explore:focus-visible {
-  color: var(--site-ink);
-  outline: none;
-}
-.explore svg { transition: transform .18s ease; }
-.explore:hover svg,
-.explore:focus-visible svg { transform: translateX(2px); }
-
 /* --- Bottom strip -------------------------------------------------------- */
 
 .bottom {
@@ -277,7 +213,6 @@
     gap: var(--site-gap-tight);
     min-width: 0;
   }
-  .brandTagline { max-width: none; }
   .learnList {
     flex-direction: row;
     flex-wrap: wrap;
@@ -287,14 +222,18 @@
   }
 }
 
-/* Phone: sitemap folds to single column. Descriptions tighten. */
+/* Phone: the pairs stack, the rule turns horizontal. Descriptions tighten. */
 @media (max-width: 640px) {
   .sitemap {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "os"
-      "primitive"
-      "model";
+  }
+  .items {
+    padding: var(--site-gap-normal) 0;
+  }
+  .items:first-child { padding-top: 0; }
+  .items + .items {
+    border-left: 0;
+    border-top: 1px solid var(--site-rule-2);
   }
   .itemDesc {
     -webkit-line-clamp: 1;

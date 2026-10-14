@@ -1,5 +1,5 @@
 import { SiteLink as Link } from './SiteLink';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { NuLogo } from '../marks/NuLogo';
 import { NustackMark } from '../marks/NustackMark';
 import { SocialLinks } from './SocialLinks';
@@ -10,11 +10,10 @@ import s from './Footer.module.css';
 /**
  * Site footer — rich sitemap.
  *
- * Each product entry is a titled row: name (link) + one-line description under
- * it. The three stack tiers become peer columns with taglines under each
- * header.
- * A brand column carries the wordmark, a confident tagline, Learn links, and
- * socials. Transparent surface; sits on --site-bg from PageShell.
+ * The brand column is the nustack title: wordmark and Learn links. Next to
+ * it, the stack products in paired columns, each a name (link) with a
+ * one-line description under it. Transparent surface; sits on --site-bg
+ * from PageShell.
  */
 
 const LEARN_LINKS = [
@@ -22,12 +21,6 @@ const LEARN_LINKS = [
   { label: 'Blog', href: '/blog' },
   { label: 'Changelog', href: 'https://github.com/nustackdev/nuspace/blob/main/CHANGELOG.md' },
 ];
-
-const AREAS: Record<string, string> = {
-  'Interaction OS': 'os',
-  'Interaction primitive': 'primitive',
-  'Interaction model': 'model',
-};
 
 export function Footer() {
   return (
@@ -41,7 +34,6 @@ export function Footer() {
                 <NuLogo size={22} className={s.brandLogo} />
                 <NustackMark mono className={s.brandMark} />
               </span>
-              <p className={s.brandTagline}>The interaction primitive.</p>
             </div>
             <ul className={s.learnList}>
               {LEARN_LINKS.map((l) => {
@@ -62,44 +54,21 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Sitemap: groups × { header, tagline, rich items } */}
+          {/* Sitemap: the stack products, one pair per column */}
           <div className={s.sitemap}>
-            {STACK_GROUPS.map((group) => (
-              <div
-                key={group.header}
-                className={s.group}
-                style={{ gridArea: AREAS[group.header] }}
-              >
-                <div className={s.groupHead}>
-                  {group.href ? (
-                    <Link href={group.href} className={s.groupHeaderLink}>
-                      <span className={s.groupHeader}>{group.header}</span>
-                      <span className={s.groupTagline}>{group.tagline}</span>
+            {STACK_GROUPS[0].rows.map((row) => (
+              <ul key={row[0].href} className={s.items}>
+                {row.map((item) => (
+                  <li key={item.href} className={s.item}>
+                    <Link href={item.href} className={s.itemLink}>
+                      <span className={s.itemName}>{item.name}</span>
+                      <span className={s.itemDesc}>
+                        {item.role ? `${item.role}. ${item.desc}` : item.desc}
+                      </span>
                     </Link>
-                  ) : (
-                    <>
-                      <div className={s.groupHeader}>{group.header}</div>
-                      <div className={s.groupTagline}>{group.tagline}</div>
-                    </>
-                  )}
-                </div>
-                <ul className={s.items}>
-                  {group.items.map((item) => (
-                    <li key={item.href} className={s.item}>
-                      <Link href={item.href} className={s.itemLink}>
-                        <span className={s.itemName}>{item.name}</span>
-                        <span className={s.itemDesc}>{item.desc}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                {group.explore ? (
-                  <Link href={group.explore.href} className={s.explore}>
-                    <span>{group.explore.label}</span>
-                    <ArrowRight size={12} aria-hidden />
-                  </Link>
-                ) : null}
-              </div>
+                  </li>
+                ))}
+              </ul>
             ))}
           </div>
         </div>

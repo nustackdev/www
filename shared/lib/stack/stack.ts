@@ -1,39 +1,24 @@
 /**
- * Stack — the ladder, canonical list. Consumed by:
- *   - components/nav/nav.data.ts (Stack dropdown + footer, grouped by tier)
+ * Stack — the nustack products, canonical list. Consumed by:
+ *   - components/nav/nav.data.ts (Stack dropdown + footer)
  *   - landing /stack index and the /stack/* pages (archived for now, see
  *     the archive/pages-2026-10 tag; items link to their repos until each
  *     page comes back)
- *
- * Three tiers: the interaction model, the interaction primitive, the
- * interaction OS. Each runtime tier pairs a core with its ecosystem
- * (nu + nustd, nuspace + nuverse).
  */
 
 import type { Hue } from '../hue';
 
-export type Tier = 'model' | 'primitive' | 'os';
-
-export interface TierSpec {
-  tier: Tier;
-  /** Tier name, e.g. "Interaction OS". */
-  name: string;
-  tagline: string;
-}
-
-export const TIERS: TierSpec[] = [
-  { tier: 'os', name: 'Interaction OS', tagline: 'Runs and keeps Nu programs.' },
-  { tier: 'primitive', name: 'Interaction primitive', tagline: 'The model, in Python.' },
-  { tier: 'model', name: 'Interaction model', tagline: 'The language agnostic spec.' },
-];
+/** The family title and line over the products, as in the landing "How it works". */
+export const NUSTACK = { name: 'nustack', tagline: 'One primitive, all the way down.' };
 
 export interface StackItem {
   name: string;
   slug: string;
-  tier: Tier;
   hue: Hue;
-  /** Compressed microcopy for nav dropdown / footer. */
+  /** One line for the nav dropdown and footer, after the landing wording. */
   navDesc: string;
+  /** Lead-in before navDesc in the footer, eg "The theory". */
+  role?: string;
   /** The item's GitHub source, where it links while its page is away. */
   repo: string;
   href: string;
@@ -44,11 +29,11 @@ type StackSpec = Omit<StackItem, 'href'>;
 const GH = 'https://github.com/nustackdev';
 
 const SPECS: StackSpec[] = [
-  { name: 'nuspace', slug: 'nuspace', tier: 'os', hue: 'teal', navDesc: 'Interaction OS. A computing space for data-centric apps.', repo: `${GH}/nuspace` },
-  { name: 'nuverse', slug: 'nuverse', tier: 'os', hue: 'sage', navDesc: 'The nuspace ecosystem: planes and snippets.', repo: `${GH}/nuverse` },
-  { name: 'nu', slug: 'nu', tier: 'primitive', hue: 'plum', navDesc: 'The interaction primitive. Refs and interactions.', repo: `${GH}/nu` },
-  { name: 'nustd', slug: 'nustd', tier: 'primitive', hue: 'coral', navDesc: 'Fabrics and the standard library.', repo: `${GH}/nu/tree/main/pkgs/nustd` },
-  { name: 'interaction model', slug: 'model', tier: 'model', hue: 'steel', navDesc: 'Refs, interactions, fabrics, contexts.', repo: `${GH}/interaction-model` },
+  { name: 'nuspace', slug: 'nuspace', hue: 'teal', navDesc: 'A space that runs Nu programs. Every cell is one.', repo: `${GH}/nuspace` },
+  { name: 'nuverse', slug: 'nuverse', hue: 'sage', navDesc: 'Ready made spaces and extensions, one install away.', repo: `${GH}/nuverse` },
+  { name: 'nu', slug: 'nu', hue: 'plum', navDesc: 'The interaction model implementation in Python.', repo: `${GH}/nu` },
+  { name: 'nustd', slug: 'nustd', hue: 'coral', navDesc: 'Nu Refs and Interactions for everyday tasks.', repo: `${GH}/nu/tree/main/pkgs/nustd` },
+  { name: 'interaction-model', slug: 'model', hue: 'steel', role: 'The theory', navDesc: 'Every resource is a Ref, everything you do with it an Interaction.', repo: `${GH}/interaction-model` },
 ];
 
 export const stackHref = (slug: string) => `/stack/${slug}`;
@@ -61,4 +46,3 @@ export const STACK: StackItem[] = SPECS.map((s) => ({
   href: LIVE.has(s.slug) ? stackHref(s.slug) : s.repo,
 }));
 
-export const stackOf = (tier: Tier) => STACK.filter((s) => s.tier === tier);

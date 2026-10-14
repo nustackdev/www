@@ -250,7 +250,7 @@ export function FloatingNav() {
                 {section.groups.map((group) => (
                   <div key={group.header} className={s.sheetSubGroup}>
                     <div className={s.sheetSubHeader}>{group.header}</div>
-                    {group.items.map((item) => (
+                    {group.rows.flat().map((item) => (
                       <Link key={item.href} href={item.href} className={s.sheetSubLink}>
                         <span>{item.name}</span>
                         <span className={s.sheetLinkDesc}>{item.desc}</span>

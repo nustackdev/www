@@ -7,26 +7,34 @@
  * how they group.
  */
 
-import { TIERS, stackOf } from '../../lib/stack/stack';
+import { NUSTACK, STACK, type StackItem } from '../../lib/stack/stack';
 
-export type ProductItem = { name: string; href: string; desc: string };
+export type ProductItem = { name: string; href: string; desc: string; role?: string };
 export type ProductGroup = {
   header: string;
   tagline: string;
+  /** Items in pairs: rows in the header menu, columns in the footer. */
   /** Optional href — when set, the group header itself becomes a link to
    * the group's index page (e.g. Spaces → /spaces). */
   href?: string;
-  items: ProductItem[];
+  rows: ProductItem[][];
   /** Optional trailing text link (e.g. "Explore →") pointing to an index. */
   explore?: { label: string; href: string };
 };
 
-/** Stack menu: one group per tier, top of the ladder first. */
-export const STACK_GROUPS: ProductGroup[] = TIERS.map((t) => ({
-  header: t.name,
-  tagline: t.tagline,
-  items: stackOf(t.tier).map((s) => ({ name: s.name, href: s.href, desc: s.navDesc })),
-}));
+/** Each product with its pair: the space, the primitive, then the model. */
+const PAIRS = [['nuspace', 'nuverse'], ['nu', 'nustd'], ['model']];
+
+const item = (s: StackItem): ProductItem => ({ name: s.name, href: s.href, desc: s.navDesc, role: s.role });
+
+/** Stack menu: one nustack group over the paired products. */
+export const STACK_GROUPS: ProductGroup[] = [
+  {
+    header: NUSTACK.name,
+    tagline: NUSTACK.tagline,
+    rows: PAIRS.map((pair) => pair.map((slug) => item(STACK.find((s) => s.slug === slug)!))),
+  },
+];
 
 export type WordLink = { label: string; href: string };
 

@@ -4,7 +4,7 @@
  * ProductsMenu — the mega-panel that opens under a nav trigger (Stack, Spaces).
  *
  * One row per product group. Left column: group name + tagline. Right
- * column: 2-column grid of items (name + tagline text). Hover paints a
+ * column: the paired items, one pair per row with a rule between rows. Hover paints a
  * soft --site-wash bloom under the text and warms the tagline one step.
  * Surface matches FloatingNav's pill glass formula.
  */
@@ -37,14 +37,16 @@ export function ProductsMenu({ groups = STACK_GROUPS }: { groups?: ProductGroup[
             )}
           </div>
           <div className={s.right}>
-            <div className={s.itemsGrid}>
-              {group.items.map((item) => (
-                <Link key={item.href} href={item.href} className={s.item} role="menuitem">
-                  <span className={s.itemName}>{item.name}</span>
-                  <span className={s.itemDesc}>{item.desc}</span>
-                </Link>
-              ))}
-            </div>
+            {group.rows.map((row) => (
+              <div key={row[0].href} className={s.itemsGrid}>
+                {row.map((item) => (
+                  <Link key={item.href} href={item.href} className={s.item} role="menuitem">
+                    <span className={s.itemName}>{item.name}</span>
+                    <span className={s.itemDesc}>{item.desc}</span>
+                  </Link>
+                ))}
+              </div>
+            ))}
             {group.explore ? (
               <Link href={group.explore.href} className={s.explore} role="menuitem">
                 <span>{group.explore.label}</span>
