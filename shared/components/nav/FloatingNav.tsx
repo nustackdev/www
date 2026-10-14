@@ -247,9 +247,10 @@ export function FloatingNav() {
                 <span>{section.label}</span>
               </summary>
               <div className={s.sheetAccordionBody}>
+                {/* One group only (nustack), so its header would just repeat
+                    the section label. Rows render flat under Stack. */}
                 {section.groups.map((group) => (
                   <div key={group.header} className={s.sheetSubGroup}>
-                    <div className={s.sheetSubHeader}>{group.header}</div>
                     {group.rows.flat().map((item) => (
                       <Link key={item.href} href={item.href} className={s.sheetSubLink}>
                         <span>{item.name}</span>

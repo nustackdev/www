@@ -204,80 +204,67 @@
   color: var(--site-ink);
   background: var(--site-wash-2);
 }
-/* Top-level items in the sheet: Products (accordion) + flat links share a row
-   treatment so they read as siblings. Hairline between rows. */
+/* Sheet rows share one flat treatment: same left inset, hairline between
+   top-level rows, no tiles. Hover/focus only lifts the ink. The inset is a
+   var so the social icon row can align its glyphs to the same edge. */
+.sheet { --sheet-row-x: 4px; }
+
 .sheetAccordion,
 .sheetTopLink {
   border-bottom: 1px solid var(--site-rule);
 }
 
-.sheetTopLink {
+.sheetTopLink,
+.sheetAccordionSummary {
   display: flex;
   align-items: center;
   min-height: 52px;
-  padding: 12px var(--site-gap-tight);
-  border-radius: var(--site-r-md);
+  padding: 12px var(--sheet-row-x);
   color: var(--site-ink);
   text-decoration: none;
   font-family: var(--font-display);
   font-size: var(--site-fs-8);
   font-weight: 500;
-  transition: background var(--site-t);
-}
-.sheetTopLink:hover,
-.sheetTopLink:focus-visible {
-  background: var(--site-wash);
-}
-
-.sheetAccordionSummary {
-  display: flex;
-  align-items: center;
-  min-height: 52px;
-  padding: 12px 4px;
-  color: var(--site-ink);
-  font-family: var(--font-display);
-  font-size: var(--site-fs-8);
-  font-weight: 500;
   cursor: pointer;
-  list-style: none;
+  transition: color var(--site-t);
 }
+.sheetAccordionSummary { list-style: none; }
 .sheetAccordionSummary::-webkit-details-marker { display: none; }
 
-.sheetAccordionBody {
-  display: flex;
-  flex-direction: column;
-  gap: var(--site-gap-tight);
-  padding: var(--site-gap-tight) 0 var(--site-gap-normal) var(--site-gap-tight);
-}
 .sheetSubGroup {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-.sheetSubHeader {
-  color: var(--site-ink-4);
-  font-family: var(--font-display);
-  font-size: var(--site-fs-1);
-  font-weight: 600;
-  letter-spacing: var(--site-tr-wide);
-  text-transform: uppercase;
-  padding: 6px 4px 4px;
+.sheetAccordionBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 0 var(--site-gap-tight);
 }
 .sheetSubLink {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 10px 8px;
+  padding: 10px var(--sheet-row-x);
   min-height: 44px;
   justify-content: center;
   color: var(--site-ink);
   text-decoration: none;
-  border-radius: var(--site-r-lg);
   font-family: var(--font-display);
   font-size: var(--site-fs-6);
   font-weight: 500;
+  transition: color var(--site-t);
 }
-.sheetSubLink:hover { background: var(--site-wash-2); }
+/* Touch keeps :hover sticky after a tap, so only real pointers get it. */
+.sheetTopLink:focus-visible,
+.sheetAccordionSummary:focus-visible,
+.sheetSubLink:focus-visible { color: var(--site-ink-2); }
+@media (hover: hover) {
+  .sheetTopLink:hover,
+  .sheetAccordionSummary:hover,
+  .sheetSubLink:hover { color: var(--site-ink-2); }
+}
 
 /* Explore action — inline arrow after the label, subtle slide on hover. */
 .sheetSubExploreArrow {
@@ -296,8 +283,11 @@
   color: var(--site-ink-3);
 }
 
+/* Icons sit in 35px hit boxes around ~18px glyphs; pull the row left by the
+   box padding so the first glyph lines up with the row text above. */
 .sheetIconRow {
   display: flex;
   gap: var(--site-control-gap);
-  padding: var(--site-gap-normal) var(--site-gap-tight) 0;
+  padding-top: var(--site-gap-normal);
+  margin-left: calc(var(--sheet-row-x) - 8px);
 }
