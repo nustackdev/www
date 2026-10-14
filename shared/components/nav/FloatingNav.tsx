@@ -3,10 +3,10 @@
 /**
  * FloatingNav — the site's top nav pill.
  *
- * Desktop: logo · Stack▾ · Spaces▾ · Docs · Blog · About · socials · search.
+ * Desktop: logo · Stack▾ · Docs · Blog · socials · search.
  * Mobile:  logo · search · hamburger → full-screen sheet with everything stacked.
  *
- * Both dropdowns (ProductsMenu) are portaled to <body> so their blur
+ * The Stack dropdown (ProductsMenu) is portaled to <body> so its blur
  * escapes this header's `isolation: isolate` backdrop-root.
  */
 
@@ -20,7 +20,7 @@ import { GithubMark } from '../marks/GithubMark';
 import { ProductsMenu } from './ProductsMenu';
 import { SocialLinks } from './SocialLinks';
 import { SearchDialog } from './SearchDialog';
-import { STACK_GROUPS, SPACES_GROUP, WORD_LINKS, SOCIAL_LINKS } from './nav.data';
+import { STACK_GROUPS, WORD_LINKS, SOCIAL_LINKS } from './nav.data';
 import s from './FloatingNav.module.css';
 
 const HOVER_CLOSE_MS = 140;
@@ -30,7 +30,6 @@ export function FloatingNav() {
   const pathname = usePathname();
 
   const [stackOpen, setStackOpen] = useState(false);
-  const [spacesOpen, setSpacesOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
@@ -38,16 +37,12 @@ export function FloatingNav() {
   const pillRef = useRef<HTMLDivElement>(null);
   const stackTriggerRef = useRef<HTMLButtonElement>(null);
   const stackPanelRef = useRef<HTMLDivElement>(null);
-  const spacesTriggerRef = useRef<HTMLButtonElement>(null);
-  const spacesPanelRef = useRef<HTMLDivElement>(null);
   const sheetCloseRef = useRef<HTMLButtonElement>(null);
   const stackHoverTimer = useRef<number | null>(null);
-  const spacesHoverTimer = useRef<number | null>(null);
 
   // Close every surface on route change.
   useEffect(() => {
     setStackOpen(false);
-    setSpacesOpen(false);
     setSheetOpen(false);
   }, [pathname]);
 
@@ -65,24 +60,11 @@ export function FloatingNav() {
     return () => document.removeEventListener('mousedown', onDown);
   }, [stackOpen]);
 
-  useEffect(() => {
-    if (!spacesOpen) return;
-    const onDown = (e: MouseEvent) => {
-      const target = e.target as Node;
-      const inPill = pillRef.current?.contains(target);
-      const inPanel = spacesPanelRef.current?.contains(target);
-      if (!inPill && !inPanel) setSpacesOpen(false);
-    };
-    document.addEventListener('mousedown', onDown);
-    return () => document.removeEventListener('mousedown', onDown);
-  }, [spacesOpen]);
-
   // Esc closes either surface and returns focus to the stack trigger.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
       setStackOpen(false);
-      setSpacesOpen(false);
       setSheetOpen(false);
       stackTriggerRef.current?.focus();
     };
@@ -130,7 +112,6 @@ export function FloatingNav() {
   const openStack = useCallback(() => {
     if (stackHoverTimer.current) window.clearTimeout(stackHoverTimer.current);
     setStackOpen(true);
-    setSpacesOpen(false);
   }, []);
   const scheduleCloseStack = useCallback(() => {
     if (stackHoverTimer.current) window.clearTimeout(stackHoverTimer.current);
@@ -146,26 +127,6 @@ export function FloatingNav() {
       setStackOpen(true);
     }
   }, [toggleStack]);
-
-  const openSpaces = useCallback(() => {
-    if (spacesHoverTimer.current) window.clearTimeout(spacesHoverTimer.current);
-    setSpacesOpen(true);
-    setStackOpen(false);
-  }, []);
-  const scheduleCloseSpaces = useCallback(() => {
-    if (spacesHoverTimer.current) window.clearTimeout(spacesHoverTimer.current);
-    spacesHoverTimer.current = window.setTimeout(() => setSpacesOpen(false), HOVER_CLOSE_MS);
-  }, []);
-  const toggleSpaces = useCallback(() => setSpacesOpen(v => !v), []);
-  const onSpacesKey = useCallback((e: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleSpaces();
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setSpacesOpen(true);
-    }
-  }, [toggleSpaces]);
 
   return (
     <header className={s.floatingNav}>
@@ -206,41 +167,6 @@ export function FloatingNav() {
               role="menu"
             >
               <ProductsMenu />
-            </div>,
-            document.body,
-          )}
-        </div>
-
-        <div
-          className={s.productsSlot}
-          onMouseEnter={openSpaces}
-          onMouseLeave={scheduleCloseSpaces}
-        >
-          <button
-            ref={spacesTriggerRef}
-            type="button"
-            className={s.navWord}
-            aria-haspopup="menu"
-            aria-expanded={spacesOpen}
-            data-open={spacesOpen ? 'true' : 'false'}
-            onClick={toggleSpaces}
-            onKeyDown={onSpacesKey}
-          >
-            Spaces
-            <svg className={s.caret} width="8" height="6" viewBox="0 0 8 6" fill="none" aria-hidden>
-              <path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-
-          {spacesOpen && mounted && createPortal(
-            <div
-              ref={spacesPanelRef}
-              className={s.panelWrap}
-              onMouseEnter={openSpaces}
-              onMouseLeave={scheduleCloseSpaces}
-              role="menu"
-            >
-              <ProductsMenu groups={[SPACES_GROUP]} />
             </div>,
             document.body,
           )}
@@ -312,11 +238,9 @@ export function FloatingNav() {
             <CloseIcon size={18} aria-hidden />
           </button>
 
-          {/* Top-level nav mirrors desktop: Stack + Spaces (each expandable)
-              · Docs · Blog · About. */}
+          {/* Top-level nav mirrors desktop: Stack (expandable) · Docs · Blog. */}
           {[
             { label: 'Stack', groups: STACK_GROUPS },
-            { label: 'Spaces', groups: [SPACES_GROUP] },
           ].map((section) => (
             <details key={section.label} className={s.sheetAccordion}>
               <summary className={s.sheetAccordionSummary}>

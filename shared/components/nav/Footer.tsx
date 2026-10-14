@@ -4,15 +4,15 @@ import { NuLogo } from '../marks/NuLogo';
 import { NustackMark } from '../marks/NustackMark';
 import { SocialLinks } from './SocialLinks';
 import { ThemeToggle } from './ThemeToggle';
-import { STACK_GROUPS, SPACES_GROUP } from './nav.data';
+import { STACK_GROUPS } from './nav.data';
 import s from './Footer.module.css';
 
 /**
  * Site footer — rich sitemap.
  *
  * Each product entry is a titled row: name (link) + one-line description under
- * it. The three stack tiers and Spaces become peer columns with taglines under
- * each header.
+ * it. The three stack tiers become peer columns with taglines under each
+ * header.
  * A brand column carries the wordmark, a confident tagline, Learn links, and
  * socials. Transparent surface; sits on --site-bg from PageShell.
  */
@@ -20,18 +20,14 @@ import s from './Footer.module.css';
 const LEARN_LINKS = [
   { label: 'Docs', href: '/docs' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Changelog', href: 'https://github.com/nustackdev/nu/blob/main/CHANGELOG.md' },
-  { label: 'About', href: '/about' },
+  { label: 'Changelog', href: 'https://github.com/nustackdev/nuspace/blob/main/CHANGELOG.md' },
 ];
 
 const AREAS: Record<string, string> = {
   'Interaction OS': 'os',
   'Interaction primitive': 'primitive',
   'Interaction model': 'model',
-  Spaces: 'spaces',
 };
-
-const FOOTER_GROUPS = [...STACK_GROUPS, SPACES_GROUP];
 
 export function Footer() {
   return (
@@ -68,7 +64,7 @@ export function Footer() {
 
           {/* Sitemap: groups × { header, tagline, rich items } */}
           <div className={s.sitemap}>
-            {FOOTER_GROUPS.map((group) => (
+            {STACK_GROUPS.map((group) => (
               <div
                 key={group.header}
                 className={s.group}

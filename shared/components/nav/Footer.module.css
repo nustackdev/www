@@ -118,8 +118,8 @@
 
 .sitemap {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-areas: "os primitive model spaces";
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas: "os primitive model";
   gap: var(--site-gap-loose);
   min-width: 0;
 }
@@ -294,8 +294,7 @@
     grid-template-areas:
       "os"
       "primitive"
-      "model"
-      "spaces";
+      "model";
   }
   .itemDesc {
     -webkit-line-clamp: 1;
