@@ -142,8 +142,8 @@ importers:
   landing:
     dependencies:
       '@nustackdev/tape-player':
-        specifier: 0.1.5
-        version: 0.1.5(react@19.2.7)
+        specifier: 0.1.6
+        version: 0.1.6(react@19.2.7)
       '@www/shared':
         specifier: workspace:*
         version: link:../shared
@@ -164,8 +164,8 @@ importers:
         version: 19.2.7(react@19.2.7)
     devDependencies:
       '@nustackdev/tape':
-        specifier: 0.1.5
-        version: 0.1.5(react@19.2.7)
+        specifier: 0.1.6
+        version: 0.1.6(react@19.2.7)
       '@tailwindcss/postcss':
         specifier: ^4.3.1
         version: 4.3.2
@@ -1242,16 +1242,16 @@ packages:
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
 
-  '@nustackdev/tape-player@0.1.5':
-    resolution: {integrity: sha512-c8f+Pkl+EbvJ+A4m4DVo1+4q69qemBxGu98qkN+y0PytXK+aitMerxNONp+q1TPYQ3gw8IYuK7ltbhBc5e991A==}
+  '@nustackdev/tape-player@0.1.6':
+    resolution: {integrity: sha512-Bqe94nxNs3a9ITKTXdXL4K+bVB6SID65jQPzx9qhJX9thlRVaoo57m9Uuw0XoGq44mc0biZlpFcKE/qCulchbg==}
     peerDependencies:
       react: '>=18'
 
-  '@nustackdev/tape-scene@0.1.5':
-    resolution: {integrity: sha512-bV/AWK0t2tWJx4Vl6nHgdGWYK36o6zEaUpNvBLS2TfBdVRboqHM69f09ZK1zz6YGHjL5R+3e2Zdi39vLI4CfGw==}
+  '@nustackdev/tape-scene@0.1.6':
+    resolution: {integrity: sha512-HWpX5fJBMsANr85OLnXXMtOjaFu3K7Bc6oEn6BTnkwvL3NJRuaV8GiIxGI7d7CZ+hyImQd+B0rwyDt7fJc9+kw==}
 
-  '@nustackdev/tape@0.1.5':
-    resolution: {integrity: sha512-NUA5tfIu3lxHzJPyJPtgYIje87D8a0YIHzR9mVEZYOs2TAoXNKcBgAOPKO4tbcCxGUI3QVskmaYmmsKBvIxQcw==}
+  '@nustackdev/tape@0.1.6':
+    resolution: {integrity: sha512-Pqk/zBe39dM0swMShZAoulcIROZd+C7u15nkcCodhEk4K0R8DtZdSVTmQI7BlJQ3d2EjdVIWViNlTpaNaTveTw==}
     hasBin: true
 
   '@orama/orama@3.1.18':
@@ -6104,17 +6104,17 @@ snapshots:
 
   '@nolyfill/is-core-module@1.0.39': {}
 
-  '@nustackdev/tape-player@0.1.5(react@19.2.7)':
+  '@nustackdev/tape-player@0.1.6(react@19.2.7)':
     dependencies:
-      '@nustackdev/tape-scene': 0.1.5
+      '@nustackdev/tape-scene': 0.1.6
       react: 19.2.7
 
-  '@nustackdev/tape-scene@0.1.5': {}
+  '@nustackdev/tape-scene@0.1.6': {}
 
-  '@nustackdev/tape@0.1.5(react@19.2.7)':
+  '@nustackdev/tape@0.1.6(react@19.2.7)':
     dependencies:
-      '@nustackdev/tape-player': 0.1.5(react@19.2.7)
-      '@nustackdev/tape-scene': 0.1.5
+      '@nustackdev/tape-player': 0.1.6(react@19.2.7)
+      '@nustackdev/tape-scene': 0.1.6
       ws: 8.22.0
     transitivePeerDependencies:
       - bufferutil
