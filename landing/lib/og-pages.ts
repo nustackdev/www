@@ -23,63 +23,6 @@ export const PAGE_OG_ENTRIES: PageOgEntry[] = [
       'For everything you work with: notes, data, tools, agents. Connected cells: living programs that hold data, logic and look in one form.',
     siteLabel: appName,
   },
-  {
-    key: 'about',
-    title: 'About Nu.',
-    description: 'How Nu started, what it is, where it goes.',
-    siteLabel: appName,
-  },
-  {
-    key: 'stack',
-    title: 'The stack.',
-    description:
-      'Interaction model, interaction primitive, interaction OS. One idea, three layers.',
-    siteLabel: appName,
-  },
-  {
-    key: 'nuspace',
-    title: 'nuspace.',
-    description:
-      'An information base. One store anyone opens and writes, and the programs that run in it.',
-    siteLabel: appName,
-  },
-  {
-    key: 'nuverse',
-    title: 'nuverse.',
-    description: 'The nuspace ecosystem: the snippets and primitives spaces are built from.',
-    siteLabel: appName,
-  },
-  {
-    key: 'nu',
-    title: 'Nu.',
-    description: 'The interaction primitive. Refs name what a program touches, interactions say what to do.',
-    siteLabel: appName,
-  },
-  {
-    key: 'nustd',
-    title: 'nustd.',
-    description: 'Fabrics and the standard library for Nu: state, UI, network, cluster, models.',
-    siteLabel: appName,
-  },
-  {
-    key: 'model',
-    title: 'The interaction model.',
-    description:
-      'The language agnostic specification behind Nu. Refs, Interactions, Fabrics, Contexts.',
-    siteLabel: appName,
-  },
-  {
-    key: 'spaces',
-    title: 'Spaces.',
-    description: 'Things people and agents built in nuspace.',
-    siteLabel: appName,
-  },
-  {
-    key: 'placeholder',
-    title: 'Placeholder.',
-    description: 'Placeholder space.',
-    siteLabel: appName,
-  },
 ];
 
 export const PAGE_OG: Record<string, PageOgEntry> = Object.fromEntries(
