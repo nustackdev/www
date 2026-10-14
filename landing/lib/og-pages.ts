@@ -18,7 +18,7 @@ export interface PageOgEntry {
 export const PAGE_OG_ENTRIES: PageOgEntry[] = [
   {
     key: 'root',
-    title: 'Build your computable space.',
+    title: 'Build your computational space.',
     description:
       'For everything you work with: notes, data, tools, agents. Connected cells: living programs that hold data, logic and look in one form.',
     siteLabel: appName,

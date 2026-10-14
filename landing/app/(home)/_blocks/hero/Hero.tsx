@@ -12,7 +12,7 @@ export function Hero() {
     <section className={s.root}>
       <div className={s.head}>
         <h1 className={s.title}>
-          Build your computable space
+          Build your computational space
           <br />
           <span className={s.dim}>for everything you work with: notes, data, tools, agents.</span>
         </h1>

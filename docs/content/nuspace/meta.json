@@ -1,6 +1,6 @@
 {
   "title": "nuspace",
-  "description": "Your computable space.",
+  "description": "Your computational space.",
   "root": true,
   "pages": [
     "index",
