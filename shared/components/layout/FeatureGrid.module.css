@@ -23,7 +23,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--site-border-strong);
+  background: var(--site-border);
   -webkit-mask-image:
     linear-gradient(to right, transparent, #000 18%, #000 82%, transparent),
     linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);

@@ -21,8 +21,8 @@
   background: linear-gradient(
     to right,
     transparent,
-    var(--site-border-strong) 18%,
-    var(--site-border-strong) 82%,
+    var(--site-border) 18%,
+    var(--site-border) 82%,
     transparent
   );
 }
