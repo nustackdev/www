@@ -10,7 +10,8 @@ const inter = Inter({
   axes: ['opsz'],
 });
 
-const OG_IMAGE = '/og/page/root/image.png';
+// Bump `v` whenever the card changes: link previews (Telegram, X, Slack) cache the image by url.
+const OG_IMAGE = '/og/page/root/image.png?v=2';
 const TITLE = 'Build your computational space with nuspace';
 const DESCRIPTION = 'One place for your notes, data, tools and agents, built from connected cells: living programs that hold data, logic and look in one form.';
 
