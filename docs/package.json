@@ -4,10 +4,10 @@
   "private": true,
   "description": "nustack.dev/docs: fumadocs app, served under the /docs base path.",
   "scripts": {
-    "build": "next build",
-    "dev": "next dev --port 3002",
+    "build": "node scripts/sync-spec.mjs && next build",
+    "dev": "node scripts/sync-spec.mjs && { node scripts/sync-spec.mjs --watch & next dev --port 3002; }",
     "start": "next start",
-    "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
+    "types:check": "node scripts/sync-spec.mjs && fumadocs-mdx && next typegen && tsc --noEmit",
     "postinstall": "fumadocs-mdx",
     "lint": "eslint"
   },

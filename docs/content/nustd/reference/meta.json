@@ -1,0 +1,32 @@
+{
+  "title": "Reference",
+  "pages": [
+    "kv",
+    "valkey",
+    "ui",
+    "cluster",
+    "llm",
+    "proxy",
+    "http",
+    "service",
+    "cc",
+    "mp",
+    "mp_pool",
+    "ws_server",
+    "queue",
+    "math",
+    "cmath",
+    "random",
+    "time",
+    "datetime",
+    "itertools",
+    "functools",
+    "asyncio",
+    "logging",
+    "pathlib",
+    "uuid",
+    "decimal",
+    "fractions",
+    "fin"
+  ]
+}

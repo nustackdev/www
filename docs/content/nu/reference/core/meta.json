@@ -1,0 +1,27 @@
+{
+  "title": "core",
+  "pages": [
+    "arithmetic",
+    "reduction",
+    "logical",
+    "repr",
+    "bitwise",
+    "reflection",
+    "access",
+    "iteration",
+    "comparison",
+    "transform",
+    "reactive-level",
+    "dynamic",
+    "conditional",
+    "io",
+    "sentinel",
+    "reactive-interactions",
+    "reactive-event",
+    "reactive-stream",
+    "cast",
+    "cast-fns",
+    "flows",
+    "spans"
+  ]
+}

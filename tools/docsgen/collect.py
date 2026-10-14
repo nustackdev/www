@@ -10,7 +10,7 @@ from nu.inspect import BuilderRecord, InteractionRecord, parse_module
 
 from .discover import Node
 from .model import Child, Page, Root, Section, label, slug
-from .pages import RootSpec
+from .pages import Dist
 
 __all__ = ["build", "build_root"]
 
@@ -27,7 +27,7 @@ def build(node: Node) -> Page:
     )
 
 
-def build_root(spec: RootSpec, nodes: tuple[Node, ...]) -> Root:
+def build_root(spec: Dist, nodes: tuple[Node, ...]) -> Root:
     """A distribution landing page: the table of what is in the box."""
     return Root(path=spec.path, title=spec.title, children=tuple(_child(n) for n in nodes))
 

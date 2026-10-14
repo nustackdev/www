@@ -5,11 +5,13 @@ build-backend = "hatchling.build"
 [project]
 name = "nustack-docsgen"
 version = "0.1.0"
-description = "Generates docs/content/nu/reference/ from nu.inspect."
+description = "Generates the reference docs from nu.inspect."
 requires-python = ">=3.11"
 dependencies = [
-    "nucore==0.5.2",
-    "nustd[all]==0.5.2",
+    "nucore==0.6.3",
+    "nustd[all]==0.6.3",
+    "nuspace==0.5.3",
+    "nuverse==0.3.2",
 ]
 
 [project.scripts]

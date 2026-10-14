@@ -1,0 +1,14 @@
+{
+  "title": "web",
+  "pages": [
+    "shell",
+    "session",
+    "sidebar-ref",
+    "utils",
+    "viewer-ref",
+    "device",
+    "env",
+    "sidebar-feed",
+    "viewer-feed"
+  ]
+}

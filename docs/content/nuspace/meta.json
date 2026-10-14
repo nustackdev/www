@@ -3,6 +3,7 @@
   "description": "Your computable space.",
   "root": true,
   "pages": [
-    "index"
+    "index",
+    "reference"
   ]
 }

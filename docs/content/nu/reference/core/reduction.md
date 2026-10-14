@@ -1,0 +1,360 @@
+---
+title: reduction
+description: "Reduction atoms: Python's stream-to-scalar builtins."
+---
+
+Module `nu.core.reduction`.
+
+Reduction atoms: Python's stream-to-scalar builtins.
+
+Maps Python's builtins that fold an iterable down to one value onto Nu
+Reductions (a ScalarQuery with a stream child - they bridge the REFUSED cell of
+the cardinality matrix by naming the fold). Pure compute over the source.
+
+Builtins covered (Python -> Nu):
+
+- `sum` -> `Sum`, `min` -> `Min`, `max` -> `Max`
+- `any` -> `AnyOf`, `all` -> `AllOf`
+- `len` over a stream -> `Count`
+
+Plus the structural folds Python reaches for without a single builtin name -
+`First` / `Last` / `Collect` - the native ways to take the head, the tail,
+or the whole drain of a stream.
+
+`functools.reduce` is stdlib, not a bare builtin, so a generic `Reduce` is
+core-adjacent (borderline). It is deferred to `nustd`, not declared here:
+core stays the 1:1 map of native builtins.
+
+Every atom is EVALUABLE: each `Reduction` defines `compile` (sync) and
+`acompile` (async) returning a thunk that drains its stream child to a scalar,
+with EMPTY propagation.
+
+Sorts: all ScalarQuery / Reduction (Q-scalar over Q-stream).
+
+| Name | Sort | Call | Meaning |
+| --- | --- | --- | --- |
+| [AllOf](#allof) | `reduction` | `AllOf(stream)` | True if every item in its stream child is truthy (`all`). |
+| [AnyOf](#anyof) | `reduction` | `AnyOf(stream)` | True if any item in its stream child is truthy (`any`). |
+| [Collect](#collect) | `reduction` | `Collect(stream)` | Drains its stream child into one list value. |
+| [Count](#count) | `reduction` | `Count(stream)` | The number of items in its stream child (`len` over a stream). |
+| [First](#first) | `reduction` | `First(stream)` | The first item of its stream child. |
+| [Last](#last) | `reduction` | `Last(stream)` | The last item of its stream child. |
+| [Max](#max) | `reduction` | `Max(stream)` | The largest item in its stream child (`max`). |
+| [Min](#min) | `reduction` | `Min(stream)` | The smallest item in its stream child (`min`). |
+| [Sum](#sum) | `reduction` | `Sum(stream)` | The sum of every item in its stream child (`sum`). |
+
+## AllOf
+
+True if every item in its stream child is truthy (`all`).
+
+```python
+AllOf(stream)
+```
+
+Path `nu.core.AllOf`. Kind `Reduction`, sort `reduction`, cardinality `scalar`. Arity 1 (1 required).
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `stream` |  |  | the stream to fold. |
+
+**Yields**
+
+True or False, never EMPTY. An EMPTY item counts as false.
+
+**Notes**
+
+- Short-circuits on the first falsy item; the rest of the stream is never drained.
+- An empty stream yields True, Python's `all` rule for no items.
+
+**Example**
+
+```python
+nu.run(nu.AllOf(nu.Iter([1, 1, 1])))[0]
+```
+
+```
+True
+```
+
+## AnyOf
+
+True if any item in its stream child is truthy (`any`).
+
+```python
+AnyOf(stream)
+```
+
+Path `nu.core.AnyOf`. Kind `Reduction`, sort `reduction`, cardinality `scalar`. Arity 1 (1 required).
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `stream` |  |  | the stream to fold. |
+
+**Yields**
+
+True or False, never EMPTY. An EMPTY item counts as false.
+
+**Notes**
+
+- Short-circuits on the first truthy item; the rest of the stream is never drained.
+- An empty stream yields False, Python's `any` rule for no items.
+
+**Example**
+
+```python
+nu.run(nu.AnyOf(nu.Iter([0, 0, 1])))[0]
+```
+
+```
+True
+```
+
+## Collect
+
+Drains its stream child into one list value.
+
+```python
+Collect(stream)
+```
+
+Path `nu.core.Collect`. Kind `Reduction`, sort `reduction`, cardinality `scalar`. Arity 1 (1 required).
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `stream` |  |  | the stream to fold. |
+
+**Yields**
+
+A list of every item, in order. Empty list for an empty stream.
+EMPTY if any item is EMPTY.
+
+**Notes**
+
+- The one reduction with no single Python builtin behind it; it names the structural "materialize the stream" fold.
+
+**Example**
+
+```python
+nu.run(nu.Collect(nu.Iter([1, 2, 3])))[0]
+```
+
+```
+[1, 2, 3]
+```
+
+## Count
+
+The number of items in its stream child (`len` over a stream).
+
+```python
+Count(stream)
+```
+
+Path `nu.core.Count`. Kind `Reduction`, sort `reduction`, cardinality `scalar`. Arity 1 (1 required).
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `stream` |  |  | the stream to fold. |
+
+**Yields**
+
+The count. 0 for an empty stream. EMPTY if any item is
+EMPTY.
+
+**Notes**
+
+- Drains the whole stream to count it; there is no shortcut.
+
+**Example**
+
+```python
+nu.run(nu.Count(nu.Iter([1, 2, 3])))[0]
+```
+
+```
+3
+```
+
+## First
+
+The first item of its stream child.
+
+```python
+First(stream)
+```
+
+Path `nu.core.First`. Kind `Reduction`, sort `reduction`, cardinality `scalar`. Arity 1 (1 required).
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `stream` |  |  | the stream to fold. |
+
+**Yields**
+
+The first item. EMPTY if the stream is empty or that first item is
+EMPTY.
+
+**Notes**
+
+- Pulls exactly one item and stops; the rest of the stream is never touched.
+
+**Example**
+
+```python
+nu.run(nu.First(nu.Iter([1, 2, 3])))[0]
+```
+
+```
+1
+```
+
+## Last
+
+The last item of its stream child.
+
+```python
+Last(stream)
+```
+
+Path `nu.core.Last`. Kind `Reduction`, sort `reduction`, cardinality `scalar`. Arity 1 (1 required).
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `stream` |  |  | the stream to fold. |
+
+**Yields**
+
+The last item. EMPTY if the stream is empty or any item is EMPTY.
+
+**Notes**
+
+- Drains the whole stream to find the last item; there is no shortcut from the tail.
+
+**Example**
+
+```python
+nu.run(nu.Last(nu.Iter([1, 2, 3])))[0]
+```
+
+```
+3
+```
+
+## Max
+
+The largest item in its stream child (`max`).
+
+```python
+Max(stream)
+```
+
+Path `nu.core.Max`. Kind `Reduction`, sort `reduction`, cardinality `scalar`. Arity 1 (1 required).
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `stream` |  |  | the stream to fold. |
+
+**Yields**
+
+The largest item. EMPTY if the stream is empty or any item
+is EMPTY.
+
+**Notes**
+
+- Buffers every item before comparing, since finding a maximum needs the whole set; nothing shortcuts.
+- An empty stream yields EMPTY, not an error, unlike Python's `max` which raises.
+
+**Example**
+
+```python
+nu.run(nu.Max(nu.Iter([3, 1, 2])))[0]
+```
+
+```
+3
+```
+
+## Min
+
+The smallest item in its stream child (`min`).
+
+```python
+Min(stream)
+```
+
+Path `nu.core.Min`. Kind `Reduction`, sort `reduction`, cardinality `scalar`. Arity 1 (1 required).
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `stream` |  |  | the stream to fold. |
+
+**Yields**
+
+The smallest item. EMPTY if the stream is empty or any item
+is EMPTY.
+
+**Notes**
+
+- Buffers every item before comparing, since finding a minimum needs the whole set; nothing shortcuts.
+- An empty stream yields EMPTY, not an error, unlike Python's `min` which raises.
+
+**Example**
+
+```python
+nu.run(nu.Min(nu.Iter([3, 1, 2])))[0]
+```
+
+```
+1
+```
+
+## Sum
+
+The sum of every item in its stream child (`sum`).
+
+```python
+Sum(stream)
+```
+
+Path `nu.core.Sum`. Kind `Reduction`, sort `reduction`, cardinality `scalar`. Arity 1 (1 required).
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `stream` |  |  | the stream to fold. |
+
+**Yields**
+
+The sum. EMPTY if any item is EMPTY.
+
+**Notes**
+
+- Folds from 0, the additive identity, so an empty stream yields 0 rather than EMPTY.
+- The fold stops at the first EMPTY item it drains.
+
+**Example**
+
+```python
+nu.run(nu.Sum(nu.Iter([1, 2, 3])))[0]
+```
+
+```
+6
+```

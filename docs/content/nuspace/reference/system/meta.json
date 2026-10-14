@@ -1,0 +1,9 @@
+{
+  "title": "system",
+  "pages": [
+    "backends",
+    "devices",
+    "kernel",
+    "services"
+  ]
+}

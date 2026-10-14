@@ -107,7 +107,7 @@ The same lines that put `a + b` on a dashboard can, without changing shape:
 - **Handle terabytes.** Shard the KV Fabric. The Refs do not notice.
 - **Run distributed across a cluster.** Bind through `nustd.cluster`. The Refs do not notice.
 
-For the algebra underneath (atoms, kinds, forms), see the [Explanation](/docs/nu/reference/nu) section once it lands. For now, pick a card above and start building.
+For the algebra underneath (atoms, kinds, forms), see the [Explanation](/docs/nu/reference) section once it lands. For now, pick a card above and start building.
 
 ## Nu STD
 
@@ -119,36 +119,36 @@ The rest re-surface Python's **standard library**. Call them anywhere, no bindin
 
 | Module | What | Looks like |
 | --- | --- | --- |
-| [`nustd.kv`](/docs/nu/reference/nustd/kv) | Persistent state. | `State.movies.append(m)` |
-| [`nustd.ui`](/docs/nu/reference/nustd/ui) | Reactive web UI. | `Dashboard.count.set_value(n)` |
-| [`nustd.cluster`](/docs/nu/reference/nustd/cluster) | Cluster compute. | `Teleport(op, target="gpu")` |
-| [`nustd.llm`](/docs/nu/reference/nustd/llm) | OpenAI-compatible chat. | `Bot.chat(prompt="…")` |
-| [`nustd.mem`](/docs/nu/reference/nustd/mem) | In-memory state. | `users.age.set(12)` |
-| [`nustd.proxy`](/docs/nu/reference/nustd/proxy) | Fabrics over the network. | `InvisiblesProxy(Nav, address=...)` |
-| [`nustd.http`](/docs/nu/reference/nustd/http) | Nu meets the web. | `Solana.get_slot()` |
-| [`nustd.service`](/docs/nu/reference/nustd/service) | Python objects as Refs. | `Calc.add(a=2, b=3)` |
-| [`nustd.cc`](/docs/nu/reference/nustd/cc) | Claude Code as a Ref. | `Agent.ask(prompt="…")` |
-| [`nustd.mp`](/docs/nu/reference/nustd/mp) | Local parallel execution. | `Teleport(op, target=0)` |
-| [`nustd.mp_pool`](/docs/nu/reference/nustd/mp_pool) | A pool of workers, as a fabric. | `Teleport(body, worker=w)` |
-| [`nustd.ws_server`](/docs/nu/reference/nustd/ws_server) | Serve websocket clients. | `SessionFor(body=arm)` |
-| [`nustd.math`](/docs/nu/reference/nustd/math) | Math functions and constants. | `math.sqrt(2)` |
-| [`nustd.cmath`](/docs/nu/reference/nustd/cmath) | `complex` and its companions. | `cmath.polar(z)` |
-| [`nustd.random`](/docs/nu/reference/nustd/random) | The global RNG. | `random.randint(1, 6)` |
-| [`nustd.time`](/docs/nu/reference/nustd/time) | The process clock. | `time.monotonic()` |
-| [`nustd.datetime`](/docs/nu/reference/nustd/datetime) | Dates, times, deltas, timezones. | `datetime.date.today()` |
-| [`nustd.itertools`](/docs/nu/reference/nustd/itertools) | Iterator building blocks. | `itertools.product(a, b)` |
-| [`nustd.functools`](/docs/nu/reference/nustd/functools) | A fold over a stream. | `functools.reduce(Add, xs)` |
-| [`nustd.asyncio`](/docs/nu/reference/nustd/asyncio) | The non-blocking sleep. | `asyncio.sleep(1)` |
-| [`nustd.logging`](/docs/nu/reference/nustd/logging) | Loggers and level shortcuts. | `logging.getLogger(__name__)` |
-| [`nustd.pathlib`](/docs/nu/reference/nustd/pathlib) | Lexical path operations. | `pathlib.Path.of("a", "b")` |
-| [`nustd.uuid`](/docs/nu/reference/nustd/uuid) | UUIDs, all four versions. | `uuid.uuid4()` |
-| [`nustd.decimal`](/docs/nu/reference/nustd/decimal) | Exact decimal arithmetic. | `Decimal.of("0.1")` |
-| [`nustd.fractions`](/docs/nu/reference/nustd/fractions) | Exact rational arithmetic. | `Fraction.of(1, 3)` |
-| [`nustd.fin`](/docs/nu/reference/nustd/fin) | Nu's own financial types. | `Percentage.of(75.5)` |
+| [`nustd.kv`](/docs/nustd/reference/kv) | Persistent state. | `State.movies.append(m)` |
+| [`nustd.ui`](/docs/nustd/reference/ui) | Reactive web UI. | `Dashboard.count.set_value(n)` |
+| [`nustd.cluster`](/docs/nustd/reference/cluster) | Cluster compute. | `Teleport(op, target="gpu")` |
+| [`nustd.llm`](/docs/nustd/reference/llm) | OpenAI-compatible chat. | `Bot.chat(prompt="…")` |
+| [`nu.mem`](/docs/nu/reference/mem) | In-memory state. | `users.age.set(12)` |
+| [`nustd.proxy`](/docs/nustd/reference/proxy) | Fabrics over the network. | `InvisiblesProxy(Nav, address=...)` |
+| [`nustd.http`](/docs/nustd/reference/http) | Nu meets the web. | `Solana.get_slot()` |
+| [`nustd.service`](/docs/nustd/reference/service) | Python objects as Refs. | `Calc.add(a=2, b=3)` |
+| [`nustd.cc`](/docs/nustd/reference/cc) | Claude Code as a Ref. | `Agent.ask(prompt="…")` |
+| [`nustd.mp`](/docs/nustd/reference/mp) | Local parallel execution. | `Teleport(op, target=0)` |
+| [`nustd.mp_pool`](/docs/nustd/reference/mp_pool) | A pool of workers, as a fabric. | `Teleport(body, worker=w)` |
+| [`nustd.ws_server`](/docs/nustd/reference/ws_server) | Serve websocket clients. | `SessionFor(body=arm)` |
+| [`nustd.math`](/docs/nustd/reference/math) | Math functions and constants. | `math.sqrt(2)` |
+| [`nustd.cmath`](/docs/nustd/reference/cmath) | `complex` and its companions. | `cmath.polar(z)` |
+| [`nustd.random`](/docs/nustd/reference/random) | The global RNG. | `random.randint(1, 6)` |
+| [`nustd.time`](/docs/nustd/reference/time) | The process clock. | `time.monotonic()` |
+| [`nustd.datetime`](/docs/nustd/reference/datetime) | Dates, times, deltas, timezones. | `datetime.date.today()` |
+| [`nustd.itertools`](/docs/nustd/reference/itertools) | Iterator building blocks. | `itertools.product(a, b)` |
+| [`nustd.functools`](/docs/nustd/reference/functools) | A fold over a stream. | `functools.reduce(Add, xs)` |
+| [`nustd.asyncio`](/docs/nustd/reference/asyncio) | The non-blocking sleep. | `asyncio.sleep(1)` |
+| [`nustd.logging`](/docs/nustd/reference/logging) | Loggers and level shortcuts. | `logging.getLogger(__name__)` |
+| [`nustd.pathlib`](/docs/nustd/reference/pathlib) | Lexical path operations. | `pathlib.Path.of("a", "b")` |
+| [`nustd.uuid`](/docs/nustd/reference/uuid) | UUIDs, all four versions. | `uuid.uuid4()` |
+| [`nustd.decimal`](/docs/nustd/reference/decimal) | Exact decimal arithmetic. | `Decimal.of("0.1")` |
+| [`nustd.fractions`](/docs/nustd/reference/fractions) | Exact rational arithmetic. | `Fraction.of(1, 3)` |
+| [`nustd.fin`](/docs/nustd/reference/fin) | Nu's own financial types. | `Percentage.of(75.5)` |
 
 ## Go deeper
 
 <Cards>
   <Card title="How-to" href="/docs/nu/how-to/install" description="Recipes for common tasks. Install, cross-repo dev, more coming." />
-  <Card title="Reference" href="/docs/nu/reference/nu" description="API surface. The nu kernel, the fabrics, the standard library." />
+  <Card title="Reference" href="/docs/nu/reference" description="API surface of the nu kernel. The fabrics and the standard library live in nustd." />
 </Cards>

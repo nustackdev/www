@@ -1,0 +1,1709 @@
+---
+title: primitives.str_
+description: "Str - string interface."
+---
+
+Module `nu.forms.primitives.str_`.
+
+Str - string interface.
+
+| Name | Sort | Call | Meaning |
+| --- | --- | --- | --- |
+| [Str](#str) | `scalar_query` | `Str()` | String interface. Addable + sliceable + comparable + logical + string methods. |
+
+## Str
+
+String interface. Addable + sliceable + comparable + logical + string methods.
+
+```python
+Str()
+```
+
+Path `nu.forms.Str`. Kind `ScalarQuery`, sort `scalar_query`, cardinality `scalar`.
+
+**Notes**
+
+- `+` concatenates; there's no numeric arithmetic on Str.
+- Comparison operators compare lexicographically, Python str ordering, and yield Bool. Chained comparisons like `a > b > c` do not build a single term; write them as `And(a > b, b > c)`.
+- Logical operators are the named forms `and_`, `or_`, `not_`, and coerce by truthiness: the empty string is False, every other string is True.
+- A search that finds nothing (`index`/`rindex`) yields EMPTY. Every other failure (a wrong type, a multi-character `fillchar`, an unencodable character, a missing `format_map` key, an out-of-range index) raises, matching Python.
+
+**Example**
+
+```python
+nu.run(nu.Str("ab") + nu.Str("cd"))[0]
+```
+
+```
+'abcd'
+```
+
+**Methods**
+
+### `a + b`
+
+Concatenation of self and other.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `other` | `StrArg` |  | the string to append to self. |
+
+**Yields**
+
+The concatenation. EMPTY when either operand is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("foo") + nu.Str("bar"))[0]
+```
+
+```
+'foobar'
+```
+
+### `a[key]`
+
+Character at an int index, or substring for a slice.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `key` | `IntArg \| slice` |  | an int index, or a Python slice of int start/stop/step. |
+
+**Yields**
+
+The single character for an int key, the substring for a slice.
+EMPTY when self is EMPTY.
+
+**Notes**
+
+- An out-of-range int index raises at evaluation time, matching Python. A slice never raises; out-of-range bounds are clamped like Python slicing, so `s[10:20]` on a shorter string yields the empty string rather than erroring.
+- Negative indices and negative slice bounds work as in Python.
+
+**Examples**
+
+```python
+nu.run(nu.Str("hello")[1])[0]
+```
+
+```
+'e'
+```
+
+```python
+nu.run(nu.Str("hello")[1:4])[0]
+```
+
+```
+'ell'
+```
+
+### `.len()`
+
+Length of self in characters.
+
+Builds `Int`.
+
+**Yields**
+
+The length as Int. EMPTY when self is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("abc").len())[0]
+```
+
+```
+3
+```
+
+### `.contains(item)`
+
+Substring test: item in self.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `item` | `StrArg` |  | the string to look for. |
+
+**Yields**
+
+True when item occurs in self, False otherwise. EMPTY when
+either operand is EMPTY.
+
+**Notes**
+
+- Named because Python's `in` must return a native bool.
+
+**Example**
+
+```python
+nu.run(nu.Str("abc").contains("b"))[0]
+```
+
+```
+True
+```
+
+### `a > b`
+
+Self strictly greater than other, lexicographically.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `other` | `StrArg` |  | the string to compare against. |
+
+**Yields**
+
+True when self sorts after other, False otherwise. EMPTY when
+either operand is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("banana") > nu.Str("apple"))[0]
+```
+
+```
+True
+```
+
+### `a < b`
+
+Self strictly less than other, lexicographically.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `other` | `StrArg` |  | the string to compare against. |
+
+**Yields**
+
+True when self sorts before other, False otherwise. EMPTY
+when either operand is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("apple") < nu.Str("banana"))[0]
+```
+
+```
+True
+```
+
+### `a >= b`
+
+Self greater than or equal to other, lexicographically.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `other` | `StrArg` |  | the string to compare against. |
+
+**Yields**
+
+True when self sorts after or equal to other, False otherwise.
+EMPTY when either operand is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("apple") >= nu.Str("apple"))[0]
+```
+
+```
+True
+```
+
+### `a <= b`
+
+Self less than or equal to other, lexicographically.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `other` | `StrArg` |  | the string to compare against. |
+
+**Yields**
+
+True when self sorts before or equal to other, False otherwise.
+EMPTY when either operand is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("apple") <= nu.Str("banana"))[0]
+```
+
+```
+True
+```
+
+### `a == b`
+
+Self equal to other by value.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `other` | `StrArg` |  | the string to compare against. |
+
+**Yields**
+
+True when the strings compare equal, False otherwise. EMPTY
+when either operand is EMPTY.
+
+**Notes**
+
+- Value equality, not identity. Use `is_` for identity.
+
+**Example**
+
+```python
+nu.run(nu.Str("hi") == nu.Str("hi"))[0]
+```
+
+```
+True
+```
+
+### `a != b`
+
+Self not equal to other by value.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `other` | `StrArg` |  | the string to compare against. |
+
+**Yields**
+
+True when the strings differ, False otherwise. EMPTY when
+either operand is EMPTY.
+
+**Notes**
+
+- Value inequality, not identity. Use `is_` for identity.
+
+**Example**
+
+```python
+nu.run(nu.Str("hi") != nu.Str("bye"))[0]
+```
+
+```
+True
+```
+
+### `.is_(other)`
+
+Identity comparison: self is other.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `other` | `StrArg` |  | the value to compare identity against. |
+
+**Yields**
+
+True when self and other evaluate to the same Python object,
+False otherwise.
+
+**Notes**
+
+- Object identity, not value equality. For scalar comparison use `==` instead.
+- Python interns short/literal strings, so distinct Str literals with equal text can still test identical.
+
+**Example**
+
+```python
+nu.run(nu.Str("abc").is_("abc"))[0]
+```
+
+```
+True
+```
+
+### `.and_(other)`
+
+Logical AND of self and other.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `other` | `StrArg` |  | the value to AND with self. Coerced to Bool by truthiness (the empty string is False, everything else is True). |
+
+**Yields**
+
+True when both operands are truthy, False otherwise. An EMPTY
+operand counts as false.
+
+**Notes**
+
+- Short-circuits like Python: the right operand is only evaluated when the left does not already decide the result.
+
+**Example**
+
+```python
+nu.run(nu.Str("hi").and_(nu.Str("")))[0]
+```
+
+```
+False
+```
+
+### `.or_(other)`
+
+Logical OR of self and other.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `other` | `StrArg` |  | the value to OR with self. Coerced to Bool by truthiness. |
+
+**Yields**
+
+True when either operand is truthy, False otherwise. An EMPTY
+operand counts as false.
+
+**Notes**
+
+- Short-circuits like Python: the right operand is only evaluated when the left does not already decide the result.
+
+**Example**
+
+```python
+nu.run(nu.Str("").or_(nu.Str("hi")))[0]
+```
+
+```
+True
+```
+
+### `.not_()`
+
+Logical NOT of self.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self is the empty string, False otherwise. EMPTY
+when self is EMPTY.
+
+**Notes**
+
+- The empty string yields True, every other string yields False.
+
+**Example**
+
+```python
+nu.run(nu.Str("").not_())[0]
+```
+
+```
+True
+```
+
+### `.bool_()`
+
+Cast self to Bool.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self is non-empty, False when self is empty. EMPTY
+when self is EMPTY.
+
+**Notes**
+
+- The empty string becomes False, every other string becomes True, matching Python's truthiness rule.
+
+**Example**
+
+```python
+nu.run(nu.Str("hi").bool_())[0]
+```
+
+```
+True
+```
+
+### `.upper()`
+
+Self converted to uppercase.
+
+Builds `Str`.
+
+**Yields**
+
+The uppercased string. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("Hello World").upper())[0]
+```
+
+```
+'HELLO WORLD'
+```
+
+### `.lower()`
+
+Self converted to lowercase.
+
+Builds `Str`.
+
+**Yields**
+
+The lowercased string. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("Hello World").lower())[0]
+```
+
+```
+'hello world'
+```
+
+### `.title()`
+
+Self converted to title case.
+
+Builds `Str`.
+
+**Yields**
+
+The titlecased string. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("hello world").title())[0]
+```
+
+```
+'Hello World'
+```
+
+### `.capitalize()`
+
+Self with only the first character capitalized.
+
+Builds `Str`.
+
+**Yields**
+
+The capitalized string. EMPTY when self is
+EMPTY.
+
+**Notes**
+
+- Every character after the first is lowercased, matching Python's `str.capitalize`.
+
+**Example**
+
+```python
+nu.run(nu.Str("hello world").capitalize())[0]
+```
+
+```
+'Hello world'
+```
+
+### `.swapcase()`
+
+Self with uppercase and lowercase characters swapped.
+
+Builds `Str`.
+
+**Yields**
+
+The case-swapped string. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("Hello World").swapcase())[0]
+```
+
+```
+'hELLO wORLD'
+```
+
+### `.casefold()`
+
+Self folded for aggressive, caseless matching.
+
+Builds `Str`.
+
+**Yields**
+
+The casefolded string. EMPTY when self is
+EMPTY.
+
+**Notes**
+
+- Stronger than `lower`: handles cases `lower` misses, like the German `ß` folding to `ss`.
+
+**Example**
+
+```python
+nu.run(nu.Str("Straße").casefold())[0]
+```
+
+```
+'strasse'
+```
+
+### `.strip(chars=None)`
+
+Self with leading and trailing characters removed.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `chars` | `StrArg \| None` | `None` | the set of characters to strip, each considered independently. When omitted, strips whitespace. |
+
+**Yields**
+
+The stripped string. EMPTY when self is
+EMPTY.
+
+**Examples**
+
+```python
+nu.run(nu.Str("  hi  ").strip())[0]
+```
+
+```
+'hi'
+```
+
+```python
+nu.run(nu.Str("xxhixx").strip("x"))[0]
+```
+
+```
+'hi'
+```
+
+### `.lstrip(chars=None)`
+
+Self with leading characters removed.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `chars` | `StrArg \| None` | `None` | the set of characters to strip, each considered independently. When omitted, strips whitespace. |
+
+**Yields**
+
+The left-stripped string. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("  hi  ").lstrip())[0]
+```
+
+```
+'hi  '
+```
+
+### `.rstrip(chars=None)`
+
+Self with trailing characters removed.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `chars` | `StrArg \| None` | `None` | the set of characters to strip, each considered independently. When omitted, strips whitespace. |
+
+**Yields**
+
+The right-stripped string. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("  hi  ").rstrip())[0]
+```
+
+```
+'  hi'
+```
+
+### `.split(sep=None, maxsplit=-1)`
+
+Self split into a list on sep, from the left.
+
+Builds `List`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `sep` | `StrArg \| None` | `None` | the separator to split on. When omitted, splits on runs of whitespace and drops empty strings from the result. |
+| `maxsplit` | `IntArg` | `-1` | the maximum number of splits. `-1` means unlimited. |
+
+**Yields**
+
+The list of pieces. EMPTY when self is
+EMPTY.
+
+**Examples**
+
+```python
+nu.run(nu.Str("a,b,c").split(","))[0]
+```
+
+```
+['a', 'b', 'c']
+```
+
+```python
+nu.run(nu.Str("a,b,c").split(",", 1))[0]
+```
+
+```
+['a', 'b,c']
+```
+
+### `.rsplit(sep=None, maxsplit=-1)`
+
+Self split into a list on sep, from the right.
+
+Builds `List`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `sep` | `StrArg \| None` | `None` | the separator to split on. When omitted, splits on runs of whitespace and drops empty strings from the result. |
+| `maxsplit` | `IntArg` | `-1` | the maximum number of splits. `-1` means unlimited. |
+
+**Yields**
+
+The list of pieces. EMPTY when self is
+EMPTY.
+
+**Notes**
+
+- Only differs from `split` when `maxsplit` is bounded: the splits are taken starting from the right end of the string.
+
+**Example**
+
+```python
+nu.run(nu.Str("a,b,c").rsplit(",", 1))[0]
+```
+
+```
+['a,b', 'c']
+```
+
+### `.splitlines(keepends=False)`
+
+Self split into a list at line boundaries.
+
+Builds `List`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `keepends` | `BoolArg` | `False` | when True, keeps the line-ending characters at the end of each piece instead of dropping them. |
+
+**Yields**
+
+The list of lines. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("a\nb\nc").splitlines())[0]
+```
+
+```
+['a', 'b', 'c']
+```
+
+### `.partition(sep)`
+
+Self split around the first occurrence of sep into a 3-tuple.
+
+Builds `Tuple`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `sep` | `StrArg` |  | the separator to split on. |
+
+**Yields**
+
+The 3-tuple of pieces. EMPTY when self is EMPTY. Raises when
+sep is empty.
+
+**Notes**
+
+- The 3-tuple is always `(before, sep, after)`. When sep is not found, that's `(self, "", "")`.
+
+**Example**
+
+```python
+nu.run(nu.Str("a,b,c").partition(","))[0]
+```
+
+```
+('a', ',', 'b,c')
+```
+
+### `.rpartition(sep)`
+
+Self split around the last occurrence of sep into a 3-tuple.
+
+Builds `Tuple`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `sep` | `StrArg` |  | the separator to split on. |
+
+**Yields**
+
+The 3-tuple of pieces. EMPTY when self is EMPTY. Raises when
+sep is empty.
+
+**Notes**
+
+- The 3-tuple is always `(before, sep, after)`. When sep is not found, that's `("", "", self)`.
+
+**Example**
+
+```python
+nu.run(nu.Str("a,b,c").rpartition(","))[0]
+```
+
+```
+('a,b', ',', 'c')
+```
+
+### `.find(sub, start=0, end=None)`
+
+Lowest index in self where sub is found, searching from the left.
+
+Builds `Int`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `sub` | `StrArg` |  | the substring to search for. |
+| `start` | `IntArg` | `0` | the index to start searching from. |
+| `end` | `IntArg \| None` | `None` | the index to stop searching at. Searches to the end of the string when omitted. |
+
+**Yields**
+
+The lowest matching index, or `-1` when sub is not found.
+EMPTY when self is EMPTY.
+
+**Examples**
+
+```python
+nu.run(nu.Str("hello world").find("o"))[0]
+```
+
+```
+4
+```
+
+```python
+nu.run(nu.Str("hello world").find("z"))[0]
+```
+
+```
+-1
+```
+
+### `.rfind(sub, start=0, end=None)`
+
+Highest index in self where sub is found, searching from the right.
+
+Builds `Int`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `sub` | `StrArg` |  | the substring to search for. |
+| `start` | `IntArg` | `0` | the index to start searching from. |
+| `end` | `IntArg \| None` | `None` | the index to stop searching at. Searches to the end of the string when omitted. |
+
+**Yields**
+
+The highest matching index, or `-1` when sub is not found.
+EMPTY when self is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("hello world").rfind("o"))[0]
+```
+
+```
+7
+```
+
+### `.index(sub, start=0, end=None)`
+
+Lowest index in self where sub is found, searching from the left.
+
+Builds `Int`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `sub` | `StrArg` |  | the substring to search for. |
+| `start` | `IntArg` | `0` | the index to start searching from. |
+| `end` | `IntArg \| None` | `None` | the index to stop searching at. Searches to the end of the string when omitted. |
+
+**Yields**
+
+The lowest matching index. EMPTY when self is EMPTY or sub is
+not found.
+
+**Notes**
+
+- Unlike Python's `str.index`, a missing sub does not raise: it yields EMPTY instead. Use `find` if `-1` on a miss is the behaviour you want.
+
+**Example**
+
+```python
+nu.run(nu.Str("hello world").index("o"))[0]
+```
+
+```
+4
+```
+
+### `.rindex(sub, start=0, end=None)`
+
+Highest index in self where sub is found, searching from the right.
+
+Builds `Int`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `sub` | `StrArg` |  | the substring to search for. |
+| `start` | `IntArg` | `0` | the index to start searching from. |
+| `end` | `IntArg \| None` | `None` | the index to stop searching at. Searches to the end of the string when omitted. |
+
+**Yields**
+
+The highest matching index. EMPTY when self is EMPTY or sub is
+not found.
+
+**Notes**
+
+- Unlike Python's `str.rindex`, a missing sub does not raise: it yields EMPTY instead. Use `rfind` if `-1` on a miss is the behaviour you want.
+
+**Example**
+
+```python
+nu.run(nu.Str("hello world").rindex("o"))[0]
+```
+
+```
+7
+```
+
+### `.count_substring(sub)`
+
+Count of non-overlapping occurrences of sub in self.
+
+Builds `Int`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `sub` | `StrArg` |  | the substring to count. |
+
+**Yields**
+
+The occurrence count. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("banana").count_substring("an"))[0]
+```
+
+```
+2
+```
+
+### `.startswith(prefix)`
+
+Whether self starts with prefix.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `prefix` | `StrArg` |  | the string to test for at the start of self. |
+
+**Yields**
+
+True when self starts with prefix, False otherwise. EMPTY
+when self is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("hello").startswith("he"))[0]
+```
+
+```
+True
+```
+
+### `.endswith(suffix)`
+
+Whether self ends with suffix.
+
+Builds `Bool`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `suffix` | `StrArg` |  | the string to test for at the end of self. |
+
+**Yields**
+
+True when self ends with suffix, False otherwise. EMPTY when
+self is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("hello").endswith("lo"))[0]
+```
+
+```
+True
+```
+
+### `.isdigit()`
+
+Whether every character in self is a digit.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self is non-empty and every character is a digit,
+False otherwise. EMPTY when self is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("123").isdigit())[0]
+```
+
+```
+True
+```
+
+### `.isalpha()`
+
+Whether every character in self is alphabetic.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self is non-empty and every character is alphabetic,
+False otherwise. EMPTY when self is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("abc").isalpha())[0]
+```
+
+```
+True
+```
+
+### `.isalnum()`
+
+Whether every character in self is alphanumeric.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self is non-empty and every character is alphanumeric,
+False otherwise. EMPTY when self is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("abc123").isalnum())[0]
+```
+
+```
+True
+```
+
+### `.isspace()`
+
+Whether every character in self is whitespace.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self is non-empty and every character is whitespace,
+False otherwise. EMPTY when self is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("   ").isspace())[0]
+```
+
+```
+True
+```
+
+### `.isnumeric()`
+
+Whether every character in self is numeric.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self is non-empty and every character is numeric,
+False otherwise. EMPTY when self is EMPTY.
+
+**Notes**
+
+- Broader than `isdigit`: also true for characters like fractions and Unicode numerals that `isdigit` rejects.
+
+**Example**
+
+```python
+nu.run(nu.Str("123").isnumeric())[0]
+```
+
+```
+True
+```
+
+### `.isdecimal()`
+
+Whether every character in self is a decimal character.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self is non-empty and every character is decimal,
+False otherwise. EMPTY when self is EMPTY.
+
+**Notes**
+
+- Narrower than `isnumeric`: only characters that can form base-10 numbers qualify.
+
+**Example**
+
+```python
+nu.run(nu.Str("123").isdecimal())[0]
+```
+
+```
+True
+```
+
+### `.isidentifier()`
+
+Whether self is a valid Python identifier.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self would be a legal Python identifier, False
+otherwise. EMPTY when self is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("my_var").isidentifier())[0]
+```
+
+```
+True
+```
+
+### `.isprintable()`
+
+Whether every character in self is printable.
+
+Builds `Bool`.
+
+**Yields**
+
+True when every character is printable, False otherwise.
+EMPTY when self is EMPTY.
+
+**Notes**
+
+- The empty string is printable; it's the presence of non-printable characters (like control characters) that makes this False.
+
+**Example**
+
+```python
+nu.run(nu.Str("abc").isprintable())[0]
+```
+
+```
+True
+```
+
+### `.istitle()`
+
+Whether self is titlecased.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self is non-empty and titlecased (each word starts
+uppercase, the rest lowercase), False otherwise. EMPTY when
+self is EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("Hello World").istitle())[0]
+```
+
+```
+True
+```
+
+### `.isupper()`
+
+Whether every cased character in self is uppercase.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self has at least one cased character and all of
+them are uppercase, False otherwise. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("ABC").isupper())[0]
+```
+
+```
+True
+```
+
+### `.islower()`
+
+Whether every cased character in self is lowercase.
+
+Builds `Bool`.
+
+**Yields**
+
+True when self has at least one cased character and all of
+them are lowercase, False otherwise. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("abc").islower())[0]
+```
+
+```
+True
+```
+
+### `.isascii()`
+
+Whether every character in self is ASCII.
+
+Builds `Bool`.
+
+**Yields**
+
+True when every character is ASCII, False otherwise. EMPTY
+when self is EMPTY.
+
+**Notes**
+
+- Unlike the other `is*` checks, the empty string yields True here rather than False.
+
+**Example**
+
+```python
+nu.run(nu.Str("").isascii())[0]
+```
+
+```
+True
+```
+
+### `.center(width, fillchar=' ')`
+
+Self centered in a field of the given width.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `width` | `IntArg` |  | the total width of the result. Self is returned unchanged when it's already at least this wide. |
+| `fillchar` | `StrArg` | `' '` | the padding character. |
+
+**Yields**
+
+The centered string. EMPTY when self is EMPTY.
+
+**Notes**
+
+- fillchar must be exactly one character; anything else raises.
+
+**Example**
+
+```python
+nu.run(nu.Str("hi").center(6, "*"))[0]
+```
+
+```
+'**hi**'
+```
+
+### `.ljust(width, fillchar=' ')`
+
+Self left-justified in a field of the given width.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `width` | `IntArg` |  | the total width of the result. Self is returned unchanged when it's already at least this wide. |
+| `fillchar` | `StrArg` | `' '` | the padding character. |
+
+**Yields**
+
+The left-justified string. EMPTY when self is EMPTY.
+
+**Notes**
+
+- fillchar must be exactly one character; anything else raises.
+
+**Example**
+
+```python
+nu.run(nu.Str("hi").ljust(6, "*"))[0]
+```
+
+```
+'hi****'
+```
+
+### `.rjust(width, fillchar=' ')`
+
+Self right-justified in a field of the given width.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `width` | `IntArg` |  | the total width of the result. Self is returned unchanged when it's already at least this wide. |
+| `fillchar` | `StrArg` | `' '` | the padding character. |
+
+**Yields**
+
+The right-justified string. EMPTY when self is EMPTY.
+
+**Notes**
+
+- fillchar must be exactly one character; anything else raises.
+
+**Example**
+
+```python
+nu.run(nu.Str("hi").rjust(6, "*"))[0]
+```
+
+```
+'****hi'
+```
+
+### `.zfill(width)`
+
+Self padded with leading zeros to the given width.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `width` | `IntArg` |  | the total width of the result. Self is returned unchanged when it's already at least this wide. |
+
+**Yields**
+
+The zero-filled string. EMPTY when self is
+EMPTY.
+
+**Notes**
+
+- A leading sign (`+` or `-`) stays in front of the zeros rather than being padded over, matching Python's `str.zfill`.
+
+**Example**
+
+```python
+nu.run(nu.Str("-42").zfill(5))[0]
+```
+
+```
+'-0042'
+```
+
+### `.expandtabs(tabsize=8)`
+
+Self with tab characters expanded to spaces.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `tabsize` | `IntArg` | `8` | the number of columns between tab stops. |
+
+**Yields**
+
+The expanded string. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("a\tb").expandtabs(4))[0]
+```
+
+```
+'a   b'
+```
+
+### `.replace(old, new, count=-1)`
+
+Self with occurrences of old replaced by new.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `old` | `StrArg` |  | the substring to replace. |
+| `new` | `StrArg` |  | the replacement substring. |
+| `count` | `IntArg` | `-1` | the maximum number of occurrences to replace. `-1` means replace all of them. |
+
+**Yields**
+
+The replaced string. EMPTY when self is
+EMPTY.
+
+**Examples**
+
+```python
+nu.run(nu.Str("hello world").replace("o", "0"))[0]
+```
+
+```
+'hell0 w0rld'
+```
+
+```python
+nu.run(nu.Str("hello world").replace("o", "0", 1))[0]
+```
+
+```
+'hell0 world'
+```
+
+### `.removeprefix(prefix)`
+
+Self with the given prefix removed if present.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `prefix` | `StrArg` |  | the prefix to strip. Self is returned unchanged when it doesn't start with prefix. |
+
+**Yields**
+
+The string with prefix removed. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("hello.txt").removeprefix("hello"))[0]
+```
+
+```
+'.txt'
+```
+
+### `.removesuffix(suffix)`
+
+Self with the given suffix removed if present.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `suffix` | `StrArg` |  | the suffix to strip. Self is returned unchanged when it doesn't end with suffix. |
+
+**Yields**
+
+The string with suffix removed. EMPTY when self is
+EMPTY.
+
+**Example**
+
+```python
+nu.run(nu.Str("hello.txt").removesuffix(".txt"))[0]
+```
+
+```
+'hello'
+```
+
+### `.translate(table)`
+
+Self with characters mapped through a translation table.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `table` | `DictArg` |  | a mapping from Unicode ordinal to replacement ordinal, string, or None to delete the character. |
+
+**Yields**
+
+The translated string. EMPTY when self is EMPTY.
+
+**Notes**
+
+- A malformed table (bad ordinal, bad replacement type) raises.
+
+**Example**
+
+```python
+nu.run(nu.Str("hello").translate({104: 72}))[0]
+```
+
+```
+'Hello'
+```
+
+### `.format_map(mapping)`
+
+Self formatted with `{field}` placeholders filled from mapping.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `mapping` | `DictArg` |  | the field-name to value mapping, used as `str.format` would use `**kwargs`. |
+
+**Yields**
+
+The formatted string. EMPTY when self is EMPTY.
+
+**Notes**
+
+- A missing field, or any other formatting error, raises.
+
+**Example**
+
+```python
+nu.run(nu.Str("{name} is {age}").format_map({"name": "Nu", "age": 1}))[0]
+```
+
+```
+'Nu is 1'
+```
+
+### `.encode(encoding='utf-8')`
+
+Self encoded to Bytes.
+
+Builds `Bytes`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `encoding` | `StrArg` | `'utf-8'` | the codec to encode with, by name. |
+
+**Yields**
+
+The encoded bytes. EMPTY when self is EMPTY.
+
+**Notes**
+
+- A character that can't be represented in the given encoding, or an unknown encoding name, raises.
+
+**Example**
+
+```python
+nu.run(nu.Str("hello").encode())[0]
+```
+
+```
+b'hello'
+```
+
+### `.join(iterable)`
+
+Elements of iterable joined together with self as separator.
+
+Builds `Str`.
+
+**Arguments**
+
+| Name | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `iterable` | `object` |  | the strings to join. Every element must be a string. |
+
+**Yields**
+
+The joined string. EMPTY when self is EMPTY.
+
+**Notes**
+
+- A non-string element raises.
+
+**Example**
+
+```python
+nu.run(nu.Str(", ").join(["a", "b", "c"]))[0]
+```
+
+```
+'a, b, c'
+```
+
+**Inherited methods**
+
+From `nu.lang.forms.Form`:
+
+| Call | Builds | Meaning |
+| --- | --- | --- |
+| `.is_empty()` | `Bool` | True if this Form yields the EMPTY sentinel. |
+| `.not_empty()` | `Bool` | True if this Form does not yield EMPTY. |
+| `.fallback(*alternatives)` | `Self` | The first of this value and `alternatives` that is not EMPTY. |

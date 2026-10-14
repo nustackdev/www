@@ -1,0 +1,100 @@
+---
+title: mp_pool
+description: "nustd.mp_pool - the pool of worker processes, as one fabric."
+---
+
+Module `nustd.mp_pool`.
+
+nustd.mp_pool - the pool of worker processes, as one fabric.
+
+`nustd.mp` is the fabric of ONE process: its whole lifecycle is the
+`With` / `Provide` bracket and it stays purely declarative.
+`nustd.mp_pool` is the sibling where **the pool itself is the fabric**. One
+`Provide` at the top of a tree owns N worker processes, and because the
+fabric now spans many processes it legitimately owns interactions over them -
+launch a worker, kill a worker, run a tree on worker id X. Those are
+statements about the fabric's contents, not imperative escapes.
+
+- `WorkerPool` - the resource. Owns `{id -> process}`. Bracket close kills
+  every worker, newest first. No size, no warmth, no scheduling, no
+  acquire/release: that is policy and belongs to callers.
+- `PoolRef` - the fabric ref. Reading it is a lookup and nothing else. It
+  also carries the fluent form of every interaction below.
+- `Launch` / `Dispatch` / `Teleport` / `Kill` / `Alive` /
+  `Running` / `Wait` / `Workers` - the interactions. `Wait` awaits a
+  worker's exit and yields its exit code.
+- `nustd.mp_pool.presets` - policy built on top, never inside: `spares`,
+  a shelf of idle workers kept up so a take skips the spawn.
+
+Everything is Nu. Every worker id and the `init` override is a **child**,
+never payload, so a target can come from a `Ref`, a mem slot or any
+query. Here `nu.let` holds the launched worker's id for the body:
+
+```python
+nu.Provide(WorkerPool, {"init": nu.With(nu.Provide(Store, {...})), "name": "nu"},
+    nu.let(Launch(), lambda w: nu.Sequential(
+        Dispatch(body=resident_tree, worker=w),
+        Teleport(body=nu.Add(1, 2), worker=w),
+        Kill(worker=w),
+    )),
+)
+```
+
+The interactions are also reachable off the ref, which is the same term by a
+shorter road:
+
+```python
+pool = PoolRef()
+nu.let(pool.launch(), lambda w: pool.dispatch(resident_tree, w) >> pool.kill(w))
+```
+
+The one exception to "no payload" is a `Dispatch` body, which has to be
+payload because a Command cannot hold a Flow in a child slot. The consequence
+is worth knowing before you rely on it: a body in payload is not part of the
+tree, so no walker, rewrite, analysis or render reaches it, and the caller has
+to apply whatever passes it needs (`nustd.kv.auto_flow_atomic` among them) to
+the body itself before building the `Dispatch`.
+
+`Dispatch` vs `Teleport` is the crux. `Dispatch` returns as soon as the
+child acknowledges receipt, so it is the verb for resident, never-terminating
+trees - a `ReactForever` body using it never blocks. `Teleport` is
+request/reply, for work that finishes.
+
+Worker ids are monotonic ints and are never reused, so a stale id is
+detectably dead rather than silently a different worker.
+
+The default `start_method` is `"spawn"` - the child gets a clean
+interpreter. The `init` bracket and every body go through cloudpickle
+(`nu.lang.wire`), so closures and classes defined inside a function travel
+too.
+
+## interactions
+
+Module `nustd.mp_pool.interactions`.
+
+The interactions of the `nustd.mp_pool` fabric.
+
+[Full entries](/docs/nustd/reference/mp_pool/interactions)
+
+| Name | Sort | Call | Meaning |
+| --- | --- | --- | --- |
+| [Alive](/docs/nustd/reference/mp_pool/interactions#alive) | `scalar_query` | `Alive(pool=None, worker=None)` | Whether the worker at this id is a process that is still up. |
+| [Dispatch](/docs/nustd/reference/mp_pool/interactions#dispatch) | `scalar_command` | `Dispatch(pool=None, body=None, worker=None, carry=False)` | Ships the body to a worker and returns as soon as the child has it. |
+| [Kill](/docs/nustd/reference/mp_pool/interactions#kill) | `scalar_command` | `Kill(pool=None, worker=None)` | Ends a worker now and reaps it. |
+| [Launch](/docs/nustd/reference/mp_pool/interactions#launch) | `scalar_action` | `Launch(pool=None, init=None)` | Spawns one worker process in the pool and yields the id it got. |
+| [Running](/docs/nustd/reference/mp_pool/interactions#running) | `scalar_query` | `Running(pool=None, worker=None)` | Whether a body dispatched to this worker is still executing. |
+| [Teleport](/docs/nustd/reference/mp_pool/interactions#teleport) | `policy` | `Teleport(pool=None, body=None, worker=None, carry=False)` | Runs the body in a pool worker and yields what it produced there. |
+| [Wait](/docs/nustd/reference/mp_pool/interactions#wait) | `scalar_query` | `Wait(pool=None, worker=None)` | Waits until the worker at this id has exited, and yields its exit code. |
+| [Workers](/docs/nustd/reference/mp_pool/interactions#workers) | `stream_query` | `Workers(pool=None)` | Every worker id the pool still tracks, in launch order. |
+
+## refs
+
+Module `nustd.mp_pool.refs`.
+
+`PoolRef`: the fabric ref that resolves the `WorkerPool` bound on ctx.
+
+[Full entries](/docs/nustd/reference/mp_pool/refs)
+
+| Name | Sort | Call | Meaning |
+| --- | --- | --- | --- |
+| [PoolRef](/docs/nustd/reference/mp_pool/refs#poolref) | `ref` | `PoolRef(address=None)` | The `WorkerPool` bound on the Context. |

@@ -30,6 +30,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The interaction-model docs section is copied in from the spec repo
+      # at build time (docs/scripts/sync-spec.mjs).
+      - uses: actions/checkout@v4
+        with:
+          repository: nustackdev/interaction-model
+          path: .spec/interaction-model
+
       - uses: pnpm/action-setup@v4
 
       - uses: actions/setup-node@v4
@@ -43,6 +50,8 @@ jobs:
 
       - name: build apps + compose site
         run: pnpm build
+        env:
+          SPEC_DIR: ${{ github.workspace }}/.spec/interaction-model
 
       - uses: actions/configure-pages@v5
 

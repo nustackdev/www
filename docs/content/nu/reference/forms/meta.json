@@ -1,0 +1,21 @@
+{
+  "title": "forms",
+  "pages": [
+    "primitives-int",
+    "primitives-float",
+    "primitives-str",
+    "primitives-bytes",
+    "primitives-bool",
+    "primitives-none",
+    "primitives-object",
+    "primitives-sentinel",
+    "collections-list",
+    "collections-tuple",
+    "collections-set",
+    "collections-dict",
+    "collections-iterator",
+    "collections-views",
+    "nu-lang-forms",
+    "collections"
+  ]
+}

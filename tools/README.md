@@ -1,6 +1,8 @@
 # docsgen
 
-Generates `docs/content/nu/reference/` from `nu.inspect`.
+Generates the reference docs from the code: `nu/reference/`, `nustd/reference/`
+and `nuspace/reference/` from `nu.inspect`, and `nuverse/reference/` from the
+nuspace extension registry.
 
 The code is the source of truth for every fact on a reference page. Names,
 sorts, call forms, argument defaults, what an atom yields, its notes and its
@@ -19,7 +21,7 @@ pnpm run docs:gen:check    # write nothing, exit 1 when committed output is stal
 Generate one page, or print the tree without writing anything:
 
 ```bash
-tools/.venv/bin/python -m docsgen --only nu.mem
+tools/.venv/bin/python -m docsgen --only nustd.kv
 tools/.venv/bin/python -m docsgen --tree
 ```
 
@@ -29,28 +31,23 @@ tools/.venv/bin/python -m docsgen --tree
 cd tools && uv venv --python 3.12 && uv pip install -e .
 ```
 
-**The nu dependency is a local editable path, on purpose.** Wave B1 of
-task-142 (the `nu.inspect` extension this tool reads) is not released yet, so
-`pyproject.toml` points `nucore` and `nustd` at `../../nu/packages/*` through
-`[tool.uv.sources]`. That makes the output depend on whatever is checked out
-next door, which is wrong for a generator whose whole point is that
-regenerating is an explicit act tied to a version.
-
-**When B1 ships, drop the `[tool.uv.sources]` block and pin the release:**
-`nucore==<version>` and `nustd[all]==<version>`.
+The packages are pinned to released versions in `pyproject.toml`, because
+the output is committed and regenerating is an explicit act tied to a version.
+On a release, bump the pins, reinstall, run `pnpm run docs:gen` and commit the
+result with the bump.
 
 ## What it writes
 
-There is no list of modules. `docsgen/discover.py` walks the two installed
+There is no list of modules. `docsgen/discover.py` walks the installed
 distributions and the module tree that comes out is the page tree, so a module
 nobody remembered to list still gets documented.
 
-The top level mirrors what people install: `reference/nu/` is what `nucore`
-ships, `reference/nustd/` is what `nustd` ships. Below that the docs path
-mirrors the module path, so `nu.core` is `reference/nu/core`, `nu.core.flows`
-is `reference/nu/core/flows` and `nu.std.math` is `reference/nustd/std/math`.
-The ten fabric slugs fall out of that on their own, and `check_fabrics` refuses
-to generate the day one of them moves.
+Each distribution lands in the `reference/` folder of its own docs section:
+`nucore` in `nu/reference/`, `nustd` in `nustd/reference/`, `nuspace` in
+`nuspace/reference/`. Below that the docs path mirrors the module path, so
+`nu.core.flows` is `nu/reference/core/flows` and `nustd.kv` is
+`nustd/reference/kv`. The ten fabric pages fall out of that on their own, and
+`check_fabrics` refuses to generate the day one of them moves.
 
 Page or section is derived, not decided:
 
@@ -59,7 +56,7 @@ Page or section is derived, not decided:
   `## arithmetic` on the core page.
 - **A subpackage the parent does not re-export is its own page, nested under
   it.** `nu.core` publishes nothing from `nu.core.flows`, so flows is
-  `reference/nu/core/flows`.
+  `nu/reference/core/flows`.
 - **A package with no subjects and no documented descendant is not a page.**
   There is nothing on it to document. With descendants it becomes a landing
   page: its docstring over a table of what is under it, which is what
@@ -69,9 +66,9 @@ A page is one file, or a folder. Past `SPLIT` lines (600) with more than one
 section, or as soon as another page nests under it, it becomes `<slug>/index.md`
 holding the module prose and one summary table per section, plus
 `<slug>/<section>.md` per section holding the full entries. Fumadocs serves
-`mem/index.md` at the same URL `mem.md` served, so the split is invisible to
-`lib/refs.ts`, the ten marketing pages and the hardcoded links in
-`docs/content/index.mdx`. A single-section page with no nested page never
+`kv/index.md` at the same URL `kv.md` served, so the split is invisible to the
+hardcoded links in
+`docs/content/nu/index.mdx`. A single-section page with no nested page never
 splits, however long: the code declares no seam to cut it on.
 
 A section's filename is its dotted module path minus the page's own prefix, so
@@ -79,9 +76,10 @@ A section's filename is its dotted module path minus the page's own prefix, so
 page's package keeps its full path. A nested page's name is its module's, and a
 section that would collide with one yields.
 
-It deletes what it stops owning: when a page crosses the threshold in either
-direction, the file or folder left behind still resolves to a URL in fumadocs,
-so `docsgen` removes it and `--check` reports it as an orphan.
+It owns every markdown file under each `reference/` folder and deletes what it
+stops writing: a page that crosses the threshold in either direction, or a
+module that is renamed or removed, leaves a file that still resolves to a URL
+in fumadocs, so `docsgen` removes it and `--check` reports it as an orphan.
 
 Two things it deliberately never writes:
 
@@ -91,9 +89,22 @@ Two things it deliberately never writes:
   including the one per page folder. Never list `"index"` in a `pages` array:
   fumadocs then renders the index as a duplicate child instead of making the
   folder itself link to it.
-- **The ten fabric slugs.** `lib/refs.ts` builds `/docs/nu/reference/nustd/<slug>`
-  and every marketing fabric page links off it, so `kv, ui, cluster, llm, mem,
-  proxy, http, service, cc, mp` are asserted rather than assumed.
+- **The ten fabric URLs.** The fabric table on `docs/content/nu/index.mdx`
+  links each fabric's page by hand (`nu.mem` plus nine in `nustd`), so their
+  paths are asserted rather than assumed.
+
+When a module appears or a section is renamed, fumadocs hides any page its
+folder's `meta.json` does not list. After a regen that adds pages, add them to
+the `meta.json` next to them.
+
+## Extensions
+
+nuverse has no API worth a module walk: its surface is what the `+` and `/`
+menus offer. `docsgen/extensions.py` reads it off the `nuspace.extensions`
+entry points, the registry nuspace itself reads, and writes three pages per
+extension: a landing page, `planes.md` and `snippets.md`, grouped under the
+headings the menus show. Each entry is the spec's fields, its one-liner, and
+the docstring of the module that documents it.
 
 ## Labels are short, paths are not gone
 
@@ -114,10 +125,11 @@ in this tool.
 
 | File | What |
 | --- | --- |
-| `docsgen/pages.py` | the decisions: the two distributions, the skip list, the fabric slugs, the split threshold |
+| `docsgen/pages.py` | the decisions: the distributions, the extensions, the skip list, the fabric modules, the split threshold |
 | `docsgen/discover.py` | walks the distributions, derives the page tree |
 | `docsgen/collect.py` | runs the six catalogues, groups subjects into sections |
 | `docsgen/model.py` | `Page`, `Section`, `Root` |
 | `docsgen/render.py` | records to markdown |
+| `docsgen/extensions.py` | the extension registry to catalogue pages |
 | `docsgen/prose.py` | reStructuredText leftovers to markdown |
 | `docsgen/__main__.py` | the command, including `--check` |

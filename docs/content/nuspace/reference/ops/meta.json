@@ -1,0 +1,15 @@
+{
+  "title": "ops",
+  "pages": [
+    "read",
+    "state",
+    "plane",
+    "cell",
+    "kernel",
+    "pin",
+    "tree",
+    "extend",
+    "utils",
+    "nuspace-shapes-state"
+  ]
+}

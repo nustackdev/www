@@ -1,0 +1,13 @@
+{
+  "title": "shape",
+  "pages": [
+    "interactions",
+    "shape",
+    "base",
+    "item",
+    "mapping",
+    "sequence",
+    "set",
+    "rewrite"
+  ]
+}

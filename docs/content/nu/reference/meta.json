@@ -1,4 +1,16 @@
 {
   "title": "Reference",
-  "pages": ["nu", "nustd"]
+  "pages": [
+    "core",
+    "forms",
+    "lang",
+    "context",
+    "mem",
+    "prog",
+    "domains",
+    "engine",
+    "factory",
+    "tree",
+    "inspect"
+  ]
 }

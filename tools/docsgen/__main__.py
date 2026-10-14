@@ -7,9 +7,10 @@ import difflib
 import sys
 from pathlib import Path
 
+from . import extensions
 from .collect import build, build_root
 from .discover import Node, check_fabrics, discover
-from .pages import ROOTS
+from .pages import DISTRIBUTIONS, EXTENSIONS
 from .render import files, root
 
 __all__ = ["main"]
@@ -61,11 +62,12 @@ def main(argv: list[str] | None = None) -> int:
         written |= files(build(node))
         owned.append(node.base)
     if not args.only:
-        for spec in ROOTS:
-            written[spec.path] = root(build_root(spec, by_folder[spec.folder]))
+        for spec in DISTRIBUTIONS:
+            written[spec.path] = root(build_root(spec, by_folder[spec.pkg]))
+        written |= extensions.files()
 
     stale = [p for p in sorted(written) if _read(p) != written[p]]
-    orphans = _orphans(owned, written)
+    orphans = _orphans(owned, written, whole=not args.only)
 
     if args.check:
         for path in stale:
@@ -97,9 +99,15 @@ def main(argv: list[str] | None = None) -> int:
         changed = _read(path) != fresh
         target.write_text(fresh)
         print(f"{'wrote' if changed else 'unchanged'}: {path}")
-    for base in owned:
-        _prune(ROOT / base)
+    bases = owned if args.only else _refs()
+    for base in bases:
+        _prune_under(ROOT / base)
     return 0
+
+
+def _refs() -> list[str]:
+    """Every folder a full run owns outright."""
+    return [spec.ref for spec in (*DISTRIBUTIONS, *EXTENSIONS)]
 
 
 def _print(node: Node, depth: int) -> None:
@@ -113,23 +121,40 @@ def _read(path: str) -> str:
     return target.read_text() if target.is_file() else ""
 
 
-def _orphans(owned: list[str], written: dict[str, str]) -> list[str]:
+def _orphans(owned: list[str], written: dict[str, str], whole: bool) -> list[str]:
     """Markdown the generator used to own and no longer writes.
 
     A page that grows past the split threshold turns ``core.md`` into
-    ``core/index.md``, and a page that shrinks turns it back. Either way the
-    file left behind still resolves to a URL in fumadocs, so it goes. Only the
-    markdown directly at a page's own base is considered: a nested page owns
-    its own directory. ``meta.json`` is never touched: it is handwritten.
+    ``core/index.md``, and a page that shrinks turns it back. A module that is
+    renamed or removed leaves its whole page behind. Either way the file still
+    resolves to a URL in fumadocs, so it goes. A full run owns every markdown
+    file under each distribution's ``ref``. A ``--only`` run owns just the
+    markdown directly at its pages' bases: a nested page owns its own
+    directory. ``meta.json`` is never touched: it is handwritten.
     """
+    if whole:
+        candidates = [p for ref in _refs() for p in sorted((ROOT / ref).rglob("*.md"))]
+    else:
+        candidates = [
+            path
+            for base in owned
+            for path in [ROOT / f"{base}.md", *sorted((ROOT / base).glob("*.md"))]
+        ]
     found: list[str] = []
-    for base in owned:
-        candidates = [ROOT / f"{base}.md", *sorted((ROOT / base).glob("*.md"))]
-        for path in candidates:
-            rel = path.relative_to(ROOT).as_posix()
-            if path.is_file() and rel not in written:
-                found.append(rel)
+    for path in candidates:
+        rel = path.relative_to(ROOT).as_posix()
+        if path.is_file() and rel not in written:
+            found.append(rel)
     return found
+
+
+def _prune_under(folder: Path) -> None:
+    """Drop every page folder at or under ``folder`` that holds no markdown any more."""
+    if not folder.is_dir():
+        return
+    for sub in sorted((d for d in folder.rglob("*") if d.is_dir()), reverse=True):
+        _prune(sub)
+    _prune(folder)
 
 
 def _prune(folder: Path) -> None:

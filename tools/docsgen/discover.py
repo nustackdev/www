@@ -17,13 +17,13 @@ and the subpackage is part of the parent's page. ``nu.core`` re-exports
 **A package with no subjects of its own and no page-worthy descendant is not a
 page.** There is nothing on it to document. A package with no subjects but with
 descendants that have some becomes a folder landing page: its docstring over a
-table of what is under it. That is what ``nu.domains``, ``nu.std`` and
+table of what is under it. That is what ``nu.domains`` and
 ``nu.inspect.core`` are.
 
-Below the distribution directory the docs path mirrors the module path, so
-``nu.core.flows`` is ``reference/nu/core/flows`` and ``nu.std.math`` is
-``reference/nustd/std/math``. The ten fabric slugs fall out of that on their
-own, and :func:`check_fabrics` asserts it rather than trusting it.
+Below the distribution's ``ref`` folder the docs path mirrors the module path,
+so ``nu.core.flows`` is ``nu/reference/core/flows`` and ``nustd.kv`` is
+``nustd/reference/kv``. The ten fabric pages fall out of that on their own,
+and :func:`check_fabrics` asserts it rather than trusting it.
 """
 
 from __future__ import annotations
@@ -46,7 +46,7 @@ from nu.inspect import (
     catalogue_shapes,
 )
 
-from .pages import DISTRIBUTIONS, FABRICS, REF, SKIP
+from .pages import DISTRIBUTIONS, FABRICS, SKIP
 
 __all__ = ["Node", "check_fabrics", "discover", "roots"]
 
@@ -86,16 +86,16 @@ class Node:
 
 
 def discover() -> tuple[tuple[str, tuple[Node, ...]], ...]:
-    """Every page, grouped by the distribution directory it lands in."""
+    """Every page, grouped by the import root of the distribution it ships in."""
     out = []
-    for dist, folder in DISTRIBUTIONS:
+    for spec in DISTRIBUTIONS:
         tops: list[Node] = []
-        for root in roots(dist, folder):
-            for dotted in _packages_in(root, folder):
-                node = _node(dotted, f"{REF}/{folder}/{_tail(dotted)}")
+        for root in roots(spec.dist, spec.pkg):
+            for dotted in _packages_in(root, spec.pkg):
+                node = _node(dotted, f"{spec.ref}/{_tail(dotted)}")
                 if node is not None:
                     tops.append(node)
-        out.append((folder, tuple(sorted(tops, key=lambda n: n.module))))
+        out.append((spec.pkg, tuple(sorted(tops, key=lambda n: n.module))))
     return tuple(out)
 
 
@@ -124,13 +124,16 @@ def roots(dist: str, pkg: str) -> list[Path]:
 def check_fabrics(nodes: tuple[Node, ...]) -> None:
     """Refuse to generate if a fabric page stopped living at its fixed URL."""
     by_module = {n.module: n for n in nodes}
-    for slug in FABRICS:
-        node = by_module.get(f"nustd.{slug}")
+    refs = {d.pkg: d.ref for d in DISTRIBUTIONS}
+    for dotted in FABRICS:
+        pkg, _, rest = dotted.partition(".")
+        expected = f"{refs[pkg]}/{rest.replace('.', '/')}"
+        node = by_module.get(dotted)
         if node is None:
-            raise RuntimeError(f"fabric nustd.{slug} has no page")
-        if node.base != f"{REF}/nustd/{slug}":
+            raise RuntimeError(f"fabric {dotted} has no page")
+        if node.base != expected:
             raise RuntimeError(
-                f"fabric nustd.{slug} moved to {node.base}; lib/refs.ts expects nustd/{slug}"
+                f"fabric {dotted} moved to {node.base}; docs/content/nu/index.mdx links {expected}"
             )
 
 
