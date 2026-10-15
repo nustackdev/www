@@ -1,0 +1,77 @@
+/* Steps — a hairline rail of numbered steps; the active one lights in Afterglow. */
+
+.rail {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--site-border);
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 6px 8px;
+  width: 100%;
+  padding: 18px 0 18px 24px;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  border-radius: 0 var(--site-r-md) var(--site-r-md) 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.step::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 2px;
+  background: var(--site-accent-text);
+  transform: scaleY(0);
+  transition: transform var(--site-dur-base) var(--site-ease-out);
+}
+.step[data-active]::before { transform: scaleY(1); }
+
+.num {
+  font-family: var(--font-mono);
+  font-size: var(--site-fs-7);
+  line-height: inherit;
+  color: var(--site-ink-4);
+  transition: color var(--site-t);
+}
+
+.label {
+  font-size: var(--site-fs-9);
+  font-weight: var(--site-fw-title);
+  letter-spacing: var(--site-tr-title);
+  color: var(--site-ink-3);
+  transition: color var(--site-t);
+}
+
+.note {
+  grid-column: 2;
+  font-size: var(--site-fs-8);
+  line-height: 1.5;
+  color: var(--site-ink-3);
+  text-wrap: pretty;
+  transition: color var(--site-t);
+}
+.note code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--site-ink-2);
+}
+
+.step:hover .label { color: var(--site-ink-2); }
+.step[data-active] .num { color: var(--site-accent-text); }
+.step[data-active] .label { color: var(--site-ink); }
+.step[data-active] .note { color: var(--site-ink-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  .step::before { transition: none; }
+}

@@ -39,7 +39,7 @@ export function Hero() {
         </div>
       </div>
 
-      <Scene name="hero" />
+      <Scene name="hero" chapters />
     </section>
   );
 }

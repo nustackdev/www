@@ -142,8 +142,8 @@ importers:
   landing:
     dependencies:
       '@nustackdev/tape-player':
-        specifier: 0.1.6
-        version: 0.1.6(react@19.2.7)
+        specifier: 0.2.0
+        version: 0.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@www/shared':
         specifier: workspace:*
         version: link:../shared
@@ -164,8 +164,8 @@ importers:
         version: 19.2.7(react@19.2.7)
     devDependencies:
       '@nustackdev/tape':
-        specifier: 0.1.6
-        version: 0.1.6(react@19.2.7)
+        specifier: 0.2.0
+        version: 0.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@tailwindcss/postcss':
         specifier: ^4.3.1
         version: 4.3.2
@@ -1242,16 +1242,17 @@ packages:
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
 
-  '@nustackdev/tape-player@0.1.6':
-    resolution: {integrity: sha512-Bqe94nxNs3a9ITKTXdXL4K+bVB6SID65jQPzx9qhJX9thlRVaoo57m9Uuw0XoGq44mc0biZlpFcKE/qCulchbg==}
+  '@nustackdev/tape-player@0.2.0':
+    resolution: {integrity: sha512-6bwaVlvK3R4YU6PfBxHYDPXHT5khVEnDvn0IMOfem0A0a6fZO4WK7WLdl+SSXT0rqwYme1ZfCiyN3kzS+OHMgA==}
     peerDependencies:
       react: '>=18'
+      react-dom: '>=18'
 
-  '@nustackdev/tape-scene@0.1.6':
-    resolution: {integrity: sha512-HWpX5fJBMsANr85OLnXXMtOjaFu3K7Bc6oEn6BTnkwvL3NJRuaV8GiIxGI7d7CZ+hyImQd+B0rwyDt7fJc9+kw==}
+  '@nustackdev/tape-scene@0.2.0':
+    resolution: {integrity: sha512-LpTfx31dkCStPj4Om8f+F8V9fvyn6tm6snzp3YhbNwrz3a18L5d7eEpvbdsvyvqp3eBNMoxr5pMmqKXr6FkVeQ==}
 
-  '@nustackdev/tape@0.1.6':
-    resolution: {integrity: sha512-Pqk/zBe39dM0swMShZAoulcIROZd+C7u15nkcCodhEk4K0R8DtZdSVTmQI7BlJQ3d2EjdVIWViNlTpaNaTveTw==}
+  '@nustackdev/tape@0.2.0':
+    resolution: {integrity: sha512-a8ngHu/KcxfI+1aWW+dhwlUnsyVl1ll/9LC6MFV3V+i9Zv7OzEOFQF6VkBnATFuqLd4THvqKYH/5+JRkmQt6qg==}
     hasBin: true
 
   '@orama/orama@3.1.18':
@@ -6104,21 +6105,23 @@ snapshots:
 
   '@nolyfill/is-core-module@1.0.39': {}
 
-  '@nustackdev/tape-player@0.1.6(react@19.2.7)':
+  '@nustackdev/tape-player@0.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
-      '@nustackdev/tape-scene': 0.1.6
+      '@nustackdev/tape-scene': 0.2.0
       react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
 
-  '@nustackdev/tape-scene@0.1.6': {}
+  '@nustackdev/tape-scene@0.2.0': {}
 
-  '@nustackdev/tape@0.1.6(react@19.2.7)':
+  '@nustackdev/tape@0.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
-      '@nustackdev/tape-player': 0.1.6(react@19.2.7)
-      '@nustackdev/tape-scene': 0.1.6
+      '@nustackdev/tape-player': 0.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@nustackdev/tape-scene': 0.2.0
       ws: 8.22.0
     transitivePeerDependencies:
       - bufferutil
       - react
+      - react-dom
       - utf-8-validate
 
   '@orama/orama@3.1.18': {}

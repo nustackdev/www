@@ -1,51 +1,60 @@
-import { Window } from '@www/shared/components/media/Window';
-import { StoryPlayer } from '../story/StoryPlayer';
-import { MOVIES, type Beat } from '../story/stories';
+'use client';
 
-/** Scenes recorded so far, by name. A block without its own plays the hero. */
-const SCENES: Record<string, { scene: string; label: string; beats?: Beat[] }> = {
-  hero: {
-    scene: 'hero',
-    label:
-      'A nuspace space built from zero: a reading list with a table, a slider, live totals and a chart, then a page inside it.',
-  },
-  movies: {
-    scene: 'movies',
-    label:
-      'The nuspace movies demo: a film added and ticked watched, the timeline, The Godfather rerated, then the atlas.',
-    beats: MOVIES.beats,
-  },
-  agents: { scene: 'agents', label: 'The nuspace agents demo: Claude Code sessions run and steered from a space.' },
-  memes: { scene: 'memes', label: 'The nuspace memes demo: meme launches and trades streaming in live.' },
-  training: { scene: 'training', label: 'The nuspace mnist demo: a model trained, steered mid-run, then reading a drawn digit.' },
-};
+import { useTheme } from 'next-themes';
+import { Tape } from '@nustackdev/tape-player';
+import { SCENES, type SceneDef, type SceneName } from './scenes';
+import s from './Scene.module.css';
+
+/** The nuspace build every scene plays in, as scripts/scenes.mjs writes it. */
+const APP = '/scenes/nuspace/index.html';
 
 export interface SceneProps {
   /** Scene id, the tape recording it plays. */
-  name: string;
+  name: SceneName;
   /** Frame aspect ratio. Reserved up front so nothing shifts when tape lands. */
   ratio?: '16 / 10' | '4 / 3';
   /** The frame is a scrub control: press and drag through the scene. */
   controls?: boolean;
+  /** Tell it by its chapters: a subtitle and a timeline, on the frame. */
+  chapters?: boolean;
 }
 
 /**
- * Scene — a tape playing in a Window, bleeding right past the main column.
- * The screen is server rendered at its size; the player and the app load
- * lazily inside it. With `controls` the frame scrubs.
+ * Scene — a tape playing in a bordered screen filling its container, in the
+ * site's theme. On narrow screens it runs past the column, cut at the
+ * window's edge. With `chapters` it is told on the frame like a
+ * video: a subtitle per chapter, a timeline along the bottom edge. With
+ * `controls` the frame scrubs.
  */
-export function Scene({ name, ratio = '16 / 10', controls }: SceneProps) {
-  const rec = SCENES[name] ?? SCENES.hero;
+export function Scene({ name, ratio = '16 / 10', controls, chapters }: SceneProps) {
+  const rec: SceneDef = SCENES[name];
   const [w, h] = ratio.split(' / ').map(Number);
+  // nuspace keeps its theme in local storage: the replay gets the site's, and restarts in it on a flip.
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === 'dark' ? 'dark' : 'light';
+
   return (
-    <Window bleed screenStyle={{ aspectRatio: ratio }}>
-      <StoryPlayer
-        scene={`/scenes/${rec.scene}.json`}
-        label={rec.label}
-        aspect={w / h}
-        beats={rec.beats}
-        controls={controls}
-      />
-    </Window>
+    <Tape.Root
+      scene={rec.scene}
+      app={APP}
+      label={rec.label}
+      chapters={chapters ? rec.chapters : undefined}
+      storage={{ 'nuspace.theme': theme }}
+      ready={!!resolvedTheme}
+    >
+      <div className={s.scene}>
+        <div className={s.screen} style={{ aspectRatio: ratio }}>
+          <Tape.Frame aspect={w / h}>
+            {controls && <Tape.Scrubber />}
+            {chapters && (
+              <>
+                <Tape.Caption className={s.subs} />
+                <Tape.Chapters className={s.bar} />
+              </>
+            )}
+          </Tape.Frame>
+        </div>
+      </div>
+    </Tape.Root>
   );
 }

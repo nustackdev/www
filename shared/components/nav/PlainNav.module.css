@@ -25,6 +25,7 @@
   background: color-mix(in oklab, var(--site-bg-overlay) 72%, transparent);
   -webkit-backdrop-filter: blur(30px);
   backdrop-filter: blur(30px);
+  box-shadow: var(--site-elevation-raised);
   transform: translateZ(0);
   font-family: var(--font-display);
   font-size: var(--site-fs-6);

@@ -4,6 +4,7 @@ import { useState, type ReactNode } from 'react';
 import { CopyButton } from '@www/shared/components/controls/CopyButton';
 import { Window } from '@www/shared/components/media/Window';
 import { Kbd } from '@www/shared/components/text/Kbd';
+import { Steps } from './Steps';
 import s from './Install.module.css';
 
 /** One printed line: the bold `nuspace` mark then dim text, or dim text alone. */
@@ -62,25 +63,7 @@ export function Install() {
 
   return (
     <div className={s.root}>
-      <ol className={s.rail}>
-        {STEPS.map((st, i) => (
-          <li key={st.label}>
-            <button
-              type="button"
-              className={s.step}
-              data-active={i === active || undefined}
-              aria-current={i === active ? 'step' : undefined}
-              onMouseEnter={() => setActive(i)}
-              onFocus={() => setActive(i)}
-              onClick={() => setActive(i)}
-            >
-              <span className={s.num}>{String(i + 1).padStart(2, '0')}</span>
-              <span className={s.label}>{st.label}</span>
-              <span className={s.note}>{st.note}</span>
-            </button>
-          </li>
-        ))}
-      </ol>
+      <Steps steps={STEPS} active={active} onPick={setActive} onPoint={setActive} />
 
       <Window title="~ zsh" className={s.term}>
         <div className={s.session}>
