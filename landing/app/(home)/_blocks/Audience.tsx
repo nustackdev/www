@@ -1,5 +1,6 @@
 import { Bot, User, Users } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { Button } from '@www/shared/components/controls/Button';
 import { Section } from '@www/shared/components/page';
 import s from './Audience.module.css';
 
@@ -62,6 +63,16 @@ export function Audience() {
       tagline="Build a new form of software."
       description="Designed for the next era, for modern teams with agents at their side."
       border={false}
+      actions={
+        <>
+          <Button variant="primary" href="#start" arrow>
+            Start your space
+          </Button>
+          <Button variant="secondary" href="/docs/nuspace">
+            Read the docs
+          </Button>
+        </>
+      }
     >
       <ul className={s.grid}>
         {AUDIENCES.map((a) => (

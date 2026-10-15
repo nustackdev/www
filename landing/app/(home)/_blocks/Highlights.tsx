@@ -1,4 +1,5 @@
 import { Braces, Database, Infinity, Layers, Network, PanelsTopLeft, Zap } from 'lucide-react';
+import { Button } from '@www/shared/components/controls/Button';
 import { Section } from '@www/shared/components/page';
 import { FeatureGrid, type Feature } from '@www/shared/components/layout/FeatureGrid';
 
@@ -21,7 +22,17 @@ const HIGHLIGHTS: Feature[] = [
 /** Highlights — what every cell can do, as an open grid. */
 export function Highlights() {
   return (
-    <Section id="capabilities" eyebrow="What it can do" tagline="Program anything." description="The data, the logic, the look, even the space itself.">
+    <Section
+      id="capabilities"
+      eyebrow="What it can do"
+      tagline="Program anything."
+      description="The data, the logic, the look, even the space itself."
+      actions={
+        <Button variant="primary" href="#spaces" arrow>
+          See it in real spaces
+        </Button>
+      }
+    >
       <FeatureGrid items={HIGHLIGHTS} />
     </Section>
   );

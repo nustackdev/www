@@ -26,6 +26,8 @@ export interface SectionProps {
   border?: boolean;
   /** Content runs edge to edge, past the main column. */
   bleed?: boolean;
+  /** The section's call to action, a row of Buttons under its content. */
+  actions?: ReactNode;
   className?: string;
   children?: ReactNode;
 }
@@ -45,6 +47,7 @@ export function Section({
   space = 'lg',
   border = true,
   bleed,
+  actions,
   className,
   children,
 }: SectionProps) {
@@ -58,6 +61,7 @@ export function Section({
         <Intro eyebrow={eyebrow} tagline={tagline} description={description} href={id ? `#${id}` : undefined} />
       ) : null}
       {bleed ? <div className={s.bleed}>{children}</div> : children}
+      {actions ? <div className={s.actions}>{actions}</div> : null}
     </section>
   );
 }

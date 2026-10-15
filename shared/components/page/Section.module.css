@@ -40,3 +40,11 @@
   padding-bottom: 0;
   border-bottom: 0;
 }
+
+/* The call to action: a row of Buttons closing the section. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
