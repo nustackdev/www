@@ -96,7 +96,7 @@
   .far { --fs: 14px; }
 }
 
-/* Still: the six quotes as a wrapped list, sharp, the asides gone. */
+/* Still: the reactions and the anchors as wrapped lists, the asides gone. */
 @media (prefers-reduced-motion: reduce) {
   .wall {
     max-width: 1200px;
@@ -107,7 +107,7 @@
   }
   .track { animation: none; width: auto; margin-left: 0 !important; }
   .row { overflow: visible; }
-  .far,
+  .mid,
   .set[data-copy],
   .slip[aria-hidden] { display: none; }
   .set { flex-wrap: wrap; }

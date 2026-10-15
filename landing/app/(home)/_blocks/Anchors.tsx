@@ -14,28 +14,34 @@ interface Quote {
   who: string;
 }
 
-/** Overheard at first looks: nuspace through things people know. Copy from identity.md in Go. */
-const NEAR: Quote[] = [
-  { known: 'Notion,', twist: 'but every block is a program.', who: 'a product designer' },
-  { known: 'A notebook', twist: 'that never goes stale.', who: 'a researcher' },
+/** Overheard at first looks. Copy from identity.md in Go. */
+
+/** Top row: first reactions, the value as people put it. */
+const TOP = [
+  "everything i use, in one place, and it's all live",
+  'this could replace half of my apps',
+  'hold on, i can program everything, even the space itself?',
+  'so i own all of it, on my machine?',
+];
+
+/** Middle row, the big one: nuspace through products people know. */
+const ANCHORS: Quote[] = [
+  { known: 'Notion,', twist: 'but every block is a program.', who: 'a product owner' },
   { known: 'A spreadsheet for anything,', twist: 'not just numbers.', who: 'an analyst' },
+  { known: 'A notebook', twist: 'that never goes stale.', who: 'a researcher' },
+  { known: 'An operating system', twist: 'for everything I know.', who: 'a consultant' },
+  { known: 'Our own Palantir,', twist: 'for company intel.', who: 'a founder' },
+  { known: 'A homelab', twist: 'for my data, tools and agents.', who: 'an indie hacker' },
 ];
 
-const MID: Quote[] = [
-  { known: 'Real programming', twist: 'that draws itself.', who: 'an engineer' },
-  { known: 'My own Palantir,', twist: 'on my laptop.', who: 'a founder' },
-  { known: 'The agent left a running system,', twist: 'not a chat log.', who: 'an ML engineer' },
-];
-
-/** Short asides in the blurred back row. */
-const FAR = [
-  'wait, the page is the program?',
+/** Bottom row: asides on the wows. */
+const ASIDES = [
+  'wait, it all runs on my laptop?',
+  'one line install? all state lives in just one folder?',
   'it just stays live',
   'so the table is code too',
   'nothing to deploy?',
-  'the dashboard is the notebook',
   'everything talks to everything',
-  'it runs on my machine?',
 ];
 
 /** Drift speed of the top row, px a second. The others go as a multiple of it. */
@@ -80,7 +86,7 @@ function Row({ items, depth }: { items: (Quote | string)[]; depth: keyof typeof 
   }, [depth]);
 
   return (
-    <div className={cn(s.row, s[depth])} aria-hidden={depth === 'far' || undefined}>
+    <div className={cn(s.row, s[depth])} aria-hidden={depth === 'mid' || undefined}>
       <div ref={track} className={s.track}>
         {[0, 1].map((h) => (
           <div key={h} className={s.set} data-copy={h === 1 || undefined}>
@@ -102,9 +108,9 @@ export function Anchors() {
   return (
     <Section id="anchors" label="What people compare nuspace to" space="none" border={false} bleed>
       <div className={s.wall}>
-        <Row items={FAR} depth="far" />
-        <Row items={NEAR} depth="near" />
-        <Row items={MID} depth="mid" />
+        <Row items={TOP} depth="far" />
+        <Row items={ANCHORS} depth="near" />
+        <Row items={ASIDES} depth="mid" />
       </div>
     </Section>
   );
