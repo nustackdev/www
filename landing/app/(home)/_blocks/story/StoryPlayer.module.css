@@ -38,8 +38,6 @@
   transition: opacity 150ms;
   will-change: transform;
 }
-/* The recorded viewport is scaled down about half: the pointer is drawn up to match. */
-.cursor > svg { scale: 1.4; transform-origin: 4px 3px; }
 
 .clicks {
   position: absolute;
