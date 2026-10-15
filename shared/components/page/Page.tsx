@@ -11,7 +11,7 @@ export interface PageProps {
 
 /**
  * Page — the site's outer page wrapper: the ground, a Container for the
- * content, then the footer. Owns top clearance for the fixed FloatingNav so
+ * content, then the footer. Owns top clearance for the fixed top nav so
  * children start below it.
  */
 export function Page({ children, className, footer }: PageProps) {

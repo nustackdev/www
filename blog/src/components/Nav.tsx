@@ -1,11 +1,11 @@
 import { ThemeProvider } from '@www/shared/components/nav/ThemeProvider';
-import { FloatingNav } from '@www/shared/components/nav/FloatingNav';
+import { PlainNav } from '@www/shared/components/nav/PlainNav';
 
-/** The site nav as a blog island, with the theme context its toggle needs. */
+/** The site nav as a blog island, inside the theme context the shared kit expects. */
 export default function Nav() {
   return (
     <ThemeProvider>
-      <FloatingNav />
+      <PlainNav />
     </ThemeProvider>
   );
 }
