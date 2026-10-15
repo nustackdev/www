@@ -68,14 +68,9 @@ export function Audience() {
       description="Designed for the next era, for modern teams with agents at their side."
       border={false}
       actions={
-        <>
-          <Button variant="primary" href="#start" arrow>
-            Start your space
-          </Button>
-          <Button variant="secondary" href="/docs/nuspace">
-            Read the docs
-          </Button>
-        </>
+        <Button variant="primary" href="#start" arrow>
+          Start your space
+        </Button>
       }
     >
       <ul className={s.grid}>

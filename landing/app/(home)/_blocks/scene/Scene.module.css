@@ -6,8 +6,8 @@
 .screen {
   position: relative;
   overflow: hidden;
-  border-radius: var(--site-r-xl);
-  border: 1px solid color-mix(in oklab, var(--site-ink) 9%, transparent);
+  border-radius: var(--site-r-md);
+  border: 1px solid var(--site-border);
   background: var(--site-bg-raised);
 }
 
@@ -15,6 +15,22 @@
   .screen {
     width: 140%;
     max-width: none;
+  }
+
+  /* Where the window cuts it, a shadow: it reads as running on past the
+   * edge, not as broken. Pinned to the window's right edge, which sits
+   * half the gap between column and window out from the column. */
+  .scene { position: relative; }
+  .scene::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: calc((100cqw - 100vw) / 2);
+    z-index: 5;
+    width: 30px;
+    background: linear-gradient(to left, rgb(0 0 0 / 0.38), rgb(0 0 0 / 0.12) 45%, transparent);
+    pointer-events: none;
   }
 }
 
@@ -49,7 +65,7 @@
 
 /* The bar sits on the bottom edge; its hit area reaches up into the frame. */
 .bar {
-  --tape-track: color-mix(in oklab, #000 28%, transparent);
+  --tape-track: var(--site-border);
   --tape-accent-text: var(--site-accent);
   position: absolute;
   left: 0;

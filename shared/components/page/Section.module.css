@@ -48,3 +48,7 @@
   align-items: center;
   gap: 12px;
 }
+/* Phones: full width and stacked, as the hero's. */
+@media (max-width: 640px) {
+  .actions { flex-direction: column; align-items: stretch; width: 100%; }
+}

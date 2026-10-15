@@ -37,15 +37,17 @@
 .who {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 0;
   border: 0;
   background: none;
   font: inherit;
-  font-size: var(--site-fs-7);
-  font-weight: 500;
+  /* As a FeatureGrid title, so the two blocks' heads read the same. */
+  font-size: var(--site-fs-9);
+  font-weight: var(--site-fw-title);
+  letter-spacing: var(--site-tr-title);
   text-align: left;
-  color: var(--site-accent-text);
+  color: var(--site-ink);
   scroll-margin-top: var(--site-nav-clearance);
   -webkit-tap-highlight-color: transparent;
 }
@@ -66,6 +68,7 @@
   border-radius: var(--site-r-lg);
   background: var(--site-accent-soft);
   box-shadow: inset 0 0 0 1px var(--site-accent-line);
+  color: var(--site-accent-text);
 }
 .icon svg { width: 16px; height: 16px; }
 
@@ -134,8 +137,6 @@
   .who {
     width: 100%;
     padding: 18px 0;
-    font-size: var(--site-fs-9);
-    color: var(--site-ink);
     cursor: pointer;
     transition: color var(--site-t);
   }
