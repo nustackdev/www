@@ -11,11 +11,14 @@ export function Hero() {
   return (
     <section className={s.root}>
       <div className={s.head}>
-        <h1 className={s.title}>
-          Build your computational space
-          <br />
-          <span className={s.dim}>for everything you work with: notes, data, tools, agents.</span>
-        </h1>
+        <div className={s.titleBlock}>
+          <p className={s.eyebrow}>Open-source · Self-hosted · Data stays local</p>
+          <h1 className={s.title}>
+            Build your computational space
+            <br />
+            <span className={s.dim}>for everything you work with: notes, data, tools, agents.</span>
+          </h1>
+        </div>
 
         <div className={s.row}>
           <p className={s.sub}>

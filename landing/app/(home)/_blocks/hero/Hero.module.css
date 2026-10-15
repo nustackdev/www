@@ -16,6 +16,21 @@
 
 /* -- Title + row ---------------------------------------------------------- */
 
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Eyebrow: the section kicker's look. */
+.eyebrow {
+  margin: 0;
+  font-size: var(--site-fs-5);
+  font-weight: var(--site-fw-medium);
+  color: var(--site-accent-text);
+}
+
 .title {
   margin: 0;
   font-family: var(--font-display);
