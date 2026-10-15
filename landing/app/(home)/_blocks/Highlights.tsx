@@ -1,5 +1,5 @@
 import { Braces, Database, Infinity, Layers, Network, PanelsTopLeft, Zap } from 'lucide-react';
-import { Group } from '@www/shared/components/page';
+import { Section } from '@www/shared/components/page';
 import { FeatureGrid, type Feature } from '@www/shared/components/layout/FeatureGrid';
 
 /** What a cell gives you, one line each. Copy from identity.md in Go. */
@@ -21,8 +21,8 @@ const HIGHLIGHTS: Feature[] = [
 /** Highlights — what every cell can do, as an open grid. */
 export function Highlights() {
   return (
-    <Group id="highlights" kicker="Highlights" title="Program anything." dim="The data, the logic, the look, even the space itself." tight>
+    <Section id="capabilities" eyebrow="What it can do" tagline="Program anything." description="The data, the logic, the look, even the space itself.">
       <FeatureGrid items={HIGHLIGHTS} />
-    </Group>
+    </Section>
   );
 }

@@ -3,26 +3,28 @@ import { Kicker } from '../text/Kicker';
 import s from './Intro.module.css';
 
 export interface IntroProps {
-  /** Group name, eg "Spaces". */
-  kicker: ReactNode;
+  /** Section name over the heading, eg "Spaces". */
+  eyebrow?: ReactNode;
   /** The statement, in full ink. */
-  title: ReactNode;
+  tagline: ReactNode;
   /** Its continuation, in the same heading, in the second tone. */
-  children?: ReactNode;
-  /** The group's anchor: the kicker links to it. */
+  description?: ReactNode;
+  /** The section's anchor: the eyebrow links to it. */
   href?: string;
 }
 
-/** Intro — the h2 that opens a group: kicker, then a two tone statement. */
-export function Intro({ kicker, title, children, href }: IntroProps) {
+/** Intro — the h2 that opens a section: eyebrow, then a two tone statement. */
+export function Intro({ eyebrow, tagline, description, href }: IntroProps) {
   return (
     <header className={s.root}>
-      <Kicker tone="accent" href={href}>
-        {kicker}
-      </Kicker>
+      {eyebrow ? (
+        <Kicker tone="accent" href={href}>
+          {eyebrow}
+        </Kicker>
+      ) : null}
       <h2 className={s.text}>
-        {title}
-        {children ? <span className={s.dim}> {children}</span> : null}
+        {tagline}
+        {description ? <span className={s.dim}> {description}</span> : null}
       </h2>
     </header>
   );

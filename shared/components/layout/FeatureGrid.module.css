@@ -139,4 +139,7 @@
     color: var(--site-accent-text);
   }
   .grid > .cell > * { padding: 22px 0; }
+  /* Edge rows drop their outer padding too, like edge columns do on wide screens. */
+  .grid > .cell:first-child > * { padding-top: 0; }
+  .grid > .cell:last-child > * { padding-bottom: 0; }
 }

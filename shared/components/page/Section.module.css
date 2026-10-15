@@ -1,0 +1,42 @@
+.root {
+  --section-pad: clamp(64px, 8vw, 112px);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--section-pad);
+  scroll-margin-top: var(--site-nav-h);
+}
+
+/* Space: the padding above and below. */
+.space-lg { --section-pad: clamp(64px, 8vw, 112px); }
+.space-md { --section-pad: clamp(48px, 6vw, 80px); }
+.space-sm { --section-pad: clamp(32px, 4vw, 56px); }
+.space-none { --section-pad: 0px; }
+
+/* Layout: the gap under the heading. Content reads with it, subsections stand apart. */
+.content { gap: clamp(40px, 5vw, 64px); }
+.subsections { gap: clamp(64px, 8vw, 112px); }
+
+/* Edge to edge, past the main column. */
+.border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  background: var(--site-border);
+  transform: translateX(-50%);
+}
+
+.bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+/* The last subsection hands its divider and bottom space to the section. */
+.root > article:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}

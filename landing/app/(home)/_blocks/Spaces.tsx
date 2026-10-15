@@ -1,4 +1,4 @@
-import { Group, Unit } from '@www/shared/components/page';
+import { Section, Subsection } from '@www/shared/components/page';
 import { Scene } from './scene/Scene';
 import s from './Spaces.module.css';
 
@@ -62,13 +62,19 @@ const SPACES: Space[] = [
 /** Spaces — what nuspace enables, shown on real spaces. */
 export function Spaces() {
   return (
-    <Group id="spaces" kicker="Spaces" title="Built in nuspace." dim="Real spaces, made of connected cells.">
+    <Section
+      id="spaces"
+      eyebrow="Spaces"
+      tagline="Built in nuspace."
+      description="Real spaces, made of connected cells."
+      layout="subsections"
+    >
       {SPACES.map((sp) => (
-        <Unit
+        <Subsection
           key={sp.scene}
           id={sp.scene}
-          kicker={sp.name}
-          title={sp.title}
+          eyebrow={sp.name}
+          tagline={sp.title}
           description={sp.body}
           media={<Scene name={sp.scene} />}
           lead={
@@ -80,6 +86,6 @@ export function Spaces() {
           }
         />
       ))}
-    </Group>
+    </Section>
   );
 }

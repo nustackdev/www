@@ -2,7 +2,7 @@ import { BookOpen } from 'lucide-react';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
 import { DiscordMark } from '@www/shared/components/marks/DiscordMark';
 import { XMark } from '@www/shared/components/marks/XMark';
-import { Group } from '@www/shared/components/page';
+import { Section } from '@www/shared/components/page';
 import { FeatureGrid, type Feature } from '@www/shared/components/layout/FeatureGrid';
 import { SOCIAL_LINKS } from '@www/shared/lib/social';
 import { Install } from './Install';
@@ -28,7 +28,7 @@ const LINKS: Feature[] = [
 /** TryIt — every CTA on the page lands here: install, run, then the community. */
 export function TryIt() {
   return (
-    <Group id="start" kicker="Get started" title="Start your space." dim="One install, on your machine.">
+    <Section id="start" eyebrow="Get started" tagline="Start your space." description="One install, on your machine.">
       <Install />
 
       <div className={s.community}>
@@ -37,6 +37,6 @@ export function TryIt() {
         </h3>
         <FeatureGrid items={LINKS} icon="plain" />
       </div>
-    </Group>
+    </Section>
   );
 }

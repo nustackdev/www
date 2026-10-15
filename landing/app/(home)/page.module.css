@@ -12,7 +12,7 @@
   overflow-x: clip;
 }
 
-/* Groups stack edge to edge, their full width dividers carry the rhythm. */
+/* Sections stack edge to edge, their full width dividers carry the rhythm. */
 .content {
   position: relative;
   flex: 1 0 auto;
