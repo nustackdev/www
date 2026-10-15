@@ -33,7 +33,7 @@ export function Highlights() {
         </Button>
       }
     >
-      <FeatureGrid items={HIGHLIGHTS} />
+      <FeatureGrid items={HIGHLIGHTS} accordion />
     </Section>
   );
 }

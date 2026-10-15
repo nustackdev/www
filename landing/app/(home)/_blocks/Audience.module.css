@@ -38,9 +38,24 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
   font-size: var(--site-fs-7);
   font-weight: 500;
+  text-align: left;
   color: var(--site-accent-text);
+  scroll-margin-top: var(--site-nav-clearance);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The fold and its chevron only work on phones; wide, everything shows as is. */
+.fold,
+.folded { display: contents; }
+.chev { display: none; }
+@media (min-width: 861px) {
+  .who { pointer-events: none; }
 }
 
 .icon {
@@ -113,7 +128,47 @@
   }
   .cell,
   .cell:first-child,
-  .cell:last-child { padding: 32px 0; }
-  .cell:first-child { padding-top: 0; }
-  .cell:last-child { padding-bottom: 0; }
+  .cell:last-child { gap: 0; padding: 0; }
+
+  /* An accordion: the head is the toggle, the rest folds under it. */
+  .who {
+    width: 100%;
+    padding: 18px 0;
+    font-size: var(--site-fs-9);
+    color: var(--site-ink);
+    cursor: pointer;
+    transition: color var(--site-t);
+  }
+  .cell[data-open] .who { color: var(--site-accent-text); }
+  .who:focus-visible { outline: var(--site-ring-width) solid var(--site-ring); outline-offset: var(--site-ring-offset); border-radius: var(--site-r-md); }
+  .cell:first-child .who { padding-top: 0; }
+
+  .chev {
+    display: block;
+    margin-left: auto;
+    color: var(--site-ink-3);
+    transition: rotate var(--site-dur-base) var(--site-ease-out), color var(--site-t);
+  }
+  .cell[data-open] .chev { rotate: 180deg; color: var(--site-accent-text); }
+
+  .fold {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 280ms var(--site-ease-out), opacity 200ms ease;
+  }
+  .cell[data-open] .fold { grid-template-rows: 1fr; opacity: 1; }
+  .folded {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .folded > :last-child { margin-bottom: 24px; }
+  .title { margin-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fold, .chev { transition: none; }
 }

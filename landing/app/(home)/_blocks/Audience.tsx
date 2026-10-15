@@ -1,7 +1,10 @@
-import { Bot, User, Users } from 'lucide-react';
+'use client';
+
+import { Bot, ChevronDown, User, Users } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Button } from '@www/shared/components/controls/Button';
 import { Section } from '@www/shared/components/page';
+import { useAccordion } from '@www/shared/lib/useAccordion';
 import s from './Audience.module.css';
 
 interface Audience {
@@ -54,8 +57,9 @@ const AUDIENCES: Audience[] = [
   },
 ];
 
-/** Audience: who nuspace is for and what each of them builds in it. */
+/** Audience: who nuspace is for and what each of them builds in it. On phones an accordion, one open at a time. */
 export function Audience() {
+  const acc = useAccordion('(max-width: 860px)');
   return (
     <Section
       id="for"
@@ -75,27 +79,32 @@ export function Audience() {
       }
     >
       <ul className={s.grid}>
-        {AUDIENCES.map((a) => (
-          <li key={a.who} className={s.cell}>
-            <span className={s.who}>
+        {AUDIENCES.map((a, i) => (
+          <li key={a.who} className={s.cell} {...acc.item(i)}>
+            <button className={s.who} {...acc.head(i)}>
               <span className={s.icon} aria-hidden>
                 {a.icon}
               </span>
               {a.who}
-            </span>
-            <h3 className={s.title}>{a.title}</h3>
-            <p className={s.body}>{a.body}</p>
-            <ul className={s.cases}>
-              {a.cases.map((c) => {
-                const [label, rest] = c.includes(': ') ? c.split(': ', 2) : [null, c];
-                return (
-                  <li key={c}>
-                    {label ? <span className={s.label}>{label}: </span> : null}
-                    {rest}
-                  </li>
-                );
-              })}
-            </ul>
+              <ChevronDown className={s.chev} size={18} aria-hidden />
+            </button>
+            <div className={s.fold}>
+              <div className={s.folded}>
+                <h3 className={s.title}>{a.title}</h3>
+                <p className={s.body}>{a.body}</p>
+                <ul className={s.cases}>
+                  {a.cases.map((c) => {
+                    const [label, rest] = c.includes(': ') ? c.split(': ', 2) : [null, c];
+                    return (
+                      <li key={c}>
+                        {label ? <span className={s.label}>{label}: </span> : null}
+                        {rest}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
           </li>
         ))}
       </ul>

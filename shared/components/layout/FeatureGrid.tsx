@@ -1,7 +1,10 @@
+'use client';
+
 import type { ReactNode } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import { SiteLink as Link } from '../nav/SiteLink';
 import { cn } from '../../lib/cn';
+import { useAccordion } from '../../lib/useAccordion';
 import s from './FeatureGrid.module.css';
 
 export interface Feature {
@@ -20,19 +23,44 @@ interface Props {
   columns?: 2 | 3 | 4;
   /** tile: the icon on a soft Afterglow tile. plain: the icon as is, for marks. */
   icon?: 'tile' | 'plain';
+  /** On phones, an accordion: heads only, one open at a time. For cells without links. */
+  accordion?: boolean;
   className?: string;
 }
 
 /**
  * FeatureGrid — an open grid of short features. Lines only between cells,
  * fading toward every edge; edge cells drop their outer padding so the text
- * lines up with the page.
+ * lines up with the page. With `accordion`, phones get the heads only, one
+ * open at a time.
  */
-export function FeatureGrid({ items, columns = 4, icon = 'tile', className }: Props) {
+export function FeatureGrid({ items, columns = 4, icon = 'tile', accordion, className }: Props) {
+  const acc = useAccordion('(max-width: 560px)');
   return (
-    <ul className={cn(s.grid, s[`c${columns}`], s[icon], className)}>
+    <ul className={cn(s.grid, s[`c${columns}`], s[icon], accordion && s.acc, className)}>
       {items.map((f, i) => {
         const external = !!f.href && /^https?:\/\//.test(f.href);
+        if (accordion && !f.href)
+          return (
+            <li key={i} className={cn(s.cell, f.wide && s.wide)} {...acc.item(i)}>
+              <div className={s.body}>
+                <button className={cn(s.head, s.toggle)} {...acc.head(i)}>
+                  {f.icon ? (
+                    <span className={s.icon} aria-hidden>
+                      {f.icon}
+                    </span>
+                  ) : null}
+                  <span className={s.title}>{f.title}</span>
+                  <ChevronDown className={s.chev} size={18} aria-hidden />
+                </button>
+                <span className={s.fold}>
+                  <span className={s.folded}>
+                    <span className={s.line}>{f.line}</span>
+                  </span>
+                </span>
+              </div>
+            </li>
+          );
         const body = (
           <>
             <span className={s.head}>

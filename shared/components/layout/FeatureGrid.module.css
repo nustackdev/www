@@ -118,6 +118,25 @@
   text-wrap: pretty;
 }
 
+/* Accordion: the head is a button that only works on phones. Wide, the fold
+ * is out of the way and the chevron hidden. */
+.toggle {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  scroll-margin-top: var(--site-nav-clearance);
+  -webkit-tap-highlight-color: transparent;
+}
+.fold,
+.folded { display: contents; }
+.chev { display: none; }
+@media (min-width: 561px) {
+  .toggle { pointer-events: none; }
+}
+
 .link:hover .arrow { color: var(--site-accent-text); transform: translate(2px, -2px); }
 .plain .link:hover .icon { color: var(--site-accent-text); }
 .link:hover .title { color: var(--site-ink); }
@@ -129,17 +148,61 @@
   .grid > .cell:nth-child(even) > *,
   .grid > .cell:last-child > * { padding-right: 0; }
 }
-@media (max-width: 560px) {
-  .grid { --cols: 1; }
-  /* One column: the closing cell is a regular one, the wash has no edge to sit in. */
-  .wide { grid-column: auto; background: var(--site-bg); }
+/* Tablet and phones: the closing cell is a regular one, a whole row on
+ * tablet. The wash has no edge to sit in there. */
+@media (max-width: 1024px) {
+  .wide { background: var(--site-bg); }
   .tile .wide .icon {
     background: var(--site-accent-soft);
     box-shadow: inset 0 0 0 1px var(--site-accent-line);
     color: var(--site-accent-text);
   }
+}
+@media (max-width: 560px) {
+  .grid { --cols: 1; }
+  .wide { grid-column: auto; }
   .grid > .cell > * { padding: 22px 0; }
   /* Edge rows drop their outer padding too, like edge columns do on wide screens. */
   .grid > .cell:first-child > * { padding-top: 0; }
   .grid > .cell:last-child > * { padding-bottom: 0; }
+}
+
+@media (max-width: 560px) {
+  .acc > .cell > .body { gap: 0; }
+  .acc > .cell > * { padding: 0; }
+  .toggle {
+    width: 100%;
+    padding: 18px 0;
+    cursor: pointer;
+  }
+  .acc > .cell:first-child .toggle { padding-top: 0; }
+  .toggle:focus-visible { outline: var(--site-ring-width) solid var(--site-ring); outline-offset: var(--site-ring-offset); border-radius: var(--site-r-md); }
+  .acc .cell[data-open] .title { color: var(--site-accent-text); }
+
+  .chev {
+    display: block;
+    flex: none;
+    margin-left: auto;
+    color: var(--site-ink-3);
+    transition: rotate var(--site-dur-base) var(--site-ease-out), color var(--site-t);
+  }
+  .cell[data-open] .chev { rotate: 180deg; color: var(--site-accent-text); }
+
+  .fold {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 280ms var(--site-ease-out), opacity 200ms ease;
+  }
+  .cell[data-open] .fold { grid-template-rows: 1fr; opacity: 1; }
+  .folded {
+    display: block;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .folded > .line { display: block; padding-bottom: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fold, .chev { transition: none; }
 }
