@@ -66,7 +66,6 @@ export function Audience() {
       eyebrow="Who it's for"
       tagline="Build a new form of software."
       description="Designed for the next era, for modern teams with agents at their side."
-      border={false}
       actions={
         <Button variant="primary" href="#start" arrow>
           Start your space

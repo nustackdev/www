@@ -46,7 +46,7 @@ const ASIDES = [
 
 /** Drift speed of the top row, px a second. The others go as a multiple of it. */
 const SPEED = 30;
-const PACE = { far: 1, mid: 1.7, near: 2.2 } as const;
+const PACE = { far: 1, mid: 1.5, near: 2 } as const;
 
 /** Each half of a track repeats its slips this many times, so it outruns the widest screen. */
 const REPEAT = 2;

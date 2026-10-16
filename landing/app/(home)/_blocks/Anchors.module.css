@@ -7,16 +7,24 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
+  /* Air before Audience's divider, the same as the hero leaves above. */
+  margin-bottom: clamp(64px, 8vw, 112px);
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+  /* Not actionable: no hover, no selection. */
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
 }
 
-.row { overflow: hidden; }
+/* Each row its own paint boundary, each track a stable GPU layer. */
+.row { overflow: hidden; contain: paint; }
 
 .track {
   display: flex;
   width: max-content;
   gap: var(--gap);
+  will-change: transform;
   /* --dur is set per row from its measured width, see Anchors.tsx. */
   animation: drift var(--dur, 100s) linear infinite;
   animation-direction: var(--dir, normal);
@@ -33,8 +41,6 @@
   to { transform: translateX(calc(-50% - var(--gap) / 2)); }
 }
 
-.wall:hover .track { animation-play-state: paused; }
-
 .slip {
   flex: none;
   display: flex;
@@ -46,9 +52,7 @@
   border: 1px solid var(--site-border);
   border-radius: var(--site-r-lg);
   white-space: nowrap;
-  transition: border-color var(--site-dur-fast) var(--site-ease-out);
 }
-.slip:hover { border-color: var(--site-border-strong); }
 
 .slip blockquote { margin: 0; }
 
@@ -105,8 +109,8 @@
     -webkit-mask-image: none;
     mask-image: none;
   }
-  .track { animation: none; width: auto; margin-left: 0 !important; }
-  .row { overflow: visible; }
+  .track { animation: none; will-change: auto; width: auto; margin-left: 0 !important; }
+  .row { overflow: visible; contain: none; }
   .mid,
   .set[data-copy],
   .slip[aria-hidden] { display: none; }
