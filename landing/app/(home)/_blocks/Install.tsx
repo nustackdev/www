@@ -38,20 +38,23 @@ const STEPS: Step[] = [
     commands: ['nuspace run my.nuspace'],
     out: [
       { mark: true, text: 'my.nuspace' },
-      { text: 'http://127.0.0.1:8080, Ctrl+C to stop' },
+      { text: 'nuspace running at http://localhost:8080' },
+      { text: 'Ctrl+C to stop' },
     ],
   },
   {
     label: 'Try a demo',
     note: (
       <>
-        A throwaway space with a full app in it. <code>nuspace demo</code> lists them all.
+        A throwaway space with a full app in it. <code>nuspace verse</code> lists them all.
       </>
     ),
-    commands: ['pip install "nuspace[demos]"', 'nuspace demo movies'],
+    commands: ['pip install nudemos', 'nuspace run --with nudemos.movies'],
     out: [
-      { mark: true, text: 'Throwaway space, gone at close' },
-      { text: 'http://127.0.0.1:8080/movies, Ctrl+C to stop' },
+      { mark: true, text: 'throwaway space, gone at close' },
+      { text: 'plane nudemos-movies' },
+      { text: 'nuspace running at http://localhost:8080' },
+      { text: 'Ctrl+C to stop' },
     ],
   },
 ];
