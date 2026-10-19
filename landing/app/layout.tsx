@@ -1,4 +1,3 @@
-import '@nustackdev/tape-player/tape.css';
 import './global.css';
 import { Inter } from 'next/font/google';
 import { JsonLd } from '@www/shared/components/meta/JsonLd';

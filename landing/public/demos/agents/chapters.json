@@ -1,0 +1,51 @@
+{
+  "label": "A team of Claude Code agents in one live space: fanned out with a judge, briefed, steered and stopped, their work kept on their pages, then steered all at once from a desk built on the spot.",
+  "duration": 119.3,
+  "chapters": [
+    {
+      "t": 0,
+      "title": "Open the team",
+      "note": "Agents, flows and what they made, one space."
+    },
+    {
+      "t": 7.22,
+      "title": "Fan out",
+      "note": "A few lines of Nu: three builders, then a judge."
+    },
+    {
+      "t": 24.45,
+      "title": "Brief an agent",
+      "note": "Its page streams every step as it happens."
+    },
+    {
+      "t": 49.34,
+      "title": "Steer and stop",
+      "note": "Say, stop, resume: it picks up where it was."
+    },
+    {
+      "t": 57.5,
+      "title": "Keep the work",
+      "note": "Every call, file and cost stays on its page."
+    },
+    {
+      "t": 66.44,
+      "title": "A judge picks",
+      "note": "It read every folder and named a winner."
+    },
+    {
+      "t": 76.1,
+      "title": "Build a desk",
+      "note": "A new page: every agent in one live table."
+    },
+    {
+      "t": 96.54,
+      "title": "Tell the builders",
+      "note": "One line in my box, three real sessions take it."
+    },
+    {
+      "t": 107.25,
+      "title": "Everyone knows",
+      "note": "New answers on my desk, the board and their pages."
+    }
+  ]
+}

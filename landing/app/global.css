@@ -7,21 +7,3 @@ html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
 }
-
-/* Tape players in site tokens. On the root, so the scrubber portaled to the body has them too. */
-:root {
-  --tape-accent: var(--site-accent);
-  --tape-accent-text: var(--site-accent-text);
-  --tape-ink: var(--site-ink);
-  --tape-ink-soft: var(--site-ink-3);
-  --tape-ink-faint: var(--site-ink-4);
-  --tape-track: var(--site-border);
-  --tape-bg: var(--site-bg-raised);
-  --tape-shimmer: var(--site-wash);
-  --tape-ring: var(--site-ring);
-  --tape-ring-width: var(--site-ring-width);
-  --tape-ring-offset: var(--site-ring-offset);
-  --tape-font-mono: var(--font-mono);
-  --tape-fs-title: var(--site-fs-6);
-  --tape-fs-num: var(--site-fs-2);
-}

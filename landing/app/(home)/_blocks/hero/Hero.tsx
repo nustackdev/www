@@ -1,6 +1,6 @@
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
 import { Button } from '@www/shared/components/controls/Button';
-import { Scene } from '../scene/Scene';
+import { DemoVideo } from '@www/shared/components/media/demo/DemoVideo';
 import s from './Hero.module.css';
 
 /**
@@ -39,7 +39,7 @@ export function Hero() {
         </div>
       </div>
 
-      <Scene name="hero" chapters />
+      <DemoVideo src="/demos/hero" bleed eager />
     </section>
   );
 }

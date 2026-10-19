@@ -1,9 +1,9 @@
 import { Section, Subsection } from '@www/shared/components/page';
-import { Scene } from './scene/Scene';
-import type { SceneName } from './scene/scenes';
+import { DemoVideo } from '@www/shared/components/media/demo/DemoVideo';
 
 interface Space {
-  scene: SceneName;
+  /** The demo's folder name, `/demos/<scene>`. */
+  scene: 'movies' | 'agents' | 'memes' | 'training';
   /** Space name, as the kicker. */
   name: string;
   title: string;
@@ -22,7 +22,7 @@ const SPACES: Space[] = [
     scene: 'agents',
     name: 'Agent orchestration',
     title: 'A team of agents, run from one space.',
-    body: 'Start, watch and steer Claude Code sessions, then chain them into flows.',
+    body: 'Brief and steer Claude Code sessions, chain them into flows, build your own tools around them.',
   },
   {
     scene: 'memes',
@@ -33,8 +33,8 @@ const SPACES: Space[] = [
   {
     scene: 'training',
     name: 'ML training',
-    title: 'Train a model. Steer it mid-run.',
-    body: 'Launch runs, watch them learn and change course while they train.',
+    title: 'Train models in your own ML lab.',
+    body: 'Launch runs, watch them learn, use their models and build your own tools around them.',
   },
 ];
 
@@ -55,7 +55,7 @@ export function Spaces() {
           eyebrow={sp.name}
           tagline={sp.title}
           description={sp.body}
-          media={<Scene name={sp.scene} chapters />}
+          media={<DemoVideo src={`/demos/${sp.scene}`} bleed />}
         />
       ))}
     </Section>

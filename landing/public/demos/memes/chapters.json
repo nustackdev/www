@@ -1,0 +1,46 @@
+{
+  "label": "A meme market read live off Solana: launches and trades streaming in, a coin's live page, the job behind it, then a new Radar page whose bar gives every coin past it a live page.",
+  "duration": 100,
+  "chapters": [
+    {
+      "t": 0,
+      "title": "Open the market",
+      "note": "Coins, trades and tools in one live space."
+    },
+    {
+      "t": 7.42,
+      "title": "Watch it land",
+      "note": "Launches and trades land as they happen."
+    },
+    {
+      "t": 17.06,
+      "title": "Rank the board",
+      "note": "Every coin it follows, re-ranked as trades land."
+    },
+    {
+      "t": 27.94,
+      "title": "Open a coin",
+      "note": "A live page per coin, from the same stream."
+    },
+    {
+      "t": 41.79,
+      "title": "Under the hood",
+      "note": "One job reads every block, in its own process."
+    },
+    {
+      "t": 53.84,
+      "title": "Make a radar",
+      "note": "A new page, a few lines, wired to the stream."
+    },
+    {
+      "t": 71.48,
+      "title": "Lower the bar",
+      "note": "Every coin past it gets a live page."
+    },
+    {
+      "t": 85.09,
+      "title": "Every page follows",
+      "note": "Pages your block made, live from the first second."
+    }
+  ]
+}

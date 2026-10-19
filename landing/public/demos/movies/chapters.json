@@ -1,0 +1,46 @@
+{
+  "label": "A film base in one live space: a log brought in by a job, a film added by hand, then a Tonight page written on the spot that rates a film and moves the whole base.",
+  "duration": 99.8,
+  "chapters": [
+    {
+      "t": 0,
+      "title": "Open the base",
+      "note": "A page per film and person, all linked."
+    },
+    {
+      "t": 10.22,
+      "title": "Bring in a log",
+      "note": "A job builds 90 film pages while you watch."
+    },
+    {
+      "t": 26.16,
+      "title": "Add a film",
+      "note": "Two facts in, its poster and links follow."
+    },
+    {
+      "t": 46.15,
+      "title": "Use it elsewhere",
+      "note": "Jaws is on his page and the atlas already."
+    },
+    {
+      "t": 56.08,
+      "title": "Make a page",
+      "note": "A few lines pick tonight's film from the list."
+    },
+    {
+      "t": 70.11,
+      "title": "Pick for tonight",
+      "note": "Less time, another pick: the Jaws you just added."
+    },
+    {
+      "t": 77.16,
+      "title": "Watch it",
+      "note": "Rate tonight's pick. The shelf follows beside it."
+    },
+    {
+      "t": 87.56,
+      "title": "Every page knows",
+      "note": "Parasite tops the wall and its own page."
+    }
+  ]
+}

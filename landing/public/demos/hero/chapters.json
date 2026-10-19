@@ -1,0 +1,31 @@
+{
+  "label": "A personal space in nuspace: a week's note, money, reading and an agent's answer, all live cells. A statement imports on its own, a tool is built from a few lines, and one new expense moves every page.",
+  "duration": 42.1,
+  "chapters": [
+    {
+      "t": 0,
+      "title": "Open your space",
+      "note": "Notes, data, tools and agents. All cells."
+    },
+    {
+      "t": 4.11,
+      "title": "Ask an agent",
+      "note": "Its answer is a live cell, not a chat log."
+    },
+    {
+      "t": 10.9,
+      "title": "Watch it move",
+      "note": "A statement imports. The agent's chart follows."
+    },
+    {
+      "t": 18.56,
+      "title": "Build a tool",
+      "note": "A few lines read your money and answer."
+    },
+    {
+      "t": 29.18,
+      "title": "Change one thing",
+      "note": "Add an expense. Every page knows."
+    }
+  ]
+}

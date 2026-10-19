@@ -30,8 +30,5 @@ yarn-error.log*
 next-env.d.ts
 .ruff_cache
 
-# fetched by landing/scripts/scenes.mjs
-landing/public/scenes/nuspace/
-
 # copied in by docs/scripts/sync-spec.mjs
 docs/content/interaction-model/
