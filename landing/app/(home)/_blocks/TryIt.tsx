@@ -28,7 +28,7 @@ const LINKS: Feature[] = [
 /** TryIt — every CTA on the page lands here: install, run, then the community. */
 export function TryIt() {
   return (
-    <Section id="start" eyebrow="Get started" tagline="Start your space." description="One install, on your machine.">
+    <Section id="start" eyebrow="Get started" tagline="Three steps to your space." description="Hand it to your agent: it installs nuspace and builds your first thing from one prompt.">
       <Install />
 
       <div className={s.community}>

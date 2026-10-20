@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type FocusEventHandler } from 'react';
 import { Check, Copy } from 'lucide-react';
-import { Button, type ButtonVariant } from './Button';
+import { Button, type ButtonSize, type ButtonVariant } from './Button';
 
 interface Props {
   /** What lands on the clipboard. */
@@ -10,12 +10,24 @@ interface Props {
   /** What is copied, for screen readers, eg "install commands". */
   what?: string;
   variant?: ButtonVariant;
+  /** sm by default; lg for a copy that is the section's main action. */
+  size?: ButtonSize;
+  /** The resting label, eg "Copy commands". */
+  label?: string;
   className?: string;
   onFocus?: FocusEventHandler<HTMLElement>;
 }
 
 /** CopyButton — a small button that copies text and says so for a moment. */
-export function CopyButton({ text, what = 'text', variant = 'secondary', className, onFocus }: Props) {
+export function CopyButton({
+  text,
+  what = 'text',
+  variant = 'secondary',
+  size = 'sm',
+  label = 'Copy',
+  className,
+  onFocus,
+}: Props) {
   const [copied, setCopied] = useState(false);
   const timer = useRef<number | undefined>(undefined);
   useEffect(() => () => window.clearTimeout(timer.current), []);
@@ -34,14 +46,14 @@ export function CopyButton({ text, what = 'text', variant = 'secondary', classNa
   return (
     <Button
       variant={variant}
-      size="sm"
+      size={size}
       onClick={copy}
       onFocus={onFocus}
       ariaLabel={copied ? 'copied' : `copy ${what}`}
       className={className}
     >
       {copied ? <Check aria-hidden /> : <Copy aria-hidden />}
-      <span>{copied ? 'Copied' : 'Copy'}</span>
+      <span>{copied ? 'Copied' : label}</span>
     </Button>
   );
 }
