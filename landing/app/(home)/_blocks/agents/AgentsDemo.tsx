@@ -3,25 +3,44 @@
 import { BookOpen, File, Plus, Search } from 'lucide-react';
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from 'react';
 import { cn } from '@www/shared/lib/cn';
-import { DUR, KEY_AT, LAST, PARTS, STATUS, type Key, type Line } from './program';
+import { DUR, LAST, PARTS, STATUS, STEP_KEY, type Key, type Line } from './program';
 import s from './Agents.module.css';
 
 const CALM = '(prefers-reduced-motion: reduce)';
 const NARROW = '(max-width: 860px)';
 
 const BOOKS = [
-  { title: 'Dune', notes: 'reread', at: 5, cover: 'var(--site-status-warning)' },
-  { title: 'Piranesi', notes: 'for book club', at: 6, cover: 'var(--site-status-info)' },
-  { title: 'Middlemarch', notes: 'slow', at: 7, cover: 'var(--site-accent)' },
+  { title: 'Dune', author: 'Frank Herbert', pages: '412 / 617', read: 0.67, notes: 'reread', at: 5, cover: 'var(--site-status-warning)' },
+  { title: 'Piranesi', author: 'Susanna Clarke', pages: '88 / 272', read: 0.32, notes: 'for book club', at: 6, cover: 'var(--site-status-info)' },
+  { title: 'Middlemarch', author: 'George Eliot', pages: '140 / 880', read: 0.16, notes: 'slow', at: 7, cover: 'var(--site-accent)' },
+];
+const STATS = [
+  ['Books', '3'],
+  ['Pages this month', '640'],
+  ['Streak', '6 days'],
+];
+const PAGES = [
+  ['🏠', 'Home'],
+  ['📓', 'Journal'],
+  ['📚', 'Library'],
+];
+const MORE = [
+  ['🍳', 'Recipes'],
+  ['🧭', 'Trips'],
+  ['🧾', 'Groceries'],
+];
+const NEXT = [
+  ['The Left Hand of Darkness', 'Ursula K. Le Guin'],
+  ['Stoner', 'John Williams'],
 ];
 const BARS = [38, 62, 30, 80, 54, 20];
 const WEEKS = ['w1', 'w2', 'w3', 'w4', 'w5', 'now'];
-const LIVE_BASE = 20;
+/** The newest bar: where it starts, how it climbs while live. */
+const LIVE = { from: 20, to: 70, by: 10, every: 600 };
 /** The window's desktop width, scaled down to fit on phones. */
 const MOCK_W = 840;
-
-/** What the running step touches in the window, lit while it runs. */
-const TOUCH: Record<number, string> = { 1: 'reading', 2: 'reading', 3: 'library', 4: 'library', 5: 'card5', 6: 'card6', 7: 'card7', 8: 'chart' };
+/** The step the Reading page opens on: its first card. */
+const OPEN = 5;
 
 interface Hover {
   el: Element;
@@ -42,17 +61,19 @@ function useMedia(q: string) {
 }
 
 const keysOf = (el: Element) => (el.getAttribute('data-hk') ?? '').split(' ') as Key[];
+const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
 
 /**
  * AgentsDemo: a nuspace window with the agent's program floating over its
  * corner. The program plays line by line and the window changes with each
- * line, looping with a hold at the end. A hover on a line, a part or a piece
- * of the window pauses it there and lights both sides; leaving resumes from
- * the same step. Each part's number sits in a ring that fills as it runs.
- * Paused offscreen; reduced motion shows the end. On phones the window only
- * scales down, and a code toast on its lower edge shows one step at a time;
- * the running line and what it changes share a colour and a numbered pin.
- * Nothing pauses there: a tap on a step or a line plays on from it.
+ * line, then a short beat on the start and round again. A hover on a line or
+ * a part pauses it there and lights both sides; leaving replays that step.
+ * The window itself does not react. Each part's number sits in a ring that
+ * fills with the step clock. Paused offscreen; reduced motion shows the end.
+ * On phones the window only scales down, and a code toast on its lower edge
+ * shows one part at a time; the running line and what it changes share a
+ * colour and a numbered pin. Nothing pauses there: a tap on a step or a line
+ * plays on from it.
  */
 export function AgentsDemo() {
   const host = useRef<HTMLDivElement>(null);
@@ -67,14 +88,15 @@ export function AgentsDemo() {
   const [hover, setHover] = useState<Hover | null>(null);
   const [zoom, setZoom] = useState(1);
   const paused = hover !== null && !narrow;
+  const held = paused || calm || !visible;
 
-  const k = paused ? Math.max(hover.shown, calm ? LAST : 0) : calm ? LAST : n;
+  const k = calm ? LAST : paused ? hover.shown : n;
   const cur = Math.max(0, PARTS.findIndex((p) => p.steps.includes(k)));
-  const lit = new Set<Key>(hover?.keys ?? []);
+  const lit = new Set<Key>(paused ? hover.keys : []);
   const hl = (keys: Key[]) => keys.some((x) => lit.has(x));
-  const flash = (id: string) => !narrow && !paused && TOUCH[k] === id;
-  /** Phones: the part the current step changes, lit with its pin. */
-  const onPart = (i: number) => narrow && k > 0 && k < LAST && cur === i;
+  /** What the running step changes, lit while it plays. */
+  const runKey = !paused && k < LAST ? STEP_KEY[k] : undefined;
+  const act = (...keys: Key[]) => runKey !== undefined && keys.includes(runKey);
   const pinOf = (i: number) => <span className={s.mpin}>{i + 1}</span>;
 
   // Pause offscreen.
@@ -96,75 +118,70 @@ export function AgentsDemo() {
   }, []);
 
   /** Phones: a tap on a step or a line plays on from there. */
-  const jump = (to: number) => setN(to);
   const onSnip = (e: { target: EventTarget }) => {
     const at = (e.target as Element).closest('[data-from]')?.getAttribute('data-from');
-    if (at) jump(Number(at));
+    if (at) setN(Number(at));
   };
 
-  // The rings: done parts full, the current one fills with the clock.
+  // Play: each step holds for its time, then the next; after the last, the start.
+  // Any hold (hover, offscreen) replays the step in full, and so does its ring.
   useEffect(() => {
-    const held = paused || calm;
+    if (held) return;
+    const t = setTimeout(() => setN((x) => (x >= LAST ? 0 : x + 1)), DUR[n]);
+    return () => clearTimeout(t);
+  }, [n, held]);
+
+  // The rings: done parts full, the current one fills with the step clock.
+  useEffect(() => {
     const set = (c: SVGCircleElement, p: number, ms = 0) => {
       c.style.transition = ms ? `stroke-dashoffset ${ms}ms linear` : 'none';
       c.style.strokeDashoffset = String(1 - p);
     };
     const st = PARTS[cur].steps;
     const d = st.map((x) => DUR[x]);
-    const tot = d.reduce((a, b) => a + b, 0);
     const ix = st.indexOf(k);
-    const from = d.slice(0, Math.max(0, ix)).reduce((a, b) => a + b, 0) / tot;
-    const run = !held && k > 0 && ix >= 0;
+    const from = sum(d.slice(0, Math.max(0, ix))) / sum(d);
+    const to = ix < 0 ? 0 : from + d[ix] / sum(d);
     rings.current.forEach((c, j) => {
       if (!c) return;
       const i = j % PARTS.length;
-      if (i !== cur || !run) return set(c, i < cur || (held && i === cur) ? 1 : 0);
+      if (i !== cur || ix < 0) return set(c, i < cur ? 1 : 0);
+      if (paused || calm) return set(c, to);
       set(c, from);
+      if (!visible) return;
       void c.getBoundingClientRect();
-      set(c, from + d[ix] / tot, DUR[k]);
+      set(c, to, DUR[k]);
     });
-  }, [k, cur, paused, calm]);
+  }, [k, cur, paused, calm, visible]);
 
-  // Play: each step holds for its time, then the next, looping to idle.
-  useEffect(() => {
-    if (!visible || paused || calm) return;
-    const t = setTimeout(() => setN((x) => (x >= LAST ? 0 : x + 1)), DUR[n]);
-    return () => clearTimeout(t);
-  }, [n, visible, paused, calm]);
-
-  // The newest bar keeps climbing while the chart is live.
+  // Live: the newest bar climbs while the finished chart plays, and holds.
   const live = k >= 8;
+  const climbing = k === LAST && !held;
   useEffect(() => {
     const el = liveBar.current;
-    if (!el || !live || calm || paused) return;
-    let h = LIVE_BASE;
+    if (!el || !climbing) return;
+    let h = parseFloat(el.style.height) || LIVE.from;
     const t = setInterval(() => {
-      h = h >= 70 ? LIVE_BASE : h + 8;
+      h = Math.min(LIVE.to, h + LIVE.by);
       el.style.height = `${h}%`;
-    }, 1600);
-    return () => {
-      clearInterval(t);
-      el.style.height = `${LIVE_BASE}%`;
-    };
-  }, [live, calm, paused, k]);
+    }, LIVE.every);
+    return () => clearInterval(t);
+  }, [climbing]);
 
+  // Desktop: a hover on the program, never the window.
   const onOver = (e: PointerEvent) => {
     if (e.pointerType !== 'mouse' || narrow) return;
     const el = (e.target as Element).closest('[data-hk]');
     const on = el && host.current?.contains(el) ? el : null;
     if (on === (hover?.el ?? null)) return;
     if (!on) return setHover(null);
-    const keys = keysOf(on);
-    const at = on.getAttribute('data-hat');
-    // Code: the state right after it ran. The window: the step its part exists in.
-    const shown = at !== null ? Number(at) : Math.max(n, ...keys.map((x) => KEY_AT[x]));
-    setHover({ el: on, keys, shown });
+    // The state right after it ran.
+    setHover({ el: on, keys: keysOf(on), shown: Number(on.getAttribute('data-hat')) });
   };
 
-  const onRead = k >= 1;
-  const iconOn = k >= 2;
+  const onRead = k >= OPEN;
   const made = (at: number) => k >= at;
-  const PageIcon = iconOn ? BookOpen : File;
+  const PageIcon = k >= 2 ? BookOpen : File;
 
   const lines = (ls: Line[]) => (
     <div className={s.code}>
@@ -240,19 +257,17 @@ export function AgentsDemo() {
                       New page
                     </div>
                   </li>
+                  {PAGES.map(([ic, name]) => (
+                    <li key={name}>
+                      <div className={cn(s.it, name === 'Library' && !onRead && s.sel)}>
+                        <span className={s.ic}>{ic}</span>
+                        {name}
+                      </div>
+                    </li>
+                  ))}
                   <li>
-                    <div className={s.it}>
-                      <span className={s.ic}>🏠</span>Home
-                    </div>
-                  </li>
-                  <li>
-                    <div
-                      className={cn(s.it, flash('library') && s.flash, onPart(1) && s.lit, hl(['find', 'read']) && s.hl)}
-                      data-hk="find read"
-                    >
-                      <span className={s.ic}>📚</span>Library
-                      <span className={s.tag}>{k === 4 ? 'read 3 titles' : 'found Books'}</span>
-                      {pinOf(1)}
+                    <div className={cn(s.it, s.sub)}>
+                      <span className={s.ic}>✨</span>Wishlist
                     </div>
                   </li>
                   <li>
@@ -263,13 +278,11 @@ export function AgentsDemo() {
                         s.made,
                         made(1) && s.in,
                         onRead && s.sel,
-                        flash('reading') && s.flash,
-                        onPart(0) && s.lit,
+                        act('page', 'icon') && s.act,
                         hl(['page']) && s.hl,
                       )}
-                      data-hk="page"
                     >
-                      <span className={cn(s.ic, hl(['icon']) && s.hl)} data-hk="icon">
+                      <span className={cn(s.ic, hl(['icon']) && s.hl)}>
                         <PageIcon aria-hidden />
                       </span>
                       Reading
@@ -277,11 +290,14 @@ export function AgentsDemo() {
                       {pinOf(0)}
                     </div>
                   </li>
-                  <li>
-                    <div className={s.it}>
-                      <span className={s.ic}>🧾</span>Groceries
-                    </div>
-                  </li>
+                  {MORE.map(([ic, name]) => (
+                    <li key={name}>
+                      <div className={s.it}>
+                        <span className={s.ic}>{ic}</span>
+                        {name}
+                      </div>
+                    </li>
+                  ))}
                 </ul>
               </aside>
 
@@ -298,16 +314,39 @@ export function AgentsDemo() {
                     <h4 className={s.title}>
                       <span className={s.pic}>📚</span>Library
                     </h4>
+                    <p className={s.txt}>What I&apos;m reading, and how far along I am.</p>
+                    <div className={s.stats}>
+                      {STATS.map(([l, v]) => (
+                        <div key={l} className={s.stat}>
+                          <span>{l}</span>
+                          <b>{v}</b>
+                        </div>
+                      ))}
+                    </div>
                     <p className={s.lbl}>Books</p>
-                    <div className={cn(s.tbl, hl(['find', 'read']) && s.hl)} data-hk="find read">
+                    <div className={cn(s.tbl, act('find', 'read') && s.act, hl(['find', 'read']) && s.hl)}>
+                      {pinOf(1)}
                       <div>
                         <span>Name</span>
+                        <span>Author</span>
+                        <span>Pages</span>
                         <span>Notes</span>
                       </div>
                       {BOOKS.map((b) => (
                         <div key={b.title}>
-                          <span>{b.title}</span>
+                          <span className={cn(s.name, (act('read') || hl(['read'])) && s.on)}>{b.title}</span>
+                          <span>{b.author}</span>
+                          <span>{b.pages}</span>
                           <span>{b.notes}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <p className={s.lbl}>Up next</p>
+                    <div className={cn(s.tbl, s.next)}>
+                      {NEXT.map(([name, author]) => (
+                        <div key={name}>
+                          <span>{name}</span>
+                          <span>{author}</span>
                         </div>
                       ))}
                     </div>
@@ -317,29 +356,29 @@ export function AgentsDemo() {
                 <div className={cn(s.view, !onRead && s.gone)} aria-hidden={!onRead}>
                   <div className={s.page}>
                     <h4 className={s.title}>
-                      <span className={cn(s.pic, hl(['icon']) && s.hl)} data-hk="icon">
+                      <span className={cn(s.pic, hl(['icon']) && s.hl)}>
                         <PageIcon aria-hidden />
                       </span>
                       <span>Reading</span>
                     </h4>
-                    <div className={cn(s.cards, onPart(2) && s.lit)}>
+                    <div className={cn(s.cards, act('cards') && s.act)}>
                       {pinOf(2)}
                       {BOOKS.map((b) => (
                         <div
                           key={b.title}
-                          className={cn(s.bk, s.made, made(b.at) && s.in, flash(`card${b.at}`) && s.flash, hl(['cards']) && s.hl)}
-                          data-hk="cards"
+                          className={cn(s.bk, s.made, made(b.at) && s.in, act('cards') && k === b.at && s.act, hl(['cards']) && s.hl)}
                         >
                           <div className={s.cv} style={{ background: b.cover }} />
                           <b>{b.title}</b>
-                          <span>a cell</span>
+                          <span>{b.author}</span>
+                          <div className={s.pg}>
+                            <i style={{ width: `${b.read * 100}%` }} />
+                          </div>
+                          <span>p. {b.pages.replace(' / ', ' of ')}</span>
                         </div>
                       ))}
                     </div>
-                    <div
-                      className={cn(s.chart, s.made, made(8) && s.in, flash('chart') && s.flash, onPart(3) && s.lit, hl(['chart']) && s.hl)}
-                      data-hk="chart"
-                    >
+                    <div className={cn(s.chart, s.made, made(8) && s.in, act('chart') && s.act, hl(['chart']) && s.hl)}>
                       {pinOf(3)}
                       <div className={s.ct}>
                         Pages read
@@ -388,7 +427,7 @@ export function AgentsDemo() {
                     aria-selected={i === cur}
                     aria-label={`Step ${i + 1}, ${p.label}`}
                     className={cn(s.seg, i === cur && s.on, i < cur && s.past)}
-                    onClick={() => jump(p.steps[0])}
+                    onClick={() => setN(p.steps[0])}
                   >
                     {ring(i, i)}
                   </button>
