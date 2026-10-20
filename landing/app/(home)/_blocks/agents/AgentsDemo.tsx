@@ -19,8 +19,6 @@ const WEEKS = ['w1', 'w2', 'w3', 'w4', 'w5', 'now'];
 const LIVE_BASE = 20;
 /** The window's desktop width, scaled down to fit on phones. */
 const MOCK_W = 840;
-/** A tapped step holds this long before play resumes. */
-const PIN_MS = 7000;
 
 /** What the running step touches in the window, lit while it runs. */
 const TOUCH: Record<number, string> = { 1: 'reading', 2: 'reading', 3: 'library', 4: 'library', 5: 'card5', 6: 'card6', 7: 'card7', 8: 'chart' };
@@ -50,28 +48,28 @@ const keysOf = (el: Element) => (el.getAttribute('data-hk') ?? '').split(' ') as
  * corner. The program plays line by line and the window changes with each
  * line, looping with a hold at the end. A hover on a line, a part or a piece
  * of the window pauses it there and lights both sides; leaving resumes from
- * the same step. Paused offscreen; reduced motion shows the end. On phones
- * the window only scales down, and a code toast on its lower edge shows one
- * step at a time; the running line and what it changes share a colour and a
- * numbered pin. A tap holds a step until tapped again, a tap elsewhere, or a
- * few seconds.
+ * the same step. Each part's number sits in a ring that fills as it runs.
+ * Paused offscreen; reduced motion shows the end. On phones the window only
+ * scales down, and a code toast on its lower edge shows one step at a time;
+ * the running line and what it changes share a colour and a numbered pin.
+ * Nothing pauses there: a tap on a step or a line plays on from it.
  */
 export function AgentsDemo() {
   const host = useRef<HTMLDivElement>(null);
   const fit = useRef<HTMLDivElement>(null);
   const liveBar = useRef<HTMLElement>(null);
-  const fills = useRef<(HTMLElement | null)[]>([]);
+  /** Progress rings: the toast's four, then the panel's four. */
+  const rings = useRef<(SVGCircleElement | null)[]>([]);
   const calm = useMedia(CALM);
   const narrow = useMedia(NARROW);
   const [n, setN] = useState(0);
   const [visible, setVisible] = useState(false);
   const [hover, setHover] = useState<Hover | null>(null);
-  const [pin, setPin] = useState<number | null>(null);
   const [zoom, setZoom] = useState(1);
-  const paused = hover !== null || pin !== null;
+  const paused = hover !== null && !narrow;
 
-  const k = hover ? Math.max(hover.shown, calm ? LAST : 0) : pin !== null ? n : calm ? LAST : n;
-  const cur = pin ?? Math.max(0, PARTS.findIndex((p) => p.steps.includes(k)));
+  const k = paused ? Math.max(hover.shown, calm ? LAST : 0) : calm ? LAST : n;
+  const cur = Math.max(0, PARTS.findIndex((p) => p.steps.includes(k)));
   const lit = new Set<Key>(hover?.keys ?? []);
   const hl = (keys: Key[]) => keys.some((x) => lit.has(x));
   const flash = (id: string) => !narrow && !paused && TOUCH[k] === id;
@@ -97,47 +95,34 @@ export function AgentsDemo() {
     return () => ro.disconnect();
   }, []);
 
-  // A tapped step holds until a tap elsewhere or a few seconds pass.
-  useEffect(() => {
-    if (pin === null) return;
-    const t = setTimeout(() => setPin(null), PIN_MS);
-    const off = (e: globalThis.PointerEvent) => {
-      if (!(e.target as Element).closest?.('[data-step]')) setPin(null);
-    };
-    document.addEventListener('pointerdown', off);
-    return () => {
-      clearTimeout(t);
-      document.removeEventListener('pointerdown', off);
-    };
-  }, [pin]);
-
-  const tap = (i: number) => {
-    if (pin === i) return setPin(null);
-    setN(Math.max(...PARTS[i].steps));
-    setPin(i);
+  /** Phones: a tap on a step or a line plays on from there. */
+  const jump = (to: number) => setN(to);
+  const onSnip = (e: { target: EventTarget }) => {
+    const at = (e.target as Element).closest('[data-from]')?.getAttribute('data-from');
+    if (at) jump(Number(at));
   };
 
-  // Phones: the step bars, done parts full, the current one fills with the clock.
+  // The rings: done parts full, the current one fills with the clock.
   useEffect(() => {
-    const fs = fills.current;
     const held = paused || calm;
-    fs.forEach((f, i) => {
-      if (!f) return;
-      f.style.transition = 'none';
-      f.style.width = i < cur || (held && i === cur) ? '100%' : '0%';
-    });
-    const f = fs[cur];
-    if (!f || held || k === 0) return;
+    const set = (c: SVGCircleElement, p: number, ms = 0) => {
+      c.style.transition = ms ? `stroke-dashoffset ${ms}ms linear` : 'none';
+      c.style.strokeDashoffset = String(1 - p);
+    };
     const st = PARTS[cur].steps;
     const d = st.map((x) => DUR[x]);
     const tot = d.reduce((a, b) => a + b, 0);
     const ix = st.indexOf(k);
-    if (ix < 0) return;
-    const from = d.slice(0, ix).reduce((a, b) => a + b, 0) / tot;
-    f.style.width = `${from * 100}%`;
-    void f.offsetWidth;
-    f.style.transition = `width ${DUR[k]}ms linear`;
-    f.style.width = `${(from + d[ix] / tot) * 100}%`;
+    const from = d.slice(0, Math.max(0, ix)).reduce((a, b) => a + b, 0) / tot;
+    const run = !held && k > 0 && ix >= 0;
+    rings.current.forEach((c, j) => {
+      if (!c) return;
+      const i = j % PARTS.length;
+      if (i !== cur || !run) return set(c, i < cur || (held && i === cur) ? 1 : 0);
+      set(c, from);
+      void c.getBoundingClientRect();
+      set(c, from + d[ix] / tot, DUR[k]);
+    });
   }, [k, cur, paused, calm]);
 
   // Play: each step holds for its time, then the next, looping to idle.
@@ -164,7 +149,7 @@ export function AgentsDemo() {
   }, [live, calm, paused, k]);
 
   const onOver = (e: PointerEvent) => {
-    if (e.pointerType !== 'mouse') return;
+    if (e.pointerType !== 'mouse' || narrow) return;
     const el = (e.target as Element).closest('[data-hk]');
     const on = el && host.current?.contains(el) ? el : null;
     if (on === (hover?.el ?? null)) return;
@@ -194,16 +179,35 @@ export function AgentsDemo() {
           )}
           data-hk={l.k}
           data-hat={Math.max(...l.run)}
+          data-from={Math.min(...l.run)}
         >
           {l.text}
         </div>
       ))}
     </div>
   );
+  const ring = (i: number, at: number) => (
+    <span className={s.ring}>
+      <svg viewBox="0 0 24 24" aria-hidden>
+        <circle className={s.track} cx="12" cy="12" r="11" pathLength={1} />
+        <circle
+          className={s.prog}
+          cx="12"
+          cy="12"
+          r="11"
+          pathLength={1}
+          ref={(el) => {
+            rings.current[at] = el;
+          }}
+        />
+      </svg>
+      <span className={s.num}>{i + 1}</span>
+    </span>
+  );
   const status = (
     <div className={cn(s.ctl, paused && s.paused)}>
       <span className={s.status}>{STATUS[k]}</span>
-      <span className={s.pausedNote}>{pin !== null ? 'paused on this step' : 'paused while you look'}</span>
+      <span className={s.pausedNote}>paused while you look</span>
     </div>
   );
 
@@ -384,23 +388,14 @@ export function AgentsDemo() {
                     aria-selected={i === cur}
                     aria-label={`Step ${i + 1}, ${p.label}`}
                     className={cn(s.seg, i === cur && s.on, i < cur && s.past)}
-                    onClick={() => tap(i)}
-                    data-step
+                    onClick={() => jump(p.steps[0])}
                   >
-                    <span className={s.pip}>
-                      <span
-                        className={s.fill}
-                        ref={(el) => {
-                          fills.current[i] = el;
-                        }}
-                      />
-                      <span className={s.num}>{i + 1}</span>
-                    </span>
+                    {ring(i, i)}
                   </button>
                 ))}
               </div>
             </div>
-            <div className={s.snips} onClick={() => tap(cur)} data-step>
+            <div className={s.snips} onClick={onSnip}>
               {PARTS.map((p, i) => (
                 <div key={p.label} className={cn(s.snip, i === cur && s.on)} role="tabpanel" aria-hidden={i !== cur}>
                   <div className={s.scroll}>{lines(p.lines)}</div>
@@ -424,7 +419,7 @@ export function AgentsDemo() {
               data-hat={Math.max(...p.steps)}
             >
               <div className={s.bl}>
-                <span className={s.n}>{i + 1}</span>
+                {ring(i, PARTS.length + i)}
                 <b>{p.label}</b>
                 <span className={s.st}>{on ? 'running' : done ? 'done' : ''}</span>
               </div>
