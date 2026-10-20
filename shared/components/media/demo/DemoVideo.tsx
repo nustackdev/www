@@ -219,6 +219,8 @@ export function DemoVideo({
     let glide = 0;
     const tick = () => {
       raf = requestAnimationFrame(tick);
+      // Unmounting: refs clear before this effect's cleanup runs.
+      if (!v0.current || !v1.current) return;
       const a = vid(active.current);
       const d = a.duration;
       if (!d || Number.isNaN(d)) return;

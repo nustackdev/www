@@ -3,7 +3,6 @@ import { Footer } from '@www/shared/components/nav/Footer';
 import { Hero } from './_blocks/hero/Hero';
 import { Anchors } from './_blocks/Anchors';
 import { Audience } from './_blocks/Audience';
-import { Spaces } from './_blocks/Spaces';
 import { Highlights } from './_blocks/Highlights';
 import { HowItWorks } from './_blocks/HowItWorks';
 import { TryIt } from './_blocks/TryIt';
@@ -21,7 +20,6 @@ export default function Home() {
         <Anchors />
         <Audience />
         <Highlights />
-        <Spaces />
         <HowItWorks />
         <TryIt />
       </Container>

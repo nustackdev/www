@@ -32,3 +32,6 @@ next-env.d.ts
 
 # copied in by docs/scripts/sync-spec.mjs
 docs/content/interaction-model/
+
+# dev-only hero lab preview loops (landing/app/dev/hero-lab)
+landing/public/_lab/

@@ -1,5 +1,5 @@
 /* Audience: three columns, lines only between them, fading at both ends.
- * Each: who, a title, a line, then what they build ticked by a dot like Spaces. */
+ * Each: who, a title, a line, then what they build ticked by a dot. */
 
 .grid {
   --cell-px: clamp(20px, 2.2vw, 32px);

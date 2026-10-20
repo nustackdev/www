@@ -1,0 +1,216 @@
+/* Hero gallery: a 5x5 grid of 16:10 cells, the stage 4x4 in the top left,
+ * nine thumbs in an L around it. Rows come from the grid's own width so the
+ * stage is exactly 16:10 like the clip: row = (stage width * 0.625 - 3 gaps) / 4. */
+
+.root { display: flex; flex-direction: column; gap: 14px; }
+.wrap { container-type: inline-size; }
+
+.grid {
+  --g: 10px;
+  --w: calc((100cqw - 4 * var(--g)) / 5);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-rows: calc(((var(--w) * 4 + 3 * var(--g)) * 0.625 - 3 * var(--g)) / 4);
+  gap: var(--g);
+}
+
+.stage {
+  grid-column: 1 / span 4;
+  grid-row: 1 / span 4;
+  min-width: 0;
+}
+/* The stage swap, opacity only: fade out, then the new demo fades in. */
+.layer { min-width: 0; transition: opacity 180ms var(--site-ease-in-out); }
+.fadeIn { animation: fadeIn 180ms var(--site-ease-out) backwards; }
+.fadeOut { opacity: 0; }
+@keyframes fadeIn { from { opacity: 0; } }
+
+/* A thumb just traded in from the stage settles in its slot: a small press and opacity up. */
+.landed { animation: landed 180ms var(--site-ease-out) backwards; }
+@keyframes landed {
+  from { opacity: 0.4; scale: 0.97; }
+}
+/* Flat everywhere in the gallery: drop the player's caption shadow too. */
+.stage :global(*) { box-shadow: none !important; }
+
+/* ---- thumbs --------------------------------------------------------------- */
+
+.thumb {
+  position: relative;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--site-r-md);
+  background: none;
+  font: inherit;
+  color: inherit;
+}
+button.thumb { cursor: pointer; }
+
+.media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--site-r-md);
+  border: 1px solid var(--site-border);
+  background: var(--site-bg-raised);
+}
+button.thumb .media { transition: scale 150ms var(--site-ease-out); }
+button.thumb:active .media { scale: 0.97; }
+/* Hover, focus or a peek from the tab line: a 2px edge and the label. Nothing else. */
+.media::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: 2;
+  border-radius: inherit;
+  border: 2px solid var(--site-accent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--site-t);
+}
+.soon .media::after { border-color: var(--site-border-strong); }
+.thumb:hover .media::after,
+.thumb:focus-visible .media::after,
+.thumb[data-peek] .media::after { opacity: 1; }
+
+.label {
+  position: absolute;
+  z-index: 1;
+  left: 6px;
+  bottom: 6px;
+  max-width: calc(100% - 12px);
+  padding: 1px 6px;
+  border-radius: var(--site-r-sm);
+  border: 1px solid var(--site-border-subtle);
+  background: var(--site-bg-overlay);
+  font-size: var(--site-fs-3);
+  font-weight: var(--site-fw-medium);
+  line-height: 18px;
+  color: var(--site-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--site-t);
+}
+.thumb:hover .label,
+.thumb:focus-visible .label,
+.thumb[data-peek] .label { opacity: 1; }
+
+/* The loop fills the thumb, pinned top left: sidebar and page title read best small. */
+.loop { position: absolute; inset: 0; display: block; overflow: hidden; }
+.loopMedia {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0 0;
+  display: block;
+}
+.dark { display: none; }
+:global(.dark) .light { display: none; }
+:global(.dark) .dark { display: block; }
+
+.soon .media { border-style: dashed; background: var(--site-bg); }
+.soonArt {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background-image: var(--site-dot-grid);
+  background-size: 14px 14px;
+  color: var(--site-ink-4);
+}
+
+.kicker {
+  font-size: var(--site-fs-1);
+  font-weight: var(--site-fw-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--site-accent-text);
+}
+
+/* ---- phones: the stage on top, thumbs five a row under it, labels on ------ */
+
+@container (max-width: 640px) {
+  .grid { --g: 8px; grid-auto-rows: auto; }
+  .stage { grid-column: 1 / -1; grid-row: auto; }
+  .thumb { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 16 / 10; }
+  .label { display: none; }
+}
+
+/* ---- tab line ------------------------------------------------------------- */
+
+.tabsBox { position: relative; z-index: 5; }
+.tabs {
+  display: flex;
+  gap: 2px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 3px;
+  border-radius: calc(var(--site-r-md) + 3px);
+  border: 1px solid var(--site-border);
+  background: var(--site-wash);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: var(--site-r-md);
+  background: none;
+  color: var(--site-ink-2);
+  font: inherit;
+  font-size: var(--site-fs-4);
+  font-weight: var(--site-fw-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--site-t), color var(--site-t);
+}
+.tab:hover, .tab[data-peek] { color: var(--site-ink); background: var(--site-wash); }
+.tabOn, .tabOn:hover {
+  background: var(--site-bg-overlay);
+  border-color: var(--site-border);
+  color: var(--site-ink);
+}
+.tabSoon { color: var(--site-ink-4); cursor: default; }
+.tabSoonDot { width: 5px; height: 5px; border-radius: 50%; border: 1px solid currentColor; }
+
+/* Peek: a card under the hovered or focused tab, over the grid. */
+.peek {
+  position: absolute;
+  top: calc(100% + 8px);
+  width: min(260px, 100%);
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 6px 8px;
+  border-radius: var(--site-r-lg);
+  border: 1px solid var(--site-border-strong);
+  background: var(--site-bg-overlay);
+  pointer-events: none;
+  animation: peek var(--site-dur-base) var(--site-ease-out);
+}
+.peekMedia { position: relative; inset: auto; display: block; aspect-ratio: 16 / 10; border-radius: var(--site-r-sm); margin-bottom: 6px; overflow: hidden; }
+.peekSoon {
+  display: grid;
+  place-items: center;
+  background-image: var(--site-dot-grid);
+  background-size: var(--site-dot-size);
+  border: 1px dashed var(--site-border);
+  font-size: var(--site-fs-3);
+  color: var(--site-ink-3);
+}
+.peek .kicker { padding: 0 4px; }
+.peekTitle { padding: 0 4px; font-size: var(--site-fs-4); font-weight: var(--site-fw-medium); color: var(--site-ink); }
+@keyframes peek {
+  from { opacity: 0; translate: -50% -4px; }
+}

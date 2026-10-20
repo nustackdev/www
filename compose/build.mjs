@@ -29,6 +29,9 @@ for (const app of APPS) {
   console.log(`compose: ${app.name.padEnd(8)} -> /${app.zone.slice(1)}`);
 }
 
+// Dev-only hero lab loops (gitignored, so CI never has them); drop any local copy.
+rmSync(join(OUT, '_lab'), { recursive: true, force: true });
+
 // One sitemap for the site: every app's <url> entries, zone sitemaps dropped.
 const urls = [];
 for (const app of APPS) {

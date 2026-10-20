@@ -1,11 +1,11 @@
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
 import { Button } from '@www/shared/components/controls/Button';
-import { DemoVideo } from '@www/shared/components/media/demo/DemoVideo';
+import { Gallery } from './Gallery';
 import s from './Hero.module.css';
 
 /**
- * Hero — left aligned head, then the hero scene bleeding past the main
- * column to the right, cut by the window. Copy from identity.md in Go.
+ * Hero — left aligned head, then the demo gallery: the tour on stage, the
+ * other demos as small loops around it. Copy from identity.md in Go.
  */
 export function Hero() {
   return (
@@ -39,7 +39,7 @@ export function Hero() {
         </div>
       </div>
 
-      <DemoVideo src="/demos/hero" bleed eager />
+      <Gallery />
     </section>
   );
 }

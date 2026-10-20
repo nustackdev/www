@@ -15,6 +15,12 @@ landing/public/demos/<demo>/
   poster-light.jpg  first frame of light.mp4
   poster-dark.jpg   first frame of dark.mp4
   chapters.json     chapters and label
+  preview-light.mp4   h264, the preview loop, Dawn
+  preview-light.webm  vp9, the same
+  preview-dark.mp4    h264, the preview loop, Dusk
+  preview-dark.webm   vp9, the same
+  thumb-light.jpg     480x300 still, the loop's first frame, Dawn
+  thumb-dark.jpg      the same, Dusk
 ```
 
 `<demo>` is a short kebab id, the same one the page uses: `hero`, `movies`, `agents`, `memes`, `training`. Used as `<DemoVideo src="/demos/hero" />`.
@@ -45,6 +51,17 @@ done
 ```
 
 `+faststart` puts the index first so playback starts before the file is in. A keyframe every 2s keeps chapter jumps snappy; every 1s nearly doubles the size of a mostly still screen. Do not use vp9 `-deadline realtime` for finals: it spends bits badly on text and ghosts old frames into flat areas.
+
+## Preview loop and thumb
+
+For small tiles (a gallery, an index of demos) where the UI text can't be read anyway: a short loop and a still, cut for motion and weight, not detail. `DemoVideo` does not use them.
+
+- **Cut**: 8s from the take, a stretch with motion that reads small (things landing, curves drawing, a wall of posters). Where per demo is `PREVIEWS` in `brand/demos/tools/render.mjs`.
+- **Loop**: 640x400, 30 fps, no audio, bt709 tagged. h264 crf 28 and vp9 crf 38. Roughly 80-220 KB a file. Plain loop, no crossfade.
+- **Thumb**: 480x300 jpg q 4, the loop's first frame taken from the full take, roughly 10-20 KB.
+- A player for them should load the loop only when it is in view and the page's main clip is in, play it while seen, and hold the thumb under reduced motion or save data.
+
+`render.mjs` cuts both from the final mp4 on every render; `node tools/render.mjs <demo> --format preview` cuts them alone from what is in `out/`. `publish.mjs` copies them with the rest when present.
 
 ## chapters.json
 

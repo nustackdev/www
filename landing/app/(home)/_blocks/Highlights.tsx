@@ -28,8 +28,8 @@ export function Highlights() {
       tagline="Program anything."
       description="The data, the logic, the look, even the space itself."
       actions={
-        <Button variant="primary" href="#spaces" arrow>
-          See it in real spaces
+        <Button variant="primary" href="#start" arrow>
+          Install nuspace
         </Button>
       }
     >
