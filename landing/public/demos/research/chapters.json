@@ -1,0 +1,41 @@
+{
+  "label": "A research desk in one live space: a probe that asks Claude on its own, a paper put on the board that flips a claim everywhere, then a page written on the spot that starts a real eval run.",
+  "duration": 81.8,
+  "chapters": [
+    {
+      "t": 0,
+      "title": "Open the desk",
+      "note": "A team's papers, claims and runs, live in one space."
+    },
+    {
+      "t": 9.6,
+      "title": "The probe asks",
+      "note": "A job asks Claude on its own. The answer lands."
+    },
+    {
+      "t": 14.16,
+      "title": "Weigh a paper",
+      "note": "Link a paper against a claim, right on its page."
+    },
+    {
+      "t": 27.76,
+      "title": "Every page knows",
+      "note": "Doubtful now on the board, the sidebar and its page."
+    },
+    {
+      "t": 36.35,
+      "title": "Make a page",
+      "note": "A few lines set the papers against our own runs."
+    },
+    {
+      "t": 51.8,
+      "title": "Run it again",
+      "note": "Press it: a real eval starts, the whole desk knows."
+    },
+    {
+      "t": 64.51,
+      "title": "Answers land",
+      "note": "The leaderboard and the run's page fill as it answers."
+    }
+  ]
+}

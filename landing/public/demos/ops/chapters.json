@@ -1,0 +1,41 @@
+{
+  "label": "A storefront run from one live space: a release shipped and broken for real, the incident paged and the bug found in the real log, then a rule written on the spot that rolls it back on its own.",
+  "duration": 92.4,
+  "chapters": [
+    {
+      "t": 0,
+      "title": "Open the space",
+      "note": "A storefront's jobs, deploys and alerts, all live."
+    },
+    {
+      "t": 12.63,
+      "title": "Watch it run",
+      "note": "Every job is a real process. The log streams in."
+    },
+    {
+      "t": 24.07,
+      "title": "Ship a release",
+      "note": "One click: status, incidents and paging follow."
+    },
+    {
+      "t": 44.14,
+      "title": "Find the cause",
+      "note": "The runbook and the log find the same bug."
+    },
+    {
+      "t": 53.53,
+      "title": "Write a rule",
+      "note": "The rules are a few lines. Add one: roll back."
+    },
+    {
+      "t": 66.1,
+      "title": "It rolls back",
+      "note": "The rule ships 1.8.3 on its own. You just verify."
+    },
+    {
+      "t": 79.97,
+      "title": "Everyone knows",
+      "note": "Customers, deploys and the feed already know."
+    }
+  ]
+}

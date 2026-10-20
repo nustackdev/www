@@ -1,0 +1,36 @@
+{
+  "label": "A design system in one live space: a teammate's proposal checked and decided, a release drawn by a job, then a color checker written on the spot that the whole system follows.",
+  "duration": 75.8,
+  "chapters": [
+    {
+      "t": 0,
+      "title": "Open the system",
+      "note": "One live spec. A teammate's proposal lands on its own."
+    },
+    {
+      "t": 14.46,
+      "title": "Decide",
+      "note": "The checks read every proposal before you do."
+    },
+    {
+      "t": 22.81,
+      "title": "Ship a release",
+      "note": "A job draws 30 files in its own process."
+    },
+    {
+      "t": 39.53,
+      "title": "Make a tool",
+      "note": "A few lines: a color checker on the live spec."
+    },
+    {
+      "t": 51.96,
+      "title": "Try a color",
+      "note": "Your block and the checks agree, the same second."
+    },
+    {
+      "t": 61.11,
+      "title": "Every page knows",
+      "note": "The mocks, the spec, the release and the feed moved."
+    }
+  ]
+}
