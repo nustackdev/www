@@ -11,7 +11,8 @@ import s from './Gallery.module.css';
 /** Thumb cells around the 4x4 stage on a 5x5 grid: four down the right, five along the bottom. */
 const SLOTS: [number, number][] = [
   [5, 1], [5, 2], [5, 3], [5, 4],
-  [1, 5], [2, 5], [3, 5], [4, 5], [5, 5],
+  // Bottom row, hidden while there are only five demos:
+  // [1, 5], [2, 5], [3, 5], [4, 5], [5, 5],
 ];
 
 const SOON_ICON: Record<string, LucideIcon> = {
@@ -225,6 +226,7 @@ function TabLine({
   return (
     <div ref={box} className={s.tabsBox}>
       <div className={s.tabs} role="tablist" aria-label="Demos" onScroll={hide}>
+        <span className={s.tabsLabel} aria-hidden="true">Demos:</span>
         {GALLERY.map((g, i) => {
           const on = g.id === active;
           return (

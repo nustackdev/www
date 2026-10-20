@@ -1,31 +1,71 @@
 {
-  "label": "A personal space in nuspace: a week's note, money, reading and an agent's answer, all live cells. A statement imports on its own, a tool is built from a few lines, and one new expense moves every page.",
-  "duration": 42.1,
+  "label": "nustack's org space built from an empty page: a page that talks, a movie club, a spend chart, our GitHub synced by a job, our brand, and an agent whose answer stays live.",
+  "duration": 159.2,
   "chapters": [
     {
       "t": 0,
-      "title": "Open your space",
-      "note": "Notes, data, tools and agents. All cells."
+      "title": "Start from nothing",
+      "note": "An empty space. One click, an empty page."
     },
     {
-      "t": 4.11,
+      "t": 3.02,
+      "title": "Write a page",
+      "note": "Plain markdown. The page says what comes next."
+    },
+    {
+      "t": 17.27,
+      "title": "Make a movie club",
+      "note": "A few lines. Every film gets its own page."
+    },
+    {
+      "t": 37.37,
+      "title": "Open its page",
+      "note": "The film's own page. A note, then a tick."
+    },
+    {
+      "t": 46.42,
+      "title": "Track the spend",
+      "note": "A form and a chart over one list, live."
+    },
+    {
+      "t": 65.79,
+      "title": "Change the code",
+      "note": "Every block is code. One word, a new chart."
+    },
+    {
+      "t": 74.18,
+      "title": "Sync the repos",
+      "note": "A job pulls our GitHub. Commits land live."
+    },
+    {
+      "t": 97.14,
       "title": "Ask an agent",
-      "note": "Its answer is a live cell, not a chat log."
+      "note": "It reads the space while we keep going."
     },
     {
-      "t": 10.9,
-      "title": "Watch it move",
-      "note": "A statement imports. The agent's chart follows."
+      "t": 109.67,
+      "title": "Look under the hood",
+      "note": "The sync job in its own process, the agent beside it."
     },
     {
-      "t": 18.56,
-      "title": "Build a tool",
-      "note": "A few lines read your money and answer."
+      "t": 114.62,
+      "title": "Bring in the brand",
+      "note": "Our colors as a block. One pick, every board follows."
     },
     {
-      "t": 29.18,
-      "title": "Change one thing",
-      "note": "Add an expense. Every page knows."
+      "t": 131.73,
+      "title": "Read its take",
+      "note": "Its answer is a cell on the page, not a chat log."
+    },
+    {
+      "t": 138.57,
+      "title": "Add one more",
+      "note": "One new spend. The agent's number follows."
+    },
+    {
+      "t": 146.25,
+      "title": "Back home",
+      "note": "Every box ticked. Home knows it all."
     }
   ]
 }

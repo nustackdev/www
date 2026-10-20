@@ -152,9 +152,20 @@ button.thumb:active .media { scale: 0.97; }
   padding: 3px;
   border-radius: calc(var(--site-r-md) + 3px);
   border: 1px solid var(--site-border);
-  background: var(--site-wash);
+  background: var(--site-code-bg); /* ground-deep: the sunken well, like the kit's segmented list */
   overflow-x: auto;
   scrollbar-width: none;
+}
+.tabsLabel {
+  flex: none;
+  align-self: center;
+  padding: 0 10px 0 9px;
+  color: var(--site-ink-3);
+  font-size: var(--site-fs-1);
+  font-weight: var(--site-fw-medium);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  user-select: none;
 }
 .tab {
   flex: none;
@@ -175,12 +186,16 @@ button.thumb:active .media { scale: 0.97; }
   transition: background var(--site-t), color var(--site-t);
 }
 .tab:hover, .tab[data-peek] { color: var(--site-ink); background: var(--site-wash); }
-.tabOn, .tabOn:hover {
+.tab:active { background: var(--site-wash-2); }
+/* Selected: the raised thumb, ground-overlay on line, held under the pointer. No shadow. */
+.tabOn, .tabOn:hover, .tabOn:active {
   background: var(--site-bg-overlay);
   border-color: var(--site-border);
   color: var(--site-ink);
 }
 .tabSoon { color: var(--site-ink-4); cursor: default; }
+.tabSoon:hover, .tabSoon[data-peek] { color: var(--site-ink-3); }
+.tabSoon:active { background: var(--site-wash); }
 .tabSoonDot { width: 5px; height: 5px; border-radius: 50%; border: 1px solid currentColor; }
 
 /* Peek: a card under the hovered or focused tab, over the grid. */
@@ -194,7 +209,7 @@ button.thumb:active .media { scale: 0.97; }
   gap: 2px;
   padding: 6px 6px 8px;
   border-radius: var(--site-r-lg);
-  border: 1px solid var(--site-border-strong);
+  border: 1px solid var(--site-border);
   background: var(--site-bg-overlay);
   pointer-events: none;
   animation: peek var(--site-dur-base) var(--site-ease-out);
