@@ -73,7 +73,7 @@ export function Audience() {
         id="agents"
         eyebrow="For agents"
         tagline="It programs your space, live."
-        description="Your agent writes a few lines of nu. Each one changes the space as it runs: a new page, a card for every book, a chart that keeps up."
+        description="Your agent writes a few lines of Python. Each one changes the space as it runs: a new page, a card for every book, a chart that keeps up."
         media={<AgentsDemo />}
         actions={<StartButton>Give your agent a space</StartButton>}
       />

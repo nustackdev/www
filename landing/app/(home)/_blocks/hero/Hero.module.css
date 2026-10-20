@@ -55,7 +55,7 @@
 .sub {
   margin: 0;
   max-width: min(54ch, 100%);
-  font-size: clamp(16px, 1.3vw, 18px);
+  font-size: var(--site-fs-lede);
   line-height: 1.5;
   color: var(--site-ink-2);
 }

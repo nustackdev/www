@@ -67,7 +67,7 @@
 
 .line {
   max-width: 60ch;
-  font-size: var(--site-fs-9);
+  font-size: var(--site-fs-body);
   line-height: 1.5;
   color: var(--site-ink-2);
   text-wrap: pretty;
