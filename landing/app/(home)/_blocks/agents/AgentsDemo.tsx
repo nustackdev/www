@@ -383,17 +383,18 @@ export function AgentsDemo() {
                     role="tab"
                     aria-selected={i === cur}
                     aria-label={`Step ${i + 1}, ${p.label}`}
-                    className={cn(s.seg, i === cur && s.on)}
+                    className={cn(s.seg, i === cur && s.on, i < cur && s.past)}
                     onClick={() => tap(i)}
                     data-step
                   >
-                    <span className={s.track}>
+                    <span className={s.pip}>
                       <span
                         className={s.fill}
                         ref={(el) => {
                           fills.current[i] = el;
                         }}
                       />
+                      <span className={s.num}>{i + 1}</span>
                     </span>
                   </button>
                 ))}

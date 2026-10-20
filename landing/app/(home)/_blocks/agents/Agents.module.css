@@ -16,6 +16,8 @@
   --pl-min: 560px;
 
   position: relative;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 :global(.dark) .host { --ns-card: var(--site-surface); }
 
@@ -265,9 +267,18 @@
   }
   .stage { position: relative; display: flex; flex-direction: column; }
 
-  /* The window keeps its desktop size and only scales; its top 60% shows. */
-  .fit { overflow: hidden; }
-  .fit .ns { width: 840px; height: 360px; min-height: 0; border: 0; border-radius: 0; zoom: var(--z, 1); }
+  /* The window keeps its desktop size and only scales; its top 60% shows.
+   * A transform, not zoom: iOS Safari scales boxes under zoom but not text. */
+  .fit { height: calc(360px * var(--z, 1)); overflow: hidden; }
+  .fit .ns {
+    width: 840px;
+    height: 360px;
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+    transform: scale(var(--z, 1));
+    transform-origin: top left;
+  }
   .fit .page { margin-top: 12px; }
   .fit .tag { display: none; }
 
@@ -321,8 +332,8 @@
   .swap > * { grid-area: 1 / 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; opacity: 0; transition: opacity var(--ns-t); }
   .swap > .on { opacity: 1; }
 
-  /* Four step bars that fill with the clock, each a 40px target. */
-  .segs { display: flex; align-items: center; }
+  /* Four numbered steps that fill with the clock, each a 40px target. */
+  .segs { display: flex; align-items: center; padding-right: 2px; }
   .seg {
     flex: none;
     display: flex;
@@ -337,9 +348,23 @@
     -webkit-tap-highlight-color: transparent;
   }
   .seg:focus-visible { outline: 2px solid var(--site-ring); outline-offset: -2px; }
-  .track { position: relative; width: 20px; height: 3px; overflow: hidden; border-radius: 2px; background: var(--site-border); }
-  .fill { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--site-ink-3); }
-  .seg.on .fill { background: var(--ns-hl-line); }
+  .pip {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+    border: 1px solid var(--site-border);
+    border-radius: 50%;
+    color: var(--site-ink-3);
+    transition: border-color var(--ns-t), color var(--ns-t);
+  }
+  .fill { position: absolute; inset: 0 auto 0 0; width: 0; background: color-mix(in oklab, var(--site-ink) 10%, transparent); }
+  .num { position: relative; font: 600 10.5px / 1 var(--font-mono); }
+  .seg.past .pip { color: var(--site-ink-2); }
+  .seg.on .pip { border-color: var(--ns-hl-line); color: var(--site-accent-2); }
+  .seg.on .fill { background: var(--ns-hl-wash); }
 
   /* All four stacked in one cell: the tallest sets the height, nothing jumps. */
   .snips { display: grid; grid-template-columns: minmax(0, 1fr); cursor: pointer; }
