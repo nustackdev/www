@@ -21,6 +21,8 @@ export interface SubsectionProps {
   className?: string;
   /** Extras under the media: stats, code, links. */
   children?: ReactNode;
+  /** The unit's call to action, a row of Buttons at its end. */
+  actions?: ReactNode;
 }
 
 /**
@@ -37,6 +39,7 @@ export function Subsection({
   border = true,
   className,
   children,
+  actions,
 }: SubsectionProps) {
   return (
     <article id={id} className={cn(s.root, border && s.border, className)}>
@@ -50,6 +53,7 @@ export function Subsection({
       {lead}
       {media}
       {children}
+      {actions ? <div className={s.actions}>{actions}</div> : null}
     </article>
   );
 }

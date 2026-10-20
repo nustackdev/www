@@ -1,10 +1,11 @@
 'use client';
 
-import { Bot, ChevronDown, User, Users } from 'lucide-react';
+import { ChevronDown, User, Users } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Button } from '@www/shared/components/controls/Button';
-import { Section } from '@www/shared/components/page';
+import { Section, Subsection } from '@www/shared/components/page';
 import { useAccordion } from '@www/shared/lib/useAccordion';
+import { AgentsDemo } from './agents/AgentsDemo';
 import s from './Audience.module.css';
 
 interface Audience {
@@ -17,7 +18,7 @@ interface Audience {
   cases: string[];
 }
 
-/** Who it's for: individuals, teams, agents. Each column speaks to its reader as you. Copy from identity.md in Go. */
+/** People: individuals and teams, the second unit. Each column speaks to its reader as you. Copy from identity.md in Go. */
 const AUDIENCES: Audience[] = [
   {
     icon: <User />,
@@ -43,21 +44,21 @@ const AUDIENCES: Audience[] = [
       'Infra: ML runs, pipelines, deploys',
     ],
   },
-  {
-    icon: <Bot />,
-    who: 'For agents',
-    title: 'A space you can program.',
-    body: "MCP? No. You don't call into nuspace, you program it.",
-    cases: [
-      'Reach: any data, any cell, the space itself',
-      'Memory: work that outlives your context window',
-      'Tools: build your own, then use them',
-      'Visibility: everything you build, your human sees too',
-    ],
-  },
 ];
 
-/** Audience: who nuspace is for and what each of them builds in it. On phones an accordion, one open at a time. */
+function StartButton({ children = 'Start your space' }: { children?: ReactNode }) {
+  return (
+    <Button variant="primary" href="#start" arrow>
+      {children}
+    </Button>
+  );
+}
+
+/**
+ * Audience: who nuspace is for, one group of two units. Agents first, a
+ * program playing into a window; then people, individuals and teams side by
+ * side, on phones an accordion with one open at a time.
+ */
 export function Audience() {
   const acc = useAccordion('(max-width: 860px)');
   return (
@@ -66,42 +67,54 @@ export function Audience() {
       eyebrow="Who it's for"
       tagline="Build a new form of software."
       description="Designed for the next era, for modern teams with agents at their side."
-      actions={
-        <Button variant="primary" href="#start" arrow>
-          Start your space
-        </Button>
-      }
+      layout="subsections"
     >
-      <ul className={s.grid}>
-        {AUDIENCES.map((a, i) => (
-          <li key={a.who} className={s.cell} {...acc.item(i)}>
-            <button className={s.who} {...acc.head(i)}>
-              <span className={s.icon} aria-hidden>
-                {a.icon}
-              </span>
-              {a.who}
-              <ChevronDown className={s.chev} size={18} aria-hidden />
-            </button>
-            <div className={s.fold}>
-              <div className={s.folded}>
-                <h3 className={s.title}>{a.title}</h3>
-                <p className={s.body}>{a.body}</p>
-                <ul className={s.cases}>
-                  {a.cases.map((c) => {
-                    const [label, rest] = c.includes(': ') ? c.split(': ', 2) : [null, c];
-                    return (
-                      <li key={c}>
-                        {label ? <span className={s.label}>{label}: </span> : null}
-                        {rest}
-                      </li>
-                    );
-                  })}
-                </ul>
+      <Subsection
+        id="agents"
+        eyebrow="For agents"
+        tagline="It programs your space, live."
+        description="Your agent writes a few lines of nu. Each one changes the space as it runs: a new page, a card for every book, a chart that keeps up."
+        media={<AgentsDemo />}
+        actions={<StartButton>Give your agent a space</StartButton>}
+      />
+      <Subsection
+        id="people"
+        eyebrow="For people"
+        tagline="Tools for you and your team."
+        description="One space, any size: your own tools, or your team's whole stack."
+        actions={<StartButton />}
+      >
+        <ul className={s.grid}>
+          {AUDIENCES.map((a, i) => (
+            <li key={a.who} className={s.cell} {...acc.item(i)}>
+              <button className={s.who} {...acc.head(i)}>
+                <span className={s.icon} aria-hidden>
+                  {a.icon}
+                </span>
+                {a.who}
+                <ChevronDown className={s.chev} size={18} aria-hidden />
+              </button>
+              <div className={s.fold}>
+                <div className={s.folded}>
+                  <h4 className={s.title}>{a.title}</h4>
+                  <p className={s.body}>{a.body}</p>
+                  <ul className={s.cases}>
+                    {a.cases.map((c) => {
+                      const [label, rest] = c.includes(': ') ? c.split(': ', 2) : [null, c];
+                      return (
+                        <li key={c}>
+                          {label ? <span className={s.label}>{label}: </span> : null}
+                          {rest}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      </Subsection>
     </Section>
   );
 }

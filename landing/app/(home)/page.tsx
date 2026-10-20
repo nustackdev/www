@@ -20,8 +20,8 @@ export default function Home() {
         <Anchors />
         <Audience />
         <Highlights />
-        <HowItWorks />
         <TryIt />
+        <HowItWorks />
       </Container>
       <Footer />
     </div>

@@ -1,4 +1,4 @@
-/* Audience: three columns, lines only between them, fading at both ends.
+/* Audience: two columns, lines only between them, fading at both ends.
  * Each: who, a title, a line, then what they build ticked by a dot. */
 
 .grid {
@@ -7,7 +7,7 @@
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
   margin: 0;
   padding: 0;

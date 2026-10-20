@@ -40,6 +40,17 @@
   color: var(--site-ink-2);
 }
 
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
 @media (max-width: 860px) {
   .head { grid-template-columns: 1fr; }
+}
+/* Phones: full width and stacked, as the section's. */
+@media (max-width: 640px) {
+  .actions { flex-direction: column; align-items: stretch; width: 100%; }
 }
