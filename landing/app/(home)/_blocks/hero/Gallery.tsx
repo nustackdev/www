@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent } from 'react';
 import { BookOpen, FlaskConical, GitPullRequest, Server, Wallet, type LucideIcon } from 'lucide-react';
 import { DemoVideo } from '@www/shared/components/media/demo/DemoVideo';
 import { cn } from '@www/shared/lib/cn';
@@ -101,7 +101,7 @@ export function Gallery() {
 
   return (
     <div className={s.root}>
-      <TabLine active={active} peek={peek} setPeek={setPeek} pick={pick} />
+      <TabLine active={active} peek={peek} setPeek={setPeek} pick={pick} ready={loops} />
       <div className={s.wrap}>
         <div className={s.grid}>
           <div ref={stage} className={s.stage}>
@@ -184,48 +184,115 @@ function Thumb({ g, style, landed, live, peeked, onPick, onPeek }: ThumbProps) {
   );
 }
 
+/** The peek's motion, `--site-dur-base`: how long a close keeps the card around to fade. */
+const PEEK_MS = 180;
+
+/** Where the peek card sits and what it shows. `glide`: it was already up, so it moves and slides instead of fading in. */
+interface PeekCard {
+  open: boolean;
+  /** The tab it shows. */
+  i: number;
+  x: number;
+  glide: boolean;
+  /** Slide direction of the content: 1 when the pointer moved right, -1 left, 0 for no slide. */
+  dir: 1 | -1 | 0;
+  /** Cards on their way out, by tab, with the direction they leave in. */
+  exits: Record<number, 1 | -1>;
+  /** How far the content shifts, px: tied to how far the card glides. */
+  travel: number;
+}
+
+/** Content shift on a glide, card-relative: the card's own move plus what reads on screen, so the glide never cancels it. */
+const travelFor = (dx: number) => Math.round(Math.abs(dx) + 48);
+
 /** Every demo in one line, real and coming. Hover or focus peeks, click or Enter puts it on stage. */
 function TabLine({
   active,
   peek,
   setPeek,
   pick,
+  ready,
 }: {
   active: string;
   peek: string | null;
   setPeek: (id: string | null) => void;
   pick: (id: string) => void;
+  /** Mount the peek cards ahead of the first hover, so their thumbs are painted before they slide in. */
+  ready: boolean;
 }) {
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
   const box = useRef<HTMLDivElement>(null);
-  const [hover, setHover] = useState<{ id: string; x: number } | null>(null);
+  const layers = useRef<(HTMLDivElement | null)[]>([]);
+  const [card, setCard] = useState<PeekCard>({ open: false, i: -1, x: 0, glide: false, dir: 0, exits: {}, travel: 40 });
+  const [h, setH] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  /** Shown or still fading out: then a new tab glides the card there. */
+  const up = useRef(false);
+  const closing = useRef<number | undefined>(undefined);
   const n = GALLERY.length;
   const at = GALLERY.findIndex((g) => g.id === active);
 
-  /** Peek card centred under tab `i`, kept inside the line. */
+  if (ready && !mounted) setMounted(true);
+
+  /** One card for the whole line: centred under tab `i`, kept inside the line. */
   const show = (i: number) => {
+    if (GALLERY[i].id === active) return hide();
     const b = box.current?.getBoundingClientRect();
     const r = refs.current[i]?.getBoundingClientRect();
     if (!b || !r) return;
+    clearTimeout(closing.current);
     const half = Math.min(130, b.width / 2);
-    setHover({ id: GALLERY[i].id, x: Math.min(b.width - half, Math.max(half, r.left - b.left + r.width / 2)) });
+    const x = Math.min(b.width - half, Math.max(half, r.left - b.left + r.width / 2));
+    const glide = up.current;
+    up.current = true;
+    setMounted(true);
+    setCard((c) => {
+      if (c.open && c.i === i) return c;
+      if (!glide || c.i < 0 || c.i === i) return { open: true, i, x, glide: false, dir: 0, exits: {}, travel: c.travel };
+      const dir: 1 | -1 = i > c.i ? 1 : -1;
+      const exits: PeekCard['exits'] = { ...c.exits, [c.i]: dir };
+      delete exits[i];
+      return { open: true, i, x, glide: true, dir, exits, travel: travelFor(x - c.x) };
+    });
     setPeek(GALLERY[i].id);
   };
   const hide = () => {
-    setHover(null);
+    setCard((c) => (c.open ? { ...c, open: false } : c));
     setPeek(null);
+    clearTimeout(closing.current);
+    closing.current = window.setTimeout(() => {
+      up.current = false;
+    }, PEEK_MS);
   };
+  useEffect(() => () => clearTimeout(closing.current), []);
+
+  // A tab put on stage has nothing to peek at.
+  const shownId = card.i >= 0 ? GALLERY[card.i].id : null;
+  useEffect(() => {
+    if (shownId === active) hide();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+
+  // The card takes the height of what it shows, and follows it on a glide.
+  useLayoutEffect(() => {
+    const el = card.i >= 0 ? layers.current[card.i] : null;
+    if (!el) return;
+    setH(el.offsetHeight);
+    const ro = new ResizeObserver(() => setH(el.offsetHeight));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [card.i, mounted]);
+
   const onKey = (e: KeyboardEvent, i: number) => {
     const to = e.key === 'ArrowRight' ? (i + 1) % n : e.key === 'ArrowLeft' ? (i - 1 + n) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1;
     if (to < 0) return;
     e.preventDefault();
     refs.current[to]?.focus();
   };
-  const peekItem = hover ? GALLERY.find((g) => g.id === hover.id) : null;
 
   return (
     <div ref={box} className={s.tabsBox}>
-      <div className={s.tabs} role="tablist" aria-label="Demos" onScroll={hide}>
+      <div className={s.tabs} role="tablist" aria-label="Demos" onScroll={hide} onPointerLeave={hide}>
         <span className={s.tabsLabel} aria-hidden="true">Demos:</span>
         {GALLERY.map((g, i) => {
           const on = g.id === active;
@@ -245,7 +312,6 @@ function TabLine({
               onClick={() => pick(g.id)}
               onKeyDown={(e) => onKey(e, i)}
               onPointerEnter={(e) => e.pointerType === 'mouse' && show(i)}
-              onPointerLeave={hide}
               onFocus={() => show(i)}
               onBlur={hide}
             >
@@ -255,15 +321,36 @@ function TabLine({
           );
         })}
       </div>
-      {peekItem && peekItem.id !== active ? (
-        <div className={s.peek} style={{ left: hover!.x }} aria-hidden>
-          {peekItem.demo ? (
-            <DemoLoop key={peekItem.id} src={`/demos/${peekItem.demo}`} live className={s.peekMedia} />
-          ) : (
-            <span className={cn(s.peekMedia, s.peekSoon)}>Coming soon</span>
-          )}
-          <span className={s.kicker}>{peekItem.eyebrow}</span>
-          <span className={s.peekTitle}>{peekItem.title}</span>
+      {mounted ? (
+        <div
+          className={s.peek}
+          data-open={card.open || undefined}
+          data-glide={card.glide || undefined}
+          style={{ left: card.x, height: h, '--peek-travel': `${card.travel}px` } as CSSProperties}
+          aria-hidden
+        >
+          {GALLERY.map((g, i) => {
+            const cur = i === card.i;
+            const exit = card.exits[i];
+            return (
+              <div
+                key={g.id}
+                ref={(el) => {
+                  layers.current[i] = el;
+                }}
+                className={cn(s.peekLayer, cur && s.peekIn, !cur && exit && s.peekOut)}
+                data-dir={cur ? card.dir : exit}
+              >
+                {g.demo ? (
+                  <DemoLoop src={`/demos/${g.demo}`} live={card.open && cur} className={s.peekMedia} />
+                ) : (
+                  <span className={cn(s.peekMedia, s.peekSoon)}>Coming soon</span>
+                )}
+                <span className={s.kicker}>{g.eyebrow}</span>
+                <span className={s.peekTitle}>{g.title}</span>
+              </div>
+            );
+          })}
         </div>
       ) : null}
     </div>

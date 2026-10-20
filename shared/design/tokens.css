@@ -101,9 +101,9 @@
 
   /* --- Shape: the language radius steps -------------------------------- */
   --site-r-sm: 4px;   /* badges, kbd, small chips */
-  --site-r-md: 6px;   /* controls */
-  --site-r-lg: 8px;   /* cards, panels, menus */
-  --site-r-xl: 12px;  /* large surfaces, frames, dialogs */
+  --site-r-md: 6px;   /* controls, menus, popovers */
+  --site-r-lg: 8px;   /* cards, panels, modal dialogs */
+  --site-r-xl: 12px;  /* large surfaces, scene/video frames */
 
   /* --- Motion: four steps, one easing family ---------------------------- */
   --site-dur-fast: 120ms;  /* hover, focus, small toggles */

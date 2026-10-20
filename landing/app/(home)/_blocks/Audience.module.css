@@ -65,7 +65,7 @@
   place-items: center;
   width: 28px;
   height: 28px;
-  border-radius: var(--site-r-lg);
+  border-radius: var(--site-r-sm);
   background: var(--site-accent-soft);
   box-shadow: inset 0 0 0 1px var(--site-accent-line);
   color: var(--site-accent-text);

@@ -40,7 +40,7 @@
   min-width: 0;
   padding: 0;
   border: 0;
-  border-radius: var(--site-r-md);
+  border-radius: var(--site-r-lg);
   background: none;
   font: inherit;
   color: inherit;
@@ -51,7 +51,7 @@ button.thumb { cursor: pointer; }
   position: absolute;
   inset: 0;
   overflow: hidden;
-  border-radius: var(--site-r-md);
+  border-radius: var(--site-r-lg);
   border: 1px solid var(--site-border);
   background: var(--site-bg-raised);
 }
@@ -198,23 +198,54 @@ button.thumb:active .media { scale: 0.97; }
 .tabSoon:active { background: var(--site-wash); }
 .tabSoonDot { width: 5px; height: 5px; border-radius: 50%; border: 1px solid currentColor; }
 
-/* Peek: a card under the hovered or focused tab, over the grid. */
+/* Peek: one card for the whole line, under the hovered or focused tab, over
+ * the grid. It opens and closes like a popover, a fade and a 4px drop. Moving
+ * to another tab while it is up, the card glides there and takes the new
+ * height, and its content slides the way the pointer went, clipped inside. */
 .peek {
+  --peek-ease: var(--site-ease-in);
+  --peek-glide: 0s;
   position: absolute;
   top: calc(100% + 8px);
   width: min(260px, 100%);
-  translate: -50% 0;
+  translate: -50% -4px;
+  opacity: 0;
+  overflow: hidden;
+  border-radius: var(--site-r-md);
+  border: 1px solid var(--site-border);
+  background: var(--site-bg-overlay);
+  box-shadow: var(--site-elevation-floating);
+  pointer-events: none;
+  transition:
+    opacity var(--site-dur-base) var(--peek-ease),
+    translate var(--site-dur-base) var(--peek-ease),
+    left var(--peek-glide) var(--site-ease-in-out),
+    height var(--peek-glide) var(--site-ease-in-out);
+}
+.peek[data-open] { --peek-ease: var(--site-ease-out); opacity: 1; translate: -50% 0; }
+.peek[data-glide] { --peek-glide: var(--site-dur-base); }
+
+/* The cards inside, stacked; only the one shown is opaque. */
+.peekLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2px;
   padding: 6px 6px 8px;
-  border-radius: var(--site-r-lg);
-  border: 1px solid var(--site-border);
-  background: var(--site-bg-overlay);
-  pointer-events: none;
-  animation: peek var(--site-dur-base) var(--site-ease-out);
+  opacity: 0;
 }
-.peekMedia { position: relative; inset: auto; display: block; aspect-ratio: 16 / 10; border-radius: var(--site-r-sm); margin-bottom: 6px; overflow: hidden; }
+.peekIn { opacity: 1; }
+/* A window sliding over cards laid side by side: both shift against the glide
+ * at once, over the glide's own time. The old one fades out faster than it
+ * moves so the cross-fade stays clean; `--peek-travel` is set per glide. */
+.peekIn[data-dir='1'] { animation: peekFadeIn var(--site-dur-base) var(--site-ease-in-out), peekFromRight var(--site-dur-base) var(--site-ease-in-out); }
+.peekIn[data-dir='-1'] { animation: peekFadeIn var(--site-dur-base) var(--site-ease-in-out), peekFromLeft var(--site-dur-base) var(--site-ease-in-out); }
+.peekOut[data-dir='1'] { animation: peekFadeOut var(--site-dur-fast) var(--site-ease-in), peekToLeft var(--site-dur-base) var(--site-ease-in-out); }
+.peekOut[data-dir='-1'] { animation: peekFadeOut var(--site-dur-fast) var(--site-ease-in), peekToRight var(--site-dur-base) var(--site-ease-in-out); }
+.peekMedia { position: relative; inset: auto; display: block; aspect-ratio: 16 / 10; border-radius: 2px; /* md minus the 6px pad, floored so it stays soft */ margin-bottom: 6px; overflow: hidden; }
 .peekSoon {
   display: grid;
   place-items: center;
@@ -226,6 +257,15 @@ button.thumb:active .media { scale: 0.97; }
 }
 .peek .kicker { padding: 0 4px; }
 .peekTitle { padding: 0 4px; font-size: var(--site-fs-4); font-weight: var(--site-fw-medium); color: var(--site-ink); }
-@keyframes peek {
-  from { opacity: 0; translate: -50% -4px; }
+@keyframes peekFadeIn { from { opacity: 0; } }
+@keyframes peekFadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes peekFromRight { from { translate: var(--peek-travel) 0; } }
+@keyframes peekFromLeft { from { translate: calc(var(--peek-travel) * -1) 0; } }
+@keyframes peekToLeft { from { translate: 0 0; } to { translate: calc(var(--peek-travel) * -1) 0; } }
+@keyframes peekToRight { from { translate: 0 0; } to { translate: var(--peek-travel) 0; } }
+
+/* Reduced motion: the card is just there, or not. */
+@media (prefers-reduced-motion: reduce) {
+  .peek { transition: none; }
+  .peekLayer { animation: none !important; }
 }
