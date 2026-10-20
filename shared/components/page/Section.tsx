@@ -12,6 +12,8 @@ export interface SectionProps {
   tagline?: ReactNode;
   /** The h2 continuation, in the second tone. */
   description?: ReactNode;
+  /** A paragraph under the h2, in the second ink. */
+  lead?: ReactNode;
   /** Accessible name, for a section with no tagline. */
   label?: string;
   /**
@@ -42,6 +44,7 @@ export function Section({
   eyebrow,
   tagline,
   description,
+  lead,
   label,
   layout = 'content',
   space = 'lg',
@@ -58,7 +61,7 @@ export function Section({
       className={cn(s.root, s[layout], s[`space-${space}`], border && s.border, className)}
     >
       {tagline ? (
-        <Intro eyebrow={eyebrow} tagline={tagline} description={description} href={id ? `#${id}` : undefined} />
+        <Intro eyebrow={eyebrow} tagline={tagline} description={description} lead={lead} href={id ? `#${id}` : undefined} />
       ) : null}
       {bleed ? <div className={s.bleed}>{children}</div> : children}
       {actions ? <div className={s.actions}>{actions}</div> : null}

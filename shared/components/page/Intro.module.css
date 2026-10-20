@@ -16,3 +16,14 @@
   text-wrap: pretty;
 }
 .dim { color: var(--site-ink-twilight); }
+
+/* Lead: a plain paragraph under the h2, for a section that needs a sentence of setup. */
+.lead {
+  margin: 0;
+  max-width: min(52ch, 100%);
+  font-size: var(--site-fs-lede);
+  line-height: 1.5;
+  letter-spacing: var(--site-tr-title);
+  color: var(--site-ink-2);
+  text-wrap: pretty;
+}

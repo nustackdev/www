@@ -9,12 +9,14 @@ export interface IntroProps {
   tagline: ReactNode;
   /** Its continuation, in the same heading, in the second tone. */
   description?: ReactNode;
+  /** A paragraph under the heading, in the second ink at lede size. */
+  lead?: ReactNode;
   /** The section's anchor: the eyebrow links to it. */
   href?: string;
 }
 
-/** Intro — the h2 that opens a section: eyebrow, then a two tone statement. */
-export function Intro({ eyebrow, tagline, description, href }: IntroProps) {
+/** Intro — the h2 that opens a section: eyebrow, a two tone statement, an optional lead. */
+export function Intro({ eyebrow, tagline, description, lead, href }: IntroProps) {
   return (
     <header className={s.root}>
       {eyebrow ? (
@@ -26,6 +28,7 @@ export function Intro({ eyebrow, tagline, description, href }: IntroProps) {
         {tagline}
         {description ? <span className={s.dim}> {description}</span> : null}
       </h2>
+      {lead ? <p className={s.lead}>{lead}</p> : null}
     </header>
   );
 }

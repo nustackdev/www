@@ -1,0 +1,107 @@
+/* Fan: the screens rise out of the install frame. The stage runs edge to
+ * edge; the frame overlaps its bottom by the tuck. --k scales the whole
+ * fan down on phones. */
+
+.rise {
+  --k: 1;
+  --tuck: 84px;
+
+  /* The section's gap under the heading, pulled in to the fan's own air. */
+  margin-top: calc(clamp(24px, 3vw, 40px) - clamp(40px, 5vw, 64px));
+}
+
+.install {
+  position: relative;
+  z-index: 3;
+  margin-top: calc(var(--tuck) * var(--k) * -1);
+}
+
+.stage {
+  --w: 300px;
+  --h: 260px;
+  --top: 24px;
+  --ff: 56%;
+
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  height: calc(var(--h) * var(--k));
+  perspective: 1400px;
+  perspective-origin: 50% 0%;
+  /* Fade into the section ground, no glow. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 var(--ff), transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0, #000 var(--ff), transparent 100%);
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--top) * var(--k));
+  width: calc(var(--w) * var(--k));
+  aspect-ratio: 16 / 10;
+  transform-origin: 50% 100%;
+  /* Closed: sunk into the frame, stacked. */
+  transform: translateX(-50%) translateY(45%) translateZ(var(--z)) scale(var(--s));
+  transition: transform var(--site-dur-slow) var(--site-ease-out);
+  transition-delay: calc(var(--a) * 40ms);
+}
+.open .card {
+  transform: translateX(-50%) translateX(calc(var(--tx) * var(--k))) translateY(calc(var(--ty) * var(--k)))
+    translateZ(var(--z)) rotate(var(--rot)) scale(var(--s));
+}
+
+/* Parallax: each step out drifts a little more with the scroll. */
+.pl {
+  position: absolute;
+  inset: 0;
+  transform: translateY(calc(var(--p, 0) * var(--a) * 5px));
+  will-change: transform;
+}
+
+.fc {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--site-surface);
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-r-xl);
+}
+.card[data-elev="floating"] .fc { box-shadow: var(--site-elevation-floating); }
+.card[data-elev="raised"] .fc { box-shadow: var(--site-elevation-raised); }
+
+.fc img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+/* Both themes ship; the theme class picks one, as the demo posters do. */
+.fc .dark { display: none; }
+:global(.dark) .fc .light { display: none; }
+:global(.dark) .fc .dark { display: block; }
+
+/* Depth: the section ground laid over the card, never a tint. */
+.fc::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--site-bg);
+  opacity: var(--dim);
+  border-radius: inherit;
+  pointer-events: none;
+}
+:global(.dark) .fc::after { opacity: min(0.9, calc(var(--dim) * 1.2)); }
+
+/* Phones: a smaller fan, the centre and two steps out each side. */
+@media (max-width: 760px) {
+  .rise { --k: 0.6; }
+  .card[data-a="3"],
+  .card[data-a="4"] { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none !important; }
+  .pl { transform: none !important; }
+}
