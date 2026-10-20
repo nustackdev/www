@@ -4,8 +4,8 @@ import { Gallery } from './Gallery';
 import s from './Hero.module.css';
 
 /**
- * Hero — left aligned head, then the demo gallery: the tour on stage, the
- * other demos as small loops around it. Copy from identity.md in Go.
+ * Hero — left aligned head, then the demo gallery: a deck of demo cards
+ * over the picked demo playing big. Copy from identity.md in Go.
  */
 export function Hero() {
   return (

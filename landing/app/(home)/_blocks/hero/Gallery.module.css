@@ -1,80 +1,73 @@
-/* Hero gallery: a 5x5 grid of 16:10 cells, the stage 4x4 in the top left,
- * nine thumbs in an L around it. Rows come from the grid's own width so the
- * stage is exactly 16:10 like the clip: row = (stage width * 0.625 - 3 gaps) / 4. */
+/* Hero gallery: a line above, then one frame: a deck of demo cards on a
+ * dotted well, the picked demo on stage under it. */
 
-.root { display: flex; flex-direction: column; gap: 14px; }
-.wrap { container-type: inline-size; }
+.root { display: flex; flex-direction: column; gap: 12px; }
 
-.grid {
-  --g: 10px;
-  --w: calc((100cqw - 4 * var(--g)) / 5);
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-auto-rows: calc(((var(--w) * 4 + 3 * var(--g)) * 0.625 - 3 * var(--g)) / 4);
-  gap: var(--g);
+.lead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 0;
+  padding: 0 2px;
 }
+.leadTitle { font-size: 15px; font-weight: var(--site-fw-semibold); color: var(--site-ink); }
+.leadNote { font-size: var(--site-fs-4); color: var(--site-ink-4); }
 
-.stage {
-  grid-column: 1 / span 4;
-  grid-row: 1 / span 4;
-  min-width: 0;
-}
-/* The stage swap, opacity only: fade out, then the new demo fades in. */
-.layer { min-width: 0; transition: opacity 180ms var(--site-ease-in-out); }
-.fadeIn { animation: fadeIn 180ms var(--site-ease-out) backwards; }
-.fadeOut { opacity: 0; }
-@keyframes fadeIn { from { opacity: 0; } }
-
-/* A thumb just traded in from the stage settles in its slot: a small press and opacity up. */
-.landed { animation: landed 180ms var(--site-ease-out) backwards; }
-@keyframes landed {
-  from { opacity: 0.4; scale: 0.97; }
-}
-/* Flat everywhere in the gallery: drop the player's caption shadow too. */
-.stage :global(*) { box-shadow: none !important; }
-
-/* ---- thumbs --------------------------------------------------------------- */
-
-.thumb {
-  position: relative;
-  min-width: 0;
-  padding: 0;
-  border: 0;
-  border-radius: var(--site-r-lg);
-  background: none;
-  font: inherit;
-  color: inherit;
-}
-button.thumb { cursor: pointer; }
-
-.media {
-  position: absolute;
-  inset: 0;
+.frame {
   overflow: hidden;
-  border-radius: var(--site-r-lg);
+  border-radius: var(--site-r-xl);
   border: 1px solid var(--site-border);
   background: var(--site-bg-raised);
 }
-button.thumb .media { transition: scale 150ms var(--site-ease-out); }
-button.thumb:active .media { scale: 0.97; }
-/* Hover, focus or a peek from the tab line: a 2px edge and the label. Nothing else. */
-.media::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  z-index: 2;
-  border-radius: inherit;
-  border: 2px solid var(--site-accent);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--site-t);
-}
-.soon .media::after { border-color: var(--site-border-strong); }
-.thumb:hover .media::after,
-.thumb:focus-visible .media::after,
-.thumb[data-peek] .media::after { opacity: 1; }
 
-.label {
+/* ---- deck ------------------------------------------------------------------ */
+
+.deck {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 1px solid var(--site-border);
+  background-color: var(--site-code-bg);
+  background-image: var(--site-dot-grid);
+  background-size: 14px 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.card {
+  position: relative;
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Hover or the pick: a 2px accent ring, set off by 2px. The rest sit dimmed. */
+.media {
+  position: relative;
+  display: block;
+  width: 120px;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--site-r-md);
+  border: 1px solid var(--site-border);
+  background: var(--site-bg-raised);
+  box-shadow: var(--site-elevation-floating);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color 200ms var(--site-ease-out), opacity 200ms var(--site-ease-out), filter 200ms var(--site-ease-out);
+}
+.card:not(.cardOn):not(:hover):not(:focus-visible) .media { opacity: 0.78; filter: saturate(0.55); }
+.card:hover .media,
+.card:focus-visible .media,
+.cardOn .media { outline-color: var(--site-accent); }
+.card:focus-visible { outline: none; }
+
+.name {
   position: absolute;
   z-index: 1;
   left: 6px;
@@ -84,21 +77,18 @@ button.thumb:active .media { scale: 0.97; }
   border-radius: var(--site-r-sm);
   border: 1px solid var(--site-border-subtle);
   background: var(--site-bg-overlay);
-  font-size: var(--site-fs-3);
+  font-size: var(--site-fs-1);
   font-weight: var(--site-fw-medium);
-  line-height: 18px;
+  line-height: 16px;
   color: var(--site-ink);
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity var(--site-t);
+  transition: background 200ms, color 200ms, border-color 200ms;
 }
-.thumb:hover .label,
-.thumb:focus-visible .label,
-.thumb[data-peek] .label { opacity: 1; }
+.cardOn .name { background: var(--site-accent); border-color: transparent; color: #fff; }
 
-/* The loop fills the thumb, pinned top left: sidebar and page title read best small. */
+/* The loop fills the card, pinned top left: sidebar and page title read best small. */
 .loop { position: absolute; inset: 0; display: block; overflow: hidden; }
 .loopMedia {
   position: absolute;
@@ -113,159 +103,25 @@ button.thumb:active .media { scale: 0.97; }
 :global(.dark) .light { display: none; }
 :global(.dark) .dark { display: block; }
 
-.soon .media { border-style: dashed; background: var(--site-bg); }
-.soonArt {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background-image: var(--site-dot-grid);
-  background-size: 14px 14px;
-  color: var(--site-ink-4);
+/* ---- stage ----------------------------------------------------------------- */
+
+.stage { min-width: 0; }
+/* The frame is ours: drop the player's own border, corners and shadows. */
+.stage :global([role='region']) > div:first-child { border: 0; border-radius: 0; }
+.stage :global(*) { box-shadow: none !important; }
+
+/* The stage swap, opacity only: fade out, then the new demo fades in. */
+.layer { min-width: 0; transition: opacity 180ms var(--site-ease-in-out); }
+.fadeIn { animation: fadeIn 180ms var(--site-ease-out) backwards; }
+.fadeOut { opacity: 0; }
+@keyframes fadeIn { from { opacity: 0; } }
+
+@media (max-width: 640px) {
+  .deck { gap: 10px; padding: 14px; }
+  .media { width: 104px; }
 }
 
-.kicker {
-  font-size: var(--site-fs-1);
-  font-weight: var(--site-fw-semibold);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--site-accent-text);
-}
-
-/* ---- phones: the stage on top, thumbs five a row under it, labels on ------ */
-
-@container (max-width: 640px) {
-  .grid { --g: 8px; grid-auto-rows: auto; }
-  .stage { grid-column: 1 / -1; grid-row: auto; }
-  .thumb { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 16 / 10; }
-  .label { display: none; }
-}
-
-/* ---- tab line ------------------------------------------------------------- */
-
-.tabsBox { position: relative; z-index: 5; }
-.tabs {
-  display: flex;
-  gap: 2px;
-  width: fit-content;
-  max-width: 100%;
-  padding: 3px;
-  border-radius: calc(var(--site-r-md) + 3px);
-  border: 1px solid var(--site-border);
-  background: var(--site-code-bg); /* ground-deep: the sunken well, like the kit's segmented list */
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.tabsLabel {
-  flex: none;
-  align-self: center;
-  padding: 0 10px 0 9px;
-  color: var(--site-ink-3);
-  font-size: var(--site-fs-1);
-  font-weight: var(--site-fw-medium);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  user-select: none;
-}
-.tab {
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 30px;
-  padding: 0 12px;
-  border: 1px solid transparent;
-  border-radius: var(--site-r-md);
-  background: none;
-  color: var(--site-ink-2);
-  font: inherit;
-  font-size: var(--site-fs-4);
-  font-weight: var(--site-fw-medium);
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background var(--site-t), color var(--site-t);
-}
-.tab:hover, .tab[data-peek] { color: var(--site-ink); background: var(--site-wash); }
-.tab:active { background: var(--site-wash-2); }
-/* Selected: the raised thumb, ground-overlay on line, held under the pointer. No shadow. */
-.tabOn, .tabOn:hover, .tabOn:active {
-  background: var(--site-bg-overlay);
-  border-color: var(--site-border);
-  color: var(--site-ink);
-}
-.tabSoon { color: var(--site-ink-4); cursor: default; }
-.tabSoon:hover, .tabSoon[data-peek] { color: var(--site-ink-3); }
-.tabSoon:active { background: var(--site-wash); }
-.tabSoonDot { width: 5px; height: 5px; border-radius: 50%; border: 1px solid currentColor; }
-
-/* Peek: one card for the whole line, under the hovered or focused tab, over
- * the grid. It opens and closes like a popover, a fade and a 4px drop. Moving
- * to another tab while it is up, the card glides there and takes the new
- * height, and its content slides the way the pointer went, clipped inside. */
-.peek {
-  --peek-ease: var(--site-ease-in);
-  --peek-glide: 0s;
-  position: absolute;
-  top: calc(100% + 8px);
-  width: min(260px, 100%);
-  translate: -50% -4px;
-  opacity: 0;
-  overflow: hidden;
-  border-radius: var(--site-r-md);
-  border: 1px solid var(--site-border);
-  background: var(--site-bg-overlay);
-  box-shadow: var(--site-elevation-floating);
-  pointer-events: none;
-  transition:
-    opacity var(--site-dur-base) var(--peek-ease),
-    translate var(--site-dur-base) var(--peek-ease),
-    left var(--peek-glide) var(--site-ease-in-out),
-    height var(--peek-glide) var(--site-ease-in-out);
-}
-.peek[data-open] { --peek-ease: var(--site-ease-out); opacity: 1; translate: -50% 0; }
-.peek[data-glide] { --peek-glide: var(--site-dur-base); }
-
-/* The cards inside, stacked; only the one shown is opaque. */
-.peekLayer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 6px 6px 8px;
-  opacity: 0;
-}
-.peekIn { opacity: 1; }
-/* A window sliding over cards laid side by side: both shift against the glide
- * at once, over the glide's own time. The old one fades out faster than it
- * moves so the cross-fade stays clean; `--peek-travel` is set per glide. */
-.peekIn[data-dir='1'] { animation: peekFadeIn var(--site-dur-base) var(--site-ease-in-out), peekFromRight var(--site-dur-base) var(--site-ease-in-out); }
-.peekIn[data-dir='-1'] { animation: peekFadeIn var(--site-dur-base) var(--site-ease-in-out), peekFromLeft var(--site-dur-base) var(--site-ease-in-out); }
-.peekOut[data-dir='1'] { animation: peekFadeOut var(--site-dur-fast) var(--site-ease-in), peekToLeft var(--site-dur-base) var(--site-ease-in-out); }
-.peekOut[data-dir='-1'] { animation: peekFadeOut var(--site-dur-fast) var(--site-ease-in), peekToRight var(--site-dur-base) var(--site-ease-in-out); }
-.peekMedia { position: relative; inset: auto; display: block; aspect-ratio: 16 / 10; border-radius: 2px; /* md minus the 6px pad, floored so it stays soft */ margin-bottom: 6px; overflow: hidden; }
-.peekSoon {
-  display: grid;
-  place-items: center;
-  background-image: var(--site-dot-grid);
-  background-size: var(--site-dot-size);
-  border: 1px dashed var(--site-border);
-  font-size: var(--site-fs-3);
-  color: var(--site-ink-3);
-}
-.peek .kicker { padding: 0 4px; }
-.peekTitle { padding: 0 4px; font-size: var(--site-fs-4); font-weight: var(--site-fw-medium); color: var(--site-ink); }
-@keyframes peekFadeIn { from { opacity: 0; } }
-@keyframes peekFadeOut { from { opacity: 1; } to { opacity: 0; } }
-@keyframes peekFromRight { from { translate: var(--peek-travel) 0; } }
-@keyframes peekFromLeft { from { translate: calc(var(--peek-travel) * -1) 0; } }
-@keyframes peekToLeft { from { translate: 0 0; } to { translate: calc(var(--peek-travel) * -1) 0; } }
-@keyframes peekToRight { from { translate: 0 0; } to { translate: var(--peek-travel) 0; } }
-
-/* Reduced motion: the card is just there, or not. */
 @media (prefers-reduced-motion: reduce) {
-  .peek { transition: none; }
-  .peekLayer { animation: none !important; }
+  .media, .name, .layer { transition: none; }
+  .fadeIn { animation: none; }
 }

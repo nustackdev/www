@@ -1,6 +1,8 @@
-/* Agents: a nuspace window, its program floating over the lower right corner.
- * The window keeps its document left of the program, so every change stays in
- * view. A running line reads in Afterglow, a hover in Starlight. */
+/* Agents: a nuspace window, its program floating over the lower right corner
+ * and hanging past it; a narrow screen cuts the panel off, never scrolls. The
+ * page inside draws at a fixed width, so every size draws the same. On phones
+ * the program becomes steps above, and the window only scales down. A running
+ * line reads in Afterglow, a hover in Starlight. */
 
 .host {
   /* The cards and tables inside the document. */
@@ -9,6 +11,9 @@
   --ns-t-slow: var(--site-dur-slow) var(--site-ease-out);
   --ns-hl-line: var(--site-accent-2);
   --ns-hl-wash: color-mix(in oklab, var(--site-accent-2-soft) 70%, transparent);
+
+  --pw: 470px;
+  --pl-min: 560px;
 
   position: relative;
 }
@@ -37,9 +42,8 @@
   font-size: var(--site-fs-5);
 }
 
-.brand { display: flex; align-items: center; gap: 8px; height: 26px; padding: 2px 6px; }
-.tg { width: 14px; height: 14px; border-radius: 3px; box-shadow: inset 0 0 0 1.5px var(--site-ink-3); }
-.brand b { font-size: var(--site-fs-6); font-weight: 700; letter-spacing: 0.02em; color: var(--site-accent-text); }
+.brand { display: flex; align-items: center; height: 26px; padding: 2px 6px; }
+.brand b { font-size: var(--site-fs-6); font-weight: 700; letter-spacing: -0.01em; color: var(--site-accent-text); }
 
 .search {
   display: flex;
@@ -85,27 +89,23 @@
 }
 .it.flash .tag { opacity: 1; }
 
-.foot { display: flex; align-items: center; gap: 10px; margin-top: auto; padding: 6px 8px; color: var(--site-ink-3); }
-.foot svg { width: 13px; height: 13px; }
-.dot { width: 7px; height: 7px; margin-left: auto; border-radius: 50%; background: var(--site-status-success); }
-
-.doc { position: relative; min-width: 0; padding: 12px 500px 24px 18px; }
+.doc { position: relative; min-width: 0; overflow: hidden; padding: 12px 18px 24px; }
 
 .bar { display: flex; align-items: center; gap: 6px; height: 24px; font-size: var(--site-fs-3); color: var(--site-ink-3); }
 .crumb { transition: opacity var(--ns-t); }
-.more { margin-left: auto; letter-spacing: 0.1em; }
 
 .view { transition: opacity var(--ns-t-slow); }
 .view.gone { position: absolute; visibility: hidden; opacity: 0; pointer-events: none; }
 
-.page { display: flex; flex-direction: column; gap: 12px; max-width: 520px; margin: 24px 0 0 clamp(8px, 3vw, 40px); }
+/* The drawing area: a fixed width, left in the document. */
+.page { display: flex; flex-direction: column; gap: 12px; width: 600px; margin: 24px 0 0 12px; }
 
 .title {
   display: flex;
   align-items: center;
   gap: 12px;
   margin: 0 0 4px;
-  font-size: clamp(22px, 2.4vw, 28px);
+  font-size: 26px;
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: var(--site-tr-display);
@@ -172,13 +172,12 @@
 
 .panel {
   position: absolute;
-  right: -16px;
+  left: max(var(--pl-min), calc(100% + 16px - var(--pw)));
   bottom: -28px;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  width: 470px;
-  min-width: 0;
+  width: var(--pw);
   overflow: hidden;
   border: 1px solid var(--site-border);
   border-radius: var(--site-r-lg);
@@ -210,7 +209,7 @@
 .blk.hl { background: color-mix(in oklab, var(--site-accent-2-soft) 40%, transparent); }
 .blk.hl .bl b { color: var(--site-accent-2); }
 
-.code { margin: 0; padding: 4px 0 9px; overflow-x: auto; font: 400 11.5px / 1.8 var(--font-mono); color: var(--site-ink-2); }
+.code { margin: 0; padding: 4px 0 9px; font: 400 11.5px / 1.8 var(--font-mono); color: var(--site-ink-2); }
 
 .ln {
   position: relative;
@@ -247,20 +246,123 @@
 .pausedNote { color: var(--site-accent-2); opacity: 0; transition: opacity var(--site-dur-fast) var(--site-ease-out); }
 .ctl.paused .pausedNote { opacity: 1; }
 
-/* ===== narrower: the program under the window, not over it ===== */
+/* ===== phones: the window scaled in one frame, a code toast on its lower edge ===== */
 
-@media (max-width: 1180px) {
-  .ns { min-height: 480px; }
-  .doc { padding-right: 18px; }
-  .page { margin: 20px auto 0; }
-  .panel { position: static; width: 100%; margin-top: 12px; box-shadow: none; }
-}
+.unit,
+.stage { display: contents; }
+.toast,
+.mpin { display: none; }
 
-@media (max-width: 640px) {
-  .ns { grid-template-columns: 1fr; min-height: 0; }
-  .sb { border-right: 0; border-bottom: 1px solid var(--site-border-subtle); }
-  .search,
-  .foot { display: none; }
+@media (max-width: 860px) {
+  .panel { display: none; }
+
+  .unit {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--site-border);
+    border-radius: var(--site-r-xl);
+    background: var(--site-bg-raised);
+  }
+  .stage { position: relative; display: flex; flex-direction: column; }
+
+  /* The window keeps its desktop size and only scales; its top 60% shows. */
+  .fit { overflow: hidden; }
+  .fit .ns { width: 840px; height: 360px; min-height: 0; border: 0; border-radius: 0; zoom: var(--z, 1); }
+  .fit .page { margin-top: 12px; }
+  .fit .tag { display: none; }
+
+  /* The part the step changes: the running line's colour, and its number. */
+  .fit .cards { position: relative; margin: -4px; padding: 4px; border-radius: var(--site-r-lg); transition: box-shadow var(--ns-t), background-color var(--ns-t); }
+  .fit .chart { position: relative; }
+  .ns .lit { box-shadow: inset 0 0 0 calc(1px / var(--z, 1)) var(--site-accent-2-line); background: var(--ns-hl-wash); }
+  .mpin {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: calc(11px / var(--z, 1));
+    height: calc(11px / var(--z, 1));
+    border-radius: 50%;
+    background: var(--ns-hl-line);
+    color: var(--site-accent-2-label);
+    font: 600 calc(7px / var(--z, 1)) / 1 var(--font-mono);
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity var(--ns-t), transform var(--ns-t);
+  }
+  .lit > .mpin { opacity: 1; transform: none; }
+  .it .mpin { margin-left: auto; }
+  .cards > .mpin,
+  .chart > .mpin { position: absolute; top: calc(-5px / var(--z, 1)); right: calc(-5px / var(--z, 1)); }
+
+  .toast {
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin: -24px 8px 8px;
+    overflow: hidden;
+    border: 1px solid var(--site-border);
+    border-radius: var(--site-r-lg);
+    background: var(--site-code-bg);
+    box-shadow: var(--site-elevation-floating);
+  }
+  .th { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 0 0 10px; border-bottom: 1px solid var(--site-border-subtle); }
+  .badge {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--ns-hl-line);
+    color: var(--site-accent-2-label);
+    font: 600 9.5px / 1 var(--font-mono);
+  }
+  .swap { flex: 1; display: grid; min-width: 0; font-size: var(--site-fs-5); font-weight: var(--site-fw-medium); }
+  .swap > * { grid-area: 1 / 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; opacity: 0; transition: opacity var(--ns-t); }
+  .swap > .on { opacity: 1; }
+
+  /* Four step bars that fill with the clock, each a 40px target. */
+  .segs { display: flex; align-items: center; }
+  .seg {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .seg:focus-visible { outline: 2px solid var(--site-ring); outline-offset: -2px; }
+  .track { position: relative; width: 20px; height: 3px; overflow: hidden; border-radius: 2px; background: var(--site-border); }
+  .fill { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--site-ink-3); }
+  .seg.on .fill { background: var(--ns-hl-line); }
+
+  /* All four stacked in one cell: the tallest sets the height, nothing jumps. */
+  .snips { display: grid; grid-template-columns: minmax(0, 1fr); cursor: pointer; }
+  .snip {
+    grid-area: 1 / 1;
+    min-width: 0;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity var(--ns-t), transform var(--ns-t), visibility 0s linear var(--site-dur-base);
+  }
+  .snip.on { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
+  .scroll {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+  }
+  .scroll::-webkit-scrollbar { display: none; }
+  .snip .code { width: max-content; min-width: 100%; padding: 6px 28px 7px 0; font-size: 11px; line-height: 1.6; }
+  .snip .ln { padding-left: 12px; }
+  .snip .ln.run { background: var(--ns-hl-wash); color: var(--site-ink); }
+  .snip .ln.run::before { background: var(--ns-hl-line); }
 }
 
 @media (prefers-reduced-motion: reduce) {
