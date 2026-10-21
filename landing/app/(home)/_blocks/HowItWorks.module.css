@@ -27,6 +27,27 @@
   );
 }
 
+/* The reader's own space, on top of the stack: same columns as the layers,
+ * but not one of them. No number and no line above it: a dashed Afterglow
+ * frame, still to be filled, with a plus where the number goes. */
+.list > li:has(+ .yours)::after { display: none; }
+.yours {
+  margin: 16px calc(-1 * clamp(16px, 2vw, 24px)) 0;
+  padding-inline: clamp(16px, 2vw, 24px);
+  border: 1px dashed var(--site-accent-line);
+  border-radius: var(--site-r-xl);
+  background: color-mix(in oklab, var(--site-accent-soft) 40%, transparent);
+}
+.plus {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px dashed var(--site-accent-line);
+  border-radius: var(--site-r-md);
+  color: var(--site-accent-text);
+}
+
 .row {
   display: grid;
   grid-template-columns: 40px minmax(0, 0.8fr) minmax(0, 2fr) auto;
@@ -92,14 +113,9 @@
 .row:hover .num,
 .row:hover .gh { color: var(--site-accent-text); }
 .row:hover .arrow { transform: translate(2px, -2px); }
+.arrowOn { flex: none; transition: transform var(--site-dur-base) var(--site-ease-out); }
+.row:hover .arrowOn { transform: translateX(2px); }
 .row:hover .name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
-
-.close {
-  margin: 0;
-  font-size: clamp(17px, 1.4vw, 20px);
-  line-height: 1.5;
-  color: var(--site-ink-2);
-}
 
 @media (max-width: 860px) {
   .row {
@@ -109,4 +125,5 @@
   }
   .line { grid-column: 2 / 4; }
   .gh { grid-column: 3; grid-row: 1; align-self: center; }
+  .plus { width: 28px; height: 28px; }
 }

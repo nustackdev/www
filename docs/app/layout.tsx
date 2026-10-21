@@ -16,7 +16,7 @@ const inter = Inter({
 });
 
 const TITLE = 'Docs';
-const DESCRIPTION = 'Docs for nustack: the interaction model, Nu, nustd, nuspace and nuverse.';
+const DESCRIPTION = 'Docs for nustack: the interaction model, nu, nustd, nuspace and nuverse.';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -27,7 +27,7 @@ export const metadata = {
   openGraph: {
     type: 'website',
     url: '/docs',
-    siteName: 'Nu',
+    siteName: 'nu',
     title: TITLE,
     description: DESCRIPTION,
   },

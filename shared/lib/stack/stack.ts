@@ -26,10 +26,10 @@ type StackSpec = Omit<StackItem, 'href'>;
 const GH = 'https://github.com/nustackdev';
 
 const SPECS: StackSpec[] = [
-  { name: 'nuspace', slug: 'nuspace', navDesc: 'A space that runs Nu programs. Every cell is one.', repo: `${GH}/nuspace` },
+  { name: 'nuspace', slug: 'nuspace', navDesc: 'A space that runs nu programs. Every cell is one.', repo: `${GH}/nuspace` },
   { name: 'nuverse', slug: 'nuverse', navDesc: 'Ready made spaces and extensions, one install away.', repo: `${GH}/nuverse` },
   { name: 'nu', slug: 'nu', navDesc: 'The interaction model implementation in Python.', repo: `${GH}/nu` },
-  { name: 'nustd', slug: 'nustd', navDesc: 'Nu Refs and Interactions for everyday tasks.', repo: `${GH}/nu/tree/main/pkgs/nustd` },
+  { name: 'nustd', slug: 'nustd', navDesc: 'nu Refs and Interactions for everyday tasks.', repo: `${GH}/nu/tree/main/pkgs/nustd` },
   { name: 'interaction-model', slug: 'model', role: 'The theory', navDesc: 'Every resource is a Ref, everything you do with it an Interaction.', repo: `${GH}/interaction-model` },
 ];
 

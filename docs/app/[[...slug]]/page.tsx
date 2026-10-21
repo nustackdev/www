@@ -76,7 +76,7 @@ export async function generateMetadata(props: PageProps<'/[[...slug]]'>): Promis
       type: 'article',
       title: page.data.title,
       description: page.data.description,
-      siteName: 'Nu',
+      siteName: 'nu',
       url,
       images: [{ url: image, width: 1200, height: 630, alt: page.data.title }],
     },

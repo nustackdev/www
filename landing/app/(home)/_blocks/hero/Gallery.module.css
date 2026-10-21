@@ -86,6 +86,8 @@
   text-overflow: ellipsis;
   transition: background 200ms, color 200ms, border-color 200ms;
 }
+.card:hover .name,
+.card:focus-visible .name,
 .cardOn .name { background: var(--site-accent); border-color: transparent; color: #fff; }
 
 /* The loop fills the card, pinned top left: sidebar and page title read best small. */

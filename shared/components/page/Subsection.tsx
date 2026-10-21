@@ -26,8 +26,8 @@ export interface SubsectionProps {
 }
 
 /**
- * Subsection — the one repeated block inside a Section: h3 left,
- * description right, lead extras, the media, extras, then a main width divider.
+ * Subsection — the one repeated block inside a Section: the eyebrow across,
+ * then h3 left and description right, lead extras, the media, extras, then a main width divider.
  */
 export function Subsection({
   id,
@@ -44,10 +44,12 @@ export function Subsection({
   return (
     <article id={id} className={cn(s.root, border && s.border, className)}>
       <div className={s.head}>
-        <div className={s.titleCol}>
-          {eyebrow ? <Kicker href={id ? `#${id}` : undefined}>{eyebrow}</Kicker> : null}
-          <h3 className={s.title}>{tagline}</h3>
-        </div>
+        {eyebrow ? (
+          <Kicker href={id ? `#${id}` : undefined} className={s.eyebrow}>
+            {eyebrow}
+          </Kicker>
+        ) : null}
+        <h3 className={s.title}>{tagline}</h3>
         {description ? <p className={s.desc}>{description}</p> : null}
       </div>
       {lead}

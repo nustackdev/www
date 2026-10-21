@@ -2,6 +2,7 @@ import { Container } from '@www/shared/components/grid/Container';
 import { Footer } from '@www/shared/components/nav/Footer';
 import { Hero } from './_blocks/hero/Hero';
 import { Anchors } from './_blocks/Anchors';
+import { Closing } from './_blocks/Closing';
 import { Audience } from './_blocks/Audience';
 import { Highlights } from './_blocks/Highlights';
 import { HowItWorks } from './_blocks/HowItWorks';
@@ -22,6 +23,7 @@ export default function Home() {
         <Highlights />
         <TryIt />
         <HowItWorks />
+        <Closing />
       </Container>
       <Footer />
     </div>

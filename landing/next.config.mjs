@@ -5,7 +5,7 @@ const ZONE = '';
 
 /** @type {(phase: string) => import('next').NextConfig} */
 const config = (phase) => ({
-  // Dev-only routes are `page.dev.tsx` (eg app/dev/hero-lab): `next dev` serves them, builds never see them.
+  // Dev-only routes are `page.dev.tsx` (eg a throwaway lab route): `next dev` serves them, builds never see them.
   pageExtensions: phase === PHASE_DEVELOPMENT_SERVER ? ['dev.tsx', 'tsx', 'ts', 'jsx', 'js'] : ['tsx', 'ts', 'jsx', 'js'],
   reactStrictMode: true,
   // Read by @www/shared/lib/zones to tell in-zone links from cross-zone ones.

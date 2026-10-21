@@ -66,14 +66,14 @@ export function Audience() {
       id="for"
       eyebrow="Who it's for"
       tagline="Build a new form of software."
-      description="Designed for the next era, for modern teams with agents at their side."
+      description="Designed for modern teams with agents at their side."
       layout="subsections"
     >
       <Subsection
         id="agents"
         eyebrow="For agents"
-        tagline="It programs your space, live."
-        description="Your agent writes a few lines of Python. Each one changes the space as it runs: a new page, a card for every book, a chart that keeps up."
+        tagline="Your agent's whole world."
+        description="MCP? No. You don't call into nuspace, you program it."
         media={<AgentsDemo />}
         actions={<StartButton>Give your agent a space</StartButton>}
       />
@@ -81,7 +81,7 @@ export function Audience() {
         id="people"
         eyebrow="For people"
         tagline="Tools for you and your team."
-        description="One space, any size: your own tools, or your team's whole stack."
+        description="Small enough for one person, big enough for a team."
         actions={<StartButton />}
       >
         <ul className={s.grid}>

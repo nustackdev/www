@@ -14,7 +14,7 @@ export function Hero() {
         <div className={s.titleBlock}>
           <p className={s.eyebrow}>Open-source · Self-hosted · Data stays local</p>
           <h1 className={s.title}>
-            Build your computational space
+            Computational space
             <br />
             <span className={s.dim}>for everything you work with: notes, data, tools, agents.</span>
           </h1>

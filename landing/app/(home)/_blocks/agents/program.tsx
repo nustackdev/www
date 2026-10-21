@@ -38,11 +38,12 @@ export const PARTS: Part[] = [
   {
     label: 'Make a page',
     k: ['page', 'icon'],
-    steps: [1, 2],
+    steps: [0, 1, 2],
     lines: [
-      { k: 'page', run: [1], text: <>nuspace.{op('add_plane')}(backend={str('"async"')}, name={str('"Reading"')},</> },
-      { k: 'page', run: [1], text: <>{'                  '}parent=plane, ui={con('True')}, into=page)</> },
-      { k: 'icon', run: [2], text: <>{'>> '}nuspace.{op('set_plane_icon')}(nu.Str(page), {str('"book-open"')})</> },
+      { k: 'page', run: [0, 1], text: <>nuspace.{op('add_plane')}(</> },
+      { k: 'page', run: [0, 1], text: <>{'    '}backend={str('"async"')}, name={str('"Reading"')},</> },
+      { k: 'page', run: [0, 1], text: <>{'    '}parent=plane, ui={con('True')}, into=page,</> },
+      { k: 'icon', run: [2], text: <>{') >> '}nuspace.{op('set_plane_icon')}(page, {str('"book-open"')})</> },
     ],
   },
   {
@@ -51,10 +52,12 @@ export const PARTS: Part[] = [
     steps: [3, 4],
     lines: [
       { k: 'find', run: [3], text: <>books = nuspace.{op('cell_named')}(plane, {str('"Books"')})</> },
-      { k: 'read', run: [4], text: <>titles = nuspace.{op('snapshot')}(nuspace.{op('cell_state')}(books,</> },
-      { k: 'read', run: [4], text: <>{'    '}Sheet.order.iter().map({kw('lambda')} r:</> },
-      { k: 'read', run: [4], text: <>{'        '}nu.str(Sheet.rows[nu.Str(r)].cells[{str('"name"')}]))</> },
-      { k: 'read', run: [4], text: <>{'    '}.to_list()))</> },
+      { k: 'read', run: [4], text: <>titles = nuspace.{op('snapshot')}(nuspace.{op('cell_state')}(</> },
+      { k: 'read', run: [4], text: <>{'    '}books,</> },
+      { k: 'read', run: [4], text: <>{'    '}Sheet.order.iter()</> },
+      { k: 'read', run: [4], text: <>{'        '}.map({kw('lambda')} r: Sheet.rows[r].cells[{str('"name"')}])</> },
+      { k: 'read', run: [4], text: <>{'        '}.to_list(),</> },
+      { k: 'read', run: [4], text: <>))</> },
     ],
   },
   {
@@ -62,8 +65,9 @@ export const PARTS: Part[] = [
     k: ['cards'],
     steps: [5, 6, 7],
     lines: [
-      { k: 'cards', run: [5, 6, 7], text: <>nu.{op('let')}(titles, {kw('lambda')} ts: nu.{op('ForEachDo')}(ts, {kw('lambda')} t:</> },
-      { k: 'cards', run: [5, 6, 7], text: <>{'    '}nuspace.{op('add_cell')}(nu.Str(page), CARD, name=nu.Str(t))))</> },
+      { k: 'cards', run: [5, 6, 7], text: <>nu.{op('let')}(titles, {kw('lambda')} ts: nu.{op('ForEachDo')}(</> },
+      { k: 'cards', run: [5, 6, 7], text: <>{'    '}ts, {kw('lambda')} t: nuspace.{op('add_cell')}(page, CARD, name=t),</> },
+      { k: 'cards', run: [5, 6, 7], text: <>))</> },
     ],
   },
   {
@@ -72,19 +76,18 @@ export const PARTS: Part[] = [
     steps: [8, 9],
     lines: [
       { k: 'chart', run: [8, 9], text: note('# a chart cell that redraws as you log pages') },
-      { k: 'chart', run: [8, 9], text: <>nuspace.{op('add_cell')}(nu.Str(page), PAGES_CHART,</> },
-      { k: 'chart', run: [8, 9], text: <>{'                 '}name={str('"Pages read"')})</> },
+      { k: 'chart', run: [8, 9], text: <>nuspace.{op('add_cell')}(page, PAGES_CHART, name={str('"Pages read"')})</> },
     ],
   },
 ];
 
-/** Steps: 0 a beat on the start, 1 page, 2 icon, 3 find the table, 4 read
- * titles, 5-7 a card each, 8 chart, 9 live (the end hold). Each holds for
+/** Steps: 0 the reset into a fresh space (part one's first beat), 1 page, 2 icon, 3 find the table, 4 read
+ * titles, 5-7 a card each, 8 chart, 9 live (the end, still part four). Each holds for
  * about as long as it changes the window. */
-export const DUR = [500, 1200, 700, 800, 1100, 700, 600, 900, 1300, 3000];
+export const DUR = [400, 1200, 700, 800, 1100, 700, 600, 900, 1300, 3000];
 export const LAST = DUR.length - 1;
 export const STATUS = [
-  'ready',
+  'making the page',
   'making the page',
   'setting its icon',
   'finding the Books table',

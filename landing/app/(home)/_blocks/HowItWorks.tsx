@@ -1,4 +1,4 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Plus } from 'lucide-react';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
 import { Section } from '@www/shared/components/page';
 import s from './HowItWorks.module.css';
@@ -18,20 +18,20 @@ const LAYERS: Layer[] = [
   {
     role: 'The theory',
     name: 'interaction-model',
-    line: 'Every resource is a Ref: a KV slot, a UI widget, an LLM call, a remote object. Everything you do with it is an Interaction.',
+    line: 'Every resource is a Ref: a KV slot, a UI widget, an LLM endpoint, a remote object. Everything you do with it is an Interaction.',
     repo: `${GH}/interaction-model`,
   },
   { role: 'The primitive', name: 'nu', line: 'The interaction model implementation in Python.', repo: `${GH}/nu` },
   {
     role: 'The standard library',
     name: 'nustd',
-    line: 'Nu Refs and Interactions for everyday tasks.',
+    line: 'nu Refs and Interactions for everyday tasks.',
     repo: `${GH}/nu/tree/main/pkgs/nustd`,
   },
   {
     role: 'The space',
     name: 'nuspace',
-    line: 'A space that runs Nu programs. Every cell is one.',
+    line: 'A space that runs nu programs. Every cell is one.',
     repo: `${GH}/nuspace`,
   },
   {
@@ -42,10 +42,15 @@ const LAYERS: Layer[] = [
   },
 ];
 
-/** HowItWorks — the stack under nuspace, from the theory up to the ecosystem. */
+/** HowItWorks — the stack under nuspace, from the theory up to the ecosystem, then the reader's own space on top. */
 export function HowItWorks() {
   return (
-    <Section id="how" eyebrow="How it works" tagline="One primitive, all the way down.">
+    <Section
+      id="how"
+      eyebrow="How it works"
+      tagline="One primitive, all the way down."
+      lead="nuspace is built on one idea: every resource is a Ref, and everything you do with it is an Interaction. nu implements that idea, and nuspace runs nu programs. Every cell in your space is one."
+    >
       <div className={s.body}>
         <ol className={s.list}>
           {LAYERS.map((l, i) => (
@@ -65,8 +70,23 @@ export function HowItWorks() {
               </a>
             </li>
           ))}
+          <li className={s.yours}>
+            <a href="#start" className={s.row}>
+              <span className={s.plus} aria-hidden>
+                <Plus size={16} strokeWidth={2} />
+              </span>
+              <span className={s.id}>
+                <span className={s.role}>On top of it all</span>
+                <span className={s.name}>your space</span>
+              </span>
+              <span className={s.line}>Everything below exists so your space can be anything.</span>
+              <span className={s.gh}>
+                <span>Start your space</span>
+                <ArrowRight className={s.arrowOn} size={15} strokeWidth={2} aria-hidden />
+              </span>
+            </a>
+          </li>
         </ol>
-        <p className={s.close}>All speak the same language. That&apos;s why everything connects.</p>
       </div>
     </Section>
   );

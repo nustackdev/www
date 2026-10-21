@@ -199,8 +199,8 @@
   width: var(--pw);
   overflow: hidden;
   border: 1px solid var(--site-border);
-  border-radius: var(--site-r-lg);
-  background: var(--site-code-bg);
+  border-radius: var(--site-r-md);
+  background: var(--site-bg-overlay);
   box-shadow: var(--site-elevation-floating);
 }
 
@@ -209,8 +209,7 @@
   align-items: center;
   height: 38px;
   padding: 0 14px;
-  border-bottom: 1px solid var(--site-border);
-  background: var(--site-bg-raised);
+  border-bottom: 1px solid var(--site-border-subtle);
   font-size: var(--site-fs-5);
   color: var(--site-ink-3);
 }
@@ -274,8 +273,7 @@
   gap: 10px;
   min-height: 34px;
   padding: 0 14px;
-  border-top: 1px solid var(--site-border);
-  background: var(--site-bg-raised);
+  border-top: 1px solid var(--site-border-subtle);
   font-size: var(--site-fs-3);
   color: var(--site-ink-3);
 }
@@ -304,10 +302,11 @@
 
   /* The window keeps its desktop size and only scales; its top 60% shows.
    * A transform, not zoom: iOS Safari scales boxes under zoom but not text. */
-  .fit { height: calc(360px * var(--z, 1)); overflow: hidden; }
+  /* 50px taller on screen than the 360px cut: the scaled layer grows by 50 / z. */
+  .fit { height: calc(360px * var(--z, 1) + 50px); overflow: hidden; }
   .fit .ns {
     width: 840px;
-    height: 360px;
+    height: calc(360px + 50px / var(--z, 1));
     min-height: 0;
     border: 0;
     border-radius: 0;
@@ -354,8 +353,8 @@
     margin: -24px 8px 8px;
     overflow: hidden;
     border: 1px solid var(--site-border);
-    border-radius: var(--site-r-lg);
-    background: var(--site-code-bg);
+    border-radius: var(--site-r-md);
+    background: var(--site-bg-overlay);
     box-shadow: var(--site-elevation-floating);
   }
   .th { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 0 0 10px; border-bottom: 1px solid var(--site-border-subtle); }

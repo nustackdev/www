@@ -95,7 +95,7 @@ export function AgentsDemo() {
   const lit = new Set<Key>(paused ? hover.keys : []);
   const hl = (keys: Key[]) => keys.some((x) => lit.has(x));
   /** What the running step changes, lit while it plays. */
-  const runKey = !paused && k < LAST ? STEP_KEY[k] : undefined;
+  const runKey = !paused && !calm ? STEP_KEY[k] : undefined;
   const act = (...keys: Key[]) => runKey !== undefined && keys.includes(runKey);
   const pinOf = (i: number) => <span className={s.mpin}>{i + 1}</span>;
 
@@ -123,7 +123,7 @@ export function AgentsDemo() {
     if (at) setN(Number(at));
   };
 
-  // Play: each step holds for its time, then the next; after the last, the start.
+  // Play: each step holds for its time, then the next; the last runs straight into the first.
   // Any hold (hover, offscreen) replays the step in full, and so does its ring.
   useEffect(() => {
     if (held) return;
@@ -190,8 +190,8 @@ export function AgentsDemo() {
           key={j}
           className={cn(
             s.ln,
-            l.run.includes(k) && k < LAST && s.run,
-            (Math.max(...l.run) < k || k === LAST) && s.done,
+            l.run.includes(k) && !calm && s.run,
+            (Math.max(...l.run) < k || calm) && s.done,
             hl([l.k]) && s.hl,
           )}
           data-hk={l.k}
@@ -448,8 +448,8 @@ export function AgentsDemo() {
       <div className={s.panel} role="group" aria-label="Your agent's program">
         <div className={s.ph}>your agent&apos;s program, in four parts</div>
         {PARTS.map((p, i) => {
-          const on = p.steps.includes(k) && k < LAST;
-          const done = Math.max(...p.steps) < k || k === LAST;
+          const on = p.steps.includes(k) && !calm;
+          const done = Math.max(...p.steps) < k || calm;
           return (
             <div
               key={p.label}

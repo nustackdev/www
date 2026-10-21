@@ -11,15 +11,12 @@
 .head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: start;
+  align-items: end;
   gap: 20px 64px;
 }
 
-.titleCol {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+/* The eyebrow runs across both columns, title and description sit on one baseline under it. */
+.eyebrow { grid-column: 1 / -1; margin-bottom: -8px; }
 
 .title {
   margin: 0;

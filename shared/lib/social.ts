@@ -2,5 +2,5 @@
 export const SOCIAL_LINKS = {
   github: 'https://github.com/nustackdev/nuspace',
   x: 'https://x.com/nustackdev',
-  discord: 'https://discord.gg/nustackdev',
+  discord: 'https://discord.gg/tCa8YE7XVr',
 } as const;
