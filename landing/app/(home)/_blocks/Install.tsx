@@ -3,7 +3,6 @@
 import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { Asterisk, SquareTerminal, Terminal, Waypoints } from 'lucide-react';
 import { CopyButton } from '@www/shared/components/controls/CopyButton';
-import { Kbd } from '@www/shared/components/text/Kbd';
 import { cn } from '@www/shared/lib/cn';
 import s from './Install.module.css';
 
@@ -57,7 +56,7 @@ const PATHS: Path[] = [
     id: 'codex',
     name: 'Codex',
     icon: <SquareTerminal aria-hidden />,
-    body: 'The same repo is a Codex marketplace. Same skills, same text, tested against the current code.',
+    body: 'Codex learns nu and nuspace from the skills, installs nuspace and opens your first space. Ask it for cells next.',
     steps: [
       { label: 'Add the marketplace', cmd: ['codex plugin marketplace add nustackdev/nuskills'] },
       {
@@ -85,7 +84,7 @@ const PATHS: Path[] = [
     id: 'other',
     name: 'Other agents',
     icon: <Waypoints aria-hidden />,
-    body: 'The skills are plain folders. Drop them where your agent looks for skills.',
+    body: 'Any agent that reads skills learns nu and nuspace from them, installs nuspace and opens your first space. Ask it for cells next.',
     steps: [
       { label: 'Get the skills', cmd: ['git clone https://github.com/nustackdev/nuskills'] },
       {
@@ -110,11 +109,7 @@ const PATHS: Path[] = [
       {
         label: 'Run',
         cmd: ['nuspace run my.nuspace'],
-        note: (
-          <>
-            A browser opens on your space. Press <Kbd>/</Kbd> on a plane to add a cell.
-          </>
-        ),
+        note: 'A browser opens on your space.',
       },
       {
         label: 'Try a demo',
@@ -127,7 +122,7 @@ const PATHS: Path[] = [
 
 const allCommands = (p: Path) =>
   p.steps
-    .filter((st) => st.cmd)
+    .filter((st) => st.cmd && !st.inSession)
     .map((st) => st.cmd!.join('\n'))
     .join('\n');
 

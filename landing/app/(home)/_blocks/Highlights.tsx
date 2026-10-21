@@ -8,7 +8,7 @@ const HIGHLIGHTS: Feature[] = [
   { icon: <Database />, title: 'Any data', line: 'A note, a table, a song, a billion-entry log, a genome.' },
   { icon: <Braces />, title: 'Any logic', line: 'Summarize your inbox, dim the lights at sunset, render a video.' },
   { icon: <PanelsTopLeft />, title: 'Any UI', line: 'A cell draws itself. Text, tables, charts, forms.' },
-  { icon: <Zap />, title: "It's live", line: 'Change one cell and everything that depends on it follows live. UI too.' },
+  { icon: <Zap />, title: "It's live", line: 'Change one cell and everything that depends on it follows. UI too.' },
   { icon: <Network />, title: 'Work scales', line: 'The same cell runs in a worker, across processes or on a cluster.' },
   { icon: <Layers />, title: 'Data scales', line: 'A counter or a billion rows, same cell. Storage shards underneath.' },
   {
@@ -29,7 +29,7 @@ export function Highlights() {
       description="The data, the logic, the look, even the space itself."
       actions={
         <Button variant="primary" href="#start" arrow>
-          Install nuspace
+          Start your space
         </Button>
       }
     >

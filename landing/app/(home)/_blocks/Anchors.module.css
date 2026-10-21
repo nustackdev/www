@@ -54,8 +54,6 @@
   white-space: nowrap;
 }
 
-.slip blockquote { margin: 0; }
-
 .slip p {
   margin: 0;
   font-family: var(--font-display);
@@ -65,16 +63,11 @@
   letter-spacing: var(--site-tr-title);
   color: var(--site-ink);
 }
+
 .slip p::before { content: "\201C"; margin-right: 0.08em; color: var(--site-ink-twilight); opacity: 0.6; }
 .slip p::after { content: "\201D"; margin-left: 0.04em; color: var(--site-ink-twilight); opacity: 0.6; }
 
 .dim { color: var(--site-ink-twilight); }
-
-.slip figcaption {
-  font-size: var(--site-fs-1);
-  line-height: 1;
-  color: var(--site-ink-3);
-}
 
 /* Depths. */
 .near { --fs: clamp(20px, 2vw, 26px); --py: 18px; --px: 24px; --gap: 18px; }
@@ -84,8 +77,6 @@
 .mid .track { margin-left: -260px; }
 .mid .slip,
 .far .slip { background: var(--site-bg-raised); border-color: var(--site-border-subtle); }
-.mid figcaption,
-.far figcaption { display: none; }
 
 @media (max-width: 640px) {
   .wall {

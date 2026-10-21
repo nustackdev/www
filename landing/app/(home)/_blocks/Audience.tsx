@@ -28,17 +28,17 @@ const AUDIENCES: Audience[] = [
     cases: [
       'Knowledge: notes, reading, a second brain',
       'Tracking: habits, money, films, health',
-      'Research: sources, claims, scores, live',
+      'Research: sources, claims, evals',
       'Automation: your scripts and home, with a screen',
     ],
   },
   {
     icon: <Users />,
     who: 'For teams',
-    title: 'Centralized data and ops, without limits.',
-    body: "Your team's data and ops in one live space, built the way you actually work.",
+    title: 'One space for the whole team.',
+    body: 'Data and ops in one space, built the way you work.',
     cases: [
-      'Knowledge: team wikis, BI, research',
+      'Knowledge: wikis, BI, research',
       'Dashboards: every data source, live',
       'Ops: every automation and job in one place',
       'Infra: ML runs, pipelines, deploys',
@@ -66,7 +66,7 @@ export function Audience() {
       id="for"
       eyebrow="Who it's for"
       tagline="Build a new form of software."
-      description="Designed for modern teams with agents at their side."
+      description="For agents, for you and for your team."
       layout="subsections"
     >
       <Subsection

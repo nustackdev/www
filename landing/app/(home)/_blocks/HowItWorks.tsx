@@ -18,14 +18,14 @@ const LAYERS: Layer[] = [
   {
     role: 'The theory',
     name: 'interaction-model',
-    line: 'Every resource is a Ref: a KV slot, a UI widget, an LLM endpoint, a remote object. Everything you do with it is an Interaction.',
+    line: 'A programming model where every resource is a Ref and Interactions are first-class, so you compose logic across systems.',
     repo: `${GH}/interaction-model`,
   },
-  { role: 'The primitive', name: 'nu', line: 'The interaction model implementation in Python.', repo: `${GH}/nu` },
+  { role: 'The primitive', name: 'nu', line: 'The interaction model, implemented in Python.', repo: `${GH}/nu` },
   {
     role: 'The standard library',
     name: 'nustd',
-    line: 'nu Refs and Interactions for everyday tasks.',
+    line: 'Batteries for nu: storage, UI, workers and more, ready to use.',
     repo: `${GH}/nu/tree/main/pkgs/nustd`,
   },
   {
@@ -37,7 +37,7 @@ const LAYERS: Layer[] = [
   {
     role: 'The ecosystem',
     name: 'nuverse',
-    line: 'Ready made spaces and extensions, one install away.',
+    line: 'Ready-made spaces and extensions, one install away.',
     repo: `${GH}/nuverse`,
   },
 ];
@@ -49,7 +49,7 @@ export function HowItWorks() {
       id="how"
       eyebrow="How it works"
       tagline="One primitive, all the way down."
-      lead="nuspace is built on one idea: every resource is a Ref, and everything you do with it is an Interaction. nu implements that idea, and nuspace runs nu programs. Every cell in your space is one."
+      lead="nuspace sits on a small stack, each layer its own repo, from the theory at the base to the ecosystem on top."
     >
       <div className={s.body}>
         <ol className={s.list}>

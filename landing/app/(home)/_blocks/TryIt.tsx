@@ -10,7 +10,7 @@ export function TryIt() {
       id="start"
       eyebrow="Get started"
       tagline="Three steps to your space."
-      lead="Hand it to your agent: it installs nuspace and builds your first thing from one prompt."
+      lead="Give your agent the skills and it installs nuspace and builds your first space from one prompt. Or install it yourself."
     >
       <Fan>
         <Install />

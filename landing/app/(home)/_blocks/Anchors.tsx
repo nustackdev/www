@@ -10,13 +10,12 @@ interface Quote {
   known: string;
   /** The turn that makes it nuspace, dim. */
   twist: string;
-  /** Who says it, generic. */
-  who: string;
 }
 
-/** Overheard at first looks. Copy from identity.md in Go. */
+/** How nuspace lands, in the reader's own words. Composed, so quote marks for
+ *  the voice but no names under them. Copy from compass/nuspace/anchors.md in Go. */
 
-/** Top row: first reactions, the value as people put it. */
+/** Top row: first reactions, the value as a reader would put it. */
 const TOP = [
   "everything i use, in one place, and it's all live",
   'this could replace half of my apps',
@@ -24,14 +23,14 @@ const TOP = [
   'so i own all of it, on my machine?',
 ];
 
-/** Middle row, the big one: nuspace through products people know. */
+/** Middle row, the big one: nuspace through products the reader knows. */
 const ANCHORS: Quote[] = [
-  { known: 'Notion,', twist: 'but every block is a program.', who: 'a product owner' },
-  { known: 'A spreadsheet for anything,', twist: 'not just numbers.', who: 'an analyst' },
-  { known: 'A notebook', twist: 'that never goes stale.', who: 'a researcher' },
-  { known: 'An operating system', twist: 'for everything I know.', who: 'a consultant' },
-  { known: 'Our own Palantir,', twist: 'for company intel.', who: 'a founder' },
-  { known: 'A homelab', twist: 'for my data, tools and agents.', who: 'an indie hacker' },
+  { known: 'Notion,', twist: 'but every block is a program.' },
+  { known: 'A spreadsheet for anything,', twist: 'not just numbers.' },
+  { known: 'A notebook', twist: 'that never goes stale.' },
+  { known: 'An operating system', twist: 'for everything I know.' },
+  { known: 'Our own Palantir,', twist: 'for company intel.' },
+  { known: 'A homelab', twist: 'for my data, tools and agents.' },
 ];
 
 /** Bottom row: asides on the wows. */
@@ -52,17 +51,14 @@ const PACE = { far: 1, mid: 1.5, near: 2 } as const;
 const REPEAT = 2;
 
 function Slip({ quote, hidden }: { quote: Quote | string; hidden: boolean }) {
-  const q = typeof quote === 'string' ? { known: quote, twist: '', who: '' } : quote;
+  const q = typeof quote === 'string' ? { known: quote, twist: '' } : quote;
   return (
-    <figure className={s.slip} aria-hidden={hidden || undefined}>
-      <blockquote>
-        <p>
-          {q.known}
-          {q.twist ? <span className={s.dim}> {q.twist}</span> : null}
-        </p>
-      </blockquote>
-      {q.who ? <figcaption>{q.who}</figcaption> : null}
-    </figure>
+    <div className={s.slip} aria-hidden={hidden || undefined}>
+      <p>
+        {q.known}
+        {q.twist ? <span className={s.dim}> {q.twist}</span> : null}
+      </p>
+    </div>
   );
 }
 
@@ -101,12 +97,12 @@ function Row({ items, depth }: { items: (Quote | string)[]; depth: keyof typeof 
 }
 
 /**
- * Anchors — right under the hero, no heading: a wall of overheard first
+ * Anchors — right under the hero, no heading: a wall of first
  * reactions drifting at three depths, the familiar thing then its twist.
  */
 export function Anchors() {
   return (
-    <Section id="anchors" label="What people compare nuspace to" space="none" border={false} bleed>
+    <Section id="anchors" label="What nuspace is like" space="none" border={false} bleed>
       <div className={s.wall}>
         <Row items={TOP} depth="far" />
         <Row items={ANCHORS} depth="near" />

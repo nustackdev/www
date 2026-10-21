@@ -1,6 +1,6 @@
 {
   "title": "nuverse",
-  "description": "Ready made spaces and extensions.",
+  "description": "Ready-made spaces and extensions.",
   "root": true,
   "pages": [
     "index",

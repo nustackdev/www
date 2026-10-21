@@ -1,6 +1,6 @@
 {
   "title": "nustd",
-  "description": "Refs and Interactions for everyday tasks.",
+  "description": "Batteries for nu: storage, UI, workers and more.",
   "root": true,
   "pages": [
     "index",

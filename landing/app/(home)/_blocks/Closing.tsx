@@ -26,7 +26,7 @@ const CHANNELS: Channel[] = [
   {
     icon: <DiscordMark size={18} />,
     name: 'Discord',
-    line: 'Ask questions, share what you build, shape what comes next.',
+    line: 'Ask questions, show your spaces, shape what comes next.',
     action: 'Join the server',
     href: SOCIAL_LINKS.discord,
   },
@@ -46,7 +46,7 @@ export function Closing() {
       id="community"
       eyebrow="Community"
       tagline="Built in the open."
-      description="Come build it with us."
+      description="Join in, it's early."
     >
       <ul className={s.grid}>
         {CHANNELS.map((c) => {
