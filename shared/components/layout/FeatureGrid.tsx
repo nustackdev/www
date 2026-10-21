@@ -19,11 +19,11 @@ export interface Feature {
 
 interface Props {
   items: Feature[];
-  /** Columns at full width. Halves at tablet, one on phones. */
+  /** Columns at full width. Halves at tablet, one below 860px. */
   columns?: 2 | 3 | 4;
   /** tile: the icon on a soft Afterglow tile. plain: the icon as is, for marks. */
   icon?: 'tile' | 'plain';
-  /** On phones, an accordion: heads only, one open at a time. For cells without links. */
+  /** Below 860px, an accordion: heads only, one open at a time. For cells without links. */
   accordion?: boolean;
   className?: string;
 }
@@ -31,11 +31,11 @@ interface Props {
 /**
  * FeatureGrid — an open grid of short features. Lines only between cells,
  * fading toward every edge; edge cells drop their outer padding so the text
- * lines up with the page. With `accordion`, phones get the heads only, one
- * open at a time.
+ * lines up with the page. With `accordion`, narrow screens get the heads
+ * only, one open at a time.
  */
 export function FeatureGrid({ items, columns = 4, icon = 'tile', accordion, className }: Props) {
-  const acc = useAccordion('(max-width: 560px)');
+  const acc = useAccordion('(max-width: 860px)');
   return (
     <ul className={cn(s.grid, s[`c${columns}`], s[icon], accordion && s.acc, className)}>
       {items.map((f, i) => {
@@ -70,7 +70,7 @@ export function FeatureGrid({ items, columns = 4, icon = 'tile', accordion, clas
                 </span>
               ) : null}
               <span className={s.title}>{f.title}</span>
-              {f.href ? <ArrowUpRight className={s.arrow} size={15} strokeWidth={2} aria-hidden /> : null}
+              {f.href ? <ArrowUpRight className={s.arrow} size={16} strokeWidth={2} aria-hidden /> : null}
             </span>
             <span className={s.line}>{f.line}</span>
           </>

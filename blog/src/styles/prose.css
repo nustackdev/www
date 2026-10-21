@@ -19,21 +19,21 @@
 
 .prose p { margin: 0 0 1.5em; }
 
+/* Titles on the type ladder: 24, 20, 16. */
 .prose :is(h1, h2, h3, h4, h5, h6) {
   color: var(--site-ink);
-  font-weight: 600;
+  font-weight: var(--site-fw-title);
   line-height: 1.25;
-  letter-spacing: -0.01em;
-  scroll-margin-top: calc(var(--site-nav-clearance, 96px) + 16px);
+  letter-spacing: var(--site-tr-title);
+  scroll-margin-top: calc(var(--site-nav-clearance) + 16px);
 }
 
-.prose h2 { font-size: 1.625rem; margin: 2.75em 0 0.75em; letter-spacing: -0.015em; }
-.prose h3 { font-size: 1.25rem; margin: 2.25em 0 0.5em; }
-.prose h4 { font-size: 1.0625rem; margin: 1.75em 0 0.5em; }
+.prose h2 { font-size: var(--site-fs-8); margin: 2.75em 0 0.75em; }
+.prose h3 { font-size: var(--site-fs-7); margin: 2.25em 0 0.5em; }
+.prose h4 { font-size: 16px; margin: 1.75em 0 0.5em; letter-spacing: var(--site-tr-body); }
 .prose :is(h5, h6) {
-  font-size: 0.9375rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: 16px;
+  letter-spacing: var(--site-tr-body);
   color: var(--site-ink-3);
   margin: 1.5em 0 0.5em;
 }
@@ -57,7 +57,7 @@
 .prose li::marker { color: var(--site-ink-3); }
 .prose li > :is(ul, ol) { margin: 0.5em 0; }
 
-.prose strong { font-weight: 600; }
+.prose strong { font-weight: var(--site-fw-semibold); }
 
 .prose blockquote {
   margin: 2em 0;
@@ -67,23 +67,32 @@
 }
 .prose blockquote p:last-child { margin-bottom: 0; }
 
-.prose :not(pre) > code {
-  font-family: var(--font-mono);
+/* Inline code and keys: one recipe with the docs. */
+.prose :is(:not(pre) > code, kbd) {
   font-size: 0.9em;
   padding: 0.15em 0.4em;
-  border-radius: 4px;
+  border: 1px solid var(--site-border-subtle);
+  border-radius: var(--site-r-sm);
   background: var(--site-code-bg);
   color: var(--site-ink);
+}
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
   overflow-wrap: anywhere;
+}
+.prose kbd {
+  font-family: inherit;
+  font-weight: var(--site-fw-medium);
+  white-space: nowrap;
 }
 
 /* Code blocks: Shiki renders both themes, light inline and dark as
  * --shiki-dark vars. The surface comes from the site tokens either way. */
 .prose pre {
   margin: 1.75em 0;
-  padding: var(--site-code-pad-y, 14px) var(--site-code-pad-x, 16px);
+  padding: var(--site-code-pad-y) var(--site-code-pad-x);
   border: 1px solid var(--site-border);
-  border-radius: var(--site-r-md, 8px);
+  border-radius: var(--site-r-lg);
   background: var(--site-code-bg) !important;
   font-family: var(--font-mono);
   font-size: 0.875rem;
@@ -106,7 +115,7 @@
 .prose img {
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: var(--site-r-lg);
   margin: 1.75em 0;
 }
 
@@ -123,10 +132,8 @@
   border-bottom: 1px solid var(--site-border);
   text-align: left;
 }
-.prose th { font-weight: 600; color: var(--site-ink-3); }
+.prose th { font-weight: var(--site-fw-semibold); color: var(--site-ink-3); }
 
 @media (max-width: 640px) {
   .prose { font-size: 1rem; line-height: 1.7; }
-  .prose h2 { font-size: 1.5rem; }
-  .prose h3 { font-size: 1.1875rem; }
 }

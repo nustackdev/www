@@ -63,9 +63,9 @@ export function HowItWorks() {
                 </span>
                 <span className={s.line}>{l.line}</span>
                 <span className={s.gh}>
-                  <GithubMark size={15} />
+                  <GithubMark size={16} />
                   <span>GitHub</span>
-                  <ArrowUpRight className={s.arrow} size={15} strokeWidth={2} aria-hidden />
+                  <ArrowUpRight className={s.arrow} size={16} strokeWidth={2} aria-hidden />
                 </span>
               </a>
             </li>
@@ -82,7 +82,7 @@ export function HowItWorks() {
               <span className={s.line}>Everything below exists so your space can be anything.</span>
               <span className={s.gh}>
                 <span>Start your space</span>
-                <ArrowRight className={s.arrowOn} size={15} strokeWidth={2} aria-hidden />
+                <ArrowRight className={s.arrowOn} size={16} strokeWidth={2} aria-hidden />
               </span>
             </a>
           </li>

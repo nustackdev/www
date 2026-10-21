@@ -14,7 +14,7 @@ const DROP_EX = 1.4;
 const SCALE = 0.03; // smaller per step
 const Z = -40; // px back per step
 const DIM = 0.18; // more ground laid over per step
-const ELEV = ['floating', 'raised', 'raised', 'none'] as const;
+const ELEV = ['raised', 'raised', 'raised', 'none'] as const;
 
 interface Card {
   a: number;

@@ -40,7 +40,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-mono);
-  font-size: var(--site-fs-3);
+  font-size: var(--site-fs-2);
   color: var(--site-ink-3);
   white-space: nowrap;
 }
@@ -64,7 +64,7 @@
 /* Wider than the 1200 main column: runs to the wide area on big screens,
  * cut by the window on smaller ones. */
 .bleed {
-  width: 1400px;
+  width: var(--site-w-wide);
   max-width: none;
 }
 @media (max-width: 860px) {

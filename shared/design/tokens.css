@@ -23,36 +23,28 @@
                   Arial, sans-serif;
   --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  /* --- Type: size scale (8 steps covering all repeated site sizes) ------ */
-  --site-fs-1: 11px;    /* micro labels, kbd, kickers */
-  --site-fs-2: 11px;    /* small mono */
-  --site-fs-3: 12px;    /* secondary text, item descriptions */
-  --site-fs-4: 13px;    /* small copy */
-  --site-fs-5: 13px;    /* footer, kickers, blurbs */
-  --site-fs-6: 14px;    /* controls: buttons, nav */
-  --site-fs-7: 14px;    /* list numbers, row meta */
-  --site-fs-8: 15px;    /* body text */
-  --site-fs-9:  17px;   /* body-lg, card titles */
-  --site-fs-10: 20px;   /* lede     (.tagline, .lede) */
-  --site-fs-11: 24px;   /* h4       (entryName) */
-  --site-fs-12: 32px;   /* h3       (sectionTitle) */
-  --site-fs-13: 48px;   /* h2 */
-  --site-fs-14: 64px;   /* h1 / slogan mobile */
-  --site-fs-15: 88px;   /* display-sm / slogan tablet */
-  --site-fs-16: 114px;  /* display  / slogan desktop */
-  --site-fs-17: 200px;  /* watermark (chapterPeek) */
+  /* --- Type: size scale (one step per pixel value) --------------------- */
+  --site-fs-1:  11px;   /* micro labels, kbd, kickers, small mono */
+  --site-fs-2:  12px;   /* secondary text, item descriptions */
+  --site-fs-3:  13px;   /* small copy, footer, blurbs */
+  --site-fs-4:  14px;   /* controls: buttons, nav, row meta */
+  --site-fs-5:  15px;   /* body text */
+  --site-fs-6:  17px;   /* body-lg, card titles */
+  --site-fs-7:  20px;   /* lede     (.tagline, .lede) */
+  --site-fs-8:  24px;   /* h4       (entryName) */
+  --site-fs-9:  32px;   /* h3       (sectionTitle) */
+  --site-fs-10: 48px;   /* h2 */
+  --site-fs-11: 64px;   /* h1 / slogan mobile */
+  --site-fs-12: 114px;  /* display  / slogan desktop */
 
   /* --- Type: role scale (semantic, resolves to atomic --site-fs-N) ------ */
-  --site-fs-display:   var(--site-fs-16);
-  --site-fs-heading-1: var(--site-fs-13);
-  --site-fs-heading-2: var(--site-fs-11);
-  --site-fs-tagline:   var(--site-fs-10);
-  --site-fs-lede:      var(--site-fs-10);
-  --site-fs-body:      var(--site-fs-8);
-  --site-fs-label:     var(--site-fs-5);
+  --site-fs-display:   var(--site-fs-12);
+  --site-fs-heading-1: var(--site-fs-10);
+  --site-fs-heading-2: var(--site-fs-8);
+  --site-fs-lede:      var(--site-fs-7);
+  --site-fs-body:      var(--site-fs-5);
 
   /* --- Type: tracking + weights ---------------------------------------- */
-  --site-tr-tight:  -0.02em;
   --site-tr-wide:   0.14em;
   --site-tr-wider:  0.22em;
 
@@ -76,24 +68,14 @@
   --site-gap-loose:  calc(var(--site-u) * 3);
   --site-gap-xloose: calc(var(--site-u) * 5);
 
-  --site-pad-sm-y: calc(var(--site-u) * 1.25);
-  --site-pad-sm-x: calc(var(--site-u) * 1.7);
-  --site-pad-md-y: calc(var(--site-u) * 2);
-  --site-pad-md-x: calc(var(--site-u) * 2.7);
-  --site-pad-lg-y: calc(var(--site-u) * 2.75);
-  --site-pad-lg-x: calc(var(--site-u) * 3.7);
-
-  /* Inline controls (button, input, cli, select, …) — viewport-independent
+  /* Inline controls (button, input, cli, select, …), viewport-independent
      so CTAs and inputs stay legible at every width. Any control that sits
      in the same row should read from this family. */
   --site-control-h:      40px;
   --site-control-px:     16px;
   --site-control-gap:    10px;
-  --site-list-item-gap:  calc(var(--site-u) * 0.75);
-  --site-list-item-pad-y: calc(var(--site-u) * 0.35);
   --site-code-pad-y:     calc(var(--site-u) * 1);
   --site-code-pad-x:     calc(var(--site-u) * 1.5);
-  --site-link-card-pad-y: calc(var(--site-u) * 1.35);
   --site-link-card-pad-x: calc(var(--site-u) * 1.65);
   --site-container-pad-x: calc(var(--site-u) * 2);
   --site-nav-h:          47px;
@@ -104,6 +86,11 @@
   --site-r-md: 6px;   /* controls, menus, popovers */
   --site-r-lg: 8px;   /* cards, panels, modal dialogs */
   --site-r-xl: 12px;  /* large surfaces, scene/video frames */
+  --site-r-full: 999px; /* pills, avatars, dots */
+
+  /* --- Widths: the language's page columns ------------------------------ */
+  --site-w-main: 1200px; /* site main column */
+  --site-w-wide: 1400px; /* scenes, bleed frames */
 
   /* --- Motion: four steps, one easing family ---------------------------- */
   --site-dur-fast: 120ms;  /* hover, focus, small toggles */
@@ -127,14 +114,8 @@
   --site-accent-line:   color-mix(in oklab, var(--site-accent) 44%, transparent);
   --site-accent-2-line: color-mix(in oklab, var(--site-accent-2) 44%, transparent);
 
-  /* Fixed copies of the brand colors, resolved here at the root. Hue
-   * scopes remap --site-accent-* locally and read these to stay cycle free. */
-  --site-afterglow-text: var(--site-accent-text);
-  --site-afterglow-soft: var(--site-accent-soft);
-  --site-afterglow-line: var(--site-accent-line);
-  --site-starlight:      var(--site-accent-2);
-  --site-starlight-soft: var(--site-accent-2-soft);
-  --site-starlight-line: var(--site-accent-2-line);
+  /* Text selection: Starlight, 18% in light and 24% in dark. */
+  --site-selection: color-mix(in oklab, var(--site-accent-2) var(--site-selection-pct), transparent);
 
   /* Status: aurora, sunset, ember, moonlight. Idea reads as Afterglow text. */
   --site-status-idea: var(--site-accent-text);
@@ -147,7 +128,6 @@
 
   /* Dot pattern, drawn in `line`. */
   --site-dot-grid: radial-gradient(circle at 1px 1px, var(--site-border) 1.1px, transparent 1.4px);
-  --site-dot-size: 22px 22px;
 }
 
 /* =============================================================================
@@ -164,24 +144,18 @@
   --site-bg-raised:  #ffffff; /* ground-raised */
   --site-bg-overlay: #ffffff; /* ground-overlay */
   --site-surface:    #ffffff; /* ground-card */
-  --site-surface-2:  #ffffff; /* ground-overlay */
   --site-wash-hover-pct: 5%;
   --site-wash-press-pct: 9%;
   --site-wash:       color-mix(in oklab, var(--site-ink) 5%, transparent); /* hover wash */
   --site-wash-2:     color-mix(in oklab, var(--site-ink) 9%, transparent); /* press wash */
-  --site-wash-3:     color-mix(in oklab, var(--site-ink) 13%, transparent); /* press on a washed thing */
   --site-code-bg:    #f7f8fa; /* ground-deep */
-  --site-code-bg-2:  #ffffff; /* ground-raised */
-  --site-chrome-bg:  #ffffff; /* ground-raised */
   --site-scrim:      rgba(26, 29, 36, 0.4);
+  --site-cut-shade:  rgb(26 29 36 / 0.16); /* edge of a frame the window cuts */
 
   /* --- Lines ----------------------------------------------------------- */
   --site-border-subtle:   #e5e6e8; /* line-subtle */
-  --site-rule-2:          #e5e6e8; /* line-subtle */
   --site-border:          #d9dadc; /* line */
-  --site-rule:            #d9dadc; /* line */
   --site-border-strong:   #b3b4b6; /* line-strong */
-  --site-border-stronger: #b3b4b6; /* line-strong */
 
   /* --- Ink ------------------------------------------------------------- */
   --site-ink:          #1a1d24; /* ink-1 */
@@ -198,33 +172,20 @@
   --site-accent-text:    #7638c0; /* Afterglow as text, icons */
   --site-ring:           #7638c0; /* afterglow-focus */
   --site-accent-soft:    #ede5fe; /* afterglow-soft */
-  --site-accent-wash:    #e9ebff; /* selection */
 
   /* --- Starlight Blue (accent) ---------------------------------------- */
   --site-accent-2:       #1e63b8;
   --site-accent-2-soft:  #ddebfe;
-  --site-accent-2-wash:  #ddebfe;
   --site-accent-2-label: #ffffff; /* label on a starlight fill */
+  --site-selection-pct:  18%;      /* starlight mix for text selection */
 
   /* --- Status ---------------------------------------------------------- */
   --site-status-success:      #00713f; /* aurora */
   --site-status-success-soft: #ddf6e4;
-  --site-status-success-line: #a4dab5;
   --site-status-warning:      #8d5401; /* sunset */
-  --site-status-warning-soft: #ffeed4;
-  --site-status-warning-line: #efc68f;
   --site-status-error:        #bb262c; /* ember */
   --site-status-error-soft:   #fee9e7;
-  --site-status-error-line:   #f5b9b4;
   --site-status-info:         #03698e; /* moonlight */
-  --site-status-info-soft:    #ddf2fe;
-  --site-status-info-line:    #a4d2eb;
-
-  /* --- Destructive ----------------------------------------------------- */
-  --site-destructive:         #bb262c; /* ember-solid */
-  --site-destructive-hover:   #ae1b24;
-  --site-destructive-pressed: #a0171f;
-  --site-destructive-ring:    #94151d;
 
   /* --- Elevation: three shadows over flat, nothing else ---------------- */
   --site-elevation-raised:   0 1px 1px rgb(26 29 36 / 0.04), 0 1px 3px rgb(26 29 36 / 0.06);
@@ -244,24 +205,18 @@
   --site-bg-raised:  #191c24; /* ground-raised */
   --site-bg-overlay: #292e37; /* ground-overlay */
   --site-surface:    #1e222a; /* ground-card */
-  --site-surface-2:  #292e37; /* ground-overlay */
   --site-wash-hover-pct: 7%;
   --site-wash-press-pct: 11%;
   --site-wash:       color-mix(in oklab, var(--site-ink) 7%, transparent); /* hover wash */
   --site-wash-2:     color-mix(in oklab, var(--site-ink) 11%, transparent); /* press wash */
-  --site-wash-3:     color-mix(in oklab, var(--site-ink) 15%, transparent); /* press on a washed thing */
   --site-code-bg:    #13161d; /* ground-deep */
-  --site-code-bg-2:  #191c24; /* ground-raised */
-  --site-chrome-bg:  #191c24; /* ground-raised */
   --site-scrim:      rgba(19, 22, 29, 0.6);
+  --site-cut-shade:  rgb(0 0 0 / 0.38);    /* edge of a frame the window cuts */
 
   /* --- Lines ----------------------------------------------------------- */
   --site-border-subtle:   #232831; /* line-subtle */
-  --site-rule-2:          #232831; /* line-subtle */
   --site-border:          #2d323d; /* line */
-  --site-rule:            #2d323d; /* line */
   --site-border-strong:   #444a57; /* line-strong */
-  --site-border-stronger: #444a57; /* line-strong */
 
   /* --- Ink ------------------------------------------------------------- */
   --site-ink:          #eceef4; /* ink-1 */
@@ -278,33 +233,20 @@
   --site-accent-text:    #cbaeff;
   --site-ring:           #a274ec; /* afterglow-focus, 4:1 or more on every surface */
   --site-accent-soft:    #3e2a5d; /* afterglow-soft */
-  --site-accent-wash:    #292a49; /* selection */
 
   /* --- Starlight Blue (accent) ---------------------------------------- */
   --site-accent-2:       #8cbcff;
   --site-accent-2-soft:  #1e3457;
-  --site-accent-2-wash:  #1e3457;
   --site-accent-2-label: #13161d; /* label on a starlight fill */
+  --site-selection-pct:  24%;      /* starlight mix for text selection */
 
   /* --- Status ---------------------------------------------------------- */
   --site-status-success:      #65d391; /* aurora */
   --site-status-success-soft: #153522;
-  --site-status-success-line: #1f613c;
   --site-status-warning:      #f4b353; /* sunset */
-  --site-status-warning-soft: #3f2b0d;
-  --site-status-warning-line: #714d14;
   --site-status-error:        #ff8781; /* ember */
   --site-status-error-soft:   #47201f;
-  --site-status-error-line:   #813937;
   --site-status-info:         #6fc7f2; /* moonlight */
-  --site-status-info-soft:    #0b3345;
-  --site-status-info-line:    #185b78;
-
-  /* --- Destructive ----------------------------------------------------- */
-  --site-destructive:         #c72c34; /* ember-solid */
-  --site-destructive-hover:   #b82530;
-  --site-destructive-pressed: #a51d27;
-  --site-destructive-ring:    #a01722;
 
   /* --- Elevation: a lit top edge does what a shadow cannot in dark ----- */
   --site-elevation-raised:   inset 0 1px 0 rgb(255 255 255 / 0.03), 0 1px 2px rgb(0 0 0 / 0.3);
@@ -318,13 +260,13 @@
  * ==========================================================================*/
 
 @media (max-width: 1024px) {
-  :root { --site-fs-lede: var(--site-fs-9); }
+  :root { --site-fs-lede: var(--site-fs-6); }
 }
 @media (max-width: 900px) {
-  :root { --site-fs-display: var(--site-fs-14); }
+  :root { --site-fs-display: var(--site-fs-11); }
 }
 @media (max-width: 640px) {
-  :root { --site-fs-heading-1: var(--site-fs-12); }
+  :root { --site-fs-heading-1: var(--site-fs-9); }
   :root {
     --site-control-h:   36px;
     --site-control-px:  14px;
@@ -332,15 +274,5 @@
   }
 }
 @media (max-width: 560px) {
-  :root { --site-fs-display: var(--site-fs-13); }
-}
-/* On small phones, drop CellContent lg/md pads one step so Chapter cards
- * (and any other pad="lg"/"md" surface) don't eat the whole viewport. */
-@media (max-width: 425px) {
-  :root {
-    --site-pad-lg-y: calc(var(--site-u) * 2);
-    --site-pad-lg-x: calc(var(--site-u) * 2.7);
-    --site-pad-md-y: calc(var(--site-u) * 1.25);
-    --site-pad-md-x: calc(var(--site-u) * 1.7);
-  }
+  :root { --site-fs-display: var(--site-fs-10); }
 }

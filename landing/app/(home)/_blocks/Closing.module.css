@@ -1,4 +1,4 @@
-/* Closing — three channel cards: icon and arrow, name, what you get there, the
+/* Closing — three channel cards: icon, name and arrow, what you get there, the
  * action. Hover rings it, as the hero deck does. */
 
 .grid {
@@ -22,17 +22,18 @@
   text-decoration: none;
   outline: 2px solid transparent;
   outline-offset: 2px;
-  transition: outline-color 200ms var(--site-ease-out);
+  transition: outline-color var(--site-dur-base) var(--site-ease-out);
 }
-/* Hover: the hero deck's ring, a 2px accent outline set off by 2px. */
-.card:hover,
-.card:focus-visible { outline-color: var(--site-accent); }
+/* Hover: the hero deck's ring, a 2px accent outline set off by 2px. Keyboard
+ * focus keeps the global ring color. */
+.card:hover { outline-color: var(--site-accent); }
+.card:focus-visible { outline-color: var(--site-ring); }
 
 .top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 32px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .icon {
@@ -47,6 +48,7 @@
 }
 
 .arrow {
+  margin-left: auto;
   color: var(--site-ink-4);
   transition: transform var(--site-dur-base) var(--site-ease-out);
 }
@@ -54,15 +56,14 @@
 
 .name {
   font-family: var(--font-display);
-  font-size: var(--site-fs-9);
+  font-size: var(--site-fs-6);
   font-weight: var(--site-fw-title);
   letter-spacing: var(--site-tr-title);
   color: var(--site-ink);
 }
 
 .line {
-  margin-top: 8px;
-  font-size: var(--site-fs-5);
+  font-size: var(--site-fs-body);
   line-height: 1.5;
   color: var(--site-ink-2);
   text-wrap: pretty;
@@ -71,12 +72,11 @@
 .action {
   margin-top: auto;
   padding-top: 24px;
-  font-size: var(--site-fs-5);
+  font-size: var(--site-fs-3);
   font-weight: var(--site-fw-medium);
   color: var(--site-ink);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 860px) {
   .grid { grid-template-columns: 1fr; gap: 12px; }
-  .top { margin-bottom: 20px; }
 }

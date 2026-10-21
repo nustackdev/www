@@ -28,25 +28,26 @@
 }
 
 /* The reader's own space, on top of the stack: same columns as the layers,
- * but not one of them. No number and no line above it: a dashed Afterglow
- * frame, still to be filled, with a plus where the number goes. */
-.list > li:has(+ .yours)::after { display: none; }
-.yours {
-  margin: 16px calc(-1 * clamp(16px, 2vw, 24px)) 0;
-  padding-inline: clamp(16px, 2vw, 24px);
-  border: 1px dashed var(--site-accent-line);
-  border-radius: var(--site-r-xl);
-  background: color-mix(in oklab, var(--site-accent-soft) 40%, transparent);
+ * but not one of them. A dashed Afterglow line above it, still to be filled,
+ * a plus where the number goes and the way in, in Afterglow. */
+.list > li:has(+ .yours)::after {
+  background: repeating-linear-gradient(
+    to right,
+    var(--site-accent-line) 0 6px,
+    transparent 6px 12px
+  );
+  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
 }
 .plus {
   display: inline-grid;
   place-items: center;
   width: 32px;
   height: 32px;
-  border: 1px dashed var(--site-accent-line);
   border-radius: var(--site-r-md);
+  background: var(--site-accent-soft);
   color: var(--site-accent-text);
 }
+.yours .gh { color: var(--site-accent-text); }
 
 .row {
   display: grid;
@@ -58,9 +59,12 @@
   color: inherit;
 }
 
+/* Centred in the plus tile's width, so numbers and the plus share one axis. */
 .num {
+  width: 32px;
+  text-align: center;
   font-family: var(--font-mono);
-  font-size: var(--site-fs-7);
+  font-size: var(--site-fs-4);
   color: var(--site-ink-3);
   transition: color var(--site-t);
 }
@@ -72,17 +76,17 @@
 }
 
 .role {
-  font-size: var(--site-fs-5);
-  font-weight: 500;
+  font-size: var(--site-fs-3);
+  font-weight: var(--site-fw-medium);
   color: var(--site-accent-text);
 }
 
 .name {
   font-family: var(--font-display);
   font-weight: var(--site-fw-title);
-  font-size: clamp(22px, 2.2vw, 28px);
-  line-height: 1.15;
-  letter-spacing: var(--site-tr-display);
+  font-size: clamp(20px, 1.8vw, 24px);
+  line-height: 1.2;
+  letter-spacing: var(--site-tr-title);
   color: var(--site-ink);
 }
 
@@ -98,8 +102,8 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: var(--site-fs-7);
-  font-weight: 500;
+  font-size: var(--site-fs-4);
+  font-weight: var(--site-fw-medium);
   color: var(--site-ink-3);
   white-space: nowrap;
   transition: color var(--site-t);
@@ -125,5 +129,7 @@
   }
   .line { grid-column: 2 / 4; }
   .gh { grid-column: 3; grid-row: 1; align-self: center; }
-  .plus { width: 28px; height: 28px; }
+  .num,
+  .plus { width: 28px; }
+  .plus { height: 28px; }
 }

@@ -3,7 +3,7 @@ import s from './Container.module.css';
 
 export interface ContainerProps {
   children?: ReactNode;
-  /** Max content width (px). Default 1200. */
+  /** Max content width (px). Default --site-w-main (1200). */
   maxWidth?: number;
   className?: string;
   style?: CSSProperties;
@@ -15,7 +15,7 @@ export interface ContainerProps {
  */
 export function Container({
   children,
-  maxWidth = 1200,
+  maxWidth,
   className,
   style,
 }: ContainerProps) {
@@ -23,7 +23,7 @@ export function Container({
   return (
     <div
       className={cls}
-      style={{ ['--site-kal-max-width' as string]: `${maxWidth}px`, ...style }}
+      style={maxWidth ? { maxWidth, ...style } : style}
     >
       {children}
     </div>

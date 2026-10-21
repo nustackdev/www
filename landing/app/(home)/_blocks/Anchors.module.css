@@ -71,11 +71,9 @@
 .dim { color: var(--site-ink-twilight); }
 
 .slip figcaption {
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--site-fs-1);
   line-height: 1;
-  letter-spacing: 0.02em;
-  color: var(--site-ink-4);
+  color: var(--site-ink-3);
 }
 
 /* Depths. */
@@ -89,7 +87,7 @@
 .mid figcaption,
 .far figcaption { display: none; }
 
-@media (max-width: 760px) {
+@media (max-width: 640px) {
   .wall {
     gap: 12px;
     -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
@@ -103,7 +101,7 @@
 /* Still: the reactions and the anchors as wrapped lists, the asides gone. */
 @media (prefers-reduced-motion: reduce) {
   .wall {
-    max-width: 1200px;
+    max-width: var(--site-w-main);
     margin-inline: auto;
     padding-inline: var(--site-container-pad-x);
     -webkit-mask-image: none;

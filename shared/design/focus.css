@@ -1,6 +1,6 @@
 /* =============================================================================
- * Focus and motion, the two a11y rules every zone shares (design language:
- * a11y.md, motion.md).
+ * Focus, motion and selection, the rules every zone shares (design language:
+ * a11y.md, motion.md, color.md).
  *
  * One ring, the same everywhere: 2px Afterglow (--site-ring), 2px off the
  * element, following its radius. Keyboard focus only, a click never paints
@@ -22,6 +22,11 @@
 /* Fields carry their own edge, focus moves it to the ring color. */
 :where(input, textarea, select):focus-visible {
   outline-offset: 0;
+}
+
+/* Selected text: a Starlight tint, ink keeps its own color. */
+::selection {
+  background-color: var(--site-selection);
 }
 
 @media (prefers-reduced-motion: reduce) {

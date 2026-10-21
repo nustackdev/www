@@ -8,15 +8,19 @@
 
 .border { border-bottom: 1px solid var(--site-border); }
 
+/* The eyebrow over the row, title and description on one baseline under it. */
 .head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: end;
   gap: 20px 64px;
 }
-
-/* The eyebrow runs across both columns, title and description sit on one baseline under it. */
-.eyebrow { grid-column: 1 / -1; margin-bottom: -8px; }
 
 .title {
   margin: 0;
@@ -41,11 +45,11 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: var(--site-control-gap);
 }
 
 @media (max-width: 860px) {
-  .head { grid-template-columns: 1fr; }
+  .row { grid-template-columns: 1fr; }
 }
 /* Phones: full width and stacked, as the section's. */
 @media (max-width: 640px) {

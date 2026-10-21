@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ElementType, ReactNode } from 'react';
 import { cn } from '../../lib/cn';
 import s from './Kicker.module.css';
 
@@ -7,14 +7,16 @@ interface Props {
   tone?: 'accent' | 'muted';
   /** Makes the kicker a link to this anchor, eg "#spaces", for sharing the section. */
   href?: string;
+  /** The element, `p` by default; eg `h2` when the kicker titles a section. */
+  as?: ElementType;
   className?: string;
   children: ReactNode;
 }
 
 /** Kicker — the short name that sits over a title. Plain words, not caps. */
-export function Kicker({ tone = 'muted', href, className, children }: Props) {
+export function Kicker({ tone = 'muted', href, as: Tag = 'p', className, children }: Props) {
   return (
-    <p className={cn(s.kicker, s[tone], className)}>
+    <Tag className={cn(s.kicker, s[tone], className)}>
       {href ? (
         <a className={s.anchor} href={href}>
           {children}
@@ -25,6 +27,6 @@ export function Kicker({ tone = 'muted', href, className, children }: Props) {
       ) : (
         children
       )}
-    </p>
+    </Tag>
   );
 }

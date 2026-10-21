@@ -75,7 +75,7 @@
   border: 1px solid var(--site-border);
   background: var(--site-bg-overlay);
   box-shadow: var(--site-elevation-raised);
-  font-size: var(--site-fs-8);
+  font-size: var(--site-fs-5);
   line-height: 1.4;
   pointer-events: none;
 }
@@ -87,7 +87,7 @@
   align-items: baseline;
   gap: 14px;
   min-width: 0;
-  animation: rise 260ms var(--site-ease-out) both;
+  animation: rise var(--site-dur-slow) var(--site-ease-out) both;
 }
 @keyframes rise {
   from { opacity: 0; transform: translateY(4px); }
@@ -100,9 +100,9 @@
   font-variant-numeric: tabular-nums;
   color: var(--site-accent-text);
 }
-.of { color: var(--site-ink-4); }
+.of { color: var(--site-ink-3); }
 .text { min-width: 0; text-wrap: pretty; }
-.title { font-weight: 600; color: var(--site-ink); }
+.title { font-weight: var(--site-fw-semibold); color: var(--site-ink); }
 .title::after { content: " "; }
 .note { color: var(--site-ink-3); }
 
@@ -125,10 +125,10 @@
   position: relative;
   width: 100%;
   height: 3px;
-  border-radius: 999px;
+  border-radius: var(--site-r-full);
   overflow: hidden;
   background: var(--site-border);
-  transition: height 160ms ease;
+  transition: height var(--site-dur-fast) var(--site-ease-out);
 }
 .bar:hover .track { height: 5px; }
 
@@ -171,7 +171,7 @@
     bottom: 12px;
     max-width: calc(var(--seen) - 24px);
     padding: 6px 10px;
-    font-size: var(--site-fs-6);
+    font-size: var(--site-fs-4);
   }
 }
 
@@ -196,7 +196,7 @@
     right: calc((100cqw - 100vw) / 2);
     z-index: 5;
     width: 30px;
-    background: linear-gradient(to left, rgb(0 0 0 / 0.38), rgb(0 0 0 / 0.12) 45%, transparent);
+    background: linear-gradient(to left, var(--site-cut-shade), color-mix(in oklab, var(--site-cut-shade) 32%, transparent) 45%, transparent);
     pointer-events: none;
   }
 }

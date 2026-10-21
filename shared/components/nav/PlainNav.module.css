@@ -20,7 +20,7 @@
   align-items: center;
   gap: 2px;
   padding: 6px 12px;
-  border-radius: 999px;
+  border-radius: var(--site-r-full);
   border: 1px solid var(--site-border);
   background: color-mix(in oklab, var(--site-bg-overlay) 72%, transparent);
   -webkit-backdrop-filter: blur(30px);
@@ -28,8 +28,8 @@
   box-shadow: var(--site-elevation-raised);
   transform: translateZ(0);
   font-family: var(--font-display);
-  font-size: var(--site-fs-6);
-  font-weight: 500;
+  font-size: var(--site-fs-4);
+  font-weight: var(--site-fw-medium);
   letter-spacing: 0.005em;
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -43,7 +43,7 @@
   align-items: center;
   justify-content: center;
   height: 35px;
-  border-radius: 999px;
+  border-radius: var(--site-r-full);
   text-decoration: none;
   white-space: nowrap;
   transition: color var(--site-t), background var(--site-t);
@@ -60,7 +60,7 @@
 .ask:hover,
 .ask:focus-visible {
   color: var(--site-ink);
-  background: var(--site-wash-2);
+  background: var(--site-wash);
 }
 
 .short { display: none; }

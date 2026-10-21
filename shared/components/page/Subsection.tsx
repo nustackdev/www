@@ -45,12 +45,12 @@ export function Subsection({
     <article id={id} className={cn(s.root, border && s.border, className)}>
       <div className={s.head}>
         {eyebrow ? (
-          <Kicker href={id ? `#${id}` : undefined} className={s.eyebrow}>
-            {eyebrow}
-          </Kicker>
+          <Kicker href={id ? `#${id}` : undefined}>{eyebrow}</Kicker>
         ) : null}
-        <h3 className={s.title}>{tagline}</h3>
-        {description ? <p className={s.desc}>{description}</p> : null}
+        <div className={s.row}>
+          <h3 className={s.title}>{tagline}</h3>
+          {description ? <p className={s.desc}>{description}</p> : null}
+        </div>
       </div>
       {lead}
       {media}

@@ -1,5 +1,6 @@
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
 import { Button } from '@www/shared/components/controls/Button';
+import { Kicker } from '@www/shared/components/text/Kicker';
 import { Gallery } from './Gallery';
 import s from './Hero.module.css';
 
@@ -12,7 +13,7 @@ export function Hero() {
     <section className={s.root}>
       <div className={s.head}>
         <div className={s.titleBlock}>
-          <p className={s.eyebrow}>Open-source · Self-hosted · Data stays local</p>
+          <Kicker tone="accent">Open-source · Self-hosted · Data stays local</Kicker>
           <h1 className={s.title}>
             Computational space
             <br />

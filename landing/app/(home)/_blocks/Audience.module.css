@@ -43,7 +43,7 @@
   background: none;
   font: inherit;
   /* As a FeatureGrid title, so the two blocks' heads read the same. */
-  font-size: var(--site-fs-9);
+  font-size: var(--site-fs-6);
   font-weight: var(--site-fw-title);
   letter-spacing: var(--site-tr-title);
   text-align: left;
@@ -78,13 +78,13 @@
   font-weight: var(--site-fw-title);
   font-size: clamp(20px, 1.8vw, 24px);
   line-height: 1.2;
-  letter-spacing: var(--site-tr-display);
+  letter-spacing: var(--site-tr-title);
   color: var(--site-ink);
 }
 
 .body {
   margin: 0;
-  font-size: var(--site-fs-8);
+  font-size: var(--site-fs-5);
   line-height: 1.5;
   color: var(--site-ink-2);
   text-wrap: pretty;
@@ -97,7 +97,7 @@
   margin: 8px 0 0;
   padding: 0;
   list-style: none;
-  font-size: var(--site-fs-8);
+  font-size: var(--site-fs-5);
   line-height: 1.45;
   color: var(--site-ink-2);
 }
@@ -141,7 +141,7 @@
     transition: color var(--site-t);
   }
   .cell[data-open] .who { color: var(--site-accent-text); }
-  .who:focus-visible { outline: var(--site-ring-width) solid var(--site-ring); outline-offset: var(--site-ring-offset); border-radius: var(--site-r-md); }
+  .who:focus-visible { border-radius: var(--site-r-md); }
   .cell:first-child .who { padding-top: 0; }
 
   .chev {
@@ -156,7 +156,7 @@
     display: grid;
     grid-template-rows: 0fr;
     opacity: 0;
-    transition: grid-template-rows 280ms var(--site-ease-out), opacity 200ms ease;
+    transition: grid-template-rows var(--site-dur-slow) var(--site-ease-out), opacity var(--site-dur-base) var(--site-ease-out);
   }
   .cell[data-open] .fold { grid-template-rows: 1fr; opacity: 1; }
   .folded {

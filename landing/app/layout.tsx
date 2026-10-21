@@ -1,5 +1,5 @@
 import './global.css';
-import { Inter } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import { JsonLd } from '@www/shared/components/meta/JsonLd';
 import { organizationLd, websiteLd } from '@www/shared/lib/jsonld';
 import { ThemeProvider } from '@www/shared/components/nav/ThemeProvider';
@@ -8,6 +8,12 @@ import { siteUrl } from '@/lib/shared';
 const inter = Inter({
   subsets: ['latin'],
   axes: ['opsz'],
+});
+
+// Declares the 'JetBrains Mono' family that --font-mono names first.
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
 });
 
 // Bump `v` whenever the card changes: link previews (Telegram, X, Slack) cache the image by url.
@@ -48,7 +54,7 @@ export const viewport = {
 
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html lang="en" className={`${inter.className} ${mono.variable}`} suppressHydrationWarning>
       <body>
         <ThemeProvider>{children}</ThemeProvider>
         <JsonLd data={[organizationLd(), websiteLd()]} />

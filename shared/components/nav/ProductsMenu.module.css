@@ -49,8 +49,8 @@
 }
 .groupName {
   font-family: var(--font-display);
-  font-size: var(--site-fs-8);
-  font-weight: 500;
+  font-size: var(--site-fs-5);
+  font-weight: var(--site-fw-medium);
   color: var(--site-ink);
   letter-spacing: 0.005em;
   display: block;
@@ -58,7 +58,7 @@
 }
 .groupTagline {
   font-family: var(--font-display);
-  font-size: var(--site-fs-3);
+  font-size: var(--site-fs-2);
   font-weight: 400;
   color: var(--site-ink-3);
   line-height: 1.35;
@@ -104,7 +104,7 @@
   gap: 4px;
   padding: 0 var(--site-gap-tight);
   font-family: var(--font-display);
-  font-size: var(--site-fs-4);
+  font-size: var(--site-fs-3);
   font-weight: var(--site-fw-medium);
   color: var(--site-ink-2);
   text-decoration: none;
@@ -141,14 +141,14 @@
 
 .itemName {
   font-family: var(--font-display);
-  font-size: var(--site-fs-6);
-  font-weight: 500;
+  font-size: var(--site-fs-4);
+  font-weight: var(--site-fw-medium);
   color: var(--site-ink);
   letter-spacing: 0.005em;
 }
 .itemDesc {
   font-family: var(--font-display);
-  font-size: var(--site-fs-3);
+  font-size: var(--site-fs-2);
   font-weight: 400;
   color: var(--site-ink-3);
   line-height: 1.3;

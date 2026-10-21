@@ -1,5 +1,5 @@
 import './global.css';
-import { Inter } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { SidebarTabsDropdown } from 'fumadocs-ui/components/sidebar/tabs/dropdown';
 import { getLayoutTabs } from 'fumadocs-ui/layouts/shared';
@@ -13,6 +13,12 @@ import { source } from '@/lib/source';
 const inter = Inter({
   subsets: ['latin'],
   axes: ['opsz'],
+});
+
+// Declares the 'JetBrains Mono' family that --font-mono names first.
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
 });
 
 const TITLE = 'Docs';
@@ -63,7 +69,7 @@ const tabsDropdown = (
 
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html lang="en" className={`${inter.className} ${mono.variable}`} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
         <DocsProvider>
           <DocsLayout tree={tree} tabs={false} sidebar={{ banner: tabsDropdown }} {...baseOptions()}>

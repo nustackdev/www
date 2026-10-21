@@ -34,12 +34,13 @@
   --color-fd-primary:              var(--site-accent-text);
   --color-fd-primary-foreground:   var(--site-bg);
 
-  /* Secondary — subtle button / chip surface inside docs. */
+  /* Secondary: subtle button / chip surface inside docs. */
   --color-fd-secondary:            var(--site-wash);
   --color-fd-secondary-foreground: var(--site-ink);
 
-  /* Interaction bg (hover/active), not brand. */
-  --color-fd-accent:               var(--site-wash-2);
+  /* Interaction bg, not brand: the hover wash. Selected rows take the
+   * press wash (see the active page below). */
+  --color-fd-accent:               var(--site-wash);
   --color-fd-accent-foreground:    var(--site-ink);
 
   /* --- Status ---------------------------------------------------------- */
@@ -69,4 +70,113 @@
 #nd-sidebar a[data-active="true"] {
   background-color: var(--site-wash-2);
   color: var(--site-ink);
+}
+
+/* neutral.css retints the sidebar in dark with plain grays (`.dark
+ * #nd-sidebar`), which outranks the :root mapping above. Same tokens here,
+ * at that specificity. */
+#nd-sidebar,
+.dark #nd-sidebar {
+  --color-fd-muted:            var(--site-wash);
+  --color-fd-secondary:        var(--site-wash);
+  --color-fd-muted-foreground: var(--site-ink-3);
+}
+
+/* =============================================================================
+ * Shape and motion: fumadocs' tailwind defaults onto the site steps.
+ * ==========================================================================*/
+
+:root {
+  /* rounded-xl is fumadocs' card radius (cards, callouts, code blocks,
+   * dialogs), 2xl its sheet radius. Gentle, never pillowy. */
+  --radius-xl:  var(--site-r-lg);
+  --radius-2xl: var(--site-r-xl);
+
+  --animate-fd-popover-in:  fd-popover-in var(--site-dur-base) var(--site-ease-out);
+  --animate-fd-popover-out: fd-popover-out var(--site-dur-base) var(--site-ease-in);
+  --animate-fd-dialog-in:   fd-dialog-in var(--site-dur-slow) var(--site-ease-out);
+  --animate-fd-dialog-out:  fd-dialog-out var(--site-dur-slow) var(--site-ease-in);
+  --animate-fd-fade-in:     fd-fade-in var(--site-dur-slow) var(--site-ease-out);
+  --animate-fd-fade-out:    fd-fade-out var(--site-dur-slow) var(--site-ease-in);
+}
+
+/* Popovers are floating: a solid overlay ground, the floating shadow. */
+[class*="animate-fd-popover-in"] {
+  border-radius: var(--site-r-md);
+  background-color: var(--site-bg-overlay);
+  backdrop-filter: none;
+  box-shadow: var(--site-elevation-floating);
+}
+
+/* The search dialog is modal. Its field sits flush in the header, like the
+ * site search, so it shows no ring of its own. */
+[class*="animate-fd-dialog-in"] {
+  border-radius: var(--site-r-lg);
+  box-shadow: var(--site-elevation-modal);
+}
+[class*="animate-fd-dialog-in"] input:focus-visible {
+  outline: none;
+}
+
+/* Callouts are flat, cards in the document carry no shadow. */
+[style*="--callout-color"] {
+  box-shadow: none;
+}
+
+/* Code blocks: the same well as the landing and blog, a line edge, flat.
+ * The radius comes from --radius-xl above (tabbed blocks square their top). */
+figure.shiki {
+  border-color: var(--site-border);
+  background-color: var(--site-code-bg);
+  box-shadow: none;
+}
+/* The scroller is clipped by the frame, so its ring is drawn inside. */
+figure.shiki [role="region"]:focus-visible {
+  outline-offset: calc(var(--site-ring-width) * -1);
+}
+
+/* =============================================================================
+ * Focus: the site ring from focus.css (unlayered, so it already beats
+ * `focus-visible:outline-none`). This drops fumadocs' ring-2 shadow, which
+ * would paint a second ring with no offset.
+ * ==========================================================================*/
+
+:focus-visible {
+  --tw-ring-shadow: 0 0 #0000;
+}
+
+/* =============================================================================
+ * Prose: inline code, keys and links read the same as in the blog.
+ * ==========================================================================*/
+
+.prose {
+  --tw-prose-kbd-shadows: transparent;
+}
+
+.prose :where(code, kbd):not(:where([class~=not-prose], [class~=not-prose] *)) {
+  padding: 0.15em 0.4em;
+  border: 1px solid var(--site-border-subtle);
+  border-radius: var(--site-r-sm);
+  background: var(--site-code-bg);
+  color: var(--site-ink);
+  font-size: 0.9em;
+}
+.prose :where(code):not(:where([class~=not-prose], [class~=not-prose] *)) {
+  font-weight: 400;
+}
+
+/* Text links: ink with a quiet underline that fills in on hover. Color is
+ * rare, so it is not spent on links. */
+.prose :where(a:not([data-card])):not(:where([class~=not-prose], [class~=not-prose] *)) {
+  color: var(--site-ink);
+  font-weight: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--site-ink) 30%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--site-t);
+}
+.prose :where(a:not([data-card]):hover):not(:where([class~=not-prose], [class~=not-prose] *)) {
+  opacity: 1;
+  text-decoration-color: var(--site-ink);
 }

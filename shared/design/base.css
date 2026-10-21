@@ -2,7 +2,7 @@
  * Base page styles for apps that do not run fumadocs (landing, blog).
  * Import after tailwindcss (for preflight) and tokens.css. Docs gets the
  * same result from fumadocs' preset through its bridge sheet, and imports
- * focus.css on its own.
+ * focus.css on its own; its global.css repeats the type rules below.
  * ==========================================================================*/
 
 @import './focus.css';
@@ -28,5 +28,17 @@
     min-height: 100vh;
     background-color: var(--site-bg);
     color: var(--site-ink);
+    /* Inter's site cut (cv01, ss03) and its copy tracking, for every
+     * zone. Titles set their own tracking. */
+    font-feature-settings: "cv01", "ss03";
+    letter-spacing: var(--site-tr-body);
+  }
+
+  /* Mono keeps its own metrics: no Inter features, no tracking, no
+   * ligatures. */
+  :where(code, samp, pre) {
+    font-feature-settings: normal;
+    font-variant-ligatures: none;
+    letter-spacing: 0;
   }
 }

@@ -14,9 +14,10 @@
 .space-sm { --section-pad: clamp(32px, 4vw, 56px); }
 .space-none { --section-pad: 0px; }
 
-/* Layout: the gap under the heading. Content reads with it, subsections stand apart. */
-.content { gap: clamp(40px, 5vw, 64px); }
-.subsections { gap: clamp(64px, 8vw, 112px); }
+/* Layout: the gap under the heading. Content reads with it, subsections stand
+ * apart. Children read --section-gap to pull in against it. */
+.content { --section-gap: clamp(40px, 5vw, 64px); gap: var(--section-gap); }
+.subsections { --section-gap: clamp(64px, 8vw, 112px); gap: var(--section-gap); }
 
 /* Edge to edge, past the main column. */
 .border::before {
@@ -46,7 +47,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: var(--site-control-gap);
 }
 /* Phones: full width and stacked, as the hero's. */
 @media (max-width: 640px) {

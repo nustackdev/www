@@ -2,8 +2,7 @@
 import { render } from 'astro:content';
 import { ArrowLeft } from 'lucide-react';
 import Base from '../../layouts/Base.astro';
-import { Heading, Lede } from '@www/shared/components/text';
-import { MonoKicker } from '@www/shared/components/meta/MonoKicker';
+import { Heading, Kicker, Lede } from '@www/shared/components/text';
 import { blogPostingLd } from '@www/shared/lib/jsonld';
 import { formatDate } from '@www/shared/lib/date';
 import Comments from '../../components/Comments';
@@ -43,14 +42,14 @@ const image = ogImagePath(post.id);
         <span class="sep">·</span>
         <span>by {author}</span>
       </div>
-      <Heading level={1}>{title}</Heading>
+      <Heading level={1} as="h1">{title}</Heading>
       <Lede className="lede">{description}</Lede>
       {
         tags.length > 0 && (
           <ul class="tags">
             {tags.map((tag) => (
               <li>
-                <MonoKicker size="xs" tracking="wide">{tag}</MonoKicker>
+                <Kicker as="span">{tag}</Kicker>
               </li>
             ))}
           </ul>
@@ -63,7 +62,7 @@ const image = ogImagePath(post.id);
     </article>
 
     <section class="comments" aria-label="Comments" data-pagefind-ignore>
-      <MonoKicker as="h2" size="xs" tracking="wider">Comments</MonoKicker>
+      <Kicker as="h2">Comments</Kicker>
       <Comments client:visible />
     </section>
   </div>
@@ -82,7 +81,7 @@ const image = ogImagePath(post.id);
     gap: var(--site-gap-tight);
     margin-bottom: var(--site-gap-normal);
     color: var(--site-ink-3);
-    font-size: 0.875rem;
+    font-size: var(--site-fs-4);
     font-variant-numeric: tabular-nums;
   }
   .back {
@@ -122,7 +121,7 @@ const image = ogImagePath(post.id);
   .tags li {
     padding: 3px 10px;
     border: 1px solid var(--site-border);
-    border-radius: 999px;
+    border-radius: var(--site-r-full);
     color: var(--site-ink-3);
   }
   .comments {

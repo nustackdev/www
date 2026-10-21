@@ -34,7 +34,7 @@
   align-items: center;
   gap: 2px;
   padding: 6px 10px;
-  border-radius: 999px;
+  border-radius: var(--site-r-full);
   border: 1px solid var(--site-border);
   background: color-mix(in oklab, var(--site-bg-overlay) 72%, transparent);
   -webkit-backdrop-filter: blur(30px);
@@ -42,8 +42,8 @@
   transform: translateZ(0);
   will-change: backdrop-filter;
   font-family: var(--font-display);
-  font-size: var(--site-fs-6);
-  font-weight: 500;
+  font-size: var(--site-fs-4);
+  font-weight: var(--site-fw-medium);
   letter-spacing: 0.005em;
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -57,7 +57,7 @@
   justify-content: center;
   width: 35px;
   height: 35px;
-  border-radius: 999px;
+  border-radius: var(--site-r-full);
   border: 0;
   background: transparent;
   color: var(--site-ink-2);
@@ -68,7 +68,7 @@
 .navIcon:hover,
 .navIcon:focus-visible {
   color: var(--site-ink);
-  background: var(--site-wash-2);
+  background: var(--site-wash);
 }
 
 .navWord {
@@ -82,14 +82,17 @@
   color: var(--site-ink-2);
   cursor: pointer;
   text-decoration: none;
-  border-radius: 999px;
+  border-radius: var(--site-r-full);
   font: inherit;
   letter-spacing: inherit;
   white-space: nowrap;
   transition: color var(--site-t), background var(--site-t);
 }
 .navWord:hover,
-.navWord:focus-visible,
+.navWord:focus-visible {
+  color: var(--site-ink);
+  background: var(--site-wash);
+}
 .navWord[data-open='true'] {
   color: var(--site-ink);
   background: var(--site-wash-2);
@@ -189,7 +192,7 @@
   /* HIG minimum 44px for comfortable thumb targets. */
   width: 44px;
   height: 44px;
-  border-radius: 999px;
+  border-radius: var(--site-r-full);
   border: 1px solid var(--site-border);
   background: transparent;
   color: var(--site-ink-2);
@@ -202,7 +205,7 @@
 .sheetClose:hover,
 .sheetClose:focus-visible {
   color: var(--site-ink);
-  background: var(--site-wash-2);
+  background: var(--site-wash);
 }
 /* Sheet rows share one flat treatment: same left inset, hairline between
    top-level rows, no tiles. Hover/focus only lifts the ink. The inset is a
@@ -211,7 +214,7 @@
 
 .sheetAccordion,
 .sheetTopLink {
-  border-bottom: 1px solid var(--site-rule);
+  border-bottom: 1px solid var(--site-border);
 }
 
 .sheetTopLink,
@@ -223,8 +226,8 @@
   color: var(--site-ink);
   text-decoration: none;
   font-family: var(--font-display);
-  font-size: var(--site-fs-8);
-  font-weight: 500;
+  font-size: var(--site-fs-5);
+  font-weight: var(--site-fw-medium);
   cursor: pointer;
   transition: color var(--site-t);
 }
@@ -252,8 +255,8 @@
   color: var(--site-ink);
   text-decoration: none;
   font-family: var(--font-display);
-  font-size: var(--site-fs-6);
-  font-weight: 500;
+  font-size: var(--site-fs-4);
+  font-weight: var(--site-fw-medium);
   transition: color var(--site-t);
 }
 /* Touch keeps :hover sticky after a tap, so only real pointers get it. */
@@ -278,7 +281,7 @@
   transform: translateX(2px);
 }
 .sheetLinkDesc {
-  font-size: var(--site-fs-3);
+  font-size: var(--site-fs-2);
   font-weight: 400;
   color: var(--site-ink-3);
 }

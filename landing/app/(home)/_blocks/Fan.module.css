@@ -7,7 +7,7 @@
   --tuck: 84px;
 
   /* The section's gap under the heading, pulled in to the fan's own air. */
-  margin-top: calc(clamp(24px, 3vw, 40px) - clamp(40px, 5vw, 64px));
+  margin-top: calc(clamp(24px, 3vw, 40px) - var(--section-gap));
 }
 
 .install {
@@ -67,7 +67,6 @@
   border: 1px solid var(--site-border);
   border-radius: var(--site-r-xl);
 }
-.card[data-elev="floating"] .fc { box-shadow: var(--site-elevation-floating); }
 .card[data-elev="raised"] .fc { box-shadow: var(--site-elevation-raised); }
 
 .fc img {
@@ -95,7 +94,7 @@
 :global(.dark) .fc::after { opacity: min(0.9, calc(var(--dim) * 1.2)); }
 
 /* Phones: a smaller fan, the centre and two steps out each side. */
-@media (max-width: 760px) {
+@media (max-width: 640px) {
   .rise { --k: 0.6; }
   .card[data-a="3"],
   .card[data-a="4"] { display: none; }

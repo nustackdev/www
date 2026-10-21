@@ -8,5 +8,5 @@
 }
 .lede strong {
   color: var(--site-ink);
-  font-weight: 600;
+  font-weight: var(--site-fw-semibold);
 }

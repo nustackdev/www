@@ -426,6 +426,7 @@ export function AgentsDemo() {
                     role="tab"
                     aria-selected={i === cur}
                     aria-label={`Step ${i + 1}, ${p.label}`}
+                    data-ring="inset"
                     className={cn(s.seg, i === cur && s.on, i < cur && s.past)}
                     onClick={() => setN(p.steps[0])}
                   >

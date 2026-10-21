@@ -3,6 +3,6 @@
   position: relative;
   width: 100%;
   margin-inline: auto;
-  max-width: var(--site-kal-max-width, 1200px);
+  max-width: var(--site-w-main);
   padding-inline: var(--site-container-pad-x);
 }

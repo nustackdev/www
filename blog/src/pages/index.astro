@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { Heading, Lede } from '@www/shared/components/text';
-import { MonoKicker } from '@www/shared/components/meta/MonoKicker';
+import { Heading, Kicker, Lede } from '@www/shared/components/text';
 import { formatDate } from '@www/shared/lib/date';
 import { BLOG_DESCRIPTION, BLOG_TITLE, getPosts, ogImagePath, postPath } from '../lib/posts';
 
@@ -11,7 +10,7 @@ const posts = await getPosts();
 <Base title={BLOG_TITLE} description={BLOG_DESCRIPTION} path="/blog/" image={ogImagePath('index')}>
   <div class="blog-column">
     <header class="head">
-      <Heading level={1}>Blog</Heading>
+      <Heading level={1} as="h1">Blog</Heading>
       <Lede className="lede">{BLOG_DESCRIPTION}</Lede>
     </header>
 
@@ -20,10 +19,10 @@ const posts = await getPosts();
         posts.map((post) => (
           <li>
             <a href={postPath(post)} class="post">
-              <MonoKicker size="xs" tracking="wider">
+              <Kicker as="span" className="meta">
                 {formatDate(post.data.date)} · by {post.data.author}
                 {post.data.draft ? ' · draft' : ''}
-              </MonoKicker>
+              </Kicker>
               <span class="title">{post.data.title}</span>
               <span class="desc">{post.data.description}</span>
             </a>
@@ -59,10 +58,13 @@ const posts = await getPosts();
     color: inherit;
     text-decoration: none;
   }
+  .post :global(.meta) {
+    font-variant-numeric: tabular-nums;
+  }
   .title {
     font-size: var(--site-fs-heading-2);
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    font-weight: var(--site-fw-title);
+    letter-spacing: var(--site-tr-title);
     line-height: 1.25;
     color: var(--site-ink);
     transition: color var(--site-t);

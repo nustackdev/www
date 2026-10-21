@@ -1,20 +1,22 @@
-/* Heading — section (h2, level=1) and subsection (h3, level=2) titles.
- * Emits zero margin; rhythm is the parent's job. Copied from the former
- * .sectionTitle (level=1) and .entryName (level=2) rules in page.module.css. */
+/* Heading: section (level=1) and subsection (level=2) titles, at the site
+ * title weight with Inter's tracking for the size. Emits zero margin;
+ * rhythm is the parent's job. */
 
 .h1 {
-  font-family: var(--font-display, ui-serif, Georgia, serif);
+  font-family: var(--font-display);
   font-size: var(--site-fs-heading-1);
+  font-weight: var(--site-fw-title);
   line-height: 1.08;
-  letter-spacing: -0.015em;
+  letter-spacing: var(--site-tr-display);
   margin: 0;
   color: var(--site-ink);
 }
 
 .h2 {
-  font-family: var(--font-display, ui-serif, Georgia, serif);
+  font-family: var(--font-display);
   font-size: var(--site-fs-heading-2);
-  letter-spacing: -0.01em;
+  font-weight: var(--site-fw-title);
+  letter-spacing: var(--site-tr-title);
   margin: 0;
   color: var(--site-ink);
 }

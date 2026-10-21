@@ -12,6 +12,21 @@ html {
   font-optical-sizing: auto;
 }
 
+/* The type rules of shared/design/base.css, which docs does not load (its
+ * body colors come from fumadocs through the bridge). */
+@layer base {
+  body {
+    font-feature-settings: "cv01", "ss03";
+    letter-spacing: var(--site-tr-body);
+  }
+
+  :where(code, samp, pre) {
+    font-feature-settings: normal;
+    font-variant-ligatures: none;
+    letter-spacing: 0;
+  }
+}
+
 html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;

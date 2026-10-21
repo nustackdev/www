@@ -56,9 +56,9 @@ export function Closing() {
               <a className={s.card} href={c.href} {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>
                 <span className={s.top}>
                   <span className={s.icon}>{c.icon}</span>
+                  <span className={s.name}>{c.name}</span>
                   <ArrowUpRight className={s.arrow} size={16} strokeWidth={2} aria-hidden />
                 </span>
-                <span className={s.name}>{c.name}</span>
                 <span className={s.line}>{c.line}</span>
                 <span className={s.action}>{c.action}</span>
               </a>

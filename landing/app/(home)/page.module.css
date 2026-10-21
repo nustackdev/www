@@ -1,9 +1,6 @@
 /* Home, the product look. Colors and type come from the shared site tokens. */
 
 .root {
-  font-feature-settings: "cv01", "ss03";
-  letter-spacing: var(--site-tr-body);
-
   min-height: 100vh;
   display: flex;
   flex-direction: column;

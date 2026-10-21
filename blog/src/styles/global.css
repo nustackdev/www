@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @source '../../../shared';
 @import '@fontsource-variable/inter/opsz.css';
+@import '@fontsource-variable/jetbrains-mono/wght.css';
 @import '@www/shared/design/tokens.css';
 @import '@www/shared/design/base.css';
 @import './prose.css';
@@ -9,10 +10,16 @@ html {
   font-family: 'Inter Variable', var(--font-display);
 }
 
+/* Fontsource names the variable cut 'JetBrains Mono Variable'. */
+:root {
+  --font-mono: 'JetBrains Mono Variable', "JetBrains Mono", ui-monospace,
+               "SF Mono", Menlo, Consolas, monospace;
+}
+
 /* The one reading column every blog page sits in. */
 .blog-column {
   width: 100%;
-  max-width: 820px;
+  max-width: 680px;
   margin-inline: auto;
   padding-bottom: calc(var(--site-gap-xloose) * 2);
 }
