@@ -1,6 +1,8 @@
+import type { ReactNode } from 'react';
 import { ArrowRight, ArrowUpRight, Plus } from 'lucide-react';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
 import { Section } from '@www/shared/components/page';
+import { cn } from '@www/shared/lib/cn';
 import s from './HowItWorks.module.css';
 
 interface Layer {
@@ -42,6 +44,39 @@ const LAYERS: Layer[] = [
   },
 ];
 
+interface RowProps {
+  /** The rail's node: the layer's number, or the plus. */
+  node: ReactNode;
+  role: string;
+  name: string;
+  line: string;
+  /** The way in, at the row's end. */
+  go: ReactNode;
+  href: string;
+  external?: boolean;
+}
+
+/** One row: the rail (line, node, line) beside the layer's content. */
+function Row({ node, role, name, line, go, href, external }: RowProps) {
+  return (
+    <a href={href} className={s.row} {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>
+      <span className={s.rail} aria-hidden>
+        <span className={s.seg} />
+        <span className={s.node}>{node}</span>
+        <span className={s.seg} />
+      </span>
+      <span className={s.content}>
+        <span className={s.id}>
+          <span className={s.role}>{role}</span>
+          <span className={s.name}>{name}</span>
+        </span>
+        <span className={s.line}>{line}</span>
+        <span className={s.gh}>{go}</span>
+      </span>
+    </a>
+  );
+}
+
 /** HowItWorks — the stack under nuspace, from the theory up to the ecosystem, then the reader's own space on top. */
 export function HowItWorks() {
   return (
@@ -51,43 +86,46 @@ export function HowItWorks() {
       tagline="One primitive, all the way down."
       lead="nuspace sits on a small stack, each layer its own repo, from the theory at the base to the ecosystem on top."
     >
-      <div className={s.body}>
-        <ol className={s.list}>
-          {LAYERS.map((l, i) => (
-            <li key={l.name}>
-              <a href={l.repo} className={s.row} target="_blank" rel="noreferrer">
-                <span className={s.num}>{String(i + 1).padStart(2, '0')}</span>
-                <span className={s.id}>
-                  <span className={s.role}>{l.role}</span>
-                  <span className={s.name}>{l.name}</span>
-                </span>
-                <span className={s.line}>{l.line}</span>
-                <span className={s.gh}>
+      <ol className={s.list}>
+        {LAYERS.map((l, i) => (
+          <li key={l.name} className={s.item}>
+            <Row
+              node={<span className={s.num}>{String(i + 1).padStart(2, '0')}</span>}
+              role={l.role}
+              name={l.name}
+              line={l.line}
+              href={l.repo}
+              external
+              go={
+                <>
                   <GithubMark size={16} />
                   <span>GitHub</span>
                   <ArrowUpRight className={s.arrow} size={16} strokeWidth={2} aria-hidden />
-                </span>
-              </a>
-            </li>
-          ))}
-          <li className={s.yours}>
-            <a href="#start" className={s.row}>
-              <span className={s.plus} aria-hidden>
+                </>
+              }
+            />
+          </li>
+        ))}
+        <li className={cn(s.item, s.yours)}>
+          <Row
+            node={
+              <span className={s.plus}>
                 <Plus size={16} strokeWidth={2} />
               </span>
-              <span className={s.id}>
-                <span className={s.role}>On top of it all</span>
-                <span className={s.name}>your space</span>
-              </span>
-              <span className={s.line}>Everything below exists so your space can be anything.</span>
-              <span className={s.gh}>
+            }
+            role="On top of it all"
+            name="your space"
+            line="Everything below exists so your space can be anything."
+            href="#start"
+            go={
+              <>
                 <span>Start your space</span>
                 <ArrowRight className={s.arrowOn} size={16} strokeWidth={2} aria-hidden />
-              </span>
-            </a>
-          </li>
-        </ol>
-      </div>
+              </>
+            }
+          />
+        </li>
+      </ol>
     </Section>
   );
 }

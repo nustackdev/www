@@ -1,72 +1,91 @@
-/* HowItWorks — the stack as rows, the base first: number, role and name,
- * one line, an arrow to the repo. Lines between rows only, fading at both ends,
- * like the Cells grid. */
-
-.body {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(32px, 4vw, 48px);
-}
+/* HowItWorks — the stack as rows, the base first. Each row is a rail beside
+ * its content: number, role and name, one line, an arrow to the repo.
+ * The rails join into one line down the stack, a node on it per layer, the
+ * same air above and below each node. The lines between rows branch off it
+ * and fade to the right. The reader's own space closes it, dashed, in Afterglow. */
 
 .list {
+  /* The rail column, and the node on it: a number, or the plus tile. */
+  --rail: 32px;
+  --node: 32px;
+  /* Air between the line and a node, the same above and below. */
+  --node-gap: 8px;
+  /* Room from a row's divider to its content. */
+  --pad: clamp(22px, 2.4vw, 32px);
+  --col-gap: 40px;
+
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.list > li:not(:last-child)::after {
-  content: "";
-  display: block;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--site-border) 18%,
-    var(--site-border) 82%,
-    transparent
-  );
-}
+.item { position: relative; }
 
-/* The reader's own space, on top of the stack: same columns as the layers,
- * but not one of them. A dashed Afterglow line above it, still to be filled,
- * a plus where the number goes and the way in, in Afterglow. */
-.list > li:has(+ .yours)::after {
-  background: repeating-linear-gradient(
-    to right,
-    var(--site-accent-line) 0 6px,
-    transparent 6px 12px
-  );
-  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+/* The divider: from the line, solid, fading out to the right. */
+.item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: calc(var(--rail) / 2);
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, var(--site-border), var(--site-border) 82%, transparent);
+  pointer-events: none;
 }
-.plus {
-  display: inline-grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--site-r-md);
-  background: var(--site-accent-soft);
-  color: var(--site-accent-text);
-}
-.yours .gh { color: var(--site-accent-text); }
 
 .row {
-  display: grid;
-  grid-template-columns: 40px minmax(0, 0.8fr) minmax(0, 2fr) auto;
-  align-items: center;
-  gap: 16px 32px;
-  padding-block: clamp(22px, 2.4vw, 32px);
+  display: flex;
+  gap: var(--col-gap);
   text-decoration: none;
   color: inherit;
 }
 
-/* Centred in the plus tile's width, so numbers and the plus share one axis. */
+/* The rail: line, node, line. Both lines stretch, so the node sits centred
+ * in the row; the rows' lines meet end to end into one. */
+.rail {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--node-gap);
+  width: var(--rail);
+}
+
+.seg {
+  flex: 1;
+  width: 1px;
+  background: var(--site-border);
+}
+
+/* The line starts at the first node and ends at the plus. */
+.item:first-child .seg:first-child,
+.yours .seg:last-child { visibility: hidden; }
+
+.node {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--rail);
+  height: var(--node);
+}
+
 .num {
-  width: 32px;
-  text-align: center;
   font-family: var(--font-mono);
   font-size: var(--site-fs-4);
+  line-height: 1;
   color: var(--site-ink-3);
   transition: color var(--site-t);
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  /* The way in gets a fixed column, so every row's columns line up whatever its link says. */
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr) 9rem;
+  align-items: center;
+  gap: 16px 32px;
+  padding-block: var(--pad);
 }
 
 .id {
@@ -105,31 +124,67 @@
   font-size: var(--site-fs-4);
   font-weight: var(--site-fw-medium);
   color: var(--site-ink-3);
+  justify-self: end;
   white-space: nowrap;
   transition: color var(--site-t);
 }
 
-.arrow {
+.arrow,
+.arrowOn {
   flex: none;
   transition: transform var(--site-dur-base) var(--site-ease-out);
 }
 
+/* The reader's space: the line into it and the divider above it dashed,
+ * the plus where the number goes, the way in in Afterglow. */
+.item:has(+ .yours)::after {
+  background: repeating-linear-gradient(to right, var(--site-accent-line) 0 6px, transparent 6px 12px);
+  mask-image: linear-gradient(to right, #000, #000 82%, transparent);
+}
+.yours .seg:first-child {
+  background: repeating-linear-gradient(to bottom, var(--site-accent-line) 0 4px, transparent 4px 8px);
+}
+.plus {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--site-r-md);
+  background: var(--site-accent-soft);
+  color: var(--site-accent-text);
+}
+.yours .gh { color: var(--site-accent-text); }
+
 .row:hover .num,
 .row:hover .gh { color: var(--site-accent-text); }
 .row:hover .arrow { transform: translate(2px, -2px); }
-.arrowOn { flex: none; transition: transform var(--site-dur-base) var(--site-ease-out); }
 .row:hover .arrowOn { transform: translateX(2px); }
 .row:hover .name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 
+/* Phones: content aligns to the top, so the node does too. The line above
+ * a node is fixed, set so the node's centre meets the role line's centre;
+ * the line below takes the rest. Same air on both sides still. */
 @media (max-width: 860px) {
-  .row {
-    grid-template-columns: 28px minmax(0, 1fr) auto;
+  .list {
+    --rail: 28px;
+    --node: 28px;
+    --col-gap: 16px;
+  }
+
+  .rail {
+    /* 1lh here is the role line's height: same size, same line height. */
+    font-size: var(--site-fs-3);
+  }
+  .seg:first-child {
+    flex: none;
+    height: calc(var(--pad) + (1lh - var(--node)) / 2 - var(--node-gap));
+  }
+
+  .content {
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: start;
     gap: 10px 16px;
   }
-  .line { grid-column: 2 / 4; }
-  .gh { grid-column: 3; grid-row: 1; align-self: center; }
-  .num,
-  .plus { width: 28px; }
-  .plus { height: 28px; }
+  .line { grid-column: 1 / 3; }
+  .gh { grid-column: 2; grid-row: 1; align-self: center; }
 }
