@@ -13,20 +13,24 @@ export function Hero() {
     <section className={s.root}>
       <div className={s.head}>
         <div className={s.titleBlock}>
-          <Kicker tone="accent">Open-source · Self-hosted · Data stays local</Kicker>
+          <Kicker tone="accent">Open-source · Self-hosted · Pure Python</Kicker>
           <h1 className={s.title}>
             Computational space
             <br />
-            <span className={s.dim}>for everything you work with: notes, data, tools, agents.</span>
+            for your data and tools.
+            <br />
+            <span className={s.dim}>Human-first. Agent-native.</span>
           </h1>
         </div>
 
         <div className={s.row}>
           <p className={s.sub}>
-            Elsewhere, a note is a dead document, data is scattered, tools are
-            siloed and an agent&apos;s work is lost in chat. In nuspace,
-            they&apos;re all connected cells: living programs that hold data,
-            logic and look in one form.
+            Everything in nuspace is made of cells: tiny reactive programs that
+            hold data, run logic and render UI. From a reading list to a server
+            dashboard, it&apos;s all cells. Cells are written in nu, a Python
+            programming model with no glue code between layers, so a cell is a
+            few lines, not a thousand. Humans get the space as UI, agents get it
+            as code.
           </p>
           <div className={s.actions}>
             <Button variant="primary" href="#start" arrow>
