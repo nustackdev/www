@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { appName } from '@/lib/shared';
 
 /**
  * Build the openGraph + twitter halves of a page's Metadata from one source
@@ -32,7 +33,7 @@ export function pageOG({
       type,
       title,
       description,
-      siteName: 'nu',
+      siteName: appName,
       ...(path ? { url: path } : {}),
       images: [{ url: image, width: 1200, height: 630, alt: title }],
     },

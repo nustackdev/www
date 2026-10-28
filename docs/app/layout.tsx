@@ -7,7 +7,7 @@ import { JsonLd } from '@www/shared/components/meta/JsonLd';
 import { organizationLd, websiteLd } from '@www/shared/lib/jsonld';
 import { DocsProvider } from '@/components/provider';
 import { baseOptions } from '@/lib/layout.shared';
-import { siteUrl } from '@/lib/shared';
+import { appName, siteUrl } from '@/lib/shared';
 import { source } from '@/lib/source';
 
 const inter = Inter({
@@ -33,7 +33,7 @@ export const metadata = {
   openGraph: {
     type: 'website',
     url: '/docs',
-    siteName: 'nu',
+    siteName: appName,
     title: TITLE,
     description: DESCRIPTION,
   },

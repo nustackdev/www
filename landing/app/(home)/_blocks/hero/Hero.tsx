@@ -25,8 +25,8 @@ export function Hero() {
 
         <div className={s.row}>
           <p className={s.sub}>
-            Everything in nuspace is made of cells: tiny reactive programs that
-            hold data, run logic and render UI. From a reading list to a server
+            In nuspace, your data and tools live in cells: tiny reactive programs
+            that manage data, run logic and render UI. From a reading list to a server
             dashboard, it&apos;s all cells. Cells are written in nu, a Python
             programming model with no glue code between layers, so a cell is a
             few lines, not a thousand. Humans get the space as UI, agents get it

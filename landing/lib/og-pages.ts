@@ -1,4 +1,5 @@
 import { appName } from '@/lib/shared';
+import { NUSPACE } from '@/lib/identity';
 
 /**
  * Registry of static (non-doc, non-post) pages that
@@ -11,16 +12,14 @@ import { appName } from '@/lib/shared';
 export interface PageOgEntry {
   key: string;
   title: string;
-  description: string;
+  description?: string;
   siteLabel: string;
 }
 
 export const PAGE_OG_ENTRIES: PageOgEntry[] = [
   {
     key: 'root',
-    title: 'Build your computational space with nuspace.',
-    description:
-      'One place for your notes, data, tools and agents, built from connected cells: living programs that hold data, logic and look in one form.',
+    title: NUSPACE.headline,
     siteLabel: appName,
   },
 ];

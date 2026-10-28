@@ -5,6 +5,7 @@ import { Footer } from '@www/shared/components/nav/Footer';
 import { abs, organizationLd, websiteLd } from '@www/shared/lib/jsonld';
 import Nav from '../components/Nav';
 import { BLOG_TITLE } from '../lib/posts';
+import { appName } from '@www/shared/lib/site';
 
 interface Props {
   /** Page title as shared (OG, Twitter). */
@@ -43,7 +44,7 @@ const ld = [organizationLd(), websiteLd(), ...jsonLd];
     <meta name="theme-color" content="#15181f" media="(prefers-color-scheme: dark)" />
 
     <meta property="og:type" content={article ? 'article' : 'website'} />
-    <meta property="og:site_name" content="Nu" />
+    <meta property="og:site_name" content={appName} />
     <meta property="og:url" content={abs(path)} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

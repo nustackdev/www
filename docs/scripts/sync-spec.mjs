@@ -31,6 +31,10 @@ const SECTION = {
   root: true,
 };
 
+/** The section index's page description, the interaction-model line from compass/nustack/identity.md in Go. */
+const INDEX_DESCRIPTION =
+  'A programming model where every resource is a Ref and Interactions are first-class, so you compose logic across systems.';
+
 if (!existsSync(join(SPEC, 'README.md'))) {
   console.error(`sync-spec: no spec at ${SPEC}. Clone nustackdev/interaction-model next to www, or set SPEC_DIR.`);
   process.exit(1);
@@ -89,7 +93,8 @@ function convert(rel) {
   if (at >= 0) lines.splice(at, 1);
   const text = links(lines.join('\n').replace(/^\n+/, ''), rel);
   const name = rel.endsWith('README.md') ? rel.replace(/README\.md$/, 'index.md') : rel;
-  write(name, `---\ntitle: ${JSON.stringify(title)}\n---\n\n${text}`);
+  const description = rel === 'README.md' ? `description: ${JSON.stringify(INDEX_DESCRIPTION)}\n` : '';
+  write(name, `---\ntitle: ${JSON.stringify(title)}\n${description}---\n\n${text}`);
   return { title };
 }
 

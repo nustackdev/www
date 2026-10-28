@@ -11,7 +11,7 @@ import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
-import { gitConfig } from '@/lib/shared';
+import { appName, gitConfig } from '@/lib/shared';
 import { JsonLd } from '@www/shared/components/meta/JsonLd';
 import { techArticleLd } from '@www/shared/lib/jsonld';
 
@@ -76,7 +76,7 @@ export async function generateMetadata(props: PageProps<'/[[...slug]]'>): Promis
       type: 'article',
       title: page.data.title,
       description: page.data.description,
-      siteName: 'nu',
+      siteName: appName,
       url,
       images: [{ url: image, width: 1200, height: 630, alt: page.data.title }],
     },

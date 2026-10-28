@@ -33,13 +33,13 @@ const LAYERS: Layer[] = [
   {
     role: 'The space',
     name: 'nuspace',
-    line: 'A space that runs nu programs. Every cell is one.',
+    line: 'A space that runs nu programs.',
     repo: `${GH}/nuspace`,
   },
   {
     role: 'The ecosystem',
     name: 'nuverse',
-    line: 'Ready-made spaces and extensions, one install away.',
+    line: 'Ready-made packages, one install away.',
     repo: `${GH}/nuverse`,
   },
 ];
