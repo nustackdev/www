@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  /* Air before Audience's divider, the same as the hero leaves above. */
+  /* Air before UseCases' divider, the same as the hero leaves above. */
   margin-bottom: clamp(64px, 8vw, 112px);
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);

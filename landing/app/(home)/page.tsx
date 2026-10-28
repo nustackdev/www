@@ -3,10 +3,10 @@ import { Footer } from '@www/shared/components/nav/Footer';
 import { Hero } from './_blocks/hero/Hero';
 import { Anchors } from './_blocks/Anchors';
 import { Closing } from './_blocks/Closing';
-import { Audience } from './_blocks/Audience';
-import { Highlights } from './_blocks/Highlights';
+import { Cells } from './_blocks/Cells';
 import { HowItWorks } from './_blocks/HowItWorks';
 import { TryIt } from './_blocks/TryIt';
+import { UseCases } from './_blocks/UseCases';
 import s from './page.module.css';
 
 /**
@@ -19,8 +19,8 @@ export default function Home() {
       <Container className={s.content}>
         <Hero />
         <Anchors />
-        <Audience />
-        <Highlights />
+        <UseCases />
+        <Cells />
         <TryIt />
         <HowItWorks />
         <Closing />

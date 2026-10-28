@@ -2,8 +2,9 @@ import { Braces, Database, Infinity, Layers, Network, PanelsTopLeft, Zap } from 
 import { Button } from '@www/shared/components/controls/Button';
 import { Section } from '@www/shared/components/page';
 import { FeatureGrid, type Feature } from '@www/shared/components/layout/FeatureGrid';
+import { AgentsDemo } from './agents/AgentsDemo';
 
-/** What a cell gives you, one line each. Copy from identity.md in Go. */
+/** What a cell gives you, one line each. Copy from compass/nuspace/structure.md in Go. */
 const HIGHLIGHTS: Feature[] = [
   { icon: <Database />, title: 'Any data', line: 'A note, a table, a song, a billion-entry log, a genome.' },
   { icon: <Braces />, title: 'Any logic', line: 'Summarize your inbox, dim the lights at sunset, render a video.' },
@@ -19,12 +20,16 @@ const HIGHLIGHTS: Feature[] = [
   },
 ];
 
-/** Highlights — what every cell can do, as an open grid. */
-export function Highlights() {
+/**
+ * Cells: how it works, one heading over a group: an agent's program playing
+ * into a window, then what every cell gives you, as an open grid that names
+ * what the program just showed.
+ */
+export function Cells() {
   return (
     <Section
-      id="capabilities"
-      eyebrow="What it can do"
+      id="cells"
+      eyebrow="How it works"
       tagline="Program anything."
       description="The data, the logic, the look, even the space itself."
       actions={
@@ -33,6 +38,7 @@ export function Highlights() {
         </Button>
       }
     >
+      <AgentsDemo />
       <FeatureGrid items={HIGHLIGHTS} accordion />
     </Section>
   );

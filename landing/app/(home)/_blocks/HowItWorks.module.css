@@ -1,6 +1,6 @@
 /* HowItWorks — the stack as rows, the base first: number, role and name,
  * one line, an arrow to the repo. Lines between rows only, fading at both ends,
- * like Highlights. */
+ * like the Cells grid. */
 
 .body {
   display: flex;

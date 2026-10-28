@@ -46,8 +46,8 @@ const LAYERS: Layer[] = [
 export function HowItWorks() {
   return (
     <Section
-      id="how"
-      eyebrow="How it works"
+      id="stack"
+      eyebrow="The stack"
       tagline="One primitive, all the way down."
       lead="nuspace sits on a small stack, each layer its own repo, from the theory at the base to the ecosystem on top."
     >
