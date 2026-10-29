@@ -186,6 +186,11 @@
 
 /* -- Responsive ------------------------------------------------------------- */
 
+@media (max-width: 640px) {
+  .copy { width: 28px; padding: 0; justify-content: center; }
+  .copy > span { display: none; }
+}
+
 @media (max-width: 720px) {
   .step { grid-template-columns: 28px minmax(0, 1fr); }
   .num { padding-top: 1px; }

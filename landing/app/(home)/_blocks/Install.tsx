@@ -41,7 +41,7 @@ const BY_HAND: Step[] = [
     cmd: [START_LINE],
     note: (
       <>
-        Python 3.10 or newer. <code>my-world</code> is your space, a folder. Run the same line to come back.
+        Python 3.10 or newer. Run the same line to come back to your space.
       </>
     ),
   },
@@ -107,8 +107,8 @@ const AGENTS: Agent[] = [
 ];
 
 const WAYS = [
-  { id: 'hand', name: 'By hand', sub: 'You have Python, one line' },
-  { id: 'agent', name: 'With your agent', sub: "Don't think about it, ask" },
+  { id: 'hand', name: 'By hand', sub: 'Python 3.10 or newer. One line.' },
+  { id: 'agent', name: 'With your agent', sub: 'Your agent installs it and builds the first thing.' },
 ] as const;
 
 /** Arrow keys, Home and End over a row of tabs, with roving focus. */
@@ -153,7 +153,7 @@ function Steps({ steps }: { steps: Step[] }) {
                   <span className={s.who}>Paste to your agent</span>
                   <span>{st.prompt}</span>
                 </div>
-                <CopyButton text={st.prompt} what="prompt" variant="ghost" />
+                <CopyButton text={st.prompt} what="prompt" variant="ghost" className={s.copy} />
               </div>
             ) : null}
             {st.note ? <p className={s.note}>{st.note}</p> : null}
@@ -192,11 +192,12 @@ export function Install() {
     };
     /* Landing on the hash: the browser jumps to the tab, pull up to the section. */
     const first = requestAnimationFrame(onHash);
-    document.addEventListener('click', onClick);
+    /* Capture: a Link would route the click before it bubbles here. */
+    document.addEventListener('click', onClick, true);
     window.addEventListener('hashchange', onHash);
     return () => {
       cancelAnimationFrame(first);
-      document.removeEventListener('click', onClick);
+      document.removeEventListener('click', onClick, true);
       window.removeEventListener('hashchange', onHash);
     };
   }, [ways.refs]);

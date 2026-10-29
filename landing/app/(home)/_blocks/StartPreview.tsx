@@ -15,7 +15,7 @@ interface Cell {
   edit?: { name: string; value: number };
 }
 
-/* The start plane as it opens. Copy after growth/website/funnel.md in Go. */
+/* The quickstart plane as it opens. Copy after growth/website/funnel.md in Go. */
 const CELLS: Cell[] = [
   {
     tag: 'markdown',
@@ -42,9 +42,9 @@ const CELLS: Cell[] = [
   },
 ];
 
-/** The start plane, open, and the three it holds. */
+/** The quickstart plane, open, and the three it holds. */
 const PLANES: PlaneRow[] = [
-  { id: 'start', icon: '👋', label: 'Start', sel: true },
+  { id: 'quickstart', icon: '👋', label: 'Quickstart', sel: true },
   { id: 'first', icon: <PencilLine />, label: 'Your first cell', depth: 1 },
   { id: 'dashboard', icon: <LayoutDashboard />, label: 'A dashboard', depth: 1 },
   { id: 'catalog', icon: <Library />, label: 'A catalog', depth: 1 },
@@ -55,7 +55,7 @@ const EXTENSIONS = ['nudemos', 'nuverse'];
 /** The window's desktop width, scaled down to fit on phones. */
 const MOCK_W = 840;
 
-/** StartPreview: a still of the start plane every way in lands on, in the
+/** StartPreview: a still of the quickstart plane every way in lands on, in the
  *  nuspace window the cells section plays in. An illustration, not live. */
 export function StartPreview() {
   const fit = useRef<HTMLDivElement>(null);
@@ -80,7 +80,7 @@ export function StartPreview() {
   const scaled = zoom < 1;
 
   return (
-    <div role="img" aria-label="The start page in your space: a sidebar of planes and a canvas of cells to read and edit.">
+    <div role="img" aria-label="The quickstart page in your space: a sidebar of planes and a canvas of cells to read and edit.">
       <div
         ref={fit}
         className={s.fit}
@@ -88,9 +88,9 @@ export function StartPreview() {
         aria-hidden
       >
         <div ref={win} className={cn(s.win, scaled && s.scaled)}>
-          <NuspaceWindow className={s.ns} planes={PLANES} extensions={EXTENSIONS} crumb="Start">
+          <NuspaceWindow className={s.ns} planes={PLANES} extensions={EXTENSIONS} crumb="Quickstart">
             <div className={s.page}>
-              <PlaneTitle icon="👋">Start</PlaneTitle>
+              <PlaneTitle icon="👋">Quickstart</PlaneTitle>
               <div className={s.cells}>
                 {CELLS.map((c) => (
                   <div key={c.title} className={cn(s.cell, c.wide && s.wide)}>

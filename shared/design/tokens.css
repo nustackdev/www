@@ -72,6 +72,7 @@
      so CTAs and inputs stay legible at every width. Any control that sits
      in the same row should read from this family. */
   --site-control-h:      40px;
+  --site-control-h-xl:   48px;  /* the hero's main CTAs */
   --site-control-px:     16px;
   --site-control-gap:    10px;
   --site-code-pad-y:     calc(var(--site-u) * 1);
@@ -269,6 +270,7 @@
   :root { --site-fs-heading-1: var(--site-fs-9); }
   :root {
     --site-control-h:   36px;
+    --site-control-h-xl: 44px;
     --site-control-px:  14px;
     --site-control-gap: 8px;
   }

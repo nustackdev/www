@@ -5,13 +5,13 @@ import { cn } from '../../lib/cn';
 import s from './Button.module.css';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface ButtonProps {
   /** primary: solid Afterglow, the one main action. secondary: neutral
    *  fill and hairline. ghost: no fill until hovered. */
   variant?: ButtonVariant;
-  /** sm 28, md 32, lg 40 (the site control height). */
+  /** sm 28, md 32, lg 40 (the site control height), xl 48 (the hero's main CTAs). */
   size?: ButtonSize;
   /** Renders a link. Without it, a `<button>`. */
   href?: string;

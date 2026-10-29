@@ -1,9 +1,10 @@
 /* Command: a mono box on the code ground with its copy button inside.
  * The prompt mark is drawn, so it never lands on the clipboard. */
 
+/* Copy sits level with the first line, however many lines follow. */
 .root {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   min-width: 0;
   max-width: 100%;
@@ -14,22 +15,40 @@
   font-family: var(--font-mono);
   font-size: var(--site-fs-3);
   line-height: 1.6;
+  cursor: pointer;
+  transition: border-color var(--site-t);
 }
+/* The box is the control: hover outlines it and lights its copy icon. */
+.root:hover { border-color: var(--site-border-strong); }
 
 /* One line at the control height, to sit next to Buttons. */
 .lg {
+  align-items: center;
   height: var(--site-control-h);
   padding-block: 0;
   border-color: var(--site-border);
 }
 
+/* xl: the hero's main command, beside an xl Button. */
+.xl {
+  align-items: center;
+  height: var(--site-control-h-xl);
+  padding: 0 8px 0 20px;
+  border-color: var(--site-border);
+  font-size: var(--site-fs-4);
+}
+
 .lines {
   flex: 1 1 auto;
   min-width: 0;
+  /* Centers a line on the 28px copy button. */
+  padding-block: calc((28px - 1.6em) / 2);
   overflow-x: auto;
   scrollbar-width: none;
 }
 .lines::-webkit-scrollbar { display: none; }
+.lg .lines,
+.xl .lines { padding-block: 0; }
 
 .line {
   display: flex;
@@ -44,6 +63,26 @@
 }
 .inSession .line::before { content: ">"; }
 .line code { font: inherit; }
+
+/* Copy: an icon in its own small well, always shown, never a word. */
+.copy {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--site-r-sm);
+  background: var(--site-wash);
+  color: var(--site-ink-3);
+  cursor: pointer;
+  transition: background-color var(--site-t), color var(--site-t);
+}
+.copy svg { width: 14px; height: 14px; }
+.root:hover .copy { background: var(--site-wash-2); color: var(--site-ink); }
+.copied .copy,
+.root:hover.copied .copy { color: var(--site-status-success); }
 
 @media (max-width: 640px) {
   .root { font-size: var(--site-fs-2); }

@@ -3,15 +3,23 @@
 .root {
   display: flex;
   flex-direction: column;
-  gap: clamp(48px, 6vw, 80px);
+  gap: var(--site-gap-xloose);
   padding-top: clamp(32px, 6vw, 88px);
   padding-bottom: clamp(64px, 8vw, 112px);
 }
 
+/* The head: the pitch, then the ways in a loose step under it, so the CTA
+ * reads as the pitch's next move. The gallery stands off at xloose. */
 .head {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--site-gap-loose);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--site-gap-normal);
 }
 
 /* -- Title + sub ---------------------------------------------------------- */
@@ -35,51 +43,53 @@
   color: var(--site-ink);
 }
 .dim { color: var(--site-ink-twilight); }
+/* Never split a phrase at its hyphen. */
+.phrase { white-space: nowrap; }
 
 .sub {
   margin: 0;
   max-width: min(60ch, 100%);
   font-size: var(--site-fs-lede);
   line-height: 1.5;
+  text-wrap: pretty;
   color: var(--site-ink-2);
 }
 
-/* -- Start: the one line, its CTAs, a hint for agent users ----------------- */
+/* -- Start: two ways in, the line or your agent ------------------------------ */
 
+/* One line in: the label, the line, and the agent way as the button. */
 .start {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  margin-top: 4px;
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--site-control-gap);
-  max-width: 100%;
+  gap: 12px;
+  width: min(1100px, 100%);
 }
 
-/* The command takes what the row leaves, and scrolls inside when it runs out. */
-.line { flex: 0 1 auto; }
-
-.hint {
-  margin: 0;
-  font-size: var(--site-fs-3);
-  color: var(--site-ink-3);
+.startTitle {
+  flex: none;
+  margin: 0 8px 0 0;
+  font-size: var(--site-fs-5);
+  font-weight: var(--site-fw-title);
+  letter-spacing: var(--site-tr-title);
+  color: var(--site-ink);
 }
-.hint a {
-  color: var(--site-ink-2);
-  text-decoration: underline;
-  text-decoration-color: var(--site-border-strong);
-  text-underline-offset: 3px;
-  transition: color var(--site-t), text-decoration-color var(--site-t);
-}
-.hint a:hover { color: var(--site-ink); text-decoration-color: currentColor; }
 
+/* The line takes the room up to 550, the button keeps its own width. */
+.start .install {
+  flex: 1;
+  min-width: 0;
+  max-width: 550px;
+}
+.start .agent { flex: none; }
+
+/* The install line takes an Afterglow line, the row's one color moment. */
+.start .install,
+.start .install:hover { border-color: var(--site-accent); }
+
+/* Phones stack it: the label heads the line, the button full width. */
 @media (max-width: 640px) {
-  .start { align-items: stretch; }
-  .actions { flex-direction: column; align-items: stretch; width: 100%; }
+  .start { flex-direction: column; align-items: stretch; gap: 8px; }
+  .start .install { flex: none; max-width: none; }
+  .startTitle { margin: 0 0 4px; }
+  .start .agent { margin-top: 4px; }
 }

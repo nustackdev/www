@@ -53,6 +53,12 @@
 .sm { --btn-h: 28px; --btn-px: 10px; --btn-icon: 14px; gap: 6px; font-size: var(--site-fs-2); }
 .md { --btn-h: 32px; --btn-px: 12px; --btn-icon: 14px; gap: 6px; font-size: var(--site-fs-3); }
 .lg { /* the site control: 40 tall, 36 on phones (tokens.css) */ }
+/* xl: the hero's main CTAs, 48 tall, 44 on phones. */
+.xl {
+  --btn-h: var(--site-control-h-xl);
+  --btn-px: 20px;
+  font-size: var(--site-fs-5);
+}
 
 /* ---- primary: solid Afterglow, white label ------------------------------- */
 
