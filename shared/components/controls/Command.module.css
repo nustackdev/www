@@ -1,0 +1,50 @@
+/* Command: a mono box on the code ground with its copy button inside.
+ * The prompt mark is drawn, so it never lands on the clipboard. */
+
+.root {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 6px 6px 6px 16px;
+  background: var(--site-code-bg);
+  border: 1px solid var(--site-border-subtle);
+  border-radius: var(--site-r-md);
+  font-family: var(--font-mono);
+  font-size: var(--site-fs-3);
+  line-height: 1.6;
+}
+
+/* One line at the control height, to sit next to Buttons. */
+.lg {
+  height: var(--site-control-h);
+  padding-block: 0;
+  border-color: var(--site-border);
+}
+
+.lines {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.lines::-webkit-scrollbar { display: none; }
+
+.line {
+  display: flex;
+  gap: 0.75em;
+  white-space: nowrap;
+  color: var(--site-ink);
+}
+.line::before {
+  content: "$";
+  color: var(--site-ink-3);
+  user-select: none;
+}
+.inSession .line::before { content: ">"; }
+.line code { font: inherit; }
+
+@media (max-width: 640px) {
+  .root { font-size: var(--site-fs-2); }
+}

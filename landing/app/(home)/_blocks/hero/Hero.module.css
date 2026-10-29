@@ -1,4 +1,4 @@
-/* Hero — left aligned, tight, the product bleeds right. */
+/* Hero: left aligned, tight, the product bleeds right. */
 
 .root {
   display: flex;
@@ -14,7 +14,7 @@
   gap: 24px;
 }
 
-/* -- Title + row ---------------------------------------------------------- */
+/* -- Title + sub ---------------------------------------------------------- */
 
 .titleBlock {
   display: flex;
@@ -36,20 +36,22 @@
 }
 .dim { color: var(--site-ink-twilight); }
 
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px 48px;
-}
-
 .sub {
   margin: 0;
-  max-width: min(54ch, 100%);
+  max-width: min(60ch, 100%);
   font-size: var(--site-fs-lede);
   line-height: 1.5;
   color: var(--site-ink-2);
+}
+
+/* -- Start: the one line, its CTAs, a hint for agent users ----------------- */
+
+.start {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 4px;
 }
 
 .actions {
@@ -57,8 +59,27 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--site-control-gap);
+  max-width: 100%;
 }
 
+/* The command takes what the row leaves, and scrolls inside when it runs out. */
+.line { flex: 0 1 auto; }
+
+.hint {
+  margin: 0;
+  font-size: var(--site-fs-3);
+  color: var(--site-ink-3);
+}
+.hint a {
+  color: var(--site-ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--site-border-strong);
+  text-underline-offset: 3px;
+  transition: color var(--site-t), text-decoration-color var(--site-t);
+}
+.hint a:hover { color: var(--site-ink); text-decoration-color: currentColor; }
+
 @media (max-width: 640px) {
+  .start { align-items: stretch; }
   .actions { flex-direction: column; align-items: stretch; width: 100%; }
 }

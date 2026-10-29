@@ -5,8 +5,6 @@
  * line reads in Afterglow, a hover in Starlight. */
 
 .host {
-  /* The cards and tables inside the document. */
-  --ns-card: color-mix(in oklab, var(--site-ink) 6%, var(--site-code-bg));
   --ns-t: var(--site-dur-base) var(--site-ease-out);
   --ns-t-slow: var(--site-dur-slow) var(--site-ease-out);
   --ns-hl-line: var(--site-accent-2);
@@ -19,66 +17,10 @@
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
-:global(.dark) .host { --ns-card: var(--site-surface); }
 
-/* ===== the nuspace window ===== */
+/* ===== the nuspace window: the shell is ../nuspace, the program's marks are here ===== */
 
-.ns {
-  display: grid;
-  grid-template-columns: 190px minmax(0, 1fr);
-  min-width: 0;
-  min-height: 600px;
-  overflow: hidden;
-  border: 1px solid var(--site-border);
-  border-radius: var(--site-r-xl);
-  background: var(--site-bg-raised);
-}
-
-.sb {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 10px 8px;
-  border-right: 1px solid var(--site-border-subtle);
-  background: var(--site-code-bg);
-  font-size: var(--site-fs-3);
-}
-
-.brand { display: flex; align-items: center; height: 26px; padding: 2px 6px; }
-.brand b { font-size: var(--site-fs-4); font-weight: 700; letter-spacing: -0.01em; color: var(--site-accent-text); }
-
-.search {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  height: 28px;
-  padding: 0 8px;
-  border-radius: var(--site-r-md);
-  background: var(--ns-card);
-  color: var(--site-ink-3);
-}
-.search svg { width: 12px; height: 12px; }
-.search kbd { margin-left: auto; font: 400 var(--site-fs-1) / 1 var(--font-mono); color: var(--site-ink-4); }
-
-.tree { display: flex; flex-direction: column; gap: 1px; margin: 4px 0 0; padding: 0; list-style: none; }
-
-.it {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 28px;
-  padding: 0 8px;
-  border-radius: var(--site-r-md);
-  color: var(--site-ink);
-  transition: background-color var(--ns-t), box-shadow var(--ns-t), opacity var(--ns-t-slow), transform var(--ns-t-slow), height var(--ns-t);
-}
-.it.sub { padding-left: 26px; }
-.it.sel { background: var(--ns-card); }
-.it.newi { color: var(--site-ink-3); }
-
-.ic { flex: none; width: 16px; border-radius: var(--site-r-sm); font-size: 13px; line-height: 1; text-align: center; }
-.ic svg { width: 14px; height: 14px; color: var(--site-ink-3); vertical-align: -2px; }
+.ns .it { transition: background-color var(--ns-t), box-shadow var(--ns-t), opacity var(--ns-t-slow), transform var(--ns-t-slow), height var(--ns-t); }
 
 .tag {
   margin-left: auto;
@@ -91,9 +33,6 @@
 }
 .it.act .tag { opacity: 1; }
 
-.doc { position: relative; min-width: 0; overflow: hidden; padding: 12px 18px 24px; }
-
-.bar { display: flex; align-items: center; gap: 6px; height: 24px; font-size: var(--site-fs-2); color: var(--site-ink-3); }
 .crumb { transition: opacity var(--ns-t); }
 
 .view { transition: opacity var(--ns-t-slow); }
@@ -102,27 +41,7 @@
 /* The drawing area: a fixed width, left in the document. */
 .page { display: flex; flex-direction: column; gap: 12px; width: 600px; margin: 24px 0 0 12px; }
 
-.title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 4px;
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: var(--site-tr-display);
-}
-.pic {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: var(--site-r-md);
-  font-size: 24px;
-  line-height: 1;
-  transition: opacity var(--ns-t-slow), transform var(--ns-t-slow);
-}
-.pic svg { width: 26px; height: 26px; color: var(--site-ink-3); }
+.pic { transition: opacity var(--ns-t-slow), transform var(--ns-t-slow); }
 
 .txt { margin: -4px 0 0; font-size: var(--site-fs-3); color: var(--site-ink-2); }
 

@@ -1,8 +1,9 @@
 'use client';
 
-import { BookOpen, File, Plus, Search } from 'lucide-react';
+import { BookOpen, File } from 'lucide-react';
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from 'react';
 import { cn } from '@www/shared/lib/cn';
+import { NuspaceWindow, PlaneTitle, type PlaneRow } from '../nuspace/Nuspace';
 import { DUR, LAST, PARTS, STATUS, STEP_KEY, type Key, type Line } from './program';
 import s from './Agents.module.css';
 
@@ -20,7 +21,6 @@ const STATS = [
   ['Streak', '6 days'],
 ];
 const PAGES = [
-  ['🏠', 'Home'],
   ['📓', 'Journal'],
   ['📚', 'Library'],
 ];
@@ -29,6 +29,7 @@ const MORE = [
   ['🧭', 'Trips'],
   ['🧾', 'Groceries'],
 ];
+const EXTENSIONS = ['nudemos'];
 const NEXT = [
   ['The Left Hand of Darkness', 'Ursula K. Le Guin'],
   ['Stoner', 'John Williams'],
@@ -183,6 +184,28 @@ export function AgentsDemo() {
   const made = (at: number) => k >= at;
   const PageIcon = k >= 2 ? BookOpen : File;
 
+  /** The tree: Library holds the page the program makes. */
+  const planes: PlaneRow[] = [
+    ...PAGES.map(([ic, name]) => ({ id: name, icon: ic, label: name, sel: name === 'Library' && !onRead })),
+    { id: 'Wishlist', icon: '✨', label: 'Wishlist', depth: 1 },
+    {
+      id: 'Reading',
+      icon: <PageIcon aria-hidden />,
+      label: 'Reading',
+      depth: 1,
+      sel: onRead,
+      className: cn(s.it, s.made, made(1) && s.in, act('page', 'icon') && s.act, hl(['page']) && s.hl),
+      iconClassName: cn(hl(['icon']) && s.hl),
+      end: (
+        <>
+          <span className={s.tag}>new</span>
+          {pinOf(0)}
+        </>
+      ),
+    },
+    ...MORE.map(([ic, name]) => ({ id: name, icon: ic, label: name })),
+  ];
+
   const lines = (ls: Line[]) => (
     <div className={s.code}>
       {ls.map((l, j) => (
@@ -238,82 +261,23 @@ export function AgentsDemo() {
       <div className={s.unit}>
         <div className={s.stage}>
           <div ref={fit} className={s.fit} style={{ '--z': zoom } as CSSProperties}>
-            <div className={s.ns} aria-label="A nuspace window">
-              <aside className={s.sb}>
-                <div className={s.brand}>
-                  <b>nuspace</b>
-                </div>
-                <div className={s.search}>
-                  <Search aria-hidden />
-                  Search
-                  <kbd>⌘K</kbd>
-                </div>
-                <ul className={s.tree}>
-                  <li>
-                    <div className={cn(s.it, s.newi)}>
-                      <span className={s.ic}>
-                        <Plus aria-hidden />
-                      </span>
-                      New page
-                    </div>
-                  </li>
-                  {PAGES.map(([ic, name]) => (
-                    <li key={name}>
-                      <div className={cn(s.it, name === 'Library' && !onRead && s.sel)}>
-                        <span className={s.ic}>{ic}</span>
-                        {name}
-                      </div>
-                    </li>
-                  ))}
-                  <li>
-                    <div className={cn(s.it, s.sub)}>
-                      <span className={s.ic}>✨</span>Wishlist
-                    </div>
-                  </li>
-                  <li>
-                    <div
-                      className={cn(
-                        s.it,
-                        s.sub,
-                        s.made,
-                        made(1) && s.in,
-                        onRead && s.sel,
-                        act('page', 'icon') && s.act,
-                        hl(['page']) && s.hl,
-                      )}
-                    >
-                      <span className={cn(s.ic, hl(['icon']) && s.hl)}>
-                        <PageIcon aria-hidden />
-                      </span>
-                      Reading
-                      <span className={s.tag}>new</span>
-                      {pinOf(0)}
-                    </div>
-                  </li>
-                  {MORE.map(([ic, name]) => (
-                    <li key={name}>
-                      <div className={s.it}>
-                        <span className={s.ic}>{ic}</span>
-                        {name}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </aside>
-
-              <div className={s.doc}>
-                <div className={s.bar}>
+            <NuspaceWindow
+              className={s.ns}
+              aria-label="A nuspace window"
+              planes={planes}
+              extensions={EXTENSIONS}
+              crumb={
+                <>
                   <span>Library</span>
                   <span className={s.crumb} style={{ opacity: onRead ? 1 : 0 }}>
                     / Reading
                   </span>
-                </div>
-
+                </>
+              }
+            >
                 <div className={cn(s.view, onRead && s.gone)} aria-hidden={onRead}>
                   <div className={s.page}>
-                    <h4 className={s.title}>
-                      <span className={s.pic}>📚</span>Library
-                    </h4>
+                    <PlaneTitle icon="📚">Library</PlaneTitle>
                     <p className={s.txt}>What I&apos;m reading, and how far along I am.</p>
                     <div className={s.stats}>
                       {STATS.map(([l, v]) => (
@@ -355,12 +319,9 @@ export function AgentsDemo() {
 
                 <div className={cn(s.view, !onRead && s.gone)} aria-hidden={!onRead}>
                   <div className={s.page}>
-                    <h4 className={s.title}>
-                      <span className={cn(s.pic, hl(['icon']) && s.hl)}>
-                        <PageIcon aria-hidden />
-                      </span>
-                      <span>Reading</span>
-                    </h4>
+                    <PlaneTitle icon={<PageIcon aria-hidden />} picClassName={cn(s.pic, hl(['icon']) && s.hl)}>
+                      Reading
+                    </PlaneTitle>
                     <div className={cn(s.cards, act('cards') && s.act)}>
                       {pinOf(2)}
                       {BOOKS.map((b) => (
@@ -404,8 +365,7 @@ export function AgentsDemo() {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+            </NuspaceWindow>
           </div>
 
           <div className={s.toast} role="group" aria-label="Your agent's program, one step at a time">

@@ -6,6 +6,8 @@
   --k: 1;
   --tuck: 84px;
 
+  width: 100%;
+
   /* The section's gap under the heading, pulled in to the fan's own air. */
   margin-top: calc(clamp(24px, 3vw, 40px) - var(--section-gap));
 }

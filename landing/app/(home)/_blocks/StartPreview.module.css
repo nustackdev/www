@@ -1,0 +1,75 @@
+/* StartPreview: the start plane in the nuspace window. Cells sit on the
+ * plane like the cells section's cards; on phones the window keeps its
+ * desktop size and only scales, like the cells section's. */
+
+.fit { overflow: hidden; }
+
+/* A transform, not zoom: iOS Safari scales boxes under zoom but not text. */
+.win { width: 100%; }
+.win.scaled { width: 840px; transform: scale(var(--z, 1)); transform-origin: top left; }
+
+.win .ns { min-height: 0; }
+
+/* The drawing area: left in the document, like the cells section's. */
+.page { display: flex; flex-direction: column; gap: 16px; max-width: 600px; margin: 24px 0 0 12px; }
+
+.cells {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px;
+  border-radius: var(--site-r-lg);
+  background: var(--ns-card);
+}
+.wide { grid-column: 1 / -1; }
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: var(--site-fs-1);
+  color: var(--site-ink-3);
+}
+
+.title {
+  font-size: var(--site-fs-4);
+  font-weight: var(--site-fw-medium);
+  color: var(--site-ink);
+}
+
+.body {
+  font-size: var(--site-fs-3);
+  line-height: 1.5;
+  color: var(--site-ink-2);
+  text-wrap: pretty;
+}
+
+.code {
+  margin-top: 4px;
+  padding: 6px 10px;
+  border-radius: var(--site-r-sm);
+  background: var(--site-code-bg);
+  font: 400 11.5px / 1.6 var(--font-mono);
+  color: var(--site-ink);
+}
+.num { color: var(--site-accent-2); }
+
+.meter {
+  height: 4px;
+  margin-top: 6px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--site-border-subtle);
+}
+.meter i {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--site-accent-2);
+  opacity: 0.85;
+}

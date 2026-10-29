@@ -1,12 +1,12 @@
 'use client';
 
-import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
-import { Asterisk, SquareTerminal, Terminal, Waypoints } from 'lucide-react';
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { Asterisk, SquareTerminal, Waypoints } from 'lucide-react';
+import { Command } from '@www/shared/components/controls/Command';
 import { CopyButton } from '@www/shared/components/controls/CopyButton';
 import { cn } from '@www/shared/lib/cn';
+import { AGENT_PROMPT, START_LINE } from './start.data';
 import s from './Install.module.css';
-
-const PROMPT = 'Install nuspace, start a space and build a live monitor of this machine.';
 
 interface Step {
   label: string;
@@ -19,21 +19,40 @@ interface Step {
   note?: ReactNode;
 }
 
-interface Path {
+interface Agent {
   id: string;
   name: string;
   icon: ReactNode;
-  body: string;
   steps: Step[];
 }
 
+/** The hash that opens the quick start on the agent way. Links to it land on #start. */
+const AGENT_HASH = '#start-agent';
+
+const ASK: Step = {
+  label: 'Ask it to run',
+  prompt: AGENT_PROMPT,
+  note: 'It checks Python and pip, installs nuspace and opens the space.',
+};
+
+const BY_HAND: Step[] = [
+  {
+    label: 'Install and open',
+    cmd: [START_LINE],
+    note: (
+      <>
+        Python 3.10 or newer. <code>my-world</code> is your space, a folder. Run the same line to come back.
+      </>
+    ),
+  },
+];
+
 /* Every command is from nuskills/README.md or the nuspace README. */
-const PATHS: Path[] = [
+const AGENTS: Agent[] = [
   {
     id: 'claude',
     name: 'Claude Code',
     icon: <Asterisk aria-hidden />,
-    body: 'Claude learns nu and nuspace from the skills, installs nuspace and opens your first space. Ask it for cells next.',
     steps: [
       { label: 'Add the marketplace', cmd: ['claude plugin marketplace add nustackdev/nuskills'] },
       {
@@ -45,18 +64,13 @@ const PATHS: Path[] = [
           </>
         ),
       },
-      {
-        label: 'Ask for a space',
-        prompt: PROMPT,
-        note: 'Claude loads the nuspace skill on its own when the task matches.',
-      },
+      ASK,
     ],
   },
   {
     id: 'codex',
     name: 'Codex',
     icon: <SquareTerminal aria-hidden />,
-    body: 'Codex learns nu and nuspace from the skills, installs nuspace and opens your first space. Ask it for cells next.',
     steps: [
       { label: 'Add the marketplace', cmd: ['codex plugin marketplace add nustackdev/nuskills'] },
       {
@@ -69,22 +83,13 @@ const PATHS: Path[] = [
           </>
         ),
       },
-      {
-        label: 'Ask for a space',
-        prompt: `$nuspace ${PROMPT}`,
-        note: (
-          <>
-            Or skip <code>$nuspace</code>, Codex loads it when the task matches.
-          </>
-        ),
-      },
+      ASK,
     ],
   },
   {
     id: 'other',
     name: 'Other agents',
     icon: <Waypoints aria-hidden />,
-    body: 'Any agent that reads skills learns nu and nuspace from them, installs nuspace and opens your first space. Ask it for cells next.',
     steps: [
       { label: 'Get the skills', cmd: ['git clone https://github.com/nustackdev/nuskills'] },
       {
@@ -96,45 +101,19 @@ const PATHS: Path[] = [
           </>
         ),
       },
-      { label: 'Ask for a space', prompt: PROMPT },
-    ],
-  },
-  {
-    id: 'manual',
-    name: 'Manual',
-    icon: <Terminal aria-hidden />,
-    body: 'Install from PyPI and run a space yourself. The terminal is all you need.',
-    steps: [
-      { label: 'Install', cmd: ['pip install nuspace'] },
-      {
-        label: 'Run',
-        cmd: ['nuspace run my.nuspace'],
-        note: 'A browser opens on your space.',
-      },
-      {
-        label: 'Try a demo',
-        cmd: ['pip install nudemos', 'nuspace run --with nudemos.movies'],
-        note: 'A throwaway space with a full app in it.',
-      },
+      ASK,
     ],
   },
 ];
 
-const allCommands = (p: Path) =>
-  p.steps
-    .filter((st) => st.cmd && !st.inSession)
-    .map((st) => st.cmd!.join('\n'))
-    .join('\n');
+const WAYS = [
+  { id: 'hand', name: 'By hand', sub: 'You have Python, one line' },
+  { id: 'agent', name: 'With your agent', sub: "Don't think about it, ask" },
+] as const;
 
-/** Install: one framed card, a tab per way in (three agents, or by hand),
- *  each with its pitch, one copy for every command, and the numbered steps. */
-export function Install() {
-  const [at, setAt] = useState(0);
-  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-  const uid = useId();
-  const p = PATHS[at];
-  const n = PATHS.length;
-
+/** Arrow keys, Home and End over a row of tabs, with roving focus. */
+function useTabKeys(n: number, pick: (i: number) => void) {
+  const refs = useRef<(HTMLButtonElement | null)[]>([]);
   const onKey = (e: KeyboardEvent, i: number) => {
     const to =
       e.key === 'ArrowRight'
@@ -148,83 +127,136 @@ export function Install() {
               : -1;
     if (to < 0) return;
     e.preventDefault();
-    setAt(to);
-    tabs.current[to]?.focus();
+    pick(to);
+    refs.current[to]?.focus();
   };
+  return { refs, onKey };
+}
+
+/** Steps: the label beside its command, prompt and note, numbered when
+ *  there is more than one. */
+function Steps({ steps }: { steps: Step[] }) {
+  const numbered = steps.length > 1;
+  return (
+    <ol className={cn(s.steps, !numbered && s.single)}>
+      {steps.map((st, i) => (
+        <li key={st.label} className={s.step}>
+          {numbered ? <span className={s.num}>{String(i + 1).padStart(2, '0')}</span> : null}
+          <span className={s.label}>{st.label}</span>
+          <div className={s.body}>
+            {st.cmd ? (
+              <Command lines={st.cmd} inSession={st.inSession} what={`${st.label.toLowerCase()} commands`} />
+            ) : null}
+            {st.prompt ? (
+              <div className={s.prompt}>
+                <div className={s.say}>
+                  <span className={s.who}>Paste to your agent</span>
+                  <span>{st.prompt}</span>
+                </div>
+                <CopyButton text={st.prompt} what="prompt" variant="ghost" />
+              </div>
+            ) : null}
+            {st.note ? <p className={s.note}>{st.note}</p> : null}
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+/** Install: two ways in, by hand or with your agent, and per agent its
+ *  numbered steps. Any link to #start-agent opens it on the agent way. */
+export function Install() {
+  const [way, setWay] = useState(0);
+  const [agent, setAgent] = useState(0);
+  const ways = useTabKeys(WAYS.length, setWay);
+  const agents = useTabKeys(AGENTS.length, setAgent);
+  const uid = useId();
+  const a = AGENTS[agent];
+
+  useEffect(() => {
+    const open = () => {
+      setWay(1);
+      document.getElementById('start')?.scrollIntoView({ block: 'start' });
+    };
+    const onClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (!(e.target as Element | null)?.closest?.(`a[href="${AGENT_HASH}"]`)) return;
+      e.preventDefault();
+      history.pushState(null, '', AGENT_HASH);
+      open();
+      ways.refs.current[1]?.focus({ preventScroll: true });
+    };
+    const onHash = () => {
+      if (location.hash === AGENT_HASH) open();
+    };
+    /* Landing on the hash: the browser jumps to the tab, pull up to the section. */
+    const first = requestAnimationFrame(onHash);
+    document.addEventListener('click', onClick);
+    window.addEventListener('hashchange', onHash);
+    return () => {
+      cancelAnimationFrame(first);
+      document.removeEventListener('click', onClick);
+      window.removeEventListener('hashchange', onHash);
+    };
+  }, [ways.refs]);
 
   return (
-    <div className={s.frame}>
-      <div className={s.tabs} role="tablist" aria-label="Ways to install">
-        {PATHS.map((path, i) => (
+    <div className={s.root}>
+      <div className={s.ways} role="tablist" aria-label="Ways to install">
+        {WAYS.map((w, i) => (
           <button
-            key={path.id}
+            key={w.id}
             ref={(el) => {
-              tabs.current[i] = el;
+              ways.refs.current[i] = el;
             }}
             type="button"
             role="tab"
-            id={`${uid}-tab-${path.id}`}
-            aria-selected={i === at}
-            aria-controls={`${uid}-panel`}
-            tabIndex={i === at ? 0 : -1}
+            id={`start-${w.id}`}
+            aria-selected={i === way}
+            aria-controls={`${uid}-${w.id}`}
+            tabIndex={i === way ? 0 : -1}
             data-ring="inset"
-            className={s.tab}
-            onClick={() => setAt(i)}
-            onKeyDown={(e) => onKey(e, i)}
+            className={s.way}
+            onClick={() => setWay(i)}
+            onKeyDown={(e) => ways.onKey(e, i)}
           >
-            <span className={s.tabIcon}>{path.icon}</span>
-            {path.name}
+            <span className={s.wayName}>{w.name}</span>
+            <span className={s.waySub}>{w.sub}</span>
           </button>
         ))}
       </div>
 
-      <div className={s.panel} role="tabpanel" id={`${uid}-panel`} aria-labelledby={`${uid}-tab-${p.id}`}>
-        <div className={s.side}>
-          <h3 className={s.title}>{p.name}</h3>
-          <p className={s.line}>{p.body}</p>
-          <div className={s.actions}>
-            <CopyButton
-              text={allCommands(p)}
-              what={`${p.name} commands`}
-              variant="primary"
-              size="lg"
-              label="Copy commands"
-            />
-          </div>
-        </div>
+      <div role="tabpanel" id={`${uid}-hand`} aria-labelledby="start-hand" hidden={way !== 0} className={s.panel}>
+        <Steps steps={BY_HAND} />
+      </div>
 
-        <ol className={s.steps}>
-          {p.steps.map((st, i) => (
-            <li key={st.label} className={s.step}>
-              <span className={s.num}>{String(i + 1).padStart(2, '0')}</span>
-              <span className={s.label}>{st.label}</span>
-              <div className={s.body}>
-                {st.cmd ? (
-                  <div className={cn(s.cmd, st.inSession && s.cmdIn)}>
-                    <div className={s.lines}>
-                      {st.cmd.map((c) => (
-                        <div key={c} className={s.l}>
-                          <code>{c}</code>
-                        </div>
-                      ))}
-                    </div>
-                    <CopyButton text={st.cmd.join('\n')} what={`${st.label.toLowerCase()} commands`} />
-                  </div>
-                ) : null}
-                {st.prompt ? (
-                  <div className={s.prompt}>
-                    <div className={s.say}>
-                      <span className={s.who}>Paste to your agent</span>
-                      <span>{st.prompt}</span>
-                    </div>
-                    <CopyButton text={st.prompt} what="prompt" />
-                  </div>
-                ) : null}
-                {st.note ? <p className={s.note}>{st.note}</p> : null}
-              </div>
-            </li>
+      <div role="tabpanel" id={`${uid}-agent`} aria-labelledby="start-agent" hidden={way !== 1} className={s.panel}>
+        <div className={s.agents} role="tablist" aria-label="Agents">
+          {AGENTS.map((ag, i) => (
+            <button
+              key={ag.id}
+              ref={(el) => {
+                agents.refs.current[i] = el;
+              }}
+              type="button"
+              role="tab"
+              id={`${uid}-tab-${ag.id}`}
+              aria-selected={i === agent}
+              aria-controls={`${uid}-steps`}
+              tabIndex={i === agent ? 0 : -1}
+              className={s.chip}
+              onClick={() => setAgent(i)}
+              onKeyDown={(e) => agents.onKey(e, i)}
+            >
+              <span className={s.chipIcon}>{ag.icon}</span>
+              {ag.name}
+            </button>
           ))}
-        </ol>
+        </div>
+        <div role="tabpanel" id={`${uid}-steps`} aria-labelledby={`${uid}-tab-${a.id}`}>
+          <Steps steps={a.steps} />
+        </div>
       </div>
     </div>
   );

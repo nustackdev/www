@@ -1,181 +1,157 @@
-/* Install: one big flat frame: a tab strip, then the path's pitch beside
- * its numbered steps. Afterglow fill only on "Copy commands". */
+/* Install: a two way switch, then the way's numbered steps, flat on the
+ * page. The selected way is a raised segmented thumb, agents are chips. */
 
-.frame {
-  overflow: hidden;
-  background: var(--site-bg-raised);
-  border: 1px solid var(--site-border);
-  border-radius: var(--site-r-xl);
-}
-
-/* -- Tabs ------------------------------------------------------------------- */
-
-.tabs {
+.root {
   display: flex;
-  gap: 4px;
-  padding: 8px;
-  border-bottom: 1px solid var(--site-border-subtle);
-  background: var(--site-code-bg);
-  overflow-x: auto;
-  scrollbar-width: none;
+  flex-direction: column;
+  gap: 24px;
 }
-.tabs::-webkit-scrollbar { display: none; }
 
-.tab {
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: var(--site-control-h);
-  padding: 0 16px 0 8px;
+/* -- Ways ------------------------------------------------------------------- */
+
+.ways {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: var(--site-code-bg);
+  border: 1px solid var(--site-border-subtle);
+  border-radius: var(--site-r-lg);
+}
+
+.way {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+  padding: 12px 16px;
   border: 1px solid transparent;
   border-radius: var(--site-r-md);
   background: none;
   font-family: var(--font-display);
-  font-size: var(--site-fs-4);
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--site-t), border-color var(--site-t);
+}
+.way:hover { background: var(--site-wash); }
+.way:active { background: var(--site-wash-2); }
+/* Selected: a raised segmented thumb, held under the pointer. */
+.way[aria-selected="true"] {
+  background: var(--site-bg-overlay);
+  border-color: var(--site-border);
+  box-shadow: var(--site-elevation-raised);
+}
+
+.wayName {
+  font-size: var(--site-fs-5);
+  font-weight: var(--site-fw-title);
+  letter-spacing: var(--site-tr-title);
+  color: var(--site-ink-2);
+}
+.way[aria-selected="true"] .wayName { color: var(--site-ink); }
+
+.waySub {
+  font-size: var(--site-fs-3);
+  color: var(--site-ink-3);
+}
+
+/* -- Panel ------------------------------------------------------------------ */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.panel[hidden] { display: none; }
+
+.agents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px 0 8px;
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-r-full);
+  background: none;
+  font-family: var(--font-display);
+  font-size: var(--site-fs-3);
   font-weight: var(--site-fw-medium);
   color: var(--site-ink-2);
   white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color var(--site-t), color var(--site-t);
+  transition: background-color var(--site-t), border-color var(--site-t), color var(--site-t);
 }
-.tab:hover { background: var(--site-wash); color: var(--site-ink); }
-.tab:active { background: var(--site-wash-2); }
-/* Selected: a raised segmented thumb, held under the pointer. */
-.tab[aria-selected="true"] {
-  background: var(--site-bg-overlay);
-  border-color: var(--site-border);
-  box-shadow: var(--site-elevation-raised);
-  color: var(--site-ink);
+.chip:hover { background: var(--site-wash); color: var(--site-ink); }
+.chip:active { background: var(--site-wash-2); }
+.chip[aria-selected="true"] {
+  background: var(--site-ink);
+  border-color: var(--site-ink);
+  color: var(--site-bg);
 }
 
-.tabIcon {
+.chipIcon {
   display: inline-grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 16px;
+  height: 16px;
 }
-.tabIcon svg { width: 16px; height: 16px; }
-
-/* -- Panel ------------------------------------------------------------------ */
-
-.panel {
-  display: grid;
-  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
-}
-
-.side {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 40px;
-  border-right: 1px solid var(--site-border-subtle);
-}
-
-.title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(20px, 1.8vw, 24px);
-  font-weight: var(--site-fw-title);
-  letter-spacing: var(--site-tr-title);
-  line-height: 1.2;
-  color: var(--site-ink);
-}
-
-.line {
-  margin: 0;
-  font-size: var(--site-fs-5);
-  color: var(--site-ink-2);
-  text-wrap: pretty;
-}
-
-.actions {
-  margin-top: auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding-top: 16px;
-}
+.chipIcon svg { width: 14px; height: 14px; }
 
 /* -- Steps ------------------------------------------------------------------ */
 
 .steps {
   margin: 0;
-  padding: 16px 0;
+  padding: 0;
   list-style: none;
 }
 
+/* Number, label, then the body; label and number line up with the first box. */
 .step {
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr);
-  gap: 8px 12px;
-  padding: 20px 40px 20px 32px;
+  grid-template-columns: 32px 176px minmax(0, 1fr);
+  gap: 8px 16px;
+  padding: 16px 0;
 }
 .step + .step { border-top: 1px solid var(--site-border-subtle); }
+/* One step: no number, the label column takes its place. */
+.single .step { grid-template-columns: 176px minmax(0, 1fr); }
 
 .num {
+  padding-top: 10px;
   font-family: var(--font-mono);
-  font-size: var(--site-fs-4);
+  font-size: var(--site-fs-3);
   color: var(--site-ink-3);
 }
 
 .label {
-  font-size: var(--site-fs-6);
+  padding-top: 9px;
+  font-size: var(--site-fs-5);
   font-weight: var(--site-fw-title);
   letter-spacing: var(--site-tr-title);
   color: var(--site-ink);
 }
 
 .body {
-  grid-column: 2;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   min-width: 0;
 }
-
-.cmd {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-  padding: 8px 8px 8px 16px;
-  background: var(--site-code-bg);
-  border: 1px solid var(--site-border-subtle);
-  border-radius: var(--site-r-md);
-  font-family: var(--font-mono);
-  font-size: var(--site-fs-3);
-  line-height: 1.6;
-}
-
-.lines {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.lines::-webkit-scrollbar { display: none; }
-
-.l {
-  display: flex;
-  gap: 0.75em;
-  white-space: nowrap;
-  color: var(--site-ink);
-}
-.l::before {
-  content: "$";
-  color: var(--site-ink-3);
-  user-select: none;
-}
-.cmdIn .l::before { content: ">"; }
-.l code { font: inherit; }
 
 .prompt {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  padding: 8px 8px 8px 16px;
+  padding: 6px 6px 6px 16px;
   border: 1px dashed var(--site-border-strong);
   border-radius: var(--site-r-md);
 }
@@ -183,9 +159,10 @@
 .say {
   flex: 1 1 auto;
   min-width: 0;
-  padding-top: 4px;
+  padding-block: 4px;
   font-size: var(--site-fs-5);
   color: var(--site-ink);
+  text-wrap: pretty;
 }
 
 .who {
@@ -209,23 +186,15 @@
 
 /* -- Responsive ------------------------------------------------------------- */
 
-@media (max-width: 1024px) {
-  .panel { grid-template-columns: 1fr; }
-  .side {
-    padding: 28px;
-    border-right: 0;
-    border-bottom: 1px solid var(--site-border-subtle);
-  }
-  .step { padding: 20px 28px 20px 20px; }
+@media (max-width: 720px) {
+  .step { grid-template-columns: 28px minmax(0, 1fr); }
+  .num { padding-top: 1px; }
+  .label { padding-top: 0; }
+  .body { grid-column: 2; }
+  .single .step { grid-template-columns: minmax(0, 1fr); }
+  .single .body { grid-column: 1; }
 }
 
-@media (max-width: 640px) {
-  .side { padding: 24px 20px; }
-  .step {
-    grid-template-columns: 28px minmax(0, 1fr);
-    gap: 8px;
-    padding: 16px 16px 16px 12px;
-  }
-  .tab { padding-right: 12px; }
-  .cmd { font-size: var(--site-fs-2); }
+@media (max-width: 480px) {
+  .ways { grid-template-columns: 1fr; }
 }

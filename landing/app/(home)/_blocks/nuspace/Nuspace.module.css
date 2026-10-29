@@ -1,0 +1,165 @@
+/* NuspaceWindow: the rail a step down on the deep ground, the plane on the
+ * raised one. Rail geometry after nuspace-ui design/tokens.css: one 18px left
+ * edge for every glyph, 30px rows a hairline apart, inset 8px from the rail's
+ * edges, 12px of air over a section. No accent in the rail but the wordmark. */
+
+.root {
+  /* The cards and tables on a plane. */
+  --ns-card: color-mix(in oklab, var(--site-ink) 6%, var(--site-code-bg));
+  --ns-row: 30px;
+  --ns-fill: color-mix(in oklab, var(--site-ink) 10%, transparent);
+
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  min-width: 0;
+  min-height: 600px;
+  overflow: hidden;
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-r-xl);
+  background: var(--site-bg-raised);
+}
+:global(.dark) .root { --ns-card: var(--site-surface); }
+
+/* ===== the rail ===== */
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-right: 1px solid var(--site-border-subtle);
+  background: var(--site-code-bg);
+  font-size: var(--site-fs-4);
+}
+
+/* The top and bottom bars: a button's glyph on the rows' icon edge. */
+.top,
+.foot {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 2px;
+  height: 36px;
+  padding: 0 12px;
+}
+.foot { border-top: 1px solid var(--site-border-subtle); }
+.end { margin-left: auto; }
+
+.btn {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: var(--site-ink-3);
+}
+.btn svg { width: 16px; height: 16px; }
+
+.mark {
+  margin-left: 6px;
+  font-size: var(--site-fs-2);
+  font-weight: var(--site-fw-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--site-ink);
+  user-select: none;
+}
+.mark b { font-weight: inherit; color: var(--site-accent-text); }
+
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--site-status-success); }
+
+.moon { display: none; }
+:global(.light) .sun { display: none; }
+:global(.light) .moon { display: block; }
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 4px 8px;
+}
+
+/* A row: an icon lane, then the label; a tree row indents by its depth. */
+.row {
+  --d: 0;
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  height: var(--ns-row);
+  padding: 0 6px 0 calc(8px + var(--d) * 20px);
+  border-radius: var(--site-r-md);
+  color: var(--site-ink-2);
+  white-space: nowrap;
+  transition: background-color var(--site-dur-base) var(--site-ease-out);
+}
+.sel { background: var(--ns-fill); color: var(--site-ink); }
+.newRow { color: var(--site-ink-3); }
+
+.ic {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 20px;
+  margin-right: 8px;
+  border-radius: var(--site-r-sm);
+  font-size: 14px;
+  line-height: 1;
+  color: var(--site-ink-3);
+}
+.ic svg { width: 16px; height: 16px; }
+
+.label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+.keys { font: inherit; font-size: var(--site-fs-1); line-height: 1; color: var(--site-ink-3); }
+
+.section {
+  display: flex;
+  flex: none;
+  align-items: center;
+  height: 28px;
+  margin-top: 12px;
+  padding: 0 6px 0 8px;
+  font-size: var(--site-fs-2);
+  font-weight: var(--site-fw-medium);
+  color: var(--site-ink-3);
+  user-select: none;
+}
+
+/* ===== the plane ===== */
+
+.doc { position: relative; min-width: 0; overflow: hidden; padding: 0 18px 24px; }
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  font-size: var(--site-fs-2);
+  color: var(--site-ink-3);
+}
+.more { width: 16px; height: 16px; margin-left: auto; color: var(--site-ink-3); }
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 4px;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: var(--site-tr-display);
+  color: var(--site-ink);
+}
+.pic {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--site-r-md);
+  font-size: 24px;
+  line-height: 1;
+}
+.pic svg { width: 26px; height: 26px; color: var(--site-ink-3); }

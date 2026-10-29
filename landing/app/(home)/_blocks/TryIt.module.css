@@ -1,0 +1,27 @@
+/* TryIt: the heading left like every section, then one narrow column on the
+ * page axis: the install, then where it lands. */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  max-width: 920px;
+  min-width: 0;
+  margin-inline: auto;
+}
+
+.lands {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.lands > * { width: 100%; }
+
+.aside {
+  margin: 0;
+  font-size: var(--site-fs-3);
+  color: var(--site-ink-3);
+  text-align: center;
+}
