@@ -186,7 +186,7 @@
   --site-status-warning:      #8d5401; /* sunset */
   --site-status-error:        #bb262c; /* ember */
   --site-status-error-soft:   #fee9e7;
-  --site-status-info:         #03698e; /* moonlight */
+  --site-status-info:         #1961aa; /* moonlight */
 
   /* --- Elevation: three shadows over flat, nothing else ---------------- */
   --site-elevation-raised:   0 1px 1px rgb(26 29 36 / 0.04), 0 1px 3px rgb(26 29 36 / 0.06);
@@ -247,7 +247,7 @@
   --site-status-warning:      #f4b353; /* sunset */
   --site-status-error:        #ff8781; /* ember */
   --site-status-error-soft:   #47201f;
-  --site-status-info:         #6fc7f2; /* moonlight */
+  --site-status-info:         #87bffe; /* moonlight */
 
   /* --- Elevation: a lit top edge does what a shadow cannot in dark ----- */
   --site-elevation-raised:   inset 0 1px 0 rgb(255 255 255 / 0.03), 0 1px 2px rgb(0 0 0 / 0.3);
