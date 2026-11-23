@@ -40,7 +40,7 @@ const ASIDES = [
 ];
 
 /** Drift speed of the top row, px a second. The others go as a multiple of it. */
-const SPEED = 30;
+const SPEED = 22;
 
 /** Each depth: its pace, gap, direction and a start offset so the rows don't line up. */
 const DEPTH = {

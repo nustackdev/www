@@ -7,7 +7,7 @@ import { GALLERY, openDemo } from '../gallery/gallery.data';
 import s from './Wall.module.css';
 
 /** Columns and their drift times, s. Odd columns drift down, the rest up. */
-const DURS = [84, 97, 108, 119, 131, 92];
+const DURS = [50, 58, 65, 71, 79, 55];
 /** Tiles per column, cycling through the gallery; each column repeats them
  *  once so the drift loops without a seam. Enough that one set is taller
  *  than the wall, so no column ever shows its end. */
