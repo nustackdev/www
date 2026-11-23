@@ -151,7 +151,7 @@
 @media (min-width: 861px) {
   /* Clipped where the shade turns solid, so only the tiles you can see take clicks. */
   .root .wall {
-    --wall-inset: -50% -22% -50% 38%;
+    --wall-inset: -50% -39% -50% 38%;
     clip-path: inset(0 0 24px max(calc(50vw - 40px), 620px));
   }
 
@@ -179,9 +179,9 @@
     left: auto;
     right: auto;
     width: 100vw;
-    height: 380px;
+    height: 440px;
     margin: -100px 0 0 calc(50% - 50vw);
-    --wall-inset: 0 -14%;
+    --wall-inset: 0 -27%;
     --wall-mask: linear-gradient(180deg, transparent 40px, #000 150px, #000 calc(100% - 80px), transparent 100%);
     clip-path: inset(40px 0 24px 0);
   }
@@ -189,5 +189,5 @@
   .hint { bottom: 32px; }
 }
 @media (max-width: 640px) {
-  .root .wall { height: 440px; }
+  .root .wall { --wall-inset: 0 -14%; }
 }
