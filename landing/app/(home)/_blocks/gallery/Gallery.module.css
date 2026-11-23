@@ -1,15 +1,160 @@
-/* Gallery: a three column grid of space cards, then the lightbox. */
+/* Gallery: a bar (search, tags, arrows) over one scrolling row of space
+ * cards, then the lightbox. Three cards to a view, two on tablets, one and a
+ * peek on phones. */
 
-.grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--site-gap-loose) var(--site-gap-normal);
+.gallery {
+  --per: 3;
+  --gap: var(--site-gap-normal);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.grid > li { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+/* -- Bar ------------------------------------------------------------------- */
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  width: 240px;
+  height: 36px;
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-r-full);
+  background: var(--site-bg-raised);
+  transition: border-color var(--site-dur-fast) var(--site-ease-out);
+}
+.search:hover { border-color: var(--site-border-strong, var(--site-border)); }
+.search:focus-within { border-color: var(--site-accent); }
+.search > svg { position: absolute; left: 12px; width: 15px; height: 15px; color: var(--site-ink-3); pointer-events: none; }
+.search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 34px 0 34px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--site-fs-3);
+  color: var(--site-ink);
+  outline: none;
+}
+.search input::placeholder { color: var(--site-ink-3); }
+.search input::-webkit-search-cancel-button { display: none; }
+
+.clearQ {
+  position: absolute;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--site-r-full);
+  background: none;
+  color: var(--site-ink-3);
+  cursor: pointer;
+}
+.clearQ:hover { background: var(--site-wash); color: var(--site-ink); }
+.clearQ svg { width: 14px; height: 14px; }
+
+.tags {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tags::-webkit-scrollbar { display: none; }
+
+/* Same pill as the install picker. */
+.tag {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-r-full);
+  background: none;
+  font-family: var(--font-display);
+  font-size: var(--site-fs-3);
+  font-weight: var(--site-fw-medium);
+  color: var(--site-ink-2);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--site-dur-fast) var(--site-ease-out), color var(--site-dur-fast) var(--site-ease-out);
+}
+.tag:hover { background: var(--site-wash); color: var(--site-ink); }
+.tag:active { background: var(--site-wash-2); }
+.tag[aria-pressed="true"] { background: var(--site-ink); border-color: var(--site-ink); color: var(--site-bg); }
+
+.arrows { flex: none; display: flex; gap: 6px; }
+.arrows[data-idle] { visibility: hidden; }
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-r-full);
+  background: none;
+  color: var(--site-ink-2);
+  cursor: pointer;
+  transition: background var(--site-dur-fast) var(--site-ease-out), color var(--site-dur-fast) var(--site-ease-out), opacity var(--site-dur-fast) var(--site-ease-out);
+}
+.arrow:hover:not(:disabled) { background: var(--site-wash); color: var(--site-ink); }
+.arrow:disabled { opacity: 0.35; cursor: default; }
+.arrow svg { width: 16px; height: 16px; }
+
+/* -- Row ------------------------------------------------------------------- */
+
+/* Snaps card by card; the ring on hover gets room above and below. */
+.track {
+  list-style: none;
+  margin: -6px -6px 0;
+  padding: 6px 6px 4px;
+  scroll-padding-inline: 6px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--per) - 1) * var(--gap)) / var(--per));
+  gap: var(--gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.track::-webkit-scrollbar { display: none; }
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 240px;
+  border: 1px dashed var(--site-border);
+  border-radius: var(--site-r-lg);
+  color: var(--site-ink-3);
+}
+.empty p { margin: 0; font-size: var(--site-fs-3); }
 
 .card {
   display: flex;
@@ -145,11 +290,27 @@
 .close { right: 24px; top: 24px; }
 
 @media (max-width: 1024px) {
-  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery { --per: 2; }
 }
 
+/* Phones: the search and arrows on one line, the tags under it, and the row
+ * runs edge to edge with the next card peeking in. */
 @media (max-width: 640px) {
-  .grid { grid-template-columns: 1fr; }
+  .gallery { --gap: 12px; }
+  .bar { flex-wrap: wrap; }
+  .search { flex: 1; width: auto; }
+  .tags {
+    order: 3;
+    flex-basis: 100%;
+    margin-inline: calc(-1 * var(--site-container-pad-x));
+    padding-inline: var(--site-container-pad-x);
+  }
+  .track {
+    grid-auto-columns: 84%;
+    margin-inline: calc(-1 * var(--site-container-pad-x));
+    padding-inline: var(--site-container-pad-x);
+    scroll-padding-inline: var(--site-container-pad-x);
+  }
   .box { width: calc(100vw - 32px); }
   .prev, .next { top: auto; bottom: 20px; transform: none; }
   .prev { left: 16px; }
@@ -158,5 +319,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .media, .navBtn { transition: none; }
+  .media, .navBtn, .tag, .arrow, .search { transition: none; }
 }
