@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Search, X } from 'lucide-react';
 import { Pill, PillRow } from '@www/shared/components/controls/Pill';
 import { Section } from '@www/shared/components/page';
+import { Anchors } from './Anchors';
 import { DemoLoop } from './DemoLoop';
 import { GALLERY, TAGS, openDemo, type GalleryItem, type Tag } from './gallery.data';
 import { Lightbox } from './Lightbox';
@@ -19,7 +20,8 @@ const hay = (g: GalleryItem) => [g.name, g.eyebrow, g.title, g.tagline, ...g.mad
  * phones; the arrows page the row, a swipe or a trackpad scrolls it. A card is
  * the space's loop (plays on hover, or when it is the one in view on touch),
  * its domain, title, one line and what it is made of. A click opens it in the
- * lightbox, which the hero wall opens too.
+ * lightbox, which the hero wall opens too. Under the row, the anchors: first
+ * reactions drifting at three depths.
  */
 export function Gallery() {
   const [q, setQ] = useState('');
@@ -146,6 +148,10 @@ export function Gallery() {
             <Pill onClick={clear}>Show all</Pill>
           </div>
         )}
+
+        <div className={s.anchors}>
+          <Anchors />
+        </div>
       </div>
       <Lightbox />
     </Section>

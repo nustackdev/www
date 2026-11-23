@@ -1,0 +1,30 @@
+/* Marquee: one drifting row, its own paint boundary, the track a GPU layer. */
+
+.root { overflow: hidden; contain: paint; }
+
+.track {
+  display: flex;
+  width: max-content;
+  gap: var(--gap);
+  will-change: transform;
+  /* --dur is set from the measured width, see Marquee.tsx. */
+  animation: drift var(--dur, 100s) linear infinite;
+}
+.track[data-reverse] { animation-direction: reverse; }
+
+.set { display: flex; align-items: center; gap: var(--gap); }
+.item { flex: none; }
+
+@keyframes drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - var(--gap) / 2)); }
+}
+
+/* Still: the items once, wrapped. */
+@media (prefers-reduced-motion: reduce) {
+  .root { overflow: visible; contain: none; }
+  .track { animation: none; will-change: auto; width: auto; margin-left: 0 !important; }
+  .set { flex-wrap: wrap; }
+  .set[data-copy],
+  .item[aria-hidden] { display: none; }
+}

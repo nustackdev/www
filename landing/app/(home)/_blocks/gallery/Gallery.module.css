@@ -10,6 +10,9 @@
   gap: 20px;
 }
 
+/* The anchors follow the row closely, as part of the same gallery. */
+.anchors { margin-top: clamp(12px, 2vw, 28px); }
+
 /* -- Bar ------------------------------------------------------------------- */
 
 .bar {

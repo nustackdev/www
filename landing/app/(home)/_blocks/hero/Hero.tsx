@@ -1,14 +1,13 @@
 import { ArrowUpRight } from 'lucide-react';
 import { Button } from '@www/shared/components/controls/Button';
 import { Command } from '@www/shared/components/controls/Command';
+import { Marquee } from '@www/shared/components/media/Marquee';
 import { Kicker } from '@www/shared/components/text/Kicker';
-import { cn } from '@www/shared/lib/cn';
 import { START_LINE } from '../start.data';
-import { Rotator } from './Rotator';
 import { Wall } from './Wall';
 import s from './Hero.module.css';
 
-/** What the space composes into, the rotating word. Draft. */
+/** What the space composes into, the drifting row. Draft. */
 const WORDS = ['workflows', 'second brain', 'ops', 'AI systems', 'software factory'];
 
 /**
@@ -34,15 +33,24 @@ export function Hero() {
             </h1>
           </div>
 
-          <p className={s.sub}>
-            <span className={s.subLine}>
+          <div className={s.sub}>
+            <p className={s.subLine}>
               A society of tiny interconnected programs that hold data, run logic and render UI.
-            </span>
-            <span className={cn(s.subLine, s.subRot)}>
-              Together, they compose into your <Rotator words={WORDS} />.
-            </span>
-            <span className={cn(s.subLine, s.subInk)}>Humans get the space as UI, agents get it as code.</span>
-          </p>
+            </p>
+            <p className={s.subLine}>Together, they compose into your:</p>
+            {/* The options drift by in a row of their own, so no swap ever moves the copy. */}
+            <Marquee
+              items={WORDS.map((w) => (
+                <span key={w} className={s.opt}>
+                  {w}
+                </span>
+              ))}
+              speed={28}
+              gap="0px"
+              className={s.opts}
+            />
+            <p className={s.subLine}>Humans get the space as UI, agents get it as code.</p>
+          </div>
         </div>
 
         <div className={s.start}>

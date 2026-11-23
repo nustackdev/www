@@ -55,17 +55,28 @@
   color: var(--site-ink-2);
 }
 
-.subInk { color: var(--site-ink); }
-
-/* The rotating word: ink, an accent underline, a short fade on the swap. */
-.rot {
-  display: inline-block;
-  color: var(--site-ink);
-  font-weight: var(--site-fw-medium);
-  border-bottom: 1px solid var(--site-accent);
-  transition: opacity var(--site-dur-base) var(--site-ease-out), transform var(--site-dur-base) var(--site-ease-out);
+/* The drifting options: in the sub's own color, a dot after each, faded at both ends. One line tall, so the copy never moves. */
+.opts {
+  margin: 6px 0 8px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 88%, transparent 100%);
 }
-.rotOut { opacity: 0; transform: translateY(4px); }
+.opt {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: var(--site-fw-medium);
+  white-space: nowrap;
+}
+.opt::after {
+  content: "";
+  width: 4px;
+  height: 4px;
+  margin: 0 20px;
+  border-radius: var(--site-r-full);
+  background: currentColor;
+  opacity: 0.6;
+}
 
 /* -- Start: stacked, the label, the line, then the agent way ------------------- */
 
@@ -98,9 +109,7 @@
 /* -- Wall: the hero's background. Tilted beside the copy on wide screens,
  * flat behind it on phones (like herdr.dev). ----------------------------------- */
 
-.subLine { display: block; }
-/* The rotating line never wraps, so a swap only moves the word. */
-@media (min-width: 641px) { .subRot { white-space: nowrap; } }
+.subLine { display: block; margin: 0; }
 
 .root { position: relative; isolation: isolate; }
 
@@ -108,7 +117,8 @@
 .head { position: relative; z-index: 1; pointer-events: none; }
 .start,
 .titleBlock > *,
-.subLine { pointer-events: auto; }
+.subLine,
+.opts { pointer-events: auto; }
 /* Each line takes only its text's width, so the room past it stays the wall's. */
 .subLine { width: fit-content; }
 

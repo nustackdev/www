@@ -1,0 +1,67 @@
+/* Anchors: a wall of overheard slips drifting sideways at three depths,
+ * edge to edge, fading at both sides. The far rows are smaller and drift
+ * the other way. Not actionable: no hover, no selection. */
+
+.wall {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+.slip {
+  margin: 0;
+  padding: var(--py) var(--px);
+  background: var(--site-surface);
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-r-lg);
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: var(--site-fw-title);
+  font-size: var(--fs);
+  line-height: 1.2;
+  letter-spacing: var(--site-tr-title);
+  color: var(--site-ink);
+}
+
+.slip::before { content: "\201C"; margin-right: 0.08em; color: var(--site-ink-twilight); opacity: 0.6; }
+.slip::after { content: "\201D"; margin-left: 0.04em; color: var(--site-ink-twilight); opacity: 0.6; }
+
+.dim { color: var(--site-ink-twilight); }
+
+/* Depths. */
+.near { --fs: clamp(20px, 2vw, 26px); --py: 18px; --px: 24px; }
+.mid { --fs: 18px; --py: 14px; --px: 20px; }
+.far { --fs: 15px; --py: 11px; --px: 16px; }
+.mid .slip,
+.far .slip { background: var(--site-bg-raised); border-color: var(--site-border-subtle); }
+
+@media (max-width: 640px) {
+  .wall {
+    gap: 12px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  }
+  .near { --fs: 19px; --py: 14px; --px: 18px; }
+  .mid { --fs: 16px; }
+  .far { --fs: 14px; }
+}
+
+/* Still: the reactions and the anchors as wrapped lists on the column, the asides gone. */
+@media (prefers-reduced-motion: reduce) {
+  .wall {
+    width: auto;
+    margin-left: 0;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .mid { display: none; }
+  .slip { white-space: normal; }
+}
