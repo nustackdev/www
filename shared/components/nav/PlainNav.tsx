@@ -1,9 +1,10 @@
 'use client';
 
 /**
- * PlainNav — the site's top nav, kept to the essentials: one floating island
- * with the logo, Docs, Blog, then the two asks (star on GitHub, follow on X).
- * Same on desktop and phones; phones shorten the asks to "Star" and "Follow".
+ * PlainNav — the site's top nav, kept to the essentials: a flat full width
+ * bar, the logo, Docs and Blog on the left, the two asks (star on GitHub,
+ * follow on X) on the right, all on the main column. Phones drop the wordmark
+ * and shorten the asks to "Star" and "Follow".
  *
  * FloatingNav (Stack dropdown, search, full-screen mobile sheet) stays for
  * when the site grows back into it.
@@ -28,26 +29,31 @@ function toTop(e: MouseEvent<HTMLAnchorElement>) {
 export function PlainNav() {
   return (
     <header className={s.root}>
-      <nav className={s.pill} aria-label="Main">
-        <Link href="/" className={s.logo} aria-label="nustack home" onClick={toTop}>
-          <NuLogo size={18} />
-        </Link>
-        <Link href="/docs" className={s.word}>
-          Docs
-        </Link>
-        <Link href="/blog" className={s.word}>
-          Blog
-        </Link>
-        <a className={s.ask} href={SOCIAL_LINKS.github} target="_blank" rel="noreferrer">
-          <GithubMark size={15} />
-          <span className={s.full}>Star on GitHub</span>
-          <span className={s.short}>Star</span>
-        </a>
-        <a className={s.ask} href={SOCIAL_LINKS.x} target="_blank" rel="noreferrer">
-          <XMark size={13} />
-          <span className={s.full}>Follow on X</span>
-          <span className={s.short}>Follow</span>
-        </a>
+      <nav className={s.bar} aria-label="Main">
+        <div className={s.group}>
+          <Link href="/" className={s.logo} aria-label="nustack home" onClick={toTop}>
+            <NuLogo size={18} />
+            <span className={s.wordmark}>nustack</span>
+          </Link>
+          <Link href="/docs" className={s.word}>
+            Docs
+          </Link>
+          <Link href="/blog" className={s.word}>
+            Blog
+          </Link>
+        </div>
+        <div className={s.group}>
+          <a className={s.ask} href={SOCIAL_LINKS.github} target="_blank" rel="noreferrer">
+            <GithubMark size={15} />
+            <span className={s.full}>Star on GitHub</span>
+            <span className={s.short}>Star</span>
+          </a>
+          <a className={s.ask} href={SOCIAL_LINKS.x} target="_blank" rel="noreferrer">
+            <XMark size={13} />
+            <span className={s.full}>Follow on X</span>
+            <span className={s.short}>Follow</span>
+          </a>
+        </div>
       </nav>
     </header>
   );

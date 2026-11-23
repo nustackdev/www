@@ -79,8 +79,8 @@
   --site-code-pad-x:     calc(var(--site-u) * 1.5);
   --site-link-card-pad-x: calc(var(--site-u) * 1.65);
   --site-container-pad-x: calc(var(--site-u) * 2);
-  --site-nav-h:          47px;
-  --site-nav-clearance:  calc(var(--site-u) * 5 + var(--site-nav-h));
+  --site-nav-h:          56px;
+  --site-nav-clearance:  calc(var(--site-u) * 4 + var(--site-nav-h));
 
   /* --- Shape: the language radius steps -------------------------------- */
   --site-r-sm: 4px;   /* badges, kbd, small chips */
