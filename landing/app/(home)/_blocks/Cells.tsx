@@ -7,7 +7,7 @@ import { AgentsDemo } from './agents/AgentsDemo';
 /** What a cell gives you, one line each. Copy from compass/nuspace/structure.md in Go. */
 const HIGHLIGHTS: Feature[] = [
   { icon: <Database />, title: 'Any data', line: 'A note, a table, a song, a billion-entry log, a genome.' },
-  { icon: <Braces />, title: 'Any logic', line: 'Summarize your inbox, dim the lights at sunset, render a video.' },
+  { icon: <Braces />, title: 'Any logic', line: 'Branches and loops, reactions, parallel runs and races.' },
   { icon: <PanelsTopLeft />, title: 'Any UI', line: 'A cell draws itself. Text, tables, charts, forms.' },
   { icon: <Zap />, title: "It's live", line: 'Change one cell and everything that depends on it follows. UI too.' },
   { icon: <Network />, title: 'Work scales', line: 'The same cell runs in a worker, across processes or on a cluster.' },
