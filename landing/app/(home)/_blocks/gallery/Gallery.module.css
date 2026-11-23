@@ -65,37 +65,7 @@
 .clearQ:hover { background: var(--site-wash); color: var(--site-ink); }
 .clearQ svg { width: 14px; height: 14px; }
 
-.tags {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.tags::-webkit-scrollbar { display: none; }
-
-/* Same pill as the install picker. */
-.tag {
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  height: 32px;
-  padding: 0 12px;
-  border: 1px solid var(--site-border);
-  border-radius: var(--site-r-full);
-  background: none;
-  font-family: var(--font-display);
-  font-size: var(--site-fs-3);
-  font-weight: var(--site-fw-medium);
-  color: var(--site-ink-2);
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background var(--site-dur-fast) var(--site-ease-out), color var(--site-dur-fast) var(--site-ease-out);
-}
-.tag:hover { background: var(--site-wash); color: var(--site-ink); }
-.tag:active { background: var(--site-wash-2); }
-.tag[aria-pressed="true"] { background: var(--site-ink); border-color: var(--site-ink); color: var(--site-bg); }
+.tags { flex: 1; min-width: 0; }
 
 .arrows { flex: none; display: flex; gap: 6px; }
 .arrows[data-idle] { visibility: hidden; }
@@ -319,5 +289,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .media, .navBtn, .tag, .arrow, .search { transition: none; }
+  .media, .navBtn, .arrow, .search { transition: none; }
 }

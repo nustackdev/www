@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Search, X } from 'lucide-react';
+import { Pill, PillRow } from '@www/shared/components/controls/Pill';
 import { Section } from '@www/shared/components/page';
 import { DemoLoop } from './DemoLoop';
 import { GALLERY, TAGS, openDemo, type GalleryItem, type Tag } from './gallery.data';
@@ -91,16 +92,16 @@ export function Gallery() {
             ) : null}
           </label>
 
-          <div className={s.tags} role="group" aria-label="Filter by tag">
-            <button type="button" className={s.tag} aria-pressed={!tag} onClick={() => setTag(null)}>
+          <PillRow scroll className={s.tags} role="group" aria-label="Filter by tag">
+            <Pill selected={!tag} onClick={() => setTag(null)}>
               All
-            </button>
+            </Pill>
             {TAGS.map((t) => (
-              <button key={t} type="button" className={s.tag} aria-pressed={tag === t} onClick={() => setTag(tag === t ? null : t)}>
+              <Pill key={t} selected={tag === t} onClick={() => setTag(tag === t ? null : t)}>
                 {t}
-              </button>
+              </Pill>
             ))}
-          </div>
+          </PillRow>
 
           {/* Hidden, room kept, when the row fits in one view. */}
           <div className={s.arrows} data-idle={(edge.start && edge.end) || undefined}>
@@ -142,9 +143,7 @@ export function Gallery() {
         ) : (
           <div className={s.empty}>
             <p>No spaces match that yet.</p>
-            <button type="button" className={s.tag} onClick={clear}>
-              Show all
-            </button>
+            <Pill onClick={clear}>Show all</Pill>
           </div>
         )}
       </div>

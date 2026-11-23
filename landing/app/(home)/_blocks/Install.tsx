@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode 
 import { Asterisk, Feather, Package, SquareTerminal, Waypoints, Zap } from 'lucide-react';
 import { Command } from '@www/shared/components/controls/Command';
 import { CopyButton } from '@www/shared/components/controls/CopyButton';
+import { Pill, PillRow } from '@www/shared/components/controls/Pill';
 import { cn } from '@www/shared/lib/cn';
 import { AGENT_PROMPT, START_LINE } from './start.data';
 import s from './Install.module.css';
@@ -204,28 +205,26 @@ function Picker({ items, label }: { items: Agent[]; label: string }) {
   const it = items[at];
   return (
     <>
-      <div className={s.agents} role="tablist" aria-label={label}>
+      <PillRow role="tablist" aria-label={label}>
         {items.map((x, i) => (
-          <button
+          <Pill
             key={x.id}
             ref={(el) => {
               keys.refs.current[i] = el;
             }}
-            type="button"
             role="tab"
+            selected={i === at}
+            icon={x.icon}
             id={`${uid}-tab-${x.id}`}
-            aria-selected={i === at}
             aria-controls={`${uid}-steps`}
             tabIndex={i === at ? 0 : -1}
-            className={s.chip}
             onClick={() => setAt(i)}
             onKeyDown={(e) => keys.onKey(e, i)}
           >
-            <span className={s.chipIcon}>{x.icon}</span>
             {x.name}
-          </button>
+          </Pill>
         ))}
-      </div>
+      </PillRow>
       <div role="tabpanel" id={`${uid}-steps`} aria-labelledby={`${uid}-tab-${it.id}`}>
         <Steps steps={it.steps} />
       </div>

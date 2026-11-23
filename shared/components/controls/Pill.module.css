@@ -1,0 +1,49 @@
+/* Pill: the site's rounded choice, a tab or a toggle in a row. */
+
+.pill {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-r-full);
+  background: none;
+  font-family: var(--font-display);
+  font-size: var(--site-fs-3);
+  font-weight: var(--site-fw-medium);
+  color: var(--site-ink-2);
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--site-t), border-color var(--site-t), color var(--site-t);
+}
+.withIcon { padding-left: 8px; }
+.pill:hover { background: var(--site-wash); color: var(--site-ink); }
+.pill:active { background: var(--site-wash-2); }
+.pill[data-on] {
+  background: var(--site-ink);
+  border-color: var(--site-ink);
+  color: var(--site-bg);
+}
+
+.icon {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+}
+.icon svg { width: 14px; height: 14px; }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.scroll {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.scroll::-webkit-scrollbar { display: none; }

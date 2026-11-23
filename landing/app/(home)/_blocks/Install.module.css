@@ -66,46 +66,6 @@
 }
 .panel[hidden] { display: none; }
 
-.agents {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 32px;
-  padding: 0 12px 0 8px;
-  border: 1px solid var(--site-border);
-  border-radius: var(--site-r-full);
-  background: none;
-  font-family: var(--font-display);
-  font-size: var(--site-fs-3);
-  font-weight: var(--site-fw-medium);
-  color: var(--site-ink-2);
-  white-space: nowrap;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition: background-color var(--site-t), border-color var(--site-t), color var(--site-t);
-}
-.chip:hover { background: var(--site-wash); color: var(--site-ink); }
-.chip:active { background: var(--site-wash-2); }
-.chip[aria-selected="true"] {
-  background: var(--site-ink);
-  border-color: var(--site-ink);
-  color: var(--site-bg);
-}
-
-.chipIcon {
-  display: inline-grid;
-  place-items: center;
-  width: 16px;
-  height: 16px;
-}
-.chipIcon svg { width: 14px; height: 14px; }
-
 /* -- Steps ------------------------------------------------------------------ */
 
 .steps {
