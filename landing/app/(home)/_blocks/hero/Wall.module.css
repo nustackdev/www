@@ -88,6 +88,12 @@
   .tile:hover { transform: none; }
 }
 
+/* Phones: three bigger columns, drifting faster so the band stays lively. */
+@media (max-width: 640px) {
+  .col { animation-duration: calc(var(--d, 90s) * 0.5); }
+  .col:nth-child(n + 4) { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .col { animation: none; }
   .tile, .tag { transition: none; }

@@ -149,7 +149,11 @@
 }
 
 @media (min-width: 861px) {
-  .root .wall { --wall-inset: -50% -22% -50% 38%; }
+  /* Clipped where the shade turns solid, so only the tiles you can see take clicks. */
+  .root .wall {
+    --wall-inset: -50% -22% -50% 38%;
+    clip-path: inset(0 0 24px max(calc(50vw - 40px), 620px));
+  }
 
   /* The page color over the wall: solid under the copy, clear to the right,
    * and into the page at the top and bottom edges. */
@@ -164,17 +168,26 @@
   }
 }
 
-/* Phones: the wall lies flat behind the whole hero, dimmed under the copy,
- * clearer under the ways in, and the hero leaves it some room at the end. */
+/* Phones: the wall lies flat in a band under the ways in, rising 100px behind
+ * them and fading in from there. Only the band's visible part takes taps. */
 @media (max-width: 860px) {
-  .root { padding-bottom: 240px; }
-  .root .wall { --wall-inset: 0 -14%; }
-  .shade {
-    background: linear-gradient(180deg,
-      color-mix(in oklab, var(--site-bg) 94%, transparent) 0,
-      color-mix(in oklab, var(--site-bg) 86%, transparent) 55%,
-      color-mix(in oklab, var(--site-bg) 35%, transparent) 82%,
-      var(--site-bg) 100%);
+  .root { gap: 0; padding-bottom: 0; }
+  .root .wall {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    width: 100vw;
+    height: 380px;
+    margin: -100px 0 0 calc(50% - 50vw);
+    --wall-inset: 0 -14%;
+    --wall-mask: linear-gradient(180deg, transparent 40px, #000 150px, #000 calc(100% - 80px), transparent 100%);
+    clip-path: inset(40px 0 24px 0);
   }
-  .hint { bottom: 20px; }
+  .shade { display: none; }
+  .hint { bottom: 32px; }
+}
+@media (max-width: 640px) {
+  .root .wall { height: 440px; }
 }
