@@ -7,8 +7,8 @@ import { START_LINE } from '../start.data';
 import { Wall } from './Wall';
 import s from './Hero.module.css';
 
-/** What the space composes into, the drifting row. Draft. */
-const WORDS = ['workflows', 'second brain', 'ops', 'AI systems', 'software factory'];
+/** What the space composes into, the drifting row: whole systems someone owns. */
+const WORDS = ['second brain', 'AI systems', 'data stack', 'software factory', 'research lab'];
 
 /**
  * Hero: the head on the left, the ways in stacked under it (the line, then
