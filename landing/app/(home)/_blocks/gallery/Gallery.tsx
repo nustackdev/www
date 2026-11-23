@@ -73,7 +73,7 @@ export function Gallery() {
     <Section
       id="gallery"
       eyebrow="Gallery"
-      tagline="Spaces people run."
+      tagline="Spaces built with nuspace."
       description="Each one is a set of small programs talking to each other."
     >
       <div className={s.gallery}>
