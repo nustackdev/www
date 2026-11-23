@@ -14,7 +14,7 @@ const WORDS = ['workflows', 'second brain', 'ops', 'AI systems', 'software facto
  * Hero: the head on the left, the ways in stacked under it (the line, then
  * your agent), over the wall: the gallery drifting behind the whole hero as
  * its background, faded out under the copy. Phones get it as a band below. The hero names the space, the
- * gallery teaches it. Copy from compass/nuspace/iter-3-wip.md, the ways in
+ * gallery teaches it. Copy from compass/nuspace/identity.md, the ways in
  * from growth/website/funnel.md in Go.
  */
 export function Hero() {

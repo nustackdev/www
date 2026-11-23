@@ -18,14 +18,14 @@ const mono = JetBrains_Mono({
 });
 
 // Bump `v` whenever the card changes: link previews (Telegram, X, Slack) cache the image by url.
-const OG_IMAGE = '/og/page/root/image.png?v=3';
-const TITLE = NUSPACE.title;
+const OG_IMAGE = '/og/page/root/image.png?v=4';
+const TITLE = NUSPACE.headline;
 const DESCRIPTION = NUSPACE.description;
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
-  // The tab and search title carry the name; previews show the line alone.
-  title: `nuspace · ${TITLE.replace(/\.$/, '')}`,
+  // The tab and search title carry the name; previews show the headline alone.
+  title: `nuspace · ${NUSPACE.title}`,
   description: DESCRIPTION,
   alternates: { canonical: '/' },
   robots: { index: true, follow: true },
