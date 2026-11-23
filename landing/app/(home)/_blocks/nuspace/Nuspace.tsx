@@ -1,4 +1,4 @@
-import { BookOpen, Ellipsis, House, Keyboard, Moon, Package, PanelLeft, Plus, Search, Settings, Sun } from 'lucide-react';
+import { BookOpen, ChevronsDownUp, Ellipsis, FilePlus, FolderPlus, House, Keyboard, Moon, Package, PanelLeft, Plus, Search, Settings, Sun } from 'lucide-react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { GithubMark } from '@www/shared/components/marks/GithubMark';
 import { cn } from '@www/shared/lib/cn';
@@ -23,7 +23,7 @@ export interface PlaneRow {
 type Nav = 'home' | 'search' | 'settings';
 
 const NAV: { id: Nav; label: string; icon: ReactNode; keys?: string }[] = [
-  { id: 'home', label: 'Home', icon: <House /> },
+  { id: 'home', label: 'Home', icon: <House />, keys: '⇧⌘H' },
   { id: 'search', label: 'Search', icon: <Search />, keys: '⌘K' },
   { id: 'settings', label: 'Settings', icon: <Settings />, keys: '⌘,' },
 ];
@@ -31,7 +31,7 @@ const NAV: { id: Nav; label: string; icon: ReactNode; keys?: string }[] = [
 export interface NuspaceWindowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   /** The tree under Planes, flat and in drawing order. */
   planes: PlaneRow[];
-  /** Packages under Extensions, folded. None hides the section. */
+  /** Packages under Specs, folded. None hides the section. */
   extensions?: string[];
   /** A nav row that is the open plane. */
   nav?: Nav;
@@ -43,8 +43,9 @@ export interface NuspaceWindowProps extends Omit<HTMLAttributes<HTMLDivElement>,
 
 /**
  * NuspaceWindow: the nuspace shell as the site draws it, after the app's
- * rail (nuspace-ui sidebar/Rail.tsx): a top bar, the nav rows, Planes with
- * its New plane row and the tree, Extensions, a bottom bar; the open plane
+ * sidebar (nuspace-ui sidebar/Sidebar.tsx, nuspace 0.8): a top bar, the nav
+ * rows with New desk and New plane, Planes with its header actions and the
+ * tree, Specs, a bottom bar; the open plane
  * beside it. Content comes in as props and children; it never moves.
  */
 export function NuspaceWindow({ planes, extensions, nav, crumb, className, children, ...rest }: NuspaceWindowProps) {
@@ -72,12 +73,28 @@ export function NuspaceWindow({ planes, extensions, nav, crumb, className, child
             </div>
           ))}
 
-          <div className={s.section}>Planes</div>
           <div className={cn(s.row, s.newRow)}>
             <span className={s.ic}>
-              <Plus />
+              <FolderPlus />
+            </span>
+            <span className={s.label}>New desk</span>
+          </div>
+          <div className={cn(s.row, s.newRow)}>
+            <span className={s.ic}>
+              <FilePlus />
             </span>
             <span className={s.label}>New plane</span>
+            <kbd className={s.keys}>⌥⌘N</kbd>
+          </div>
+
+          <div className={s.section}>
+            <span className={s.label}>Planes</span>
+            <span className={s.act}>
+              <Plus />
+            </span>
+            <span className={s.act}>
+              <ChevronsDownUp />
+            </span>
           </div>
           {planes.map((p) => (
             <div
@@ -93,7 +110,7 @@ export function NuspaceWindow({ planes, extensions, nav, crumb, className, child
 
           {extensions?.length ? (
             <>
-              <div className={s.section}>Extensions</div>
+              <div className={s.section}>Specs</div>
               {extensions.map((x) => (
                 <div key={x} className={s.row}>
                   <span className={s.ic}>

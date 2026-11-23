@@ -2,14 +2,13 @@ import type { ReactNode } from 'react';
 import s from './Agents.module.css';
 
 /* The agent's program, in four parts, and the steps each line runs on.
- * Calls are nuspace's ops (nuspace/ops in the nuspace repo), written as the
- * top-level nuspace.* calls they are becoming. Not run against a space; kept
- * short to read.
+ * Calls are nuspace's ops as programs write them (nuspace.plane, .cell,
+ * .at, .atomic, nuspace 0.8). Not run against a space; kept short to read.
  *
  * Unseen around it: `plane` is the plane the program runs on, `page` a ref
- * held in nu.let("", lambda page: ...) for add_plane's into=, `Sheet` the
- * table snippet's state (nuverse.snippets.table.snippet), and CARD and
- * PAGES_CHART two cell sources. */
+ * held in nu.let("", lambda page: ...) for plane.add's into=, RowContent
+ * the table rows' kind (nuverse.contents.row), and CARD and PAGES_CHART two
+ * cell sources. */
 
 /** What a line or a part touches. The mock shares the same keys. */
 export type Key = 'page' | 'icon' | 'find' | 'read' | 'cards' | 'chart';
@@ -40,10 +39,10 @@ export const PARTS: Part[] = [
     k: ['page', 'icon'],
     steps: [0, 1, 2],
     lines: [
-      { k: 'page', run: [0, 1], text: <>nuspace.{op('add_plane')}(</> },
-      { k: 'page', run: [0, 1], text: <>{'    '}backend={str('"async"')}, name={str('"Reading"')},</> },
-      { k: 'page', run: [0, 1], text: <>{'    '}parent=plane, ui={con('True')}, into=page,</> },
-      { k: 'icon', run: [2], text: <>{') >> '}nuspace.{op('set_plane_icon')}(page, {str('"book-open"')})</> },
+      { k: 'page', run: [0, 1], text: <>nuspace.{op('atomic')}(nuspace.plane.{op('add')}(</> },
+      { k: 'page', run: [0, 1], text: <>{'    '}parent=plane, name={str('"Reading"')},</> },
+      { k: 'page', run: [0, 1], text: <>{'    '}backend={str('"async"')}, into=page,</> },
+      { k: 'icon', run: [2], text: <>{')) >> '}nuspace.plane.{op('set_icon')}(page, {str('"lucide:book-open"')})</> },
     ],
   },
   {
@@ -51,13 +50,12 @@ export const PARTS: Part[] = [
     k: ['find', 'read'],
     steps: [3, 4],
     lines: [
-      { k: 'find', run: [3], text: <>books = nuspace.{op('cell_named')}(plane, {str('"Books"')})</> },
-      { k: 'read', run: [4], text: <>titles = nuspace.{op('snapshot')}(nuspace.{op('cell_state')}(</> },
-      { k: 'read', run: [4], text: <>{'    '}books,</> },
-      { k: 'read', run: [4], text: <>{'    '}Sheet.order.iter()</> },
-      { k: 'read', run: [4], text: <>{'        '}.map({kw('lambda')} r: Sheet.rows[r].cells[{str('"name"')}])</> },
-      { k: 'read', run: [4], text: <>{'        '}.to_list(),</> },
-      { k: 'read', run: [4], text: <>))</> },
+      { k: 'find', run: [3], text: <>books = nuspace.at.{op('cell')}({str('"books"')}).{op('content')}(RowContent)</> },
+      { k: 'read', run: [4], text: <>titles = nuspace.{op('atomic')}(</> },
+      { k: 'read', run: [4], text: <>{'    '}books.keys().iter()</> },
+      { k: 'read', run: [4], text: <>{'        '}.map({kw('lambda')} k: books[k].cells[{str('"name"')}])</> },
+      { k: 'read', run: [4], text: <>{'        '}.to_list()</> },
+      { k: 'read', run: [4], text: <>)</> },
     ],
   },
   {
@@ -65,8 +63,8 @@ export const PARTS: Part[] = [
     k: ['cards'],
     steps: [5, 6, 7],
     lines: [
-      { k: 'cards', run: [5, 6, 7], text: <>nu.{op('let')}(titles, {kw('lambda')} ts: nu.{op('ForEachDo')}(</> },
-      { k: 'cards', run: [5, 6, 7], text: <>{'    '}ts, {kw('lambda')} t: nuspace.{op('add_cell')}(page, CARD, name=t),</> },
+      { k: 'cards', run: [5, 6, 7], text: <>nu.{op('ForEachDo')}(titles, {kw('lambda')} t: nuspace.{op('atomic')}(</> },
+      { k: 'cards', run: [5, 6, 7], text: <>{'    '}nuspace.cell.{op('add')}(page, CARD, name=t),</> },
       { k: 'cards', run: [5, 6, 7], text: <>))</> },
     ],
   },
@@ -76,7 +74,7 @@ export const PARTS: Part[] = [
     steps: [8, 9],
     lines: [
       { k: 'chart', run: [8, 9], text: note('# a chart cell that redraws as you log pages') },
-      { k: 'chart', run: [8, 9], text: <>nuspace.{op('add_cell')}(page, PAGES_CHART, name={str('"Pages read"')})</> },
+      { k: 'chart', run: [8, 9], text: <>nuspace.{op('atomic')}(nuspace.cell.{op('add')}(page, PAGES_CHART, name={str('"Pages read"')}))</> },
     ],
   },
 ];

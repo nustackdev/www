@@ -1,14 +1,22 @@
+import { ArrowUpRight } from 'lucide-react';
 import { Button } from '@www/shared/components/controls/Button';
 import { Command } from '@www/shared/components/controls/Command';
 import { Kicker } from '@www/shared/components/text/Kicker';
+import { cn } from '@www/shared/lib/cn';
 import { START_LINE } from '../start.data';
-import { Gallery } from './Gallery';
+import { Rotator } from './Rotator';
+import { Wall } from './Wall';
 import s from './Hero.module.css';
 
+/** What the space composes into, the rotating word. Draft. */
+const WORDS = ['workflows', 'second brain', 'ops', 'AI systems', 'software factory'];
+
 /**
- * Hero: left aligned head, two ways in (the line, or your agent), then the
- * demo gallery: a deck of demo cards over the picked demo playing big.
- * Copy from identity.md, the ways in from growth/website/funnel.md in Go.
+ * Hero: the head on the left, the ways in stacked under it (the line, then
+ * your agent), over the wall: the gallery drifting behind the whole hero as
+ * its background, faded out under the copy. Phones get it as a band below. The hero names the space, the
+ * gallery teaches it. Copy from compass/nuspace/iter-3-wip.md, the ways in
+ * from growth/website/funnel.md in Go.
  */
 export function Hero() {
   return (
@@ -18,9 +26,7 @@ export function Hero() {
           <div className={s.titleBlock}>
             <Kicker tone="accent">Open-source · Self-hosted · Pure Python</Kicker>
             <h1 className={s.title}>
-              Computational space
-              <br />
-              for your data and tools.
+              Your computational space.
               <br />
               <span className={s.dim}>
                 <span className={s.phrase}>Human-first.</span> <span className={s.phrase}>Agent-native.</span>
@@ -29,11 +35,13 @@ export function Hero() {
           </div>
 
           <p className={s.sub}>
-            In nuspace, your data and tools live in cells: tiny reactive programs
-            that manage data, run logic and render UI. Cells are written in nu, a
-            Python programming model with no glue code between layers, so a cell
-            is a few lines, not a thousand. Humans get the space as UI, agents get it
-            as code.
+            <span className={s.subLine}>
+              A society of tiny interconnected programs that hold data, run logic and render UI.
+            </span>
+            <span className={cn(s.subLine, s.subRot)}>
+              Together, they compose into your <Rotator words={WORDS} />.
+            </span>
+            <span className={cn(s.subLine, s.subInk)}>Humans get the space as UI, agents get it as code.</span>
           </p>
         </div>
 
@@ -47,7 +55,13 @@ export function Hero() {
         </div>
       </div>
 
-      <Gallery />
+      <Wall className={s.wall} />
+      <span className={s.shade} aria-hidden />
+      <span className={s.hint} aria-hidden>
+        <span className={s.click}>Click any space</span>
+        <span className={s.tap}>Tap any space</span>
+        <ArrowUpRight />
+      </span>
     </section>
   );
 }

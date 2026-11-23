@@ -121,7 +121,6 @@
   gap: 8px 16px;
   padding: 16px 0;
 }
-.step + .step { border-top: 1px solid var(--site-border-subtle); }
 /* One step: no number, the label column takes its place. */
 .single .step { grid-template-columns: 176px minmax(0, 1fr); }
 

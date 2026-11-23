@@ -55,41 +55,126 @@
   color: var(--site-ink-2);
 }
 
-/* -- Start: two ways in, the line or your agent ------------------------------ */
+.subInk { color: var(--site-ink); }
 
-/* One line in: the label, the line, and the agent way as the button. */
+/* The rotating word: ink, an accent underline, a short fade on the swap. */
+.rot {
+  display: inline-block;
+  color: var(--site-ink);
+  font-weight: var(--site-fw-medium);
+  border-bottom: 1px solid var(--site-accent);
+  transition: opacity var(--site-dur-base) var(--site-ease-out), transform var(--site-dur-base) var(--site-ease-out);
+}
+.rotOut { opacity: 0; transform: translateY(4px); }
+
+/* -- Start: stacked, the label, the line, then the agent way ------------------- */
+
 .start {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
-  width: min(1100px, 100%);
+  width: min(500px, 100%);
 }
 
 .startTitle {
-  flex: none;
-  margin: 0 8px 0 0;
+  margin: 0;
   font-size: var(--site-fs-5);
   font-weight: var(--site-fw-title);
   letter-spacing: var(--site-tr-title);
   color: var(--site-ink);
 }
 
-/* The line takes the room up to 550, the button keeps its own width. */
-.start .install {
-  flex: 1;
-  min-width: 0;
-  max-width: 550px;
-}
-.start .agent { flex: none; }
+.start .install { width: 100%; }
 
-/* The install line takes an Afterglow line, the row's one color moment. */
+/* The install line takes an Afterglow line, the block's one color moment. */
 .start .install,
 .start .install:hover { border-color: var(--site-accent); }
 
-/* Phones stack it: the label heads the line, the button full width. */
 @media (max-width: 640px) {
-  .start { flex-direction: column; align-items: stretch; gap: 8px; }
-  .start .install { flex: none; max-width: none; }
-  .startTitle { margin: 0 0 4px; }
-  .start .agent { margin-top: 4px; }
+  .start { width: 100%; align-items: stretch; }
+}
+
+/* -- Wall: the hero's background. Tilted beside the copy on wide screens,
+ * flat behind it on phones (like herdr.dev). ----------------------------------- */
+
+.subLine { display: block; }
+/* The rotating line never wraps, so a swap only moves the word. */
+@media (min-width: 641px) { .subRot { white-space: nowrap; } }
+
+.root { position: relative; isolation: isolate; }
+
+/* Clicks pass through the copy's empty room to the wall; the text and the ways in keep theirs. */
+.head { position: relative; z-index: 1; pointer-events: none; }
+.start,
+.titleBlock > *,
+.subLine { pointer-events: auto; }
+/* Each line takes only its text's width, so the room past it stays the wall's. */
+.subLine { width: fit-content; }
+
+/* Full bleed, from under the nav to the hero's end; behind everything. */
+.root .wall,
+.shade {
+  position: absolute;
+  z-index: -1;
+  top: calc(-1 * var(--site-nav-clearance));
+  bottom: 0;
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
+  width: auto;
+  height: auto;
+  margin: 0;
+}
+.root .wall { --wall-mask: none; }
+.shade { pointer-events: none; }
+
+/* The invite, bottom right, over the wall. Touch screens say tap. */
+.hint {
+  position: absolute;
+  right: 0;
+  bottom: 24px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--site-fs-2);
+  color: var(--site-ink-3);
+  pointer-events: none;
+}
+.hint svg { width: 13px; height: 13px; }
+.tap { display: none; }
+@media (hover: none) {
+  .click { display: none; }
+  .tap { display: inline; }
+}
+
+@media (min-width: 861px) {
+  .root .wall { --wall-inset: -50% -22% -50% 38%; }
+
+  /* The page color over the wall: solid under the copy, clear to the right,
+   * and into the page at the top and bottom edges. */
+  .shade {
+    background:
+      linear-gradient(180deg, var(--site-bg) 0, transparent 140px, transparent calc(100% - 160px), var(--site-bg) 100%),
+      linear-gradient(90deg,
+        var(--site-bg) 0,
+        var(--site-bg) max(calc(50vw - 40px), 620px),
+        color-mix(in oklab, var(--site-bg) 70%, transparent) max(calc(50vw + 80px), 760px),
+        transparent max(calc(50vw + 260px), 940px));
+  }
+}
+
+/* Phones: the wall lies flat behind the whole hero, dimmed under the copy,
+ * clearer under the ways in, and the hero leaves it some room at the end. */
+@media (max-width: 860px) {
+  .root { padding-bottom: 240px; }
+  .root .wall { --wall-inset: 0 -14%; }
+  .shade {
+    background: linear-gradient(180deg,
+      color-mix(in oklab, var(--site-bg) 94%, transparent) 0,
+      color-mix(in oklab, var(--site-bg) 86%, transparent) 55%,
+      color-mix(in oklab, var(--site-bg) 35%, transparent) 82%,
+      var(--site-bg) 100%);
+  }
+  .hint { bottom: 20px; }
 }

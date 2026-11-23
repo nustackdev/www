@@ -1,5 +1,5 @@
-/* FeatureGrid — lines only between cells: the 1px gaps show a line colored
- * layer behind the cells, and that layer fades out toward every edge. */
+/* FeatureGrid — lines only between cells: the 1px gaps show a solid line
+ * colored layer behind the cells. */
 
 .grid {
   --cols: 4;
@@ -24,14 +24,6 @@
   inset: 0;
   z-index: -1;
   background: var(--site-border);
-  -webkit-mask-image:
-    linear-gradient(to right, transparent, #000 18%, #000 82%, transparent),
-    linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to right, transparent, #000 18%, #000 82%, transparent),
-    linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
-  mask-composite: intersect;
 }
 
 .cell {

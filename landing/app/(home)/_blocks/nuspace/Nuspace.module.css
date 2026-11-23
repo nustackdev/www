@@ -1,16 +1,16 @@
 /* NuspaceWindow: the rail a step down on the deep ground, the plane on the
  * raised one. Rail geometry after nuspace-ui design/tokens.css: one 18px left
- * edge for every glyph, 30px rows a hairline apart, inset 8px from the rail's
+ * edge for every glyph, 26px rows a hairline apart, inset 8px from the rail's
  * edges, 12px of air over a section. No accent in the rail but the wordmark. */
 
 .root {
   /* The cards and tables on a plane. */
   --ns-card: color-mix(in oklab, var(--site-ink) 6%, var(--site-code-bg));
-  --ns-row: 30px;
+  --ns-row: 26px;
   --ns-fill: color-mix(in oklab, var(--site-ink) 10%, transparent);
 
   display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
+  grid-template-columns: 184px minmax(0, 1fr);
   min-width: 0;
   min-height: 600px;
   overflow: hidden;
@@ -28,35 +28,39 @@
   min-width: 0;
   border-right: 1px solid var(--site-border-subtle);
   background: var(--site-code-bg);
-  font-size: var(--site-fs-4);
+  /* A step under the plane's body text, so the rail reads as chrome. */
+  font-size: 12.5px;
 }
 
 /* The top and bottom bars: a button's glyph on the rows' icon edge. */
+/* The app's chrome bars (nuspace-ui design/shell.ts chromeBar): one 30px
+ * height shared with the plane's top bar, 12px in on the left, 8px on the
+ * right, 2px between buttons. The footer sits on the window's bottom edge
+ * with no rule, like the app. */
 .top,
 .foot {
   display: flex;
   flex: none;
   align-items: center;
   gap: 2px;
-  height: 36px;
-  padding: 0 12px;
+  height: 30px;
+  padding: 0 8px 0 12px;
 }
-.foot { border-top: 1px solid var(--site-border-subtle); }
 .end { margin-left: auto; }
 
 .btn {
   display: grid;
   flex: none;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   color: var(--site-ink-3);
 }
-.btn svg { width: 16px; height: 16px; }
+.btn svg { width: 14px; height: 14px; }
 
 .mark {
-  margin-left: 6px;
-  font-size: var(--site-fs-2);
+  margin-left: 2px;
+  font-size: 12.5px;
   font-weight: var(--site-fw-semibold);
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -89,7 +93,7 @@
   flex: none;
   align-items: center;
   height: var(--ns-row);
-  padding: 0 6px 0 calc(8px + var(--d) * 20px);
+  padding: 0 6px 0 calc(8px + var(--d) * 18px);
   border-radius: var(--site-r-md);
   color: var(--site-ink-2);
   white-space: nowrap;
@@ -102,14 +106,14 @@
   display: grid;
   flex: none;
   place-items: center;
-  width: 20px;
-  margin-right: 8px;
+  width: 18px;
+  margin-right: 7px;
   border-radius: var(--site-r-sm);
-  font-size: 14px;
+  font-size: 12.5px;
   line-height: 1;
   color: var(--site-ink-3);
 }
-.ic svg { width: 16px; height: 16px; }
+.ic svg { width: 14px; height: 14px; }
 
 .label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 
@@ -119,14 +123,18 @@
   display: flex;
   flex: none;
   align-items: center;
-  height: 28px;
-  margin-top: 12px;
+  height: 24px;
+  margin-top: 10px;
   padding: 0 6px 0 8px;
-  font-size: var(--site-fs-2);
+  font-size: 11.5px;
   font-weight: var(--site-fw-medium);
   color: var(--site-ink-3);
   user-select: none;
 }
+
+/* A section's header actions, as the app draws them: small ghost icons. */
+.act { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; color: var(--site-ink-3); }
+.act svg { width: 12px; height: 12px; }
 
 /* ===== the plane ===== */
 
@@ -136,7 +144,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  height: 36px;
+  height: 30px;
   font-size: var(--site-fs-2);
   color: var(--site-ink-3);
 }

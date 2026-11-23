@@ -1,0 +1,94 @@
+/* Wall: a full bleed band of tilted, drifting columns of space thumbs.
+ * The band fades into the page on every edge, so it reads as a glimpse. */
+
+.root {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  height: clamp(340px, 38vw, 520px);
+  overflow: hidden;
+  --wall-mask:
+    linear-gradient(90deg, transparent 0, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(180deg, transparent 0, #000 18%, #000 78%, transparent 100%);
+  -webkit-mask-image: var(--wall-mask);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--wall-mask);
+  mask-composite: intersect;
+}
+
+.wall {
+  position: absolute;
+  inset: var(--wall-inset, -40% -6% -40% -6%);
+  display: flex;
+  gap: 20px;
+  transform: perspective(2200px) rotateX(20deg) rotateY(-8deg) rotate(5deg);
+  transform-origin: 50% 40%;
+}
+
+.col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: up var(--d, 90s) linear infinite;
+  will-change: transform;
+}
+.col[data-down] { animation-name: down; }
+.col:has(.tile:hover),
+.col:has(.tile:focus-visible) { animation-play-state: paused; }
+
+@keyframes up { to { transform: translateY(calc(-50% - 10px)); } }
+@keyframes down { from { transform: translateY(calc(-50% - 10px)); } to { transform: translateY(0); } }
+
+/* A tile: the gallery card's media, same ring on hover. */
+.tile {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--site-r-lg);
+  border: 1px solid var(--site-border);
+  background: var(--site-bg-raised);
+  box-shadow: var(--site-elevation-raised);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  cursor: zoom-in;
+  transition: outline-color var(--site-dur-base) var(--site-ease-out), transform var(--site-dur-base) var(--site-ease-out);
+}
+.tile:hover { z-index: 1; outline-color: var(--site-accent); transform: scale(1.08); box-shadow: var(--site-elevation-floating); }
+.tile:focus-visible { outline-color: var(--site-ring); }
+
+.tag {
+  position: absolute;
+  z-index: 1;
+  left: 8px;
+  bottom: 8px;
+  padding: 1px 7px;
+  border-radius: var(--site-r-sm);
+  background: var(--site-accent);
+  font-size: var(--site-fs-1);
+  font-weight: var(--site-fw-medium);
+  line-height: 18px;
+  color: #fff;
+  opacity: 0;
+  transition: opacity var(--site-dur-base) var(--site-ease-out);
+}
+.tile:hover .tag,
+.tile:focus-visible .tag { opacity: 1; }
+
+@media (max-width: 860px) {
+  .wall { gap: 12px; transform: none; }
+  .col { gap: 12px; }
+  .col:nth-child(n + 5) { display: none; }
+  .tile { border-radius: var(--site-r-md); }
+  .tile:hover { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .col { animation: none; }
+  .tile, .tag { transition: none; }
+}

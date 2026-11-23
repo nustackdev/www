@@ -31,7 +31,7 @@ export function Cells() {
       id="cells"
       eyebrow="How it works"
       tagline="Program anything."
-      description="The data, the logic, the look, even the space itself."
+      description="The data, the logic, the UI, even the space itself."
       actions={
         <Button variant="primary" href="#start" arrow>
           Start your space

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
-import { Asterisk, SquareTerminal, Waypoints } from 'lucide-react';
+import { Asterisk, Feather, Package, SquareTerminal, Waypoints, Zap } from 'lucide-react';
 import { Command } from '@www/shared/components/controls/Command';
 import { CopyButton } from '@www/shared/components/controls/CopyButton';
 import { cn } from '@www/shared/lib/cn';
@@ -35,15 +35,47 @@ const ASK: Step = {
   note: 'It checks Python and pip, installs nuspace and opens the space.',
 };
 
-const BY_HAND: Step[] = [
+/** By hand, one way per package manager. pip leads: everyone has it, and it is the hero's line.
+ *  uv and Poetry add nuspace to the project, so extensions and cell imports share its env
+ *  (no uv tool, pipx or uvx: an isolated env can't see them). */
+const TOOLS: Agent[] = [
   {
-    label: 'Install and open',
-    cmd: [START_LINE],
-    note: (
-      <>
-        Python 3.10 or newer. Run the same line to come back to your space.
-      </>
-    ),
+    id: 'pip',
+    name: 'pip',
+    icon: <Package aria-hidden />,
+    steps: [
+      {
+        label: 'Install and open',
+        cmd: [START_LINE],
+        note: <>Python 3.10 or newer. Run the same line to come back to your space.</>,
+      },
+    ],
+  },
+  {
+    id: 'uv',
+    name: 'uv',
+    icon: <Zap aria-hidden />,
+    steps: [
+      { label: 'Add it to your project', cmd: ['uv add nuspace'] },
+      {
+        label: 'Open your space',
+        cmd: ['uv run nuspace run'],
+        note: <>Run it again from the project to come back to your space.</>,
+      },
+    ],
+  },
+  {
+    id: 'poetry',
+    name: 'Poetry',
+    icon: <Feather aria-hidden />,
+    steps: [
+      { label: 'Add it to your project', cmd: ['poetry add nuspace'] },
+      {
+        label: 'Open your space',
+        cmd: ['poetry run nuspace run'],
+        note: <>Run it again from the project to come back to your space.</>,
+      },
+    ],
   },
 ];
 
@@ -107,7 +139,7 @@ const AGENTS: Agent[] = [
 ];
 
 const WAYS = [
-  { id: 'hand', name: 'By hand', sub: 'Python 3.10 or newer. One line.' },
+  { id: 'hand', name: 'By hand', sub: 'Python 3.10 or newer. pip, uv or Poetry.' },
   { id: 'agent', name: 'With your agent', sub: 'Your agent installs it and builds the first thing.' },
 ] as const;
 
@@ -164,15 +196,49 @@ function Steps({ steps }: { steps: Step[] }) {
   );
 }
 
-/** Install: two ways in, by hand or with your agent, and per agent its
- *  numbered steps. Any link to #start-agent opens it on the agent way. */
+/** Picker: a row of pills, one per tool or agent, over the picked one's steps. */
+function Picker({ items, label }: { items: Agent[]; label: string }) {
+  const [at, setAt] = useState(0);
+  const keys = useTabKeys(items.length, setAt);
+  const uid = useId();
+  const it = items[at];
+  return (
+    <>
+      <div className={s.agents} role="tablist" aria-label={label}>
+        {items.map((x, i) => (
+          <button
+            key={x.id}
+            ref={(el) => {
+              keys.refs.current[i] = el;
+            }}
+            type="button"
+            role="tab"
+            id={`${uid}-tab-${x.id}`}
+            aria-selected={i === at}
+            aria-controls={`${uid}-steps`}
+            tabIndex={i === at ? 0 : -1}
+            className={s.chip}
+            onClick={() => setAt(i)}
+            onKeyDown={(e) => keys.onKey(e, i)}
+          >
+            <span className={s.chipIcon}>{x.icon}</span>
+            {x.name}
+          </button>
+        ))}
+      </div>
+      <div role="tabpanel" id={`${uid}-steps`} aria-labelledby={`${uid}-tab-${it.id}`}>
+        <Steps steps={it.steps} />
+      </div>
+    </>
+  );
+}
+
+/** Install: two ways in, by hand (per package manager) or with your agent
+ *  (per agent), each with its numbered steps. Any link to #start-agent opens it on the agent way. */
 export function Install() {
   const [way, setWay] = useState(0);
-  const [agent, setAgent] = useState(0);
   const ways = useTabKeys(WAYS.length, setWay);
-  const agents = useTabKeys(AGENTS.length, setAgent);
   const uid = useId();
-  const a = AGENTS[agent];
 
   useEffect(() => {
     const open = () => {
@@ -229,35 +295,11 @@ export function Install() {
       </div>
 
       <div role="tabpanel" id={`${uid}-hand`} aria-labelledby="start-hand" hidden={way !== 0} className={s.panel}>
-        <Steps steps={BY_HAND} />
+        <Picker items={TOOLS} label="Package managers" />
       </div>
 
       <div role="tabpanel" id={`${uid}-agent`} aria-labelledby="start-agent" hidden={way !== 1} className={s.panel}>
-        <div className={s.agents} role="tablist" aria-label="Agents">
-          {AGENTS.map((ag, i) => (
-            <button
-              key={ag.id}
-              ref={(el) => {
-                agents.refs.current[i] = el;
-              }}
-              type="button"
-              role="tab"
-              id={`${uid}-tab-${ag.id}`}
-              aria-selected={i === agent}
-              aria-controls={`${uid}-steps`}
-              tabIndex={i === agent ? 0 : -1}
-              className={s.chip}
-              onClick={() => setAgent(i)}
-              onKeyDown={(e) => agents.onKey(e, i)}
-            >
-              <span className={s.chipIcon}>{ag.icon}</span>
-              {ag.name}
-            </button>
-          ))}
-        </div>
-        <div role="tabpanel" id={`${uid}-steps`} aria-labelledby={`${uid}-tab-${a.id}`}>
-          <Steps steps={a.steps} />
-        </div>
+        <Picker items={AGENTS} label="Agents" />
       </div>
     </div>
   );

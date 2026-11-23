@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useTheme } from 'next-themes';
 import { cn } from '@www/shared/lib/cn';
-import s from './Gallery.module.css';
+import s from './DemoLoop.module.css';
 
 const CALM = '(prefers-reduced-motion: reduce)';
 const subscribe = (cb: () => void) => {
@@ -25,6 +25,8 @@ interface Props {
   src: string;
   /** Load and play the loop. False holds the thumb. */
   live: boolean;
+  /** Paint the thumb at once, not when near the viewport. */
+  eager?: boolean;
   className?: string;
 }
 
@@ -33,7 +35,7 @@ interface Props {
  * DemoVideo). The thumb paints first; the loop loads once `live` and in view,
  * plays while seen, and never under reduced motion or save data.
  */
-export function DemoLoop({ src, live, className }: Props) {
+export function DemoLoop({ src, live, eager, className }: Props) {
   const { resolvedTheme } = useTheme();
   const theme = resolvedTheme ? (resolvedTheme === 'dark' ? 'dark' : 'light') : null;
   const calm = useCalm();
@@ -63,9 +65,9 @@ export function DemoLoop({ src, live, className }: Props) {
   return (
     <span ref={root} className={cn(s.loop, className)} aria-hidden>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className={cn(s.loopMedia, s.light)} src={`${src}/thumb-light.jpg`} alt="" loading="lazy" decoding="async" />
+      <img className={cn(s.loopMedia, s.light)} src={`${src}/thumb-light.jpg`} alt="" loading={eager ? 'eager' : 'lazy'} decoding="async" />
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className={cn(s.loopMedia, s.dark)} src={`${src}/thumb-dark.jpg`} alt="" loading="lazy" decoding="async" />
+      <img className={cn(s.loopMedia, s.dark)} src={`${src}/thumb-dark.jpg`} alt="" loading={eager ? 'eager' : 'lazy'} decoding="async" />
       {loaded && theme && !calm ? (
         <video key={theme} ref={video} className={s.loopMedia} muted loop playsInline preload="auto" disablePictureInPicture>
           <source src={`${src}/preview-${theme}.webm`} type='video/webm; codecs="vp9"' />

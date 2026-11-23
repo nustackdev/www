@@ -1,5 +1,5 @@
 import { SiteLink as Link } from './SiteLink';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { NuLogo } from '../marks/NuLogo';
 import { NustackMark } from '../marks/NustackMark';
 import { SocialLinks } from './SocialLinks';
@@ -22,7 +22,16 @@ const LEARN_LINKS = [
   { label: 'Changelog', href: 'https://github.com/nustackdev/nuspace/blob/main/CHANGELOG.md' },
 ];
 
-export function Footer() {
+/** A titled footer column, eg Gallery, Stack, Community: a name with one line under it per link. */
+export type FooterColumn = {
+  title: string;
+  items: { name: string; href: string; desc?: string }[];
+  /** A trailing link to the full list, eg Explore all. */
+  more?: { label: string; href: string };
+};
+
+/** columns: titled sitemap columns in place of the stack pairs. */
+export function Footer({ columns }: { columns?: FooterColumn[] } = {}) {
   return (
     <footer className={s.footer} data-pagefind-ignore>
       <div className={s.inner}>
@@ -54,25 +63,42 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Sitemap: the stack products, one pair per column */}
+          {/* Sitemap: titled columns when given, else the stack products, one pair per column */}
           <div className={s.sitemap}>
-            {STACK_GROUPS[0].rows.map((row) => (
-              <ul key={row[0].href} className={s.items}>
-                {row.map((item) => (
-                  <li key={item.href} className={s.item}>
-                    <Link href={item.href} className={s.itemLink}>
-                      <span className={s.itemName}>{item.name}</span>
-                      <span className={s.itemDesc}>
-                        {item.role ? `${item.role}. ${item.desc}` : item.desc}
-                      </span>
-                    </Link>
-                  </li>
+            {columns
+              ? columns.map((col) => (
+                  <div key={col.title} className={s.items}>
+                    <p className={s.colTitle}>{col.title}</p>
+                    <ul className={s.colList}>
+                      {col.items.map((item) => (
+                        <li key={item.href + item.name} className={s.item}>
+                          <FooterLink href={item.href} name={item.name} desc={item.desc} />
+                        </li>
+                      ))}
+                    </ul>
+                    {col.more ? (
+                      <Link href={col.more.href} className={s.more}>
+                        {col.more.label}
+                        <ArrowRight size={13} aria-hidden />
+                      </Link>
+                    ) : null}
+                  </div>
+                ))
+              : STACK_GROUPS[0].rows.map((row) => (
+                  <ul key={row[0].href} className={s.items}>
+                    {row.map((item) => (
+                      <li key={item.href} className={s.item}>
+                        <FooterLink href={item.href} name={item.name} desc={item.role ? `${item.role}. ${item.desc}` : item.desc} />
+                      </li>
+                    ))}
+                  </ul>
                 ))}
-              </ul>
-            ))}
           </div>
         </div>
 
+        {columns ? (
+          <div className={s.credits}>© 2026 nustack</div>
+        ) : (
         <div className={s.bottom}>
           <span className={s.copyright}>© 2026 nustack</span>
           <div className={s.socials}>
@@ -91,7 +117,19 @@ export function Footer() {
             <ThemeToggle className={s.socialIcon} />
           </div>
         </div>
+        )}
       </div>
     </footer>
+  );
+}
+
+/** One sitemap link: the name, its line under it. External links open in a new tab. */
+function FooterLink({ href, name, desc }: { href: string; name: string; desc?: string }) {
+  const external = href.startsWith('http');
+  return (
+    <Link href={href} className={s.itemLink} {...(external && { target: '_blank', rel: 'noopener noreferrer' })}>
+      <span className={s.itemName}>{name}</span>
+      {desc ? <span className={s.itemDesc}>{desc}</span> : null}
+    </Link>
   );
 }

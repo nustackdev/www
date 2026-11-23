@@ -21,7 +21,14 @@
 
 .aside {
   margin: 0;
-  font-size: var(--site-fs-3);
-  color: var(--site-ink-3);
+  font-family: var(--font-display);
+  font-size: var(--site-fs-6);
+  font-weight: var(--site-fw-medium);
+  letter-spacing: var(--site-tr-title);
+  line-height: 1.35;
+  text-wrap: balance;
+  color: var(--site-ink-2);
   text-align: center;
 }
+.asideLead { color: var(--site-ink); font-weight: var(--site-fw-title); }
+
