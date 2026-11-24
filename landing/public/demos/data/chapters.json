@@ -1,6 +1,6 @@
 {
   "label": "A coffee roaster's numbers in one live space: orders streaming, a million events queried, an export loaded by its own job, one filter for every page, then a metric written on the spot whose button reprices the store.",
-  "duration": 81.6,
+  "duration": 82.2,
   "chapters": [
     {
       "t": 0,
@@ -8,37 +8,37 @@
       "note": "A roaster's numbers: every tile and sheet a cell."
     },
     {
-      "t": 7.3,
+      "t": 7.45,
       "title": "Watch it sell",
       "note": "Orders land on their own. Everything follows."
     },
     {
-      "t": 14.62,
+      "t": 18.29,
       "title": "Ask a million rows",
       "note": "1.6M web events, filtered in milliseconds."
     },
     {
-      "t": 23.15,
+      "t": 26.76,
       "title": "Load an export",
       "note": "Its own process checks it. A new channel appears."
     },
     {
-      "t": 37.14,
+      "t": 39.12,
       "title": "Filter once",
       "note": "Revenue picked Pop-up. Metrics already shows it."
     },
     {
-      "t": 43.93,
+      "t": 45.33,
       "title": "Write a metric",
       "note": "A few lines: a new tile, a button on the catalog."
     },
     {
-      "t": 59.47,
+      "t": 62.04,
       "title": "Mark it down",
       "note": "Your button reprices the store. The sheet follows."
     },
     {
-      "t": 67.88,
+      "t": 72.11,
       "title": "Every page knows",
       "note": "The forecast moved too, and the shop keeps selling."
     }

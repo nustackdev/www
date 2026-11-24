@@ -1,6 +1,6 @@
 {
   "label": "An ML lab in one live space: a run launched, watched, steered, read and compared, then charted on a new page and stopped by a rule written on the spot.",
-  "duration": 100.5,
+  "duration": 100.1,
   "chapters": [
     {
       "t": 0,
@@ -8,42 +8,42 @@
       "note": "Runs, tools and notes, one live space."
     },
     {
-      "t": 5.8,
+      "t": 5.6,
       "title": "Launch a run",
       "note": "It trains as a job, in its own process."
     },
     {
-      "t": 17.97,
+      "t": 16.1,
       "title": "Watch it learn",
       "note": "Curves, digits and weights redraw as it trains."
     },
     {
-      "t": 29.82,
+      "t": 28.32,
       "title": "Steer it",
       "note": "Drag the rate. The job reads it next chunk."
     },
     {
-      "t": 34.43,
+      "t": 33.33,
       "title": "Use the model",
       "note": "Checkpoints live in the space. Any page reads them."
     },
     {
-      "t": 47.76,
+      "t": 44.94,
       "title": "Compare runs",
       "note": "Every run side by side, the live one still drawing."
     },
     {
-      "t": 57.02,
+      "t": 53.55,
       "title": "Take notes",
       "note": "A new page: your notes beside every run, live."
     },
     {
-      "t": 73.01,
+      "t": 68.89,
       "title": "Write a rule",
       "note": "A few lines on the live run: stop when good."
     },
     {
-      "t": 84.04,
+      "t": 81.15,
       "title": "Everything follows",
       "note": "Lower the bar. The run stops, every page knows."
     }

@@ -23,13 +23,11 @@ export interface GalleryItem {
 }
 
 export const GALLERY: GalleryItem[] = [
-  { id: 'hero', demo: 'hero', tags: ['Work'], eyebrow: 'Tour', name: 'Tour', title: 'Everything you work with, in one space.', tagline: "nustack's own org space, built from an empty page.", made: ['page', 'movie club', 'spend chart', 'github sync job', 'brand', 'agent'] },
   { id: 'ops', demo: 'ops', tags: ['Work'], eyebrow: 'Ops', name: 'Ops', title: 'Run your ops from one space.', tagline: 'A release breaks, the incident pages, a rule rolls it back.', made: ['storefront', 'deploy job', 'log', 'incident', 'rollback rule'] },
   { id: 'data', demo: 'data', tags: ['Data', 'Work'], eyebrow: 'Data', name: 'Dashboards', title: 'A spreadsheet for anything, live.', tagline: 'Orders stream in, every chart and metric follows.', made: ['orders stream', 'events table', 'export job', 'metric', 'price button'] },
   { id: 'design', demo: 'design', tags: ['Work'], eyebrow: 'Design', name: 'Design system', title: 'Your design system, one live spec.', tagline: 'Tokens, mocks and checks that follow every change.', made: ['tokens', 'proposal', 'release job', 'color checker'] },
   { id: 'training', demo: 'training', tags: ['AI', 'Data'], eyebrow: 'ML', name: 'ML training', title: 'Train models in your own ML lab.', tagline: 'Launch runs, watch them learn, stop them by rule.', made: ['run launcher', 'metrics', 'model', 'compare page', 'stop rule'] },
   { id: 'research', demo: 'research', tags: ['AI'], eyebrow: 'Research', name: 'Research', title: 'Sources, claims and scores, kept live.', tagline: 'A paper flips a claim everywhere, an eval reruns.', made: ['probe', 'papers', 'claims', 'eval run'] },
-  { id: 'agents', demo: 'agents', tags: ['AI', 'Work'], eyebrow: 'Agents', name: 'Agents', title: 'A team of agents, run from one space.', tagline: 'Brief, steer and judge Claude Code sessions.', made: ['agent sessions', 'briefs', 'judge', 'desk'] },
   { id: 'memes', demo: 'memes', tags: ['Data'], eyebrow: 'Live data', name: 'Memes', title: 'A blockchain, read live.', tagline: 'Every launch and trade, streamed into pages.', made: ['solana stream', 'coin pages', 'ranking', 'radar'] },
   { id: 'movies', demo: 'movies', tags: ['Personal'], eyebrow: 'Personal', name: 'Movies', title: 'Your personal movie tracker.', tagline: 'Films, people and timelines, all linked, all live.', made: ['film base', 'log import job', 'tonight page', 'ratings'] },
 ];
