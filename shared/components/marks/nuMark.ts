@@ -8,10 +8,9 @@ export const NU_MARK_TRANSFORM = 'translate(0,552) scale(0.1,-0.1)';
 
 /** Afterglow into Starlight, bottom-left to top-right of the glyph box. */
 export const NU_MARK_STOPS = [
-  { offset: 0, color: '#c7a6ff' },
-  { offset: 0.3, color: '#9257e3' },
-  { offset: 0.62, color: '#4f7fe0' },
-  { offset: 1, color: '#1b4f98' },
+  { offset: 0, color: '#9a5cec' },
+  { offset: 0.5, color: '#6a49d6' },
+  { offset: 1, color: '#1e63b8' },
 ] as const;
 
 export const NU_MARK_PATH =
